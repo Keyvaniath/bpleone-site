@@ -1,0 +1,11 @@
+# macOS / Windows / editor cruft
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Node (if you ever add a build step)
+node_modules/
+dist/
+.cache/
