@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Brandon Leon</title>
+    <link>https://bpleon.com/</link>
+    <description>Essays and research notes on public markets.</description>
+    <language>en-us</language>
+    <atom:link href="https://bpleon.com/feed.xml" rel="self" type="application/rss+xml" />
+
+    <!-- Add a new <item> at the TOP of this list each time you publish.
+         Same workflow as adding a new entry to writing.html. -->
+
+    <item>
+      <title>Welcome — what this site is for</title>
+      <link>https://YOURNAME.substack.com/p/welcome</link>
+      <guid isPermaLink="true">https://YOURNAME.substack.com/p/welcome</guid>
+      <pubDate>Sat, 25 Apr 2026 12:00:00 -0500</pubDate>
+      <description>A short note on why I'm writing here, what to expect, and how often.</description>
+    </item>
+
+  </channel>
+</rss>

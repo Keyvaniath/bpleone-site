@@ -2,10 +2,18 @@
 # https://developers.cloudflare.com/pages/configuration/redirects/
 
 # Force the canonical host (no www)
-https://www.bpleone.com/* https://bpleone.com/:splat 301
+https://www.bpleon.com/* https://bpleon.com/:splat 301
 
 # Pretty URLs (optional — lets you link /about instead of /about.html)
-/about    /about.html    200
-/projects /projects.html 200
-/writing  /writing.html  200
-/contact  /contact.html  200
+/about      /about.html      200
+/markets    /markets.html    200
+/toolkit    /toolkit.html    200
+/dcf        /dcf.html        200
+/reports    /reports.html    200
+/now        /now.html        200
+/disclaimer /disclaimer.html 200
+/projects   /projects.html   200
+/writing    /writing.html    200
+/contact    /contact.html    200
+/feed       /feed.xml        200
+/rss        /feed.xml        200

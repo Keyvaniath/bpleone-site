@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DCF Calculator &mdash; Brandon Leon</title>
+  <meta name="description" content="Interactive discounted cash flow calculator with sensitivity table." />
+  <link rel="canonical" href="https://bpleon.com/dcf.html" />
+  <meta property="og:title" content="DCF Calculator — Brandon Leon" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bpleon.com/dcf.html" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231a1a1a'/%3E%3Ctext x='50%25' y='54%25' font-family='Georgia,serif' font-size='34' font-weight='600' text-anchor='middle' dominant-baseline='middle' fill='%23faf8f4'%3EB%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html">Brandon&nbsp;Leon</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html" aria-current="page">Toolkit</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+    <header class="page-head">
+      <p class="eyebrow">Toolkit &middot; Interactive</p>
+      <h1>DCF Calculator.</h1>
+      <p class="lede">
+        Plug in a company. Tune the assumptions. Watch the share price
+        move. Below: a 5-year explicit projection, terminal value, and a
+        sensitivity table across WACC and terminal growth.
+      </p>
+    </header>
+
+    <div class="dcf-grid">
+
+      <!-- ============== INPUTS ============== -->
+      <form id="dcf-form" class="dcf-form" autocomplete="off">
+
+        <fieldset>
+          <legend>Operating</legend>
+          <label>
+            <span>Current revenue ($M)</span>
+            <input type="number" id="revenue" value="1000" step="10" min="0">
+          </label>
+          <label>
+            <span>Revenue growth p.a. (%)</span>
+            <input type="number" id="growth" value="8" step="0.5">
+          </label>
+          <label>
+            <span>Operating margin (%)</span>
+            <input type="number" id="margin" value="20" step="0.5" min="0" max="100">
+          </label>
+          <label>
+            <span>Tax rate (%)</span>
+            <input type="number" id="tax" value="21" step="0.5" min="0" max="60">
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Valuation</legend>
+          <label>
+            <span>Discount rate / WACC (%)</span>
+            <input type="number" id="wacc" value="9" step="0.25" min="1">
+          </label>
+          <label>
+            <span>Terminal growth (%)</span>
+            <input type="number" id="tg" value="2.5" step="0.25" min="0">
+          </label>
+          <label>
+            <span>Net debt ($M)</span>
+            <input type="number" id="netdebt" value="0" step="10">
+          </label>
+          <label>
+            <span>Shares outstanding (M)</span>
+            <input type="number" id="shares" value="100" step="1" min="0.001">
+          </label>
+        </fieldset>
+
+      </form>
+
+      <!-- ============== OUTPUTS ============== -->
+      <section class="dcf-output" aria-live="polite">
+
+        <h3>Implied share price</h3>
+        <p class="dcf-headline" id="out-price">$0.00</p>
+        <p class="dcf-sub" id="out-equity">Equity value: $0M &middot; EV: $0M</p>
+
+        <h3>5-year free cash flow</h3>
+        <table class="dcf-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Revenue ($M)</th>
+              <th>FCF ($M)</th>
+              <th>PV of FCF</th>
+            </tr>
+          </thead>
+          <tbody id="out-fcf"></tbody>
+          <tfoot>
+            <tr>
+              <td>PV of explicit period</td>
+              <td></td>
+              <td></td>
+              <td id="out-pvsum">$0M</td>
+            </tr>
+            <tr>
+              <td>PV of terminal value</td>
+              <td></td>
+              <td></td>
+              <td id="out-pvtv">$0M</td>
+            </tr>
+            <tr>
+              <td>Enterprise value</td>
+              <td></td>
+              <td></td>
+              <td id="out-ev">$0M</td>
+            </tr>
+          </tfoot>
+        </table>
+
+      </section>
+
+    </div>
+
+    <!-- ============== SENSITIVITY ============== -->
+    <h2 style="margin-top:3rem">Sensitivity: share price across WACC &amp; terminal growth</h2>
+    <p class="muted small">Center cell (highlighted) uses your current inputs.</p>
+    <div style="overflow-x:auto">
+      <table class="dcf-sens" id="sens-table"></table>
+    </div>
+
+    <!-- ============== METHODOLOGY ============== -->
+    <section class="dcf-method">
+      <h2>How this works</h2>
+      <p>
+        For each of the next five years the model grows revenue at the
+        constant rate you set, applies your operating margin to get
+        EBIT, taxes it at your tax rate to get NOPAT, and treats NOPAT
+        as the year's free cash flow (a simplification &mdash; we are
+        ignoring incremental working capital and D&amp;A vs. capex
+        deltas).
+      </p>
+      <p>
+        Each year's FCF is discounted at WACC. After year 5 a terminal
+        value is computed using the Gordon growth formula
+        <code>TV = FCF<sub>5</sub> &middot; (1 + g) / (WACC &minus; g)</code>
+        and discounted back. Enterprise value = sum of discounted FCFs +
+        discounted terminal value. Equity value = EV &minus; net debt.
+        Share price = equity / diluted shares.
+      </p>
+      <p>
+        It is a clean, classroom-grade DCF &mdash; useful for getting a
+        quick read or stress-testing assumptions, not a substitute for a
+        proper model with full financials. For something more thorough,
+        see the <a href="toolkit.html#dcf-template">DCF template</a> on
+        the toolkit page.
+      </p>
+      <p class="muted small">
+        <em>Nothing on this page is investment advice.</em> See
+        <a href="disclaimer.html">disclaimer</a>.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandonpleone@gmail.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/" rel="me noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/" rel="me noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+  <script>
+  // =========================================================================
+  // Inline DCF calculator. Vanilla JS, no dependencies.
+  // =========================================================================
+  (function () {
+    var ids = ['revenue','growth','margin','tax','wacc','tg','netdebt','shares'];
+    var inputs = {};
+    ids.forEach(function (id) { inputs[id] = document.getElementById(id); });
+
+    function fmtMoney(x, suffix) {
+      if (!isFinite(x)) return '—';
+      var sign = x < 0 ? '-' : '';
+      var n = Math.abs(x);
+      var formatted = n.toLocaleString(undefined, { maximumFractionDigits: 0 });
+      return sign + '$' + formatted + (suffix || '');
+    }
+    function fmtPrice(x) {
+      if (!isFinite(x)) return '—';
+      var sign = x < 0 ? '-' : '';
+      var n = Math.abs(x);
+      return sign + '$' + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function dcf(rev0, growth, margin, tax, wacc, tg, netdebt, shares) {
+      var rows = [];
+      var pvSum = 0;
+      var rev = rev0;
+      var lastFcf = 0;
+      for (var i = 1; i <= 5; i++) {
+        rev = rev * (1 + growth);
+        var fcf = rev * margin * (1 - tax);
+        var pv  = fcf / Math.pow(1 + wacc, i);
+        rows.push({ year: i, revenue: rev, fcf: fcf, pv: pv });
+        pvSum += pv;
+        lastFcf = fcf;
+      }
+      var tv = (wacc > tg) ? lastFcf * (1 + tg) / (wacc - tg) : Infinity;
+      var pvTv = tv / Math.pow(1 + wacc, 5);
+      var ev = pvSum + pvTv;
+      var equity = ev - netdebt;
+      var price = (shares > 0) ? equity / shares : NaN;
+      return { rows: rows, pvSum: pvSum, tv: tv, pvTv: pvTv, ev: ev, equity: equity, price: price };
+    }
+
+    function readNum(id) {
+      var v = parseFloat(inputs[id].value);
+      return isFinite(v) ? v : 0;
+    }
+
+    function compute() {
+      var rev0    = readNum('revenue');
+      var growth  = readNum('growth')  / 100;
+      var margin  = readNum('margin')  / 100;
+      var tax     = readNum('tax')     / 100;
+      var wacc    = readNum('wacc')    / 100;
+      var tg      = readNum('tg')      / 100;
+      var netdebt = readNum('netdebt');
+      var shares  = readNum('shares');
+
+      var r = dcf(rev0, growth, margin, tax, wacc, tg, netdebt, shares);
+
+      // Headline
+      document.getElementById('out-price').textContent  = fmtPrice(r.price);
+      document.getElementById('out-equity').textContent =
+        'Equity value: ' + fmtMoney(r.equity, 'M') + '  ·  EV: ' + fmtMoney(r.ev, 'M');
+
+      // FCF table
+      var tbody = document.getElementById('out-fcf');
+      tbody.innerHTML = '';
+      r.rows.forEach(function (row) {
+        var tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>Y' + row.year + '</td>' +
+          '<td>' + fmtMoney(row.revenue) + '</td>' +
+          '<td>' + fmtMoney(row.fcf)     + '</td>' +
+          '<td>' + fmtMoney(row.pv)      + '</td>';
+        tbody.appendChild(tr);
+      });
+      document.getElementById('out-pvsum').textContent = fmtMoney(r.pvSum, 'M');
+      document.getElementById('out-pvtv').textContent  = fmtMoney(r.pvTv,  'M');
+      document.getElementById('out-ev').textContent    = fmtMoney(r.ev,    'M');
+
+      // Sensitivity table: rows = terminal growth, cols = WACC
+      var waccs = [-2, -1, 0, 1, 2].map(function (d) { return wacc + d / 100; });
+      var tgs   = [-1, -0.5, 0, 0.5, 1].map(function (d) { return Math.max(0, tg + d / 100); });
+
+      var html = '<thead><tr><th>tg \\ WACC</th>';
+      waccs.forEach(function (w) {
+        html += '<th>' + (w * 100).toFixed(2) + '%</th>';
+      });
+      html += '</tr></thead><tbody>';
+
+      var basePrice = r.price;
+      tgs.forEach(function (g, i) {
+        html += '<tr><th>' + (g * 100).toFixed(2) + '%</th>';
+        waccs.forEach(function (w, j) {
+          var p = dcf(rev0, growth, margin, tax, w, g, netdebt, shares).price;
+          var cls = '';
+          if (i === 2 && j === 2) {
+            cls = 'center-cell';
+          } else if (isFinite(p) && isFinite(basePrice)) {
+            cls = (p >= basePrice) ? 'up' : 'down';
+          }
+          html += '<td class="' + cls + '">' + fmtPrice(p) + '</td>';
+        });
+        html += '</tr>';
+      });
+      html += '</tbody>';
+      document.getElementById('sens-table').innerHTML = html;
+    }
+
+    ids.forEach(function (id) {
+      inputs[id].addEventListener('input', compute);
+    });
+    compute();
+  })();
+  </script>
+</body>
+</html>

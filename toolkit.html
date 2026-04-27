@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Toolkit &mdash; Brandon Leon</title>
+  <meta name="description" content="Free templates and interactive tools for fundamentals work — DCF, comps, LBO, and more." />
+  <link rel="canonical" href="https://bpleon.com/toolkit.html" />
+  <meta property="og:title" content="Toolkit — Brandon Leon" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bpleon.com/toolkit.html" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231a1a1a'/%3E%3Ctext x='50%25' y='54%25' font-family='Georgia,serif' font-size='34' font-weight='600' text-anchor='middle' dominant-baseline='middle' fill='%23faf8f4'%3EB%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html">Brandon&nbsp;Leon</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html" aria-current="page">Toolkit</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+    <header class="page-head">
+      <p class="eyebrow">Toolkit</p>
+      <h1>Templates &amp; tools for fundamentals work.</h1>
+      <p class="lede">
+        Free downloadable models I use myself, plus a few interactive
+        tools that run in your browser. Use them however you like &mdash;
+        no sign-up, no email gate.
+      </p>
+    </header>
+
+    <!-- ============== INTERACTIVE TOOLS ============== -->
+    <h2>Interactive tools</h2>
+    <p class="muted small">Run in your browser. No download needed.</p>
+
+    <div class="featured-tool">
+      <div>
+        <h3>DCF Calculator</h3>
+        <p>Live discounted cash flow with sensitivity table. Tune revenue
+        growth, margins, WACC, and terminal growth, watch the implied
+        share price move in real time.</p>
+      </div>
+      <a class="btn" href="dcf.html">Open the calculator &rarr;</a>
+    </div>
+
+    <!-- ============== DOWNLOADABLE TEMPLATES ============== -->
+    <h2>Downloadable templates</h2>
+    <p class="muted small">Open in Excel or Google Sheets. Edit freely.</p>
+
+    <ol class="tool-list">
+
+      <li>
+        <div>
+          <h3>DCF Template</h3>
+          <p>Single-stage DCF with tabs for projections, WACC build,
+          terminal value, and sensitivity. Editable every cell &mdash;
+          plug in your own assumptions.</p>
+          <p class="tool-meta">v1.0 &middot; updated 2026 &middot; .xlsx (placeholder)</p>
+        </div>
+        <div class="tool-actions">
+          <a class="btn btn-ghost" href="assets/toolkit/dcf-template.xlsx" download>Download</a>
+        </div>
+      </li>
+
+      <li>
+        <div>
+          <h3>Trading Comps</h3>
+          <p>Side-by-side multiples (EV/EBITDA, P/E, P/S, EV/Sales)
+          across a peer set, with median and quartile rows. Drop your
+          tickers and revenue figures into the input tab.</p>
+          <p class="tool-meta">v1.0 &middot; .xlsx (placeholder)</p>
+        </div>
+        <div class="tool-actions">
+          <a class="btn btn-ghost" href="assets/toolkit/comps-template.xlsx" download>Download</a>
+        </div>
+      </li>
+
+      <li>
+        <div>
+          <h3>LBO / M&amp;A Model</h3>
+          <p>Sources &amp; uses, debt schedule, cash flow waterfall,
+          IRR / MOIC outputs. Built for quick-and-dirty deal screening,
+          not investment-committee polish.</p>
+          <p class="tool-meta">v0.9 &middot; .xlsx (placeholder)</p>
+        </div>
+        <div class="tool-actions">
+          <a class="btn btn-ghost" href="assets/toolkit/lbo-template.xlsx" download>Download</a>
+        </div>
+      </li>
+
+      <li>
+        <div>
+          <h3>Quarterly Earnings Tracker</h3>
+          <p>One row per company, columns for revenue / EPS estimate vs.
+          actual, surprise %, guide vs. consensus. Useful during peak
+          earnings weeks.</p>
+          <p class="tool-meta">v1.0 &middot; .xlsx (placeholder)</p>
+        </div>
+        <div class="tool-actions">
+          <a class="btn btn-ghost" href="assets/toolkit/earnings-tracker.xlsx" download>Download</a>
+        </div>
+      </li>
+
+    </ol>
+
+    <p class="muted small">
+      Looking for finished long-form research? See the
+      <a href="reports.html">reports</a> page.
+    </p>
+
+    <p class="muted small" style="margin-top:1rem">
+      <strong>How to add a new template:</strong> drop the .xlsx into
+      <code>bpleone-site/assets/toolkit/</code>, copy any
+      <code>&lt;li&gt;</code> block above, edit the title / description /
+      filename, run <code>wizard/sync-to-github.bat</code>. Live in 20
+      seconds.
+    </p>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandonpleone@gmail.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/" rel="me noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/" rel="me noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bpleone.com/sitemap.xml
+Sitemap: https://bpleon.com/sitemap.xml
