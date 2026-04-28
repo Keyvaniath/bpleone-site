@@ -43,7 +43,11 @@
 
 /* Reset-ish ----------------------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color-scheme: light;   /* tell the browser this page is light, no auto-dark */
+}
 body {
   margin: 0;
   font-family: var(--sans);
@@ -569,6 +573,146 @@ main.prose.center {
   border-bottom: 1px solid var(--rule);
   margin-bottom: 2.5rem;
 }
+.hero-split {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+}
+.hero-split .hero-text { min-width: 0; }
+.hero-art {
+  width: 100%;
+  max-width: 380px;
+  justify-self: end;
+}
+.hero-art svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(28,26,22,0.06);
+}
+@media (max-width: 720px) {
+  .hero-split { grid-template-columns: 1fr; gap: 1.5rem; }
+  .hero-art { max-width: 100%; justify-self: stretch; }
+}
+
+/* Featured highlight card -------------------------------------------------- */
+.feature-card {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 1.75rem;
+  align-items: center;
+  padding: 1.5rem;
+  background: var(--bg-soft);
+  border-radius: 14px;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--rule);
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease),
+              border-color .2s var(--ease);
+}
+.feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(28,26,22,0.08);
+  border-color: var(--accent);
+}
+.feature-card-art svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+.feature-card-body h3 {
+  margin: .35em 0 .35em;
+  font-size: 1.5rem;
+  font-family: var(--serif);
+}
+.feature-card-body p { margin: 0 0 .6em; color: var(--ink-soft); }
+.feature-card-cta {
+  color: var(--accent) !important;
+  font-weight: 500;
+  margin-top: .5rem !important;
+}
+@media (max-width: 600px) {
+  .feature-card { grid-template-columns: 1fr; }
+  .feature-card-art { max-width: 200px; }
+}
+
+/* Tile row (tools) --------------------------------------------------------- */
+.tile-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0 0;
+}
+.tile {
+  display: block;
+  padding: 1.5rem 1.25rem;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease),
+              border-color .2s var(--ease);
+}
+.tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 8px 22px rgba(181,106,63,0.10);
+}
+.tile-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: .9rem;
+}
+.tile-icon svg { width: 100%; height: 100%; display: block; }
+.tile h3 {
+  margin: 0 0 .3em;
+  font-size: 1.15rem;
+  font-family: var(--serif);
+}
+.tile p { margin: 0 0 .5em; color: var(--ink-soft); font-size: .92rem; }
+.tile-cta { color: var(--accent) !important; font-weight: 500; margin: 0 !important; }
+
+/* Project tag chips on home page ------------------------------------------ */
+.project-tag {
+  display: inline-block;
+  padding: .15rem .55rem;
+  background: var(--accent);
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  margin-bottom: .5rem;
+}
+
+/* Reading + watching list -------------------------------------------------- */
+.rw-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0.5rem;
+}
+.rw-list li {
+  display: flex;
+  gap: 1rem;
+  padding: .85rem 0;
+  border-bottom: 1px solid var(--rule);
+  align-items: baseline;
+}
+.rw-list li:last-child { border-bottom: 0; }
+.rw-tag {
+  flex: 0 0 5.5rem;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+.rw-text { color: var(--ink); font-family: var(--serif); }
 .hero h1 { max-width: 22ch; }
 .hero .lede { max-width: 56ch; }
 .hero-cta {

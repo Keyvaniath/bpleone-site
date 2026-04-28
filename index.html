@@ -16,8 +16,8 @@
   <meta property="og:image" content="https://bpleon.com/assets/og.png" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Favicon (inline SVG, no external file needed) -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231a1a1a'/%3E%3Ctext x='50%25' y='54%25' font-family='Georgia,serif' font-size='34' font-weight='600' text-anchor='middle' dominant-baseline='middle' fill='%23faf8f4'%3EB%3C/text%3E%3C/svg%3E" />
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23b56a3f'/%3E%3Ctext x='50%25' y='54%25' font-family='Georgia,serif' font-size='34' font-weight='600' text-anchor='middle' dominant-baseline='middle' fill='%23fbf7ef'%3EB%3C/text%3E%3C/svg%3E" />
 
   <!-- Fonts: Newsreader (serif) + Inter (sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,20 +41,114 @@
   </header>
 
   <main>
-    <section class="hero">
-      <p class="eyebrow">Essays &middot; Research notes &middot; Markets</p>
-      <h1>Reading markets, writing it down.</h1>
-      <p class="lede">
-        Hi, I'm Brandon. I write about public markets, capital allocation,
-        and the parts of finance that reward patient reading &mdash;
-        somewhere between a research note and a long letter to a friend.
-      </p>
-      <div class="hero-cta">
-        <a class="btn" href="writing.html">Read the writing &rarr;</a>
-        <a class="btn btn-ghost" href="markets.html">What I'm watching</a>
+
+    <!-- ====== HERO with decorative SVG ====== -->
+    <section class="hero hero-split">
+      <div class="hero-text">
+        <p class="eyebrow">Essays &middot; Research notes &middot; Markets</p>
+        <h1>Reading markets, writing it down.</h1>
+        <p class="lede">
+          Hi, I'm Brandon. I write about public markets, capital allocation,
+          and the parts of finance that reward patient reading &mdash;
+          somewhere between a research note and a long letter to a friend.
+        </p>
+        <div class="hero-cta">
+          <a class="btn" href="writing.html">Read the writing &rarr;</a>
+          <a class="btn btn-ghost" href="markets.html">What I'm watching</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <!-- Simple SVG: a stylized growth line on dotted grid paper -->
+        <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stylized chart line">
+          <defs>
+            <pattern id="dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1" fill="#d8cfb9"/>
+            </pattern>
+          </defs>
+          <rect width="320" height="240" fill="#f3ece0" rx="14"/>
+          <rect width="320" height="240" fill="url(#dots)" rx="14"/>
+          <path d="M 20 200 L 60 170 L 100 180 L 140 130 L 180 150 L 220 90 L 260 110 L 300 50"
+                fill="none" stroke="#b56a3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="300" cy="50" r="6" fill="#b56a3f"/>
+          <circle cx="300" cy="50" r="12" fill="#b56a3f" fill-opacity="0.18"/>
+        </svg>
       </div>
     </section>
 
+    <!-- ====== FEATURED highlight ====== -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Featured</h2>
+        <a class="more" href="writing.html">All writing &rarr;</a>
+      </div>
+      <a class="feature-card" href="writing.html#post-1">
+        <div class="feature-card-art" aria-hidden="true">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#5b7f6b" rx="10"/>
+            <path d="M 30 160 L 70 130 L 110 145 L 150 90 L 180 110"
+                  stroke="#fbf7ef" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <circle cx="180" cy="110" r="5" fill="#fbf7ef"/>
+          </svg>
+        </div>
+        <div class="feature-card-body">
+          <p class="eyebrow">Latest note &middot; Apr 2026</p>
+          <h3>Welcome &mdash; what this site is for</h3>
+          <p>A short note on why I started writing here, what to expect from the feed, and how often new pieces will land. Read it first if you're new.</p>
+          <p class="feature-card-cta">Read &rarr;</p>
+        </div>
+      </a>
+    </section>
+
+    <!-- ====== TOOLS row ====== -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Tools &amp; templates</h2>
+        <a class="more" href="toolkit.html">All tools &rarr;</a>
+      </div>
+      <div class="tile-row">
+        <a class="tile" href="dcf.html">
+          <div class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <rect x="6" y="6" width="36" height="36" rx="6" fill="#fbf7ef" stroke="#b56a3f" stroke-width="2"/>
+              <path d="M 13 32 L 21 24 L 27 28 L 35 16" stroke="#b56a3f" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="35" cy="16" r="2.5" fill="#b56a3f"/>
+            </svg>
+          </div>
+          <h3>DCF Calculator</h3>
+          <p>Plug in revenue, margin, WACC, terminal growth. Watch the implied share price move live, see a sensitivity grid.</p>
+          <p class="tile-cta">Open &rarr;</p>
+        </a>
+        <a class="tile" href="toolkit.html">
+          <div class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <rect x="8" y="10" width="32" height="28" rx="3" fill="#fbf7ef" stroke="#b56a3f" stroke-width="2"/>
+              <line x1="8"  y1="18" x2="40" y2="18" stroke="#b56a3f" stroke-width="2"/>
+              <line x1="18" y1="10" x2="18" y2="38" stroke="#b56a3f" stroke-width="2"/>
+              <line x1="28" y1="10" x2="28" y2="38" stroke="#b56a3f" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3>Spreadsheet templates</h3>
+          <p>Free downloadable models &mdash; DCF, comps, LBO, earnings tracker. Open in Excel or Sheets, edit freely.</p>
+          <p class="tile-cta">Browse &rarr;</p>
+        </a>
+        <a class="tile" href="reports.html">
+          <div class="tile-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 14 6 L 30 6 L 38 14 L 38 42 L 14 42 Z" fill="#fbf7ef" stroke="#b56a3f" stroke-width="2"/>
+              <path d="M 30 6 L 30 14 L 38 14" fill="none" stroke="#b56a3f" stroke-width="2"/>
+              <line x1="20" y1="22" x2="32" y2="22" stroke="#b56a3f" stroke-width="2"/>
+              <line x1="20" y1="28" x2="32" y2="28" stroke="#b56a3f" stroke-width="2"/>
+              <line x1="20" y1="34" x2="28" y2="34" stroke="#b56a3f" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3>Long-form reports</h3>
+          <p>Sector deep-dives, earnings previews, primers. PDF format, free to download. Updated when there's something worth saying.</p>
+          <p class="tile-cta">Read &rarr;</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- ====== SELECTED WORK ====== -->
     <section class="section">
       <div class="section-head">
         <h2>Selected work</h2>
@@ -62,16 +156,19 @@
       </div>
       <ul class="project-list">
         <li class="project">
+          <span class="project-tag">Research</span>
           <h3><a href="projects.html#project-one">Project One</a></h3>
           <p class="project-meta">2025 &middot; Research note</p>
-          <p>A short description of the project goes here. Replace this text with what you actually built or analyzed &mdash; one or two sentences is plenty.</p>
+          <p>A short description of the project goes here. Replace this with what you actually built or analyzed &mdash; one or two sentences is plenty.</p>
         </li>
         <li class="project">
+          <span class="project-tag">Model</span>
           <h3><a href="projects.html#project-two">Project Two</a></h3>
           <p class="project-meta">2025 &middot; Model</p>
           <p>Another project teaser. Keep it tight on the home page; the full case study lives on the projects page.</p>
         </li>
         <li class="project">
+          <span class="project-tag">Essay</span>
           <h3><a href="projects.html#project-three">Project Three</a></h3>
           <p class="project-meta">2024 &middot; Essay</p>
           <p>A third teaser. Three is a good number for the homepage &mdash; enough to show range, not so many that it becomes a list.</p>
@@ -79,6 +176,7 @@
       </ul>
     </section>
 
+    <!-- ====== RECENT WRITING ====== -->
     <section class="section">
       <div class="section-head">
         <h2>Recent writing</h2>
@@ -100,14 +198,32 @@
       </ul>
     </section>
 
+    <!-- ====== READING + WATCHING ====== -->
+    <section class="section">
+      <div class="section-head">
+        <h2>Currently reading &amp; watching</h2>
+      </div>
+      <ul class="rw-list">
+        <li>
+          <span class="rw-tag">Reading</span>
+          <span class="rw-text"><em>[Book title]</em> &mdash; one-line note on why.</span>
+        </li>
+        <li>
+          <span class="rw-tag">Watching</span>
+          <span class="rw-text">The 10Y yield. Earnings season for [sector].</span>
+        </li>
+        <li>
+          <span class="rw-tag">Listening</span>
+          <span class="rw-text"><em>[Podcast]</em> &mdash; the recent episode on [topic].</span>
+        </li>
+      </ul>
+      <p class="muted small">Updated every few weeks on the <a href="now.html">/now</a> page.</p>
+    </section>
+
+    <!-- ====== SUBSCRIBE ====== -->
     <section class="section subscribe">
       <h2>Subscribe</h2>
       <p>New essays and research notes, sent occasionally. No spam, unsubscribe any time.</p>
-      <!--
-        SUBSTACK EMBED
-        Once your Substack is created at https://YOURNAME.substack.com,
-        replace YOURNAME below with your actual Substack subdomain.
-      -->
       <iframe
         src="https://YOURNAME.substack.com/embed"
         title="Subscribe"
