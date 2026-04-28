@@ -1,8 +1,10 @@
 // =============================================================================
 // bpleon.com -- progressive enhancements
 // Self-hosted ticker tape using free, CORS-friendly APIs:
-//   - CoinGecko   (crypto + gold-backed token PAXG)
-//   - Frankfurter (FX rates, free, no key, CORS-enabled)
+//   - CoinGecko        (crypto + gold-backed token PAXG)
+//   - currency-api     (FX rates, free, no key, CORS via jsDelivr CDN)
+//                      https://github.com/fawazahmed0/exchange-api
+// (Replaced Frankfurter on 2026-04-28 -- they dropped CORS on api.frankfurter.app.)
 // No third-party widgets, no domain restrictions, no API keys.
 // Falls back gracefully if any API call fails.
 // =============================================================================
@@ -17,13 +19,19 @@
   if (!mount) return;
 
   // --- Symbols ------------------------------------------------------------
+  // Edit these two arrays to change what scrolls in the ticker.
   var CRYPTO = [
-    { id: 'bitcoin',  label: 'BTC' },
-    { id: 'ethereum', label: 'ETH' },
-    { id: 'solana',   label: 'SOL' },
-    { id: 'pax-gold', label: 'GOLD' }   // PAXG -- 1 token = 1 oz gold
+    { id: 'bitcoin',     label: 'BTC' },
+    { id: 'ethereum',    label: 'ETH' },
+    { id: 'solana',      label: 'SOL' },
+    { id: 'ripple',      label: 'XRP' },
+    { id: 'cardano',     label: 'ADA' },
+    { id: 'dogecoin',    label: 'DOGE' },
+    { id: 'avalanche-2', label: 'AVAX' },
+    { id: 'chainlink',   label: 'LINK' },
+    { id: 'pax-gold',    label: 'GOLD' }   // PAXG -- 1 token = 1 oz gold
   ];
-  var FX = ['EUR', 'GBP', 'JPY', 'CNY'];
+  var FX = ['EUR', 'GBP', 'JPY', 'CNY', 'CAD', 'AUD', 'CHF', 'MXN', 'INR'];
 
   // --- Formatting ---------------------------------------------------------
   function fmtPrice(p) {
@@ -89,7 +97,8 @@
     var cryptoIds = CRYPTO.map(function (c) { return c.id; }).join(',');
     var cgUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=' +
                 cryptoIds + '&vs_currencies=usd&include_24hr_change=true';
-    var fxUrl = 'https://api.frankfurter.app/latest?from=USD&to=' + FX.join(',');
+    // currency-api -- USD as the base; lowercase ISO codes in the response.
+    var fxUrl = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json';
 
     var cgPromise = fetch(cgUrl)
       .then(function (r) {
@@ -103,18 +112,18 @@
 
     var fxPromise = fetch(fxUrl)
       .then(function (r) {
-        console.log('[ticker] Frankfurter response: HTTP ' + r.status);
+        console.log('[ticker] currency-api response: HTTP ' + r.status);
         return r.ok ? r.json() : null;
       })
       .catch(function (e) {
-        console.warn('[ticker] Frankfurter fetch failed:', e && e.message);
+        console.warn('[ticker] currency-api fetch failed:', e && e.message);
         return null;
       });
 
     Promise.all([cgPromise, fxPromise]).then(function (results) {
       var cg = results[0], fx = results[1];
       console.log('[ticker] CoinGecko data:', cg);
-      console.log('[ticker] Frankfurter data:', fx);
+      console.log('[ticker] currency-api data:', fx);
 
       if (cg) {
         CRYPTO.forEach(function (c) {
@@ -129,17 +138,17 @@
         console.warn('[ticker] no CoinGecko payload');
       }
 
-      if (fx && fx.rates) {
+      if (fx && fx.usd) {
         FX.forEach(function (ccy) {
-          var rate = fx.rates[ccy];
+          var rate = fx.usd[ccy.toLowerCase()];
           if (rate) {
             items.push(item('USD/' + ccy, fmtFx(rate, ccy), ''));
           } else {
-            console.warn('[ticker] missing Frankfurter rate for ' + ccy);
+            console.warn('[ticker] missing currency-api rate for ' + ccy);
           }
         });
       } else {
-        console.warn('[ticker] no Frankfurter payload');
+        console.warn('[ticker] no currency-api payload');
       }
 
       render(items);
