@@ -5,15 +5,15 @@
    ========================================================================== */
 
 :root {
-  /* Palette — light */
-  --bg:        #faf8f4;   /* warm off-white */
-  --bg-soft:   #f3f0e9;
-  --ink:       #1a1a1a;   /* near-black body text */
-  --ink-soft:  #4a4a48;   /* secondary text */
-  --muted:     #8a8a86;   /* tertiary / metadata */
-  --rule:      #e6e2d8;   /* hairlines / borders */
-  --accent:    #2a4365;   /* deep navy */
-  --accent-2:  #7a3b2e;   /* burgundy, used sparingly */
+  /* Palette - warm "morning paper" cream + terracotta accent. Forced light. */
+  --bg:        #fbf7ef;   /* warmer cream, slight peach */
+  --bg-soft:   #f3ece0;   /* a touch warmer than before */
+  --ink:       #1c1a16;   /* near-black with warm tint */
+  --ink-soft:  #534f47;
+  --muted:     #8e887d;
+  --rule:      #e6dfd0;
+  --accent:    #b56a3f;   /* warm terracotta -- feels editorial + inviting */
+  --accent-2:  #5b7f6b;   /* muted sage, used sparingly */
 
   /* Type */
   --serif: "Newsreader", "Source Serif 4", Georgia, "Times New Roman", serif;
@@ -28,17 +28,17 @@
   --ease: cubic-bezier(.2,.7,.3,1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg:       #0f0f10;
-    --bg-soft:  #17171a;
-    --ink:      #efeae0;
-    --ink-soft: #b8b3a8;
-    --muted:    #7a766e;
-    --rule:     #2a2a2c;
-    --accent:   #8fb3e8;
-    --accent-2: #d49b8a;
-  }
+/* Dark mode is opt-in via [data-theme="dark"] only -- prefers-color-scheme
+   no longer forces dark, so the site stays warm and light by default. */
+[data-theme="dark"] {
+  --bg:       #15140f;
+  --bg-soft:  #1d1c17;
+  --ink:      #f0eadd;
+  --ink-soft: #beb6a4;
+  --muted:    #7d766a;
+  --rule:     #2c2a23;
+  --accent:   #d99a72;
+  --accent-2: #8db4a0;
 }
 
 /* Reset-ish ----------------------------------------------------------------- */
@@ -159,6 +159,13 @@ p  { margin: 0 0 1.1em; }
   border-radius: 10px;
   background: var(--bg);
   font-variant-numeric: tabular-nums;
+  transition: transform .2s var(--ease), box-shadow .2s var(--ease),
+              border-color .2s var(--ease);
+}
+.price-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(28, 26, 22, 0.06);
+  border-color: var(--accent);
 }
 .price-card .pc-label {
   font-family: var(--sans);
@@ -224,12 +231,18 @@ p  { margin: 0 0 1.1em; }
   counter-reset: toolnum;
 }
 .tool-list li {
-  padding: 1.5rem 0;
+  padding: 1.5rem 1rem;
   border-bottom: 1px solid var(--rule);
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 1.5rem;
   align-items: center;
+  border-radius: 8px;
+  transition: background .2s var(--ease), padding-left .2s var(--ease);
+}
+.tool-list li:hover {
+  background: var(--bg-soft);
+  padding-left: 1.25rem;
 }
 .tool-list h3 {
   margin: 0 0 .25em;
@@ -572,23 +585,37 @@ main.prose.center {
 /* Buttons ------------------------------------------------------------------- */
 .btn {
   display: inline-block;
-  padding: .65rem 1.05rem;
-  background: var(--ink);
-  color: var(--bg);
+  padding: .7rem 1.25rem;
+  background: var(--accent);
+  color: #fff;
   text-decoration: none;
   border-radius: 999px;
   font-size: .95rem;
   font-weight: 500;
-  border: 1px solid var(--ink);
-  transition: transform .15s var(--ease), background .2s var(--ease), color .2s var(--ease);
+  border: 1px solid var(--accent);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  transition: transform .18s var(--ease), background .2s var(--ease),
+              border-color .2s var(--ease), box-shadow .2s var(--ease);
 }
-.btn:hover { transform: translateY(-1px); background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn:hover {
+  transform: translateY(-2px);
+  background: #9a5530;        /* slightly deeper terracotta on hover */
+  border-color: #9a5530;
+  box-shadow: 0 6px 18px rgba(181, 106, 63, 0.22);
+  color: #fff;
+}
 .btn-ghost {
   background: transparent;
   color: var(--ink);
   border-color: var(--rule);
+  box-shadow: none;
 }
-.btn-ghost:hover { background: var(--bg-soft); color: var(--ink); border-color: var(--ink); }
+.btn-ghost:hover {
+  background: var(--bg-soft);
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(181, 106, 63, 0.10);
+}
 
 /* Sections ------------------------------------------------------------------ */
 .section { margin: 3rem 0; }
@@ -625,8 +652,14 @@ main.prose.center {
 
 /* Project cards (full page) ------------------------------------------------- */
 .project-card {
-  padding: 1.75rem 0;
+  padding: 1.75rem 1rem;
   border-bottom: 1px solid var(--rule);
+  border-radius: 8px;
+  transition: background .2s var(--ease), padding-left .2s var(--ease);
+}
+.project-card:hover {
+  background: var(--bg-soft);
+  padding-left: 1.25rem;
 }
 .project-card:last-of-type { border-bottom: 0; }
 .project-card h2 { margin: 0 0 .25em; }
