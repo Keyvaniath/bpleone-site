@@ -57,18 +57,33 @@
     );
   }
 
+  // Show a status line in the ticker bar (loading / error / fallback).
+  function showStatus(msg) {
+    mount.style.display = '';
+    mount.innerHTML =
+      '<div class="ticker-track" style="animation:none;padding-left:24px;">' +
+        '<span class="ticker-item"><span class="ticker-label">' + msg + '</span></span>' +
+      '</div>';
+  }
+
   function render(items) {
     if (!items.length) {
-      mount.style.display = 'none';
+      console.log('[ticker] no items returned -- showing fallback message');
+      showStatus('Markets data temporarily unavailable');
       return;
     }
+    console.log('[ticker] rendering ' + items.length + ' items');
     // Duplicate items so the marquee can loop seamlessly.
     var html = items.join('') + items.join('');
     mount.innerHTML = '<div class="ticker-track">' + html + '</div>';
   }
 
+  // Show immediate loading state so the bar is never blank on first paint.
+  showStatus('Loading market data…');
+
   // --- Fetch + render -----------------------------------------------------
   function fetchAll() {
+    console.log('[ticker] fetchAll() starting at ' + new Date().toISOString());
     var items = [];
 
     var cryptoIds = CRYPTO.map(function (c) { return c.id; }).join(',');
@@ -76,19 +91,42 @@
                 cryptoIds + '&vs_currencies=usd&include_24hr_change=true';
     var fxUrl = 'https://api.frankfurter.app/latest?from=USD&to=' + FX.join(',');
 
-    var cgPromise = fetch(cgUrl).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
-    var fxPromise = fetch(fxUrl).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+    var cgPromise = fetch(cgUrl)
+      .then(function (r) {
+        console.log('[ticker] CoinGecko response: HTTP ' + r.status);
+        return r.ok ? r.json() : null;
+      })
+      .catch(function (e) {
+        console.warn('[ticker] CoinGecko fetch failed:', e && e.message);
+        return null;
+      });
+
+    var fxPromise = fetch(fxUrl)
+      .then(function (r) {
+        console.log('[ticker] Frankfurter response: HTTP ' + r.status);
+        return r.ok ? r.json() : null;
+      })
+      .catch(function (e) {
+        console.warn('[ticker] Frankfurter fetch failed:', e && e.message);
+        return null;
+      });
 
     Promise.all([cgPromise, fxPromise]).then(function (results) {
       var cg = results[0], fx = results[1];
+      console.log('[ticker] CoinGecko data:', cg);
+      console.log('[ticker] Frankfurter data:', fx);
 
       if (cg) {
         CRYPTO.forEach(function (c) {
           var d = cg[c.id];
           if (d && isFinite(d.usd)) {
             items.push(item(c.label, fmtPrice(d.usd), fmtPct(d.usd_24h_change)));
+          } else {
+            console.warn('[ticker] missing CoinGecko data for ' + c.id);
           }
         });
+      } else {
+        console.warn('[ticker] no CoinGecko payload');
       }
 
       if (fx && fx.rates) {
@@ -96,11 +134,18 @@
           var rate = fx.rates[ccy];
           if (rate) {
             items.push(item('USD/' + ccy, fmtFx(rate, ccy), ''));
+          } else {
+            console.warn('[ticker] missing Frankfurter rate for ' + ccy);
           }
         });
+      } else {
+        console.warn('[ticker] no Frankfurter payload');
       }
 
       render(items);
+    }).catch(function (e) {
+      console.error('[ticker] unexpected error:', e);
+      showStatus('Markets data temporarily unavailable');
     });
   }
 
