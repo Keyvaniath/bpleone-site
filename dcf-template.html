@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DCF Template &mdash; IB-grade DCF for any company &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="Edit one cell, run a notebook, get a 20-tab Excel DCF with multiples, scenarios, and reverse-DCF. Free. 60 seconds. Auditable down to every formula." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/dcf-template.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bpleon.com/dcf-template.html" />
+  <meta property="og:title" content="DCF Template &mdash; Free IB-grade DCF for any company" />
+  <meta property="og:description" content="Edit one cell, run the notebook, get a 20-tab Excel DCF with multiples, scenarios, and reverse-DCF. Free. 60 seconds." />
+  <meta property="og:image" content="https://bpleon.com/assets/og.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon (matches index.html — terracotta B mark) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23b56a3f'/%3E%3Ctext x='50%25' y='54%25' font-family='Georgia,serif' font-size='34' font-weight='600' text-anchor='middle' dominant-baseline='middle' fill='%23fbf7ef'%3EB%3C/text%3E%3C/svg%3E" />
+
+  <!-- Fonts: Newsreader (serif) + Inter (sans) — matches sitewide -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=3" />
+
+  <!-- Page-scoped styles (gate form, feature grid, FAQ, requirements, steps) -->
+  <style>
+    .gate-card {
+      padding: 2rem;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 14px;
+      margin: 2rem 0 2.5rem;
+      box-shadow: 0 4px 16px rgba(181, 106, 63, 0.18);
+    }
+    .gate-card h2 { color: #fff; margin: 0 0 .35em; font-family: var(--serif); font-size: 1.5rem; }
+    .gate-card p  { color: rgba(255,255,255,0.88); margin: 0 0 1rem; }
+    .gate-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: .6rem;
+      margin: 1rem 0 .25rem;
+    }
+    .gate-form input[type="email"] {
+      padding: .75rem 1rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.95);
+      color: var(--ink);
+      font: 500 1rem var(--sans);
+      outline: none;
+    }
+    .gate-form input[type="email"]:focus { border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,0.25); }
+    .gate-form button {
+      background: #fff;
+      color: var(--accent);
+      border-color: #fff;
+      cursor: pointer;
+      font-family: var(--sans);
+    }
+    .gate-form button:hover { background: var(--bg-soft); color: var(--accent); border-color: var(--bg-soft); }
+    .gate-fineprint { font-size: .82rem; color: rgba(255,255,255,0.78); margin: .35rem 0 0; }
+    .gate-fineprint a { color: #fff; text-decoration-color: rgba(255,255,255,0.5); }
+    .gate-fineprint a:hover { color: #fff; text-decoration-color: #fff; }
+    .gate-thanks { display: none; }
+    .gate-thanks.show { display: block; }
+    .gate-thanks .download-row { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; margin-top: .5rem; }
+    .gate-thanks .meta { color: rgba(255,255,255,0.78); font-size: .85rem; margin: .5rem 0 0; }
+    .gate-error {
+      display: none;
+      margin-top: .6rem;
+      padding: .6rem .85rem;
+      background: rgba(255,255,255,0.14);
+      border-radius: 8px;
+      color: #fff;
+      font-size: .9rem;
+    }
+    .gate-error.show { display: block; }
+    @media (max-width: 600px) {
+      .gate-form { grid-template-columns: 1fr; }
+    }
+
+    /* Feature grid */
+    .feat-grid {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .feat-grid li {
+      padding: 1.1rem 1.25rem;
+      background: var(--bg-soft);
+      border-radius: 10px;
+      border-left: 3px solid var(--accent);
+    }
+    .feat-grid li.highlight { border-left-color: var(--accent-2); background: #ecf3ee; }
+    .feat-grid h3 {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      margin: 0 0 .4em;
+      color: var(--ink);
+    }
+    .feat-grid p { margin: 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.55; }
+
+    /* Numbered steps */
+    .steps {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0 2rem;
+      counter-reset: step;
+      border-top: 1px solid var(--rule);
+    }
+    .steps li {
+      counter-increment: step;
+      padding: 1.1rem 0 1.1rem 3rem;
+      border-bottom: 1px solid var(--rule);
+      position: relative;
+    }
+    .steps li::before {
+      content: counter(step);
+      position: absolute; left: 0; top: 1.1rem;
+      width: 2rem; height: 2rem;
+      background: var(--accent); color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font: 600 .95rem var(--sans);
+    }
+    .steps li strong { display: block; font-family: var(--serif); font-size: 1.05rem; margin-bottom: .15em; color: var(--ink); }
+    .steps li p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+    .steps code {
+      background: var(--bg-soft);
+      padding: .1em .45em;
+      border-radius: 4px;
+      font-size: .88em;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+    }
+
+    /* Requirements box */
+    .req-box {
+      padding: 1.25rem 1.5rem;
+      background: #ecf3ee;
+      border-radius: 10px;
+      margin: 1.25rem 0 2.5rem;
+      border-left: 3px solid var(--accent-2);
+    }
+    .req-box h3 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .5em; color: var(--ink); }
+    .req-box ul { list-style: none; padding: 0; margin: 0; }
+    .req-box li { padding: .25rem 0 .25rem 1.5rem; position: relative; color: var(--ink-soft); font-size: .95rem; }
+    .req-box li::before {
+      content: "✓"; position: absolute; left: 0; top: .25rem;
+      color: var(--accent-2); font-weight: 700;
+    }
+
+    /* FAQ */
+    .faq { margin: 1.25rem 0 2.5rem; }
+    .faq details {
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      padding: 0;
+      margin: 0 0 .65rem;
+      background: var(--bg);
+      transition: border-color .2s var(--ease);
+    }
+    .faq details[open] { border-color: var(--accent); }
+    .faq summary {
+      list-style: none;
+      cursor: pointer;
+      padding: .9rem 1.25rem;
+      font-family: var(--serif);
+      font-size: 1.02rem;
+      font-weight: 500;
+      color: var(--ink);
+      position: relative;
+      padding-right: 2.75rem;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: "+";
+      position: absolute; right: 1.25rem; top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.4rem; color: var(--muted);
+      transition: transform .2s var(--ease);
+    }
+    .faq details[open] summary::after { content: "−"; color: var(--accent); }
+    .faq details > div {
+      padding: 0 1.25rem 1.1rem;
+      color: var(--ink-soft);
+      font-size: .95rem;
+      line-height: 1.6;
+    }
+
+    /* Footer CTA repeat */
+    .footer-cta {
+      margin: 3rem 0 2rem;
+      padding: 2rem;
+      background: var(--bg-soft);
+      border-radius: 14px;
+      text-align: center;
+    }
+    .footer-cta h2 { margin: 0 0 .5em; font-family: var(--serif); }
+    .footer-cta p { margin: 0 0 1rem; color: var(--ink-soft); }
+  </style>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html">Brandon&nbsp;Leon</a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+
+    <header class="page-head">
+      <p class="eyebrow">Toolkit &middot; Free template</p>
+      <h1>An IB-grade DCF for any public company. Free. 60 seconds.</h1>
+      <p class="lede">
+        Edit one cell, run the notebook, get a 20-tab Excel workbook with DCF,
+        multiples, scenarios, and reverse-DCF &mdash; auditable down to every
+        formula. No FactSet subscription required.
+      </p>
+    </header>
+
+    <!-- ============ EMAIL-GATE CARD ============ -->
+    <section id="gate" class="gate-card" aria-labelledby="gate-heading">
+      <h2 id="gate-heading">Get the download link</h2>
+      <p>Drop your email and the download will appear right here. One file, ~313 KB, no follow-up unless you opt in.</p>
+
+      <form class="gate-form" id="gate-form" action="https://formspree.io/f/xdayqzkj" method="POST" novalidate>
+        <input type="email" name="email" id="gate-email" required autocomplete="email" placeholder="you@firm.com" aria-label="Email address" />
+        <button class="btn" type="submit" id="gate-submit">Send me the link &rarr;</button>
+        <input type="hidden" name="_subject" value="DCF Template download request" />
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+      </form>
+      <p class="gate-fineprint">No spam. Just the file. <a href="disclaimer.html">Disclaimer</a>.</p>
+      <div class="gate-error" id="gate-error" role="alert"></div>
+
+      <div class="gate-thanks" id="gate-thanks" aria-live="polite">
+        <p style="margin:0 0 .25rem;font-family:var(--serif);font-size:1.15rem;">Thanks &mdash; here's the file.</p>
+        <div class="download-row">
+          <a class="btn" id="gate-download" href="assets/toolkit/ib-dcf-template.zip" download>Download the template (313 KB)</a>
+          <span class="meta">v4 &middot; Apr 2026 &middot; .zip</span>
+        </div>
+        <p class="gate-fineprint" style="margin-top:.85rem;">
+          If the download doesn't start, <a href="assets/toolkit/ib-dcf-template.zip" download id="gate-download-fallback">click here</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ WHAT'S INSIDE ============ -->
+    <h2>What's in the template</h2>
+    <ul class="feat-grid">
+      <li>
+        <h3>Full Two-Stage DCF</h3>
+        <p>10-year horizon, FCFF unlevered, discounted at WACC, EV-bridge to equity. IB-standard methodology.</p>
+      </li>
+      <li>
+        <h3>Three explicit scenarios</h3>
+        <p>Pessimistic / Base / Optimistic with cycle-aware path overrides for cyclical names (memory, energy, autos).</p>
+      </li>
+      <li>
+        <h3>Multiples valuation</h3>
+        <p>Peer-blended P/E, P/B, EV/Sales, EV/EBITDA, P/FCF on both peak-cycle and mid-cycle drivers. Mid-cycle median is the headline.</p>
+      </li>
+      <li class="highlight">
+        <h3>Reverse DCF Decomposition</h3>
+        <p>Quantifies what perpetual growth rate the market price implicitly requires. The bear-thesis kill shot for IC presentations.</p>
+      </li>
+      <li>
+        <h3>Sensitivity tables</h3>
+        <p>WACC &times; Terminal Growth and EBIT Margin &times; CapEx %. Instant view of your model's risk surface.</p>
+      </li>
+      <li>
+        <h3>Driver Sensitivity tornado</h3>
+        <p>Every key driver mapped to a live workbook cell. Touch one input, see every downstream impact.</p>
+      </li>
+      <li>
+        <h3>WACC build</h3>
+        <p>Damodaran ERP, beta blend (3Y, 1Y, peer avg), WACC sanity gate (PASS/FAIL vs. terminal growth floor).</p>
+      </li>
+      <li>
+        <h3>Peer Comparison</h3>
+        <p>Target + 5 peers &times; 32 metrics with peer averages auto-computed. Auto-detects the right peer industry ratios.</p>
+      </li>
+      <li>
+        <h3>Live data via yfinance</h3>
+        <p>No manual data entry. IS, BS, CF, Estimates, peer financials all pulled automatically every refresh.</p>
+      </li>
+      <li>
+        <h3>Cover tab &mdash; IC-ready</h3>
+        <p>Rating, PT, thesis bullets, key model assumptions on a single page. Print-ready for committee.</p>
+      </li>
+      <li>
+        <h3>9 audits closed</h3>
+        <p>Math correctness, scenario consistency, hardcoded-literal sweep, magic-number elimination, FCFE&rarr;FCFF switch, sector-aware factors, target-history cross-check, NWC level semantic, reverse DCF.</p>
+      </li>
+      <li>
+        <h3>Sector-aware factors</h3>
+        <p>14 sector presets auto-tune CapEx and NWC mid-cycle factors. Memory/HBM at 0.75. Software at 1.00. Energy at 0.80. Or override.</p>
+      </li>
+    </ul>
+
+    <!-- ============ HOW TO USE IT ============ -->
+    <h2>How to use it</h2>
+    <ol class="steps">
+      <li>
+        <strong>Download &amp; unzip</strong>
+        <p>Drop your email above to reveal the download. Unzip <code>ib-dcf-template.zip</code> anywhere on your computer.</p>
+      </li>
+      <li>
+        <strong>Run setup</strong>
+        <p>Mac/Linux: <code>./setup.sh</code> &nbsp;&middot;&nbsp; Windows: double-click <code>setup.bat</code>. Installs Python dependencies (yfinance, openpyxl, pandas, jupyter).</p>
+      </li>
+      <li>
+        <strong>Open the notebook</strong>
+        <p>Run <code>jupyter notebook IB_DCF_Notebook.ipynb</code> and edit Cell 3 with your ticker, peers, rating, and scenarios.</p>
+      </li>
+      <li>
+        <strong>Run all cells</strong>
+        <p>Pipeline executes 9 numbered steps in ~60 seconds. Open <code>IB_DCF_Template.xlsm</code> in Excel &mdash; fully populated for your company.</p>
+      </li>
+    </ol>
+
+    <div class="req-box">
+      <h3>What you need</h3>
+      <ul>
+        <li>Python 3.10 or later (free &mdash; install from python.org)</li>
+        <li>Microsoft Excel or LibreOffice (to view the workbook with live formula recalc)</li>
+        <li>Internet connection (for the yfinance data pull &mdash; typically 30 seconds)</li>
+      </ul>
+    </div>
+
+    <!-- ============ FAQ ============ -->
+    <h2>FAQ</h2>
+    <div class="faq">
+
+      <details>
+        <summary>Is this really free?</summary>
+        <div>Yes. Free under MIT-equivalent terms &mdash; use it for school, work, personal investing. Built on open-source libraries (yfinance, openpyxl, pandas, jupyter). No paid data feeds required.</div>
+      </details>
+
+      <details>
+        <summary>Does this work for any ticker?</summary>
+        <div>Any public company yfinance covers &mdash; typically all US-listed equities and most major international tickers (NYSE, NASDAQ, LSE, TSE). For private companies or names yfinance doesn't track, the template handles missing data gracefully (visible "N/A" instead of silent magic numbers).</div>
+      </details>
+
+      <details>
+        <summary>Will this give me the same answer as a top-tier sell-side desk?</summary>
+        <div>It uses the same methodology (two-stage FCFF DCF, EV-bridge, peer-blended multiples, sector-aware mid-cycle factors). The answer depends on your assumptions in Cell 3 &mdash; growth path, scenario levers, CapEx normalization factor. The template is dynamic &mdash; change one input, the entire model recalculates.</div>
+      </details>
+
+      <details>
+        <summary>What's the Reverse DCF tab?</summary>
+        <div>It decomposes the market price into PV of explicit forecast + PV of reasonable terminal value + residual. The residual is what the market is paying for that fundamentals can't justify. The tab also reverse-solves for the perpetual growth rate the market price implies. For overvalued names, the implied growth often comes out 8&ndash;12% &mdash; mathematically impossible long-term. It's the most powerful slide for an UNDERWEIGHT pitch.</div>
+      </details>
+
+      <details>
+        <summary>I'm not technical. Is this hard to use?</summary>
+        <div>If you can install Python from python.org and double-click a setup script, you can run this template. The README walks through every step. Most users have it working in 5 minutes.</div>
+      </details>
+
+      <details>
+        <summary>Can I customize it?</summary>
+        <div>Yes. Every formula is in Excel and every Python module is open. Want a 7-year forecast? Edit <code>cff_forecast.py</code>. Want to add a new scenario? Edit Cell 3 of the notebook. Want to change the peer cohort? Edit Cell 3.</div>
+      </details>
+
+      <details>
+        <summary>Does it work on Mac?</summary>
+        <div>Yes. Tested on macOS, Windows, and Linux.</div>
+      </details>
+
+      <details>
+        <summary>How is this different from a free DCF spreadsheet on the internet?</summary>
+        <div>Most free templates are static &mdash; they have a hardcoded company and you manually overwrite cells. This is a dynamic pipeline &mdash; yfinance fetches live financials, the workbook formulas auto-rebuild for your ticker, and there are 9 separate audits that have eliminated silent magic numbers and broken references. It's been audited end-to-end like a production model.</div>
+      </details>
+
+    </div>
+
+    <!-- ============ FOOTER CTA ============ -->
+    <section class="footer-cta">
+      <h2>Ready to build a DCF in 60 seconds?</h2>
+      <p>Free download. Works on any public company.</p>
+      <a class="btn" href="#gate">Get the link &uarr;</a>
+    </section>
+
+    <p class="muted small" style="margin-top:1rem">
+      v4 &middot; Apr 2026 &middot; License: MIT-style (free use). For the
+      interactive web calculator, see the <a href="dcf.html">DCF Calculator</a>.
+      For other free templates, see the <a href="toolkit.html">toolkit</a>.
+    </p>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandonpleone@gmail.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/" rel="me noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/" rel="me noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=3" defer></script>
+
+  <!-- Email-gate handler — Formspree AJAX submit, persist with localStorage -->
+  <script>
+    (function () {
+      var form    = document.getElementById('gate-form');
+      var thanks  = document.getElementById('gate-thanks');
+      var errBox  = document.getElementById('gate-error');
+      var submit  = document.getElementById('gate-submit');
+      var dl      = document.getElementById('gate-download');
+      if (!form) return;
+
+      var STORAGE_KEY = 'bpleon-dcf-template-unlocked';
+
+      function showThanks() {
+        form.style.display = 'none';
+        thanks.classList.add('show');
+      }
+
+      function showError(msg) {
+        errBox.textContent = msg;
+        errBox.classList.add('show');
+      }
+
+      // If they already unlocked it on this device, skip the form
+      try {
+        if (localStorage.getItem(STORAGE_KEY) === '1') {
+          showThanks();
+        }
+      } catch (e) { /* localStorage unavailable — proceed normally */ }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        errBox.classList.remove('show');
+
+        var email = (document.getElementById('gate-email').value || '').trim();
+        if (!email || email.indexOf('@') === -1) {
+          showError('Please enter a valid email.');
+          return;
+        }
+
+        // Honeypot
+        if (form._gotcha && form._gotcha.value) return;
+
+        submit.disabled = true;
+        submit.textContent = 'Sending...';
+
+        var endpoint = form.getAttribute('action');
+        if (endpoint.indexOf('REPLACE_WITH_FORMSPREE_ID') !== -1) {
+          // Formspree not yet configured — let people through anyway so the page works,
+          // but log a console warning for the site owner.
+          console.warn('[gate] Formspree endpoint not configured. Showing download without sending.');
+          try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+          showThanks();
+          return;
+        }
+
+        fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        }).then(function (res) {
+          if (res.ok) {
+            try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+            showThanks();
+          } else {
+            return res.json().then(function (data) {
+              var msg = (data && data.errors && data.errors[0] && data.errors[0].message)
+                || 'Something went wrong. Try again, or email brandonpleone@gmail.com.';
+              throw new Error(msg);
+            });
+          }
+        }).catch(function (err) {
+          submit.disabled = false;
+          submit.textContent = 'Send me the link →';
+          showError(err.message || 'Network error. Try again.');
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
