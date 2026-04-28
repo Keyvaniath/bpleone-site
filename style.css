@@ -99,14 +99,121 @@ p  { margin: 0 0 1.1em; }
 .muted { color: var(--muted); }
 .small { font-size: .9rem; }
 
-/* Ticker tape (TradingView, mounted via script.js) ------------------------- */
+/* Ticker tape (custom, mounted via script.js) ----------------------------- */
 .ticker-wrap {
   border-bottom: 1px solid var(--rule);
   background: var(--bg-soft);
-  min-height: 46px;
+  height: 42px;
+  overflow: hidden;
+  position: relative;
 }
-.ticker-wrap .tradingview-widget-container { width: 100%; }
-.ticker-wrap iframe { display: block; }
+.ticker-track {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  white-space: nowrap;
+  animation: ticker-scroll 60s linear infinite;
+  will-change: transform;
+}
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  padding: 0 1.5rem;
+  font-size: .85rem;
+  font-variant-numeric: tabular-nums;
+  border-right: 1px solid var(--rule);
+}
+.ticker-label {
+  font-family: var(--sans);
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: .04em;
+}
+.ticker-price { color: var(--ink-soft); }
+.ticker-change {
+  font-size: .8rem;
+  font-weight: 500;
+}
+.ticker-change.up   { color: #1a6e3f; }
+.ticker-change.down { color: #b03a2e; }
+@media (prefers-color-scheme: dark) {
+  .ticker-change.up   { color: #5fbf83; }
+  .ticker-change.down { color: #e08775; }
+}
+
+/* Markets page: live price grid + watchlist links ------------------------- */
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: .75rem;
+  margin: 1rem 0 0;
+}
+.price-card {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  background: var(--bg);
+  font-variant-numeric: tabular-nums;
+}
+.price-card .pc-label {
+  font-family: var(--sans);
+  font-size: .75rem;
+  font-weight: 600;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 .35em;
+}
+.price-card .pc-price {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0 0 .15em;
+  letter-spacing: -0.01em;
+}
+.price-card .pc-change { font-size: .85rem; font-weight: 500; }
+.price-card .pc-change.up   { color: #1a6e3f; }
+.price-card .pc-change.down { color: #b03a2e; }
+@media (prefers-color-scheme: dark) {
+  .price-card .pc-change.up   { color: #5fbf83; }
+  .price-card .pc-change.down { color: #e08775; }
+}
+.price-card.placeholder .pc-price { color: var(--muted); }
+
+.watchlist {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  border-top: 1px solid var(--rule);
+}
+.watchlist li {
+  border-bottom: 1px solid var(--rule);
+}
+.watchlist a {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: .85rem 0;
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+.watchlist .wl-name {
+  font-family: var(--serif);
+  color: var(--ink);
+  font-size: 1rem;
+}
+.watchlist .wl-symbol {
+  color: var(--muted);
+  font-size: .85rem;
+  font-family: var(--sans);
+}
+.watchlist a:hover .wl-name { color: var(--accent); }
 
 /* Toolkit & Reports list --------------------------------------------------- */
 .tool-list {
