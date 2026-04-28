@@ -141,10 +141,8 @@ p  { margin: 0 0 1.1em; }
 }
 .ticker-change.up   { color: #1a6e3f; }
 .ticker-change.down { color: #b03a2e; }
-@media (prefers-color-scheme: dark) {
-  .ticker-change.up   { color: #5fbf83; }
-  .ticker-change.down { color: #e08775; }
-}
+[data-theme="dark"] .ticker-change.up   { color: #5fbf83; }
+[data-theme="dark"] .ticker-change.down { color: #e08775; }
 
 /* Markets page: live price grid + watchlist links ------------------------- */
 .price-grid {
@@ -187,10 +185,8 @@ p  { margin: 0 0 1.1em; }
 .price-card .pc-change { font-size: .85rem; font-weight: 500; }
 .price-card .pc-change.up   { color: #1a6e3f; }
 .price-card .pc-change.down { color: #b03a2e; }
-@media (prefers-color-scheme: dark) {
-  .price-card .pc-change.up   { color: #5fbf83; }
-  .price-card .pc-change.down { color: #e08775; }
-}
+[data-theme="dark"] .price-card .pc-change.up   { color: #5fbf83; }
+[data-theme="dark"] .price-card .pc-change.down { color: #e08775; }
 .price-card.placeholder .pc-price { color: var(--muted); }
 
 .watchlist {
