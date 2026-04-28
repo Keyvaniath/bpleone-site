@@ -1,9 +1,11 @@
 // =============================================================================
 // bpleon.com -- progressive enhancements
 // Self-hosted ticker tape using free, CORS-friendly APIs:
-//   - CoinGecko        (crypto + gold-backed token PAXG)
-//   - currency-api     (FX rates, free, no key, CORS via jsDelivr CDN)
-//                      https://github.com/fawazahmed0/exchange-api
+//   - CoinGecko             (crypto + gold-backed token PAXG)
+//   - currency-api          (FX rates, no key, CORS via jsDelivr CDN)
+//                           https://github.com/fawazahmed0/exchange-api
+//   - U.S. Treasury Fiscal  (daily yield curve, no key, CORS-enabled)
+//                           https://fiscaldata.treasury.gov/api-documentation/
 // (Replaced Frankfurter on 2026-04-28 -- they dropped CORS on api.frankfurter.app.)
 // No third-party widgets, no domain restrictions, no API keys.
 // Falls back gracefully if any API call fails.
@@ -19,19 +21,20 @@
   if (!mount) return;
 
   // --- Symbols ------------------------------------------------------------
-  // Edit these two arrays to change what scrolls in the ticker.
+  // Edit these arrays to change what scrolls in the ticker.
   var CRYPTO = [
-    { id: 'bitcoin',     label: 'BTC' },
-    { id: 'ethereum',    label: 'ETH' },
-    { id: 'solana',      label: 'SOL' },
-    { id: 'ripple',      label: 'XRP' },
-    { id: 'cardano',     label: 'ADA' },
-    { id: 'dogecoin',    label: 'DOGE' },
-    { id: 'avalanche-2', label: 'AVAX' },
-    { id: 'chainlink',   label: 'LINK' },
-    { id: 'pax-gold',    label: 'GOLD' }   // PAXG -- 1 token = 1 oz gold
+    { id: 'bitcoin',  label: 'BTC' },
+    { id: 'ethereum', label: 'ETH' },
+    { id: 'solana',   label: 'SOL' },
+    { id: 'pax-gold', label: 'GOLD' }   // PAXG -- 1 token = 1 oz gold
   ];
-  var FX = ['EUR', 'GBP', 'JPY', 'CNY', 'CAD', 'AUD', 'CHF', 'MXN', 'INR'];
+  var FX = ['EUR', 'GBP', 'JPY'];
+
+  // U.S. Treasury yield curve maturities to show. Field names match the
+  // Fiscal Data API columns (e.g. bc_10year, bc_2year, bc_30year, bc_3month).
+  var YIELDS = [
+    { field: 'bc_10year', label: '10Y' }
+  ];
 
   // --- Formatting ---------------------------------------------------------
   function fmtPrice(p) {
@@ -99,6 +102,10 @@
                 cryptoIds + '&vs_currencies=usd&include_24hr_change=true';
     // currency-api -- USD as the base; lowercase ISO codes in the response.
     var fxUrl = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json';
+    // U.S. Treasury Fiscal Data -- daily yield curve, latest record only.
+    var trUrl = 'https://api.fiscaldata.treasury.gov/services/api/fiscal_service/v2/' +
+                'accounting/od/daily_treasury_yield_curve_rates' +
+                '?sort=-record_date&page[number]=1&page[size]=1';
 
     var cgPromise = fetch(cgUrl)
       .then(function (r) {
@@ -120,10 +127,21 @@
         return null;
       });
 
-    Promise.all([cgPromise, fxPromise]).then(function (results) {
-      var cg = results[0], fx = results[1];
+    var trPromise = fetch(trUrl)
+      .then(function (r) {
+        console.log('[ticker] Treasury response: HTTP ' + r.status);
+        return r.ok ? r.json() : null;
+      })
+      .catch(function (e) {
+        console.warn('[ticker] Treasury fetch failed:', e && e.message);
+        return null;
+      });
+
+    Promise.all([cgPromise, fxPromise, trPromise]).then(function (results) {
+      var cg = results[0], fx = results[1], tr = results[2];
       console.log('[ticker] CoinGecko data:', cg);
       console.log('[ticker] currency-api data:', fx);
+      console.log('[ticker] Treasury data:', tr);
 
       if (cg) {
         CRYPTO.forEach(function (c) {
@@ -136,6 +154,21 @@
         });
       } else {
         console.warn('[ticker] no CoinGecko payload');
+      }
+
+      // Treasury yields render between crypto and FX -- standard ticker order.
+      if (tr && tr.data && tr.data[0]) {
+        var rec = tr.data[0];
+        YIELDS.forEach(function (y) {
+          var v = parseFloat(rec[y.field]);
+          if (isFinite(v)) {
+            items.push(item(y.label, v.toFixed(2) + '%', ''));
+          } else {
+            console.warn('[ticker] missing Treasury field ' + y.field);
+          }
+        });
+      } else {
+        console.warn('[ticker] no Treasury payload');
       }
 
       if (fx && fx.usd) {
@@ -162,6 +195,6 @@
   setInterval(fetchAll, 60 * 1000);   // refresh every 60 seconds
 
   // Expose for /markets to reuse the same fetched data.
-  window.__bpleon_ticker = { CRYPTO: CRYPTO, FX: FX };
+  window.__bpleon_ticker = { CRYPTO: CRYPTO, FX: FX, YIELDS: YIELDS };
 
 })();
