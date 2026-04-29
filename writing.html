@@ -7,19 +7,87 @@
   <meta name="color-scheme" content="light only" />
   <meta name="theme-color" content="#fbf7ef" />
   <meta name="supported-color-schemes" content="light" />
-  <meta name="description" content="Essays and research notes by Brandon Leon." />
+  <meta name="description" content="Long-form equity research and notes by Brandon Leon. Single-name pitches, sector primers, and methodology pieces on cyclicals — memory, semis, energy." />
   <link rel="canonical" href="https://bpleon.com/writing.html" />
   <link rel="alternate" type="application/rss+xml" title="Brandon Leon — Writing" href="feed.xml" />
   <meta property="og:title" content="Writing — Brandon Leon" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://bpleon.com/writing.html" />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
   <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
   <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4" />
+  <link rel="stylesheet" href="style.css?v=5" />
+  <style>
+    .writing-tag {
+      display: inline-block;
+      padding: .15rem .55rem;
+      border-radius: 999px;
+      font-family: var(--sans);
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      vertical-align: middle;
+      margin-left: .5rem;
+      position: relative;
+      top: -.18em;
+      background: var(--accent);
+      color: #fff;
+    }
+    .writing-section-head {
+      margin: 2.5rem 0 .75rem;
+      padding-bottom: .55rem;
+      border-bottom: 2px solid var(--ink);
+      font-family: var(--sans);
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .writing-index {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .writing-index li {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+    .writing-index li:last-child { border-bottom: none; }
+    .writing-index time {
+      display: block;
+      font-family: var(--sans);
+      font-size: .8rem;
+      letter-spacing: .08em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: .35em;
+    }
+    .writing-index h2 {
+      margin: 0 0 .35em;
+      font-size: 1.4rem;
+      font-family: var(--serif);
+    }
+    .writing-index p {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+    .writing-empty-state {
+      padding: 1.75rem 2rem;
+      background: var(--bg-soft);
+      border-radius: 12px;
+      border-left: 3px solid var(--accent-2);
+      margin: 1rem 0 2rem;
+    }
+    .writing-empty-state p { margin: 0; color: var(--ink-soft); }
+    .writing-empty-state strong { font-family: var(--serif); }
+  </style>
 </head>
 <body style="background:#fbf7ef;color:#1c1a16;">
   <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
@@ -38,41 +106,81 @@
   <main class="prose">
     <header class="page-head">
       <p class="eyebrow">Writing</p>
-      <h1>Notes, essays, the occasional rant.</h1>
+      <h1>Notes on what the market is pricing in.</h1>
       <p class="lede">
-        New posts go out on <a href="https://YOURNAME.substack.com">Substack</a>
-        and are mirrored here. Subscribe at the bottom of the page.
+        Long-form pieces land on bpleon.com first, then on
+        <a href="https://bpleon.substack.com" rel="noopener">Substack</a>
+        as a newsletter. Single-name pitches, sector primers, and
+        methodology notes &mdash; mostly on cyclicals where the
+        through-cycle work is interesting and the price often disagrees
+        with reality.
       </p>
     </header>
 
+    <h2 class="writing-section-head">Recent</h2>
+    <div class="writing-empty-state">
+      <p><strong>Nothing published yet.</strong> First piece lands Q2 2026 &mdash; a through-cycle long on a memory name with a cyclical comp. Subscribe below to get it the day it ships.</p>
+    </div>
+
+    <h2 class="writing-section-head">Forthcoming</h2>
     <ol class="writing-index">
-      <li id="post-1">
-        <a class="post" href="https://YOURNAME.substack.com/p/welcome">
-          <time datetime="2026-04-25">Apr 25, 2026</time>
-          <h2>Welcome &mdash; what this site is for</h2>
-          <p>A short note on why I'm writing here, what to expect, and how often.</p>
-        </a>
+      <li id="mu-through-cycle">
+        <article>
+          <time>Target: Q2 2026</time>
+          <h2>MU &mdash; Through-cycle long <span class="writing-tag">Forthcoming</span></h2>
+          <p>
+            Single-name pitch: HBM contribution to the next cycle peak,
+            mid-cycle EBIT margin normalisation, what today's price
+            implicitly requires via reverse-DCF, and the bear-case kill
+            shot for anyone underweighting the name.
+          </p>
+        </article>
       </li>
-      <li id="post-2">
-        <a class="post" href="#">
-          <time>Coming soon</time>
-          <h2>Notes on reading a 10-K like you mean it</h2>
-          <p>The footnotes nobody reads, the line items that actually move the story, and a checklist I've built up over the years.</p>
-        </a>
+      <li id="energy-tier-list">
+        <article>
+          <time>Target: Q2 2026</time>
+          <h2>Integrated oil &mdash; capital-allocation tier list <span class="writing-tag">Forthcoming</span></h2>
+          <p>
+            XOM, CVX, COP, SHEL, BP ranked on through-cycle capital
+            allocation discipline. Buybacks vs. project IRRs, who's
+            being rewarded for promises and who's actually earned it.
+          </p>
+        </article>
+      </li>
+      <li id="reading-10k">
+        <article>
+          <time>Forthcoming</time>
+          <h2>Notes on reading a 10-K like you mean it <span class="writing-tag">Forthcoming</span></h2>
+          <p>
+            A methodology piece. The footnotes nobody reads, the line
+            items that actually move the story, and the checklist I've
+            built up working on cyclicals.
+          </p>
+        </article>
       </li>
     </ol>
 
+    <p style="margin-top:2rem;">
+      For the methodology that produces these &mdash; the workbook,
+      the pipeline, the audits &mdash; see the
+      <a href="dcf-template.html">DCF template</a>. For coverage at a
+      glance, see <a href="projects.html">/projects</a>.
+    </p>
+
     <section class="subscribe">
       <h2>Subscribe</h2>
-      <p>Get new posts in your inbox. Replace YOURNAME below with your Substack handle once you've created it.</p>
+      <p>Get new posts in your inbox when they go out. No spam, unsubscribe any time.</p>
       <iframe
-        src="https://YOURNAME.substack.com/embed"
-        title="Subscribe"
+        src="https://bpleon.substack.com/embed"
+        title="Subscribe to Brandon Leon on Substack"
         width="100%"
         height="150"
         style="border:1px solid var(--rule); border-radius:8px; background:var(--bg);"
         frameborder="0"
         scrolling="no"></iframe>
+      <p class="subscribe-fallback">
+        Or subscribe directly: <a href="https://bpleon.substack.com" rel="noopener">bpleon.substack.com</a>.
+      </p>
     </section>
   </main>
 
@@ -84,12 +192,11 @@
         <li><a href="disclaimer.html">Disclaimer</a></li>
         <li><a href="mailto:brandonpleone@gmail.com">Email</a></li>
         <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
-        <li><a href="https://github.com/" rel="me noopener">GitHub</a></li>
-        <li><a href="https://x.com/" rel="me noopener">X</a></li>
+        <li><a href="https://github.com/Keyvaniath" rel="me noopener">GitHub</a></li>
       </ul>
     </div>
   </footer>
 
-  <script src="script.js?v=4" defer></script>
+  <script src="script.js?v=5" defer></script>
 </body>
 </html>
