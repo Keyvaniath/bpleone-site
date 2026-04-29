@@ -37,6 +37,7 @@
   //   'index' -> 8,456.78 with percent change (no $ -- index points)
   var INDEXES = [
     { sym: '^TNX',   label: '10Y',    fmt: 'yield' },   // 10-Year Treasury
+    { sym: '^VIX',   label: 'VIX',    fmt: 'index' },   // CBOE Volatility Index
     { sym: 'SPY',    label: 'SPY',    fmt: 'price' },   // S&P 500 ETF
     { sym: 'QQQ',    label: 'QQQ',    fmt: 'price' },   // Nasdaq-100 ETF
     { sym: 'IWV',    label: 'IWV',    fmt: 'price' },   // Russell 3000 ETF
