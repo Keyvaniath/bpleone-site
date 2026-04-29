@@ -82,6 +82,25 @@
       font-size: .9rem;
     }
     .gate-error.show { display: block; }
+    .gate-consent {
+      display: flex;
+      gap: .55rem;
+      align-items: flex-start;
+      margin: .35rem 0 .15rem;
+      color: rgba(255,255,255,0.92);
+      font-size: .9rem;
+      line-height: 1.45;
+      cursor: pointer;
+      user-select: none;
+    }
+    .gate-consent input[type="checkbox"] {
+      margin-top: .25rem;
+      flex-shrink: 0;
+      accent-color: #fff;
+      width: 1rem;
+      height: 1rem;
+      cursor: pointer;
+    }
     @media (max-width: 600px) {
       .gate-form { grid-template-columns: 1fr; }
     }
@@ -247,7 +266,11 @@
         <input type="hidden" name="_subject" value="DCF Template download request" />
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
       </form>
-      <p class="gate-fineprint">No spam. Just the file. <a href="disclaimer.html">Disclaimer</a>.</p>
+      <label class="gate-consent">
+        <input type="checkbox" name="subscribe" value="yes" form="gate-form" id="gate-subscribe" />
+        <span>Also send me Brandon's newsletter when there's a new report or template (occasional, no spam).</span>
+      </label>
+      <p class="gate-fineprint">Just the file by default. <a href="disclaimer.html">Disclaimer</a>.</p>
       <div class="gate-error" id="gate-error" role="alert"></div>
 
       <div class="gate-thanks" id="gate-thanks" aria-live="polite">

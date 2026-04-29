@@ -110,6 +110,18 @@ p  { margin: 0 0 1.1em; }
   height: 42px;
   overflow: hidden;
   position: relative;
+  cursor: grab;
+  /* Hint to the reader that the strip is interactive. */
+  touch-action: pan-y;
+}
+.ticker-wrap:hover .ticker-track,
+.ticker-wrap.dragging .ticker-track {
+  /* Pause the marquee while the cursor is over it (read or drag in peace). */
+  animation-play-state: paused;
+}
+.ticker-wrap.dragging {
+  cursor: grabbing;
+  user-select: none;
 }
 .ticker-track {
   display: inline-flex;
@@ -131,6 +143,19 @@ p  { margin: 0 0 1.1em; }
   font-size: .85rem;
   font-variant-numeric: tabular-nums;
   border-right: 1px solid var(--rule);
+  /* Keep <a> looking like the text it replaced -- no underline, inherit color. */
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color .15s ease;
+}
+a.ticker-item:hover,
+a.ticker-item:focus-visible {
+  background-color: var(--bg);
+  outline: none;
+}
+.ticker-wrap.dragging .ticker-item {
+  cursor: grabbing;
 }
 .ticker-label {
   font-family: var(--sans);
@@ -916,6 +941,31 @@ main.prose.center {
 .site-footer {
   border-top: 1px solid var(--rule);
   margin-top: 4rem;
+}
+/* Subscribe CTA injected by script.js into every page's footer. */
+.footer-subscribe {
+  max-width: var(--maxw-wide);
+  margin: 0 auto;
+  padding: 1.5rem var(--gutter) .25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+.footer-subscribe-prompt {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--ink-soft);
+}
+.footer-subscribe-btn {
+  padding: .5rem 1.1rem;
+  font-size: .9rem;
+}
+@media (max-width: 560px) {
+  .footer-subscribe { flex-direction: column; align-items: flex-start; gap: .75rem; }
 }
 .footer-inner {
   max-width: var(--maxw-wide);
