@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320" width="600" height="320">
+  <title>Brandon Leon — Stacked Lockup with Tagline</title>
+  <g transform="translate(220,40)">
+    <rect x="0" y="0" width="160" height="160" fill="#1A1714"/>
+    <g fill="#F1EFE8" transform="translate(80,80) scale(0.69)">
+      <rect x="-58" y="-65" width="18" height="130"/>
+      <path d="M -40 -65 L -16 -65 A 32 32 0 0 1 -16 -1 L -40 -1 Z M -40 -47 L -20 -47 A 14 14 0 0 1 -20 -19 L -40 -19 Z"/>
+      <path d="M -40 -1 L -8 -1 A 33 33 0 0 1 -8 65 L -40 65 Z M -40 17 L -12 17 A 15 15 0 0 1 -12 47 L -40 47 Z"/>
+      <rect x="14" y="-65" width="18" height="113"/>
+      <rect x="14" y="48" width="56" height="17"/>
+    </g>
+  </g>
+  <text x="300" y="240" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="32" fill="#1A1714">Brandon Leon</text>
+  <text x="300" y="278" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="16" font-style="italic" fill="#5F5E5A">Listen closely. Think clearly. Allocate accordingly.</text>
+</svg>

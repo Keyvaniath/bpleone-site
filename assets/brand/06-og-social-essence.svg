@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <title>Brandon Leon — Social Image (Essence Slogan)</title>
+  <rect width="1200" height="630" fill="#1A1714"/>
+  <g transform="translate(140,315)">
+    <g fill="#F1EFE8">
+      <rect x="-58" y="-65" width="18" height="130"/>
+      <path d="M -40 -65 L -16 -65 A 32 32 0 0 1 -16 -1 L -40 -1 Z M -40 -47 L -20 -47 A 14 14 0 0 1 -20 -19 L -40 -19 Z"/>
+      <path d="M -40 -1 L -8 -1 A 33 33 0 0 1 -8 65 L -40 65 Z M -40 17 L -12 17 A 15 15 0 0 1 -12 47 L -40 47 Z"/>
+      <rect x="14" y="-65" width="18" height="113"/>
+      <rect x="14" y="48" width="56" height="17"/>
+    </g>
+  </g>
+  <text x="360" y="300" font-family="Georgia, 'Times New Roman', serif" font-size="88" fill="#F1EFE8">Brandon Leon</text>
+  <text x="360" y="380" font-family="Georgia, 'Times New Roman', serif" font-size="44" font-style="italic" fill="#A89886">Where listening meets allocation.</text>
+  <rect x="360" y="430" width="120" height="4" fill="#C45D2E"/>
+  <text x="360" y="490" font-family="-apple-system, system-ui, sans-serif" font-size="26" fill="#A89886" letter-spacing="6">BPLEON.COM</text>
+</svg>

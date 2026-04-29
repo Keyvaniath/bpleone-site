@@ -548,13 +548,21 @@ a.ticker-item:focus-visible {
   border-bottom: 1px solid var(--rule);
 }
 .brand {
-  font-family: var(--serif);
-  font-size: 1.15rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
+  line-height: 0;
+  flex-shrink: 0;
 }
-.brand:hover { color: var(--ink); text-decoration: none; }
+.brand img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+.brand:hover { text-decoration: none; opacity: .85; }
+@media (max-width: 560px) {
+  .brand img { height: 30px; }
+}
 .site-nav {
   display: flex;
   gap: 1.4rem;
