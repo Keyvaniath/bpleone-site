@@ -442,7 +442,32 @@
       });
   }
 
+  // Subtle skeleton card while waiting for the first Worker response. Replaces
+  // the bare "Loading watchlist…" text with a card-shaped pulse so the layout
+  // doesn't jump when prices arrive.
+  function paintWatchlistSkeleton() {
+    var grid = document.getElementById('watchlist-grid');
+    if (!grid) return;
+    var n = Math.max(WATCHLIST.length, 1);
+    var cards = '';
+    for (var i = 0; i < n; i++) {
+      cards +=
+        '<div class="watch-card watch-card-loading" aria-busy="true">' +
+          '<div class="watch-card-head">' +
+            '<span class="skel" style="width:65%;height:1.05rem"></span>' +
+          '</div>' +
+          '<div class="watch-price-row">' +
+            '<span class="skel skel-line tall" style="width:38%;margin:0"></span>' +
+          '</div>' +
+          '<span class="skel skel-line" style="width:90%"></span>' +
+          '<span class="skel skel-line" style="width:55%"></span>' +
+        '</div>';
+    }
+    grid.innerHTML = cards;
+  }
+
   if (document.getElementById('watchlist-grid')) {
+    paintWatchlistSkeleton();
     renderWatchlist();
     setInterval(renderWatchlist, 60 * 1000);
   }
@@ -451,7 +476,8 @@
   // World markets open/closed board
   // -------------------------------------------------------------------------
   // Schedule is in each market's local time -- DST is handled automatically by
-  // Intl.DateTimeFormat with the IANA timezone name. Lunch breaks ignored.
+  // Intl.DateTimeFormat with the IANA timezone name. Lunch breaks ARE modeled
+  // for Tokyo and Hong Kong (the two majors that run an explicit midday halt).
   // Holidays not modeled -- treat as approximate near major holidays.
   // =========================================================================
   var MARKETS = [
@@ -459,8 +485,8 @@
     { name: 'Toronto',    code: 'TSX',  tz: 'America/Toronto',    open: '09:30', close: '16:00' },
     { name: 'London',     code: 'LSE',  tz: 'Europe/London',      open: '08:00', close: '16:30' },
     { name: 'Frankfurt',  code: 'XETR', tz: 'Europe/Berlin',      open: '09:00', close: '17:30' },
-    { name: 'Tokyo',      code: 'TSE',  tz: 'Asia/Tokyo',         open: '09:00', close: '15:00' },
-    { name: 'Hong Kong',  code: 'HKEX', tz: 'Asia/Hong_Kong',     open: '09:30', close: '16:00' },
+    { name: 'Tokyo',      code: 'TSE',  tz: 'Asia/Tokyo',         open: '09:00', close: '15:00', lunch: ['11:30', '12:30'] },
+    { name: 'Hong Kong',  code: 'HKEX', tz: 'Asia/Hong_Kong',     open: '09:30', close: '16:00', lunch: ['12:00', '13:00'] },
     { name: 'Shanghai',   code: 'SSE',  tz: 'Asia/Shanghai',      open: '09:30', close: '15:00' },
     { name: 'Sydney',     code: 'ASX',  tz: 'Australia/Sydney',   open: '10:00', close: '16:00' }
   ];
@@ -489,7 +515,29 @@
     var z = getZonedParts(when, market.tz);
     if (z.dayOfWeek === 0 || z.dayOfWeek === 6) return false;
     var nowMin = z.hour * 60 + z.minute;
-    return nowMin >= toMin(market.open) && nowMin < toMin(market.close);
+    if (nowMin < toMin(market.open) || nowMin >= toMin(market.close)) return false;
+    // Skip the midday lunch halt (Tokyo, Hong Kong).
+    if (market.lunch) {
+      var lStart = toMin(market.lunch[0]);
+      var lEnd   = toMin(market.lunch[1]);
+      if (nowMin >= lStart && nowMin < lEnd) return false;
+    }
+    return true;
+  }
+
+  // Returns the lunch-end time (e.g. '12:30') when the market is currently
+  // halted for lunch on a normal trading day; '' otherwise. Lets the UI
+  // distinguish "ON BREAK" from "CLOSED for the day".
+  function onLunchBreak(market, when) {
+    if (!market.lunch) return '';
+    var z = getZonedParts(when, market.tz);
+    if (z.dayOfWeek === 0 || z.dayOfWeek === 6) return '';
+    var nowMin = z.hour * 60 + z.minute;
+    if (nowMin < toMin(market.open) || nowMin >= toMin(market.close)) return '';
+    var lStart = toMin(market.lunch[0]);
+    var lEnd   = toMin(market.lunch[1]);
+    if (nowMin >= lStart && nowMin < lEnd) return market.lunch[1];
+    return '';
   }
 
   function nextOpen(market, from) {
@@ -533,12 +581,19 @@
 
     grid.innerHTML = MARKETS.map(function (m) {
       var open = isOpen(m, now);
-      var statusEl, bottomEl;
+      var lunchEndLocal = onLunchBreak(m, now);
+      var statusEl, bottomEl, cardClass;
       if (open) {
-        var todayCloseLocal = m.close;  // already shown in market local time below
         statusEl = '<span class="mkt-dot mkt-dot-open" aria-hidden="true"></span>' +
                    '<span class="mkt-status mkt-status-open">OPEN</span>';
-        bottomEl = '<p class="muted small">Closes ' + todayCloseLocal + ' local</p>';
+        bottomEl = '<p class="muted small">Closes ' + m.close + ' local</p>';
+        cardClass = 'mkt-card-open';
+      } else if (lunchEndLocal) {
+        // Within trading hours but on the lunch halt -- show as a distinct state.
+        statusEl = '<span class="mkt-dot mkt-dot-lunch" aria-hidden="true"></span>' +
+                   '<span class="mkt-status mkt-status-lunch">ON BREAK</span>';
+        bottomEl = '<p class="muted small">Reopens ' + lunchEndLocal + ' local</p>';
+        cardClass = 'mkt-card-lunch';
       } else {
         var nextO = nextOpen(m, now);
         statusEl = '<span class="mkt-dot mkt-dot-closed" aria-hidden="true"></span>' +
@@ -546,9 +601,10 @@
         bottomEl = '<p class="muted small">' +
                    (nextO ? fmtNextOpenLabel(nextO, now) : 'Opens next session') +
                    '</p>';
+        cardClass = 'mkt-card-closed';
       }
       return (
-        '<div class="mkt-card ' + (open ? 'mkt-card-open' : 'mkt-card-closed') + '">' +
+        '<div class="mkt-card ' + cardClass + '">' +
           '<div class="mkt-head">' +
             '<span class="mkt-name">' + m.name + '</span>' +
             '<span class="mkt-code">' + m.code + '</span>' +
@@ -560,7 +616,33 @@
     }).join('');
   }
 
+  // Same idea for the world-markets board: paint 8 placeholder cards
+  // immediately so the section reserves its height before renderMarketsStatus
+  // runs (which is fast since it makes no network calls, but it still beats
+  // a bare "Loading markets…" line).
+  function paintMarketsStatusSkeleton() {
+    var grid = document.getElementById('markets-status-grid');
+    if (!grid) return;
+    var cards = '';
+    for (var i = 0; i < MARKETS.length; i++) {
+      cards +=
+        '<div class="mkt-card mkt-card-loading" aria-busy="true">' +
+          '<div class="mkt-head">' +
+            '<span class="skel" style="width:55%;height:.95rem"></span>' +
+            '<span class="skel" style="width:22%;height:.7rem"></span>' +
+          '</div>' +
+          '<div class="mkt-status-row">' +
+            '<span class="skel" style="width:8px;height:8px;border-radius:50%"></span>' +
+            '<span class="skel" style="width:45%;height:.85rem"></span>' +
+          '</div>' +
+          '<span class="skel skel-line" style="width:75%"></span>' +
+        '</div>';
+    }
+    grid.innerHTML = cards;
+  }
+
   if (document.getElementById('markets-status-grid')) {
+    paintMarketsStatusSkeleton();
     renderMarketsStatus();
     setInterval(renderMarketsStatus, 60 * 1000);
   }

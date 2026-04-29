@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4" />
+  <link rel="stylesheet" href="style.css?v=5" />
 </head>
 <body style="background:#fbf7ef;color:#1c1a16;">
   <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
@@ -126,13 +126,12 @@
         <li><a href="disclaimer.html">Disclaimer</a></li>
         <li><a href="mailto:brandonpleone@gmail.com">Email</a></li>
         <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
-        <li><a href="https://github.com/" rel="me noopener">GitHub</a></li>
-        <li><a href="https://x.com/" rel="me noopener">X</a></li>
+        <li><a href="https://github.com/Keyvaniath" rel="me noopener">GitHub</a></li>
       </ul>
     </div>
   </footer>
 
-  <script src="script.js?v=4" defer></script>
+  <script src="script.js?v=5" defer></script>
   <script>
   // =========================================================================
   // Markets page: live crypto + FX + equities + treasuries + commodities.
@@ -243,6 +242,18 @@
         '</div>'
       );
     }
+    // Skeleton variant -- shimmering bars instead of "Loading…" text. Used
+    // only on the very first paint; failed/missing data falls back to the
+    // plain placeholder("—") above so users see something is wrong.
+    function loadingCard(label) {
+      return (
+        '<div class="price-card placeholder" aria-busy="true">' +
+          '<p class="pc-label">' + label + '</p>' +
+          '<span class="skel skel-line tall" style="width:62%;margin:.1rem 0 .35rem"></span>' +
+          '<span class="skel skel-line" style="width:38%;margin:0"></span>' +
+        '</div>'
+      );
+    }
 
     function yahooLink(sym) {
       return 'https://finance.yahoo.com/quote/' + encodeURIComponent(sym) + '/';
@@ -257,11 +268,11 @@
       commodities: document.getElementById('commodities-grid')
     };
     function paintLoading() {
-      if (mounts.crypto)      mounts.crypto.innerHTML      = CRYPTO.map(function (c) { return placeholder(c.label, 'Loading…'); }).join('');
-      if (mounts.fx)          mounts.fx.innerHTML          = FX.map(function (f) { return placeholder(f.label, 'Loading…'); }).join('');
-      if (mounts.equities)    mounts.equities.innerHTML    = EQUITIES.map(function (e) { return placeholder(e.label, 'Loading…'); }).join('');
-      if (mounts.rates)       mounts.rates.innerHTML       = RATES.map(function (r) { return placeholder(r.label, 'Loading…'); }).join('');
-      if (mounts.commodities) mounts.commodities.innerHTML = COMMODITIES.map(function (c) { return placeholder(c.label, 'Loading…'); }).join('');
+      if (mounts.crypto)      mounts.crypto.innerHTML      = CRYPTO.map(function (c) { return loadingCard(c.label); }).join('');
+      if (mounts.fx)          mounts.fx.innerHTML          = FX.map(function (f) { return loadingCard(f.label); }).join('');
+      if (mounts.equities)    mounts.equities.innerHTML    = EQUITIES.map(function (e) { return loadingCard(e.label); }).join('');
+      if (mounts.rates)       mounts.rates.innerHTML       = RATES.map(function (r) { return loadingCard(r.label); }).join('');
+      if (mounts.commodities) mounts.commodities.innerHTML = COMMODITIES.map(function (c) { return loadingCard(c.label); }).join('');
     }
     paintLoading();
 

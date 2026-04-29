@@ -1154,6 +1154,36 @@ main.prose.center {
 [data-theme="dark"] .mkt-status-closed { color: #e08775; }
 .mkt-card p { margin: 0; }
 
+/* World markets ON BREAK state (Tokyo / Hong Kong midday halt) -- amber */
+.mkt-card-lunch { opacity: .92; }
+.mkt-dot-lunch  { background: #c98a35; }
+.mkt-status-lunch { color: #c98a35; }
+[data-theme="dark"] .mkt-dot-lunch    { background: #e0a560; }
+[data-theme="dark"] .mkt-status-lunch { color: #e0a560; }
+
+/* Skeleton loading bars (perceived-speed UX for live data) ---------------
+   Use .skel for any standalone shimmering bar. .skel-line is a block bar
+   sized to look like a line of text; .tall makes it match the lede price
+   line in the watch / price cards. The pulse is intentionally slow and
+   subtle -- it should reassure, not distract. */
+@keyframes skel-pulse {
+  0%, 100% { opacity: .55; }
+  50%      { opacity: 1;   }
+}
+.skel {
+  display: inline-block;
+  background: var(--rule);
+  border-radius: 4px;
+  vertical-align: middle;
+  animation: skel-pulse 1.4s ease-in-out infinite;
+}
+.skel-line { display: block; height: .85rem; margin: .35rem 0; }
+.skel-line.tall { height: 1.35rem; }
+.watch-card-loading .watch-card-head,
+.mkt-card-loading .mkt-head { gap: .5rem; }
+.watch-card-loading,
+.mkt-card-loading { opacity: .85; }
+
 /* Selection / focus --------------------------------------------------------- */
 ::selection { background: var(--accent); color: #fff; }
 :focus-visible {
