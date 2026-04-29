@@ -4,17 +4,13 @@
 # Force the canonical host (no www)
 https://www.bpleon.com/* https://bpleon.com/:splat 301
 
-# Pretty URLs (optional — lets you link /about instead of /about.html)
-/about      /about.html      200
-/markets    /markets.html    200
-/toolkit    /toolkit.html    200
-/dcf        /dcf.html        200
-/dcf-template /dcf-template.html 200
-/reports    /reports.html    200
-/now        /now.html        200
-/disclaimer /disclaimer.html 200
-/projects   /projects.html   200
-/writing    /writing.html    200
-/contact    /contact.html    200
+# RSS / feed alias
 /feed       /feed.xml        200
 /rss        /feed.xml        200
+
+# NOTE: Pretty-URL rules like "/about /about.html 200" were removed
+# because Cloudflare Pages now auto-redirects /foo.html -> /foo
+# (canonical clean URLs), which collides with these rewrites and
+# causes ERR_TOO_MANY_REDIRECTS. Cloudflare Pages already serves
+# .html files at their clean-URL paths by default, so the rules
+# were redundant anyway.
