@@ -7,11 +7,12 @@
   <meta name="color-scheme" content="light only" />
   <meta name="theme-color" content="#fbf7ef" />
   <meta name="supported-color-schemes" content="light" />
-  <meta name="description" content="What I'm watching - live crypto and FX, plus a curated watchlist of equities, rates, and commodities." />
+  <meta name="description" content="Live markets dashboard — crypto, FX, US equities, treasury yields, and commodities, refreshed every minute." />
   <link rel="canonical" href="https://bpleon.com/markets.html" />
   <meta property="og:title" content="Markets — Brandon Leon" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://bpleon.com/markets.html" />
+  <meta property="og:description" content="Live markets dashboard — crypto, FX, US equities, treasury yields, and commodities." />
   <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
   <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
   <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
@@ -37,15 +38,16 @@
   <main class="prose wide">
     <header class="page-head">
       <p class="eyebrow">Markets</p>
-      <h1>What I'm watching.</h1>
+      <h1>Markets at a glance.</h1>
       <p class="lede">
-        A live snapshot of crypto and FX, plus a curated watchlist of
-        the equities, rates, and commodities that move my writing.
+        A live cross-asset dashboard &mdash; the crypto, FX, equities,
+        rates, and commodities I keep an eye on. Refreshes every minute.
       </p>
       <p class="muted small">
-        Crypto via CoinGecko &middot; FX via Frankfurter &middot;
-        click any equity / rate / commodity for a live chart on
-        Yahoo Finance.
+        Crypto via CoinGecko &middot; FX via currency-api &middot;
+        equities, rates, and commodities via Yahoo Finance, proxied
+        through Cloudflare Workers for CORS. Click any tile to open the
+        underlying source.
       </p>
     </header>
 
@@ -63,88 +65,25 @@
       <div id="fx-grid" class="price-grid"></div>
     </section>
 
-    <!-- ============== US EQUITIES (links) ============== -->
+    <!-- ============== US EQUITIES (live) ============== -->
     <section class="markets-section">
       <h2>US Equities</h2>
-      <p class="markets-note">Click any name for a live chart on Yahoo Finance.</p>
-      <ul class="watchlist">
-        <li><a href="https://finance.yahoo.com/quote/%5EGSPC" target="_blank" rel="noopener">
-          <span class="wl-name">S&amp;P 500</span>
-          <span class="wl-symbol">^GSPC &rarr;</span>
-        </a></li>
-        <li><a href="https://finance.yahoo.com/quote/%5EIXIC" target="_blank" rel="noopener">
-          <span class="wl-name">Nasdaq Composite</span>
-          <span class="wl-symbol">^IXIC &rarr;</span>
-        </a></li>
-        <li><a href="https://finance.yahoo.com/quote/%5EDJI" target="_blank" rel="noopener">
-          <span class="wl-name">Dow Jones Industrial</span>
-          <span class="wl-symbol">^DJI &rarr;</span>
-        </a></li>
-        <li><a href="https://finance.yahoo.com/quote/%5ERUT" target="_blank" rel="noopener">
-          <span class="wl-name">Russell 2000</span>
-          <span class="wl-symbol">^RUT &rarr;</span>
-        </a></li>
-        <li><a href="https://finance.yahoo.com/quote/%5EVIX" target="_blank" rel="noopener">
-          <span class="wl-name">VIX (volatility)</span>
-          <span class="wl-symbol">^VIX &rarr;</span>
-        </a></li>
-      </ul>
+      <p class="markets-note">Index levels, daily change. Tile links to Yahoo Finance.</p>
+      <div id="equities-grid" class="price-grid"></div>
     </section>
 
-    <!-- ============== TREASURIES (links) ============== -->
+    <!-- ============== TREASURIES (live) ============== -->
     <section class="markets-section">
       <h2>Treasuries</h2>
-      <p class="markets-note">Yields across the curve.</p>
-      <ul class="watchlist">
-        <li><a href="https://finance.yahoo.com/quote/%5EIRX" target="_blank" rel="noopener">
-          <span class="wl-name">13-week T-bill</span>
-          <span class="wl-symbol">^IRX &rarr;</span>
-        </a></li>
-        <li><a href="https://finance.yahoo.com/quote/%5EFVX" target="_blank" rel="noopener">
-          <span class="wl-name">5-year Treasury</span>
-          <span class="wl-symbol">^FVX &rarr;</span>
-        </a></li>
-        <li><a href="https://finance.yahoo.com/quote/%5ETNX" target="_blank" rel="noopener">
-          <span class="wl-name">10-year Treasury</span>
-          <span class="wl-symbol">^TNX &rarr;</span>
-        </a></li>
-        <li><a href="https://finance.yahoo.com/quote/%5ETYX" target="_blank" rel="noopener">
-          <span class="wl-name">30-year Treasury</span>
-          <span class="wl-symbol">^TYX &rarr;</span>
-        </a></li>
-      </ul>
+      <p class="markets-note">Yields across the curve, with day-over-day basis-point change.</p>
+      <div id="rates-grid" class="price-grid"></div>
     </section>
 
-    <!-- ============== COMMODITIES (links) ============== -->
+    <!-- ============== COMMODITIES (live) ============== -->
     <section class="markets-section">
       <h2>Commodities</h2>
-      <p class="markets-note">Energy and metals.</p>
-      <ul class="watchlist">
-        <li><a href="https://finance.yahoo.com/quote/CL%3DF" target="_blank" rel="noopener">
-          <span class="wl-name">WTI Crude Oil</span>
-          <span class="wl-symbol">CL=F &rarr;</span>
-        </a></li>
-        <li><a href="https://finance.yahoo.com/quote/BZ%3DF" target="_blank" rel="noopener">
-          <span class="wl-name">Brent Crude Oil</span>
-          <span class="wl-symbol">BZ=F &rarr;</span>
-        </a></li>
-        <li><a href="https://finance.yahoo.com/quote/NG%3DF" target="_blank" rel="noopener">
-          <span class="wl-name">Natural Gas</span>
-          <span class="wl-symbol">NG=F &rarr;</span>
-        </a></li>
-        <li><a href="https://finance.yahoo.com/quote/GC%3DF" target="_blank" rel="noopener">
-          <span class="wl-name">Gold</span>
-          <span class="wl-symbol">GC=F &rarr;</span>
-        </a></li>
-        <li><a href="https://finance.yahoo.com/quote/SI%3DF" target="_blank" rel="noopener">
-          <span class="wl-name">Silver</span>
-          <span class="wl-symbol">SI=F &rarr;</span>
-        </a></li>
-        <li><a href="https://finance.yahoo.com/quote/HG%3DF" target="_blank" rel="noopener">
-          <span class="wl-name">Copper</span>
-          <span class="wl-symbol">HG=F &rarr;</span>
-        </a></li>
-      </ul>
+      <p class="markets-note">Front-month futures &mdash; energy and metals.</p>
+      <div id="commodities-grid" class="price-grid"></div>
     </section>
 
     <!-- ============== ECONOMIC CALENDAR ============== -->
@@ -172,9 +111,10 @@
     </section>
 
     <p class="muted small" style="margin-top:2.5rem">
-      Live prices use free APIs (CoinGecko, Frankfurter). For deeper
-      charts, every link above opens the relevant page on Yahoo
-      Finance or its source.
+      Live prices use free APIs (CoinGecko for crypto, currency-api for
+      FX, Yahoo Finance via a self-hosted Cloudflare Worker for
+      everything else). Tiles link to the underlying source for deeper
+      charts.
     </p>
   </main>
 
@@ -195,52 +135,105 @@
   <script src="script.js?v=4" defer></script>
   <script>
   // =========================================================================
-  // Markets page: live crypto + FX grids, refreshed every 60 sec.
-  // Same APIs as the ticker tape (CoinGecko + Frankfurter), just rendered
-  // as cards instead of a scrolling line.
+  // Markets page: live crypto + FX + equities + treasuries + commodities.
+  //   - CoinGecko       crypto (USD prices + 24h change)
+  //   - currency-api    FX rates (no key, CORS via jsDelivr CDN)
+  //   - bpleon-quotes   Yahoo Finance proxy for everything else (CORS)
+  // Refreshes every 60 seconds. All cards are clickable links to source.
   // =========================================================================
   (function () {
+    var WORKER_URL = 'https://bpleon-quotes.brandonpleone.workers.dev/';
+
     var CRYPTO = [
-      { id: 'bitcoin',       label: 'BTC',  name: 'Bitcoin' },
-      { id: 'ethereum',      label: 'ETH',  name: 'Ether' },
-      { id: 'solana',        label: 'SOL',  name: 'Solana' },
-      { id: 'pax-gold',      label: 'GOLD', name: 'PAXG (1 oz gold)' }
-    ];
-    var FX = [
-      { code: 'EUR', label: 'USD/EUR', name: 'Euro' },
-      { code: 'GBP', label: 'USD/GBP', name: 'British Pound' },
-      { code: 'JPY', label: 'USD/JPY', name: 'Japanese Yen' },
-      { code: 'CNY', label: 'USD/CNY', name: 'Chinese Yuan' }
+      { id: 'bitcoin',  label: 'BTC',  name: 'Bitcoin',         link: 'https://www.coingecko.com/en/coins/bitcoin' },
+      { id: 'ethereum', label: 'ETH',  name: 'Ether',           link: 'https://www.coingecko.com/en/coins/ethereum' },
+      { id: 'solana',   label: 'SOL',  name: 'Solana',          link: 'https://www.coingecko.com/en/coins/solana' },
+      { id: 'pax-gold', label: 'GOLD', name: 'PAXG (1 oz gold)', link: 'https://www.coingecko.com/en/coins/pax-gold' }
     ];
 
-    function fmtPrice(p) {
+    var FX = [
+      { code: 'EUR', label: 'USD/EUR', name: 'Euro',           pair: 'EURUSD=X' },
+      { code: 'GBP', label: 'USD/GBP', name: 'British Pound',  pair: 'GBPUSD=X' },
+      { code: 'JPY', label: 'USD/JPY', name: 'Japanese Yen',   pair: 'USDJPY=X' },
+      { code: 'CNY', label: 'USD/CNY', name: 'Chinese Yuan',   pair: 'USDCNY=X' },
+      { code: 'CHF', label: 'USD/CHF', name: 'Swiss Franc',    pair: 'USDCHF=X' },
+      { code: 'CAD', label: 'USD/CAD', name: 'Canadian Dollar', pair: 'USDCAD=X' }
+    ];
+
+    var EQUITIES = [
+      { sym: '^GSPC', label: 'S&P 500',          name: '^GSPC', fmt: 'index' },
+      { sym: '^IXIC', label: 'Nasdaq Composite', name: '^IXIC', fmt: 'index' },
+      { sym: '^DJI',  label: 'Dow Jones',        name: '^DJI',  fmt: 'index' },
+      { sym: '^RUT',  label: 'Russell 2000',     name: '^RUT',  fmt: 'index' },
+      { sym: '^VIX',  label: 'VIX',              name: 'Volatility', fmt: 'index' }
+    ];
+
+    var RATES = [
+      { sym: '^IRX', label: '13-wk T-bill', name: '^IRX', fmt: 'yield' },
+      { sym: '^FVX', label: '5-yr Treasury', name: '^FVX', fmt: 'yield' },
+      { sym: '^TNX', label: '10-yr Treasury', name: '^TNX', fmt: 'yield' },
+      { sym: '^TYX', label: '30-yr Treasury', name: '^TYX', fmt: 'yield' }
+    ];
+
+    var COMMODITIES = [
+      { sym: 'CL=F', label: 'WTI Crude',  name: 'CL=F', fmt: 'price' },
+      { sym: 'BZ=F', label: 'Brent Crude', name: 'BZ=F', fmt: 'price' },
+      { sym: 'NG=F', label: 'Natural Gas', name: 'NG=F', fmt: 'price' },
+      { sym: 'GC=F', label: 'Gold',       name: 'GC=F', fmt: 'price' },
+      { sym: 'SI=F', label: 'Silver',     name: 'SI=F', fmt: 'price' },
+      { sym: 'HG=F', label: 'Copper',     name: 'HG=F', fmt: 'price' }
+    ];
+
+    // ----- Formatters -----
+    function fmtPriceUsd(p) {
       if (!isFinite(p)) return '—';
       if (p >= 1000) return '$' + Math.round(p).toLocaleString();
       if (p >= 1)    return '$' + p.toFixed(2);
       return '$' + p.toFixed(4);
     }
+    function fmtIndex(p) {
+      if (!isFinite(p)) return '—';
+      return p.toLocaleString(undefined, { maximumFractionDigits: 2 });
+    }
+    function fmtYield(p) {
+      if (!isFinite(p)) return '—';
+      return p.toFixed(2) + '%';
+    }
     function fmtPct(c) {
       if (!isFinite(c)) return '';
-      var sign = c >= 0 ? '+' : '';
-      return sign + c.toFixed(2) + '%';
+      return (c >= 0 ? '+' : '') + c.toFixed(2) + '%';
     }
-    function fmtFx(p, ccy) {
+    function fmtBp(c) {
+      // basis-point change for yields (1bp = 0.01%)
+      if (!isFinite(c)) return '';
+      var bp = Math.round(c * 100);
+      return (bp >= 0 ? '+' : '') + bp + 'bp';
+    }
+    function fmtFxRate(p, ccy) {
       if (!isFinite(p)) return '—';
       return p.toFixed(ccy === 'JPY' || ccy === 'CNY' ? 2 : 4);
     }
-    function card(label, name, price, change) {
+    function escapeAttr(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+    }
+
+    // ----- Card rendering -----
+    function card(opts) {
+      // opts: { label, name, price, change, link }
       var dirClass = '';
-      if (change && change.length) {
-        dirClass = (change.charAt(0) === '-') ? 'down' : 'up';
+      if (opts.change && opts.change.length) {
+        dirClass = (opts.change.charAt(0) === '-') ? 'down' : 'up';
       }
-      return (
-        '<div class="price-card">' +
-          '<p class="pc-label">' + label + '</p>' +
-          '<p class="pc-price">' + price + '</p>' +
-          (change ? '<p class="pc-change ' + dirClass + '">' + change + '</p>' : '') +
-          (name ? '<p class="muted small" style="margin:.25rem 0 0">' + name + '</p>' : '') +
-        '</div>'
-      );
+      var inner =
+        '<p class="pc-label">' + opts.label + '</p>' +
+        '<p class="pc-price">' + opts.price + '</p>' +
+        (opts.change ? '<p class="pc-change ' + dirClass + '">' + opts.change + '</p>' : '') +
+        (opts.name ? '<p class="muted small" style="margin:.25rem 0 0">' + opts.name + '</p>' : '');
+      if (opts.link) {
+        return '<a class="price-card price-card-link" href="' + escapeAttr(opts.link) +
+               '" target="_blank" rel="noopener">' + inner + '</a>';
+      }
+      return '<div class="price-card">' + inner + '</div>';
     }
     function placeholder(label, msg) {
       return (
@@ -251,34 +244,104 @@
       );
     }
 
-    var cryptoMount = document.getElementById('crypto-grid');
-    var fxMount     = document.getElementById('fx-grid');
-    if (cryptoMount) cryptoMount.innerHTML = CRYPTO.map(function (c) { return placeholder(c.label, 'Loading…'); }).join('');
-    if (fxMount)     fxMount.innerHTML     = FX.map(function (f) { return placeholder(f.label, 'Loading…'); }).join('');
+    function yahooLink(sym) {
+      return 'https://finance.yahoo.com/quote/' + encodeURIComponent(sym) + '/';
+    }
 
+    // ----- Mount points + initial placeholders -----
+    var mounts = {
+      crypto:      document.getElementById('crypto-grid'),
+      fx:          document.getElementById('fx-grid'),
+      equities:    document.getElementById('equities-grid'),
+      rates:       document.getElementById('rates-grid'),
+      commodities: document.getElementById('commodities-grid')
+    };
+    function paintLoading() {
+      if (mounts.crypto)      mounts.crypto.innerHTML      = CRYPTO.map(function (c) { return placeholder(c.label, 'Loading…'); }).join('');
+      if (mounts.fx)          mounts.fx.innerHTML          = FX.map(function (f) { return placeholder(f.label, 'Loading…'); }).join('');
+      if (mounts.equities)    mounts.equities.innerHTML    = EQUITIES.map(function (e) { return placeholder(e.label, 'Loading…'); }).join('');
+      if (mounts.rates)       mounts.rates.innerHTML       = RATES.map(function (r) { return placeholder(r.label, 'Loading…'); }).join('');
+      if (mounts.commodities) mounts.commodities.innerHTML = COMMODITIES.map(function (c) { return placeholder(c.label, 'Loading…'); }).join('');
+    }
+    paintLoading();
+
+    // ----- Refresh logic -----
     function refresh() {
+      // 1. Crypto via CoinGecko
       var ids = CRYPTO.map(function (c) { return c.id; }).join(',');
-      var cgUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=' + ids + '&vs_currencies=usd&include_24hr_change=true';
-      var fxUrl = 'https://api.frankfurter.app/latest?from=USD&to=' + FX.map(function (f) { return f.code; }).join(',');
+      var cgUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=' + ids +
+                  '&vs_currencies=usd&include_24hr_change=true';
 
-      // Crypto
       fetch(cgUrl).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
-        if (!data || !cryptoMount) return;
-        cryptoMount.innerHTML = CRYPTO.map(function (c) {
+        if (!data || !mounts.crypto) return;
+        mounts.crypto.innerHTML = CRYPTO.map(function (c) {
           var d = data[c.id];
           if (!d || !isFinite(d.usd)) return placeholder(c.label, '—');
-          return card(c.label, c.name, fmtPrice(d.usd), fmtPct(d.usd_24h_change));
+          return card({
+            label: c.label, name: c.name,
+            price: fmtPriceUsd(d.usd),
+            change: fmtPct(d.usd_24h_change),
+            link: c.link
+          });
         }).join('');
       }).catch(function () { /* leave placeholders */ });
 
-      // FX
+      // 2. FX via currency-api on jsDelivr (USD as base, lowercase ISO codes)
+      var fxUrl = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json';
       fetch(fxUrl).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
-        if (!data || !data.rates || !fxMount) return;
-        fxMount.innerHTML = FX.map(function (f) {
-          var rate = data.rates[f.code];
+        if (!data || !data.usd || !mounts.fx) return;
+        mounts.fx.innerHTML = FX.map(function (f) {
+          var rate = data.usd[f.code.toLowerCase()];
           if (!rate) return placeholder(f.label, '—');
-          return card(f.label, f.name, fmtFx(rate, f.code), '');
+          return card({
+            label: f.label, name: f.name,
+            price: fmtFxRate(rate, f.code),
+            change: '',
+            link: yahooLink(f.pair)
+          });
         }).join('');
+      }).catch(function () { /* leave placeholders */ });
+
+      // 3. Equities + Rates + Commodities through one Worker call
+      var ySymbols = EQUITIES.concat(RATES, COMMODITIES).map(function (x) { return x.sym; });
+      var workerUrl = WORKER_URL + '?symbols=' + encodeURIComponent(ySymbols.join(','));
+
+      fetch(workerUrl).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
+        var result = data && data.quoteResponse && data.quoteResponse.result;
+        if (!result) return;
+        var bySym = {};
+        result.forEach(function (q) { bySym[q.symbol] = q; });
+
+        function renderGroup(group, mount) {
+          if (!mount) return;
+          mount.innerHTML = group.map(function (g) {
+            var q = bySym[g.sym];
+            if (!q || !isFinite(q.regularMarketPrice)) return placeholder(g.label, '—');
+            var price = q.regularMarketPrice;
+            var changePct = q.regularMarketChangePercent;
+            var changeAbs = q.regularMarketChange;
+
+            var priceStr, changeStr;
+            if (g.fmt === 'yield') {
+              priceStr  = fmtYield(price);
+              changeStr = fmtBp(changeAbs);
+            } else if (g.fmt === 'index') {
+              priceStr  = fmtIndex(price);
+              changeStr = fmtPct(changePct);
+            } else {
+              priceStr  = fmtPriceUsd(price);
+              changeStr = fmtPct(changePct);
+            }
+            return card({
+              label: g.label, name: g.name,
+              price: priceStr, change: changeStr,
+              link: yahooLink(g.sym)
+            });
+          }).join('');
+        }
+        renderGroup(EQUITIES,    mounts.equities);
+        renderGroup(RATES,       mounts.rates);
+        renderGroup(COMMODITIES, mounts.commodities);
       }).catch(function () { /* leave placeholders */ });
     }
 
