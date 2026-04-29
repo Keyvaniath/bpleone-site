@@ -83,6 +83,32 @@
       </div>
     </section>
 
+    <!-- ====== WATCHLIST (live, mounted via script.js) ====== -->
+    <section class="section">
+      <div class="section-head">
+        <h2>What I'm watching</h2>
+        <a class="more" href="projects.html">All picks &rarr;</a>
+      </div>
+      <p class="muted small section-sub">
+        Live prices via Yahoo Finance. Targets and theses are mine &mdash;
+        not investment advice. <a href="disclaimer.html">Disclaimer</a>.
+      </p>
+      <div id="watchlist-grid" class="watchlist-grid" aria-live="polite">
+        <p class="muted small">Loading watchlist&hellip;</p>
+      </div>
+    </section>
+
+    <!-- ====== WORLD MARKETS STATUS (live, mounted via script.js) ====== -->
+    <section class="section">
+      <div class="section-head">
+        <h2>World markets</h2>
+        <span class="muted small" id="markets-now-et" aria-live="polite"></span>
+      </div>
+      <div id="markets-status-grid" class="markets-status-grid" aria-live="polite">
+        <p class="muted small">Loading markets&hellip;</p>
+      </div>
+    </section>
+
     <!-- ====== FEATURED highlight ====== -->
     <section class="section">
       <div class="section-head">

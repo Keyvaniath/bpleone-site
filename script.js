@@ -354,6 +354,217 @@
   // Expose for /markets to reuse the same fetched data.
   window.__bpleon_ticker = { CRYPTO: CRYPTO, FX: FX, INDEXES: INDEXES };
 
+  // =========================================================================
+  // Watchlist (homepage "What I'm watching" widget)
+  // -------------------------------------------------------------------------
+  // EDIT THIS ARRAY to change what shows on the homepage. Each entry needs:
+  //   sym      Yahoo Finance symbol (e.g. 'MU', 'NVDA', '^TNX')
+  //   name     Short company/ETF name shown on the card
+  //   target   Your price target (number, USD)
+  //   thesis   One-sentence thesis shown below the price
+  //   posted   YYYY-MM-DD when you posted/updated the call
+  //   note_url Optional: link to longer write-up (e.g. 'writing.html#mu')
+  //
+  // ** PLACEHOLDER ** -- replace MU below with your actual picks before
+  // anyone takes the watchlist seriously. The format demonstrates the shape.
+  // =========================================================================
+  var WATCHLIST = [
+    {
+      sym: 'MU',
+      name: 'Micron Technology',
+      target: 145.00,
+      thesis: 'HBM share gains + DRAM cycle bottoming.',
+      posted: '2026-04-01',
+      note_url: ''
+    }
+  ];
+
+  function renderWatchlist() {
+    var grid = document.getElementById('watchlist-grid');
+    if (!grid || !WATCHLIST.length) return;
+
+    var symbols = WATCHLIST.map(function (w) { return w.sym; }).join(',');
+    var url = WORKER_URL + '?symbols=' + encodeURIComponent(symbols);
+
+    fetch(url)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        var result = data && data.quoteResponse && data.quoteResponse.result;
+        if (!result) {
+          grid.innerHTML = '<p class="muted small">Watchlist data unavailable.</p>';
+          return;
+        }
+        var bySym = {};
+        result.forEach(function (q) { bySym[q.symbol] = q; });
+
+        grid.innerHTML = WATCHLIST.map(function (w) {
+          var q = bySym[w.sym];
+          if (!q || !isFinite(q.regularMarketPrice)) {
+            return (
+              '<div class="watch-card watch-card-empty">' +
+                '<div class="watch-card-head"><strong>' + w.name + ' (' + w.sym + ')</strong></div>' +
+                '<p class="muted small">Price unavailable</p>' +
+              '</div>'
+            );
+          }
+          var price = q.regularMarketPrice;
+          var pct = q.regularMarketChangePercent;
+          var pctClass = (isFinite(pct) && pct < 0) ? 'down' : 'up';
+          var pctStr = isFinite(pct) ? ((pct >= 0 ? '+' : '') + pct.toFixed(2) + '%') : '';
+
+          var toTarget = ((w.target - price) / price) * 100;
+          var ttClass = toTarget >= 0 ? 'up' : 'down';
+          var ttStr = (toTarget >= 0 ? '+' : '') + toTarget.toFixed(1) + '%';
+
+          var titleEl = w.note_url
+            ? '<a class="watch-link" href="' + escapeAttr(w.note_url) + '">' + w.name + ' <span class="watch-sym">(' + w.sym + ')</span></a>'
+            : '<strong>' + w.name + ' <span class="watch-sym">(' + w.sym + ')</span></strong>';
+
+          return (
+            '<div class="watch-card">' +
+              '<div class="watch-card-head">' + titleEl + '</div>' +
+              '<div class="watch-price-row">' +
+                '<span class="watch-price">$' + price.toFixed(2) + '</span>' +
+                (pctStr ? '<span class="watch-change ' + pctClass + '">' + pctStr + '</span>' : '') +
+              '</div>' +
+              '<p class="watch-thesis">' + w.thesis + '</p>' +
+              '<div class="watch-target-row">' +
+                '<span class="muted small">Target $' + w.target.toFixed(2) + '</span>' +
+                '<span class="watch-totarget ' + ttClass + '">' + ttStr + ' to target</span>' +
+              '</div>' +
+              '<p class="muted xsmall">Posted ' + w.posted + '</p>' +
+            '</div>'
+          );
+        }).join('');
+      })
+      .catch(function () {
+        grid.innerHTML = '<p class="muted small">Watchlist data unavailable.</p>';
+      });
+  }
+
+  if (document.getElementById('watchlist-grid')) {
+    renderWatchlist();
+    setInterval(renderWatchlist, 60 * 1000);
+  }
+
+  // =========================================================================
+  // World markets open/closed board
+  // -------------------------------------------------------------------------
+  // Schedule is in each market's local time -- DST is handled automatically by
+  // Intl.DateTimeFormat with the IANA timezone name. Lunch breaks ignored.
+  // Holidays not modeled -- treat as approximate near major holidays.
+  // =========================================================================
+  var MARKETS = [
+    { name: 'New York',   code: 'NYSE', tz: 'America/New_York',   open: '09:30', close: '16:00' },
+    { name: 'Toronto',    code: 'TSX',  tz: 'America/Toronto',    open: '09:30', close: '16:00' },
+    { name: 'London',     code: 'LSE',  tz: 'Europe/London',      open: '08:00', close: '16:30' },
+    { name: 'Frankfurt',  code: 'XETR', tz: 'Europe/Berlin',      open: '09:00', close: '17:30' },
+    { name: 'Tokyo',      code: 'TSE',  tz: 'Asia/Tokyo',         open: '09:00', close: '15:00' },
+    { name: 'Hong Kong',  code: 'HKEX', tz: 'Asia/Hong_Kong',     open: '09:30', close: '16:00' },
+    { name: 'Shanghai',   code: 'SSE',  tz: 'Asia/Shanghai',      open: '09:30', close: '15:00' },
+    { name: 'Sydney',     code: 'ASX',  tz: 'Australia/Sydney',   open: '10:00', close: '16:00' }
+  ];
+  var DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  function getZonedParts(date, tz) {
+    var fmt = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz, hour12: false,
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', weekday: 'short'
+    });
+    var parts = {};
+    fmt.formatToParts(date).forEach(function (p) { parts[p.type] = p.value; });
+    var dowMap = { Sun:0, Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6 };
+    return {
+      year: +parts.year, month: +parts.month, day: +parts.day,
+      hour: +parts.hour === 24 ? 0 : +parts.hour,  // some engines emit "24" at midnight
+      minute: +parts.minute,
+      dayOfWeek: dowMap[parts.weekday]
+    };
+  }
+
+  function toMin(hm) { var p = hm.split(':'); return +p[0] * 60 + +p[1]; }
+
+  function isOpen(market, when) {
+    var z = getZonedParts(when, market.tz);
+    if (z.dayOfWeek === 0 || z.dayOfWeek === 6) return false;
+    var nowMin = z.hour * 60 + z.minute;
+    return nowMin >= toMin(market.open) && nowMin < toMin(market.close);
+  }
+
+  function nextOpen(market, from) {
+    // Walk forward in 30-min steps up to 8 days, refine to the minute.
+    var STEP = 30 * 60 * 1000;
+    for (var i = 1; i <= 8 * 48; i++) {
+      var coarse = new Date(from.getTime() + i * STEP);
+      if (isOpen(market, coarse)) {
+        var t = coarse;
+        while (t > from && isOpen(market, new Date(t.getTime() - 60 * 1000))) {
+          t = new Date(t.getTime() - 60 * 1000);
+        }
+        return t;
+      }
+    }
+    return null;
+  }
+
+  function fmtETClock(date) {
+    return new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York',
+      hour: 'numeric', minute: '2-digit', hour12: true
+    }).format(date);
+  }
+
+  function fmtNextOpenLabel(openDate, now) {
+    var z = getZonedParts(openDate, 'America/New_York');
+    var n = getZonedParts(now,      'America/New_York');
+    var sameDate = (z.year === n.year && z.month === n.month && z.day === n.day);
+    var dayLabel = sameDate ? 'Today' : DAY_NAMES[z.dayOfWeek];
+    return 'Opens ' + dayLabel + ' ' + fmtETClock(openDate) + ' ET';
+  }
+
+  function renderMarketsStatus() {
+    var grid = document.getElementById('markets-status-grid');
+    if (!grid) return;
+    var now = new Date();
+
+    var clock = document.getElementById('markets-now-et');
+    if (clock) clock.textContent = fmtETClock(now) + ' ET';
+
+    grid.innerHTML = MARKETS.map(function (m) {
+      var open = isOpen(m, now);
+      var statusEl, bottomEl;
+      if (open) {
+        var todayCloseLocal = m.close;  // already shown in market local time below
+        statusEl = '<span class="mkt-dot mkt-dot-open" aria-hidden="true"></span>' +
+                   '<span class="mkt-status mkt-status-open">OPEN</span>';
+        bottomEl = '<p class="muted small">Closes ' + todayCloseLocal + ' local</p>';
+      } else {
+        var nextO = nextOpen(m, now);
+        statusEl = '<span class="mkt-dot mkt-dot-closed" aria-hidden="true"></span>' +
+                   '<span class="mkt-status mkt-status-closed">CLOSED</span>';
+        bottomEl = '<p class="muted small">' +
+                   (nextO ? fmtNextOpenLabel(nextO, now) : 'Opens next session') +
+                   '</p>';
+      }
+      return (
+        '<div class="mkt-card ' + (open ? 'mkt-card-open' : 'mkt-card-closed') + '">' +
+          '<div class="mkt-head">' +
+            '<span class="mkt-name">' + m.name + '</span>' +
+            '<span class="mkt-code">' + m.code + '</span>' +
+          '</div>' +
+          '<div class="mkt-status-row">' + statusEl + '</div>' +
+          bottomEl +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  if (document.getElementById('markets-status-grid')) {
+    renderMarketsStatus();
+    setInterval(renderMarketsStatus, 60 * 1000);
+  }
+
 })();
 
 // =============================================================================
