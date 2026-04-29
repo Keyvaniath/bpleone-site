@@ -3,15 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Projects &mdash; Brandon Leon</title>
+  <title>Coverage &mdash; Brandon Leon</title>
   <meta name="color-scheme" content="light only" />
   <meta name="theme-color" content="#fbf7ef" />
   <meta name="supported-color-schemes" content="light" />
-  <meta name="description" content="Projects by Brandon Leon." />
+  <meta name="description" content="Coverage by Brandon Leon. Single-name equity research and methodology artifacts on cyclicals — memory, semis, energy. Through-cycle valuation, reverse-DCF, audited models." />
   <link rel="canonical" href="https://bpleon.com/projects.html" />
-  <meta property="og:title" content="Projects — Brandon Leon" />
+  <meta property="og:title" content="Coverage — Brandon Leon" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://bpleon.com/projects.html" />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
   <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
   <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
@@ -19,6 +21,40 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=4" />
+  <style>
+    .coverage-tag {
+      display: inline-block;
+      padding: .15rem .55rem;
+      border-radius: 999px;
+      font-family: var(--sans);
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      vertical-align: middle;
+      margin-left: .55rem;
+      position: relative;
+      top: -.15em;
+    }
+    .coverage-tag.shipped { background: var(--accent-2); color: #fff; }
+    .coverage-tag.forthcoming { background: var(--accent); color: #fff; }
+    .coverage-tag.ongoing { background: var(--bg-soft); color: var(--ink-soft); border: 1px solid var(--rule); }
+
+    .project-card { padding: 1.5rem 0; border-bottom: 1px solid var(--rule); }
+    .project-card:last-of-type { border-bottom: none; }
+    .project-card h2 { margin: 0 0 .35em; font-size: 1.5rem; }
+    .project-card h2 a { color: var(--ink); text-decoration: none; }
+    .project-card h2 a:hover { color: var(--accent); }
+    .project-meta { color: var(--muted); font-size: .85rem; font-family: var(--sans); letter-spacing: .03em; margin: 0 0 .75em; }
+    .project-meta a { color: var(--ink-soft); }
+
+    .coverage-section-head { margin: 2.75rem 0 .75rem; padding-bottom: .55rem; border-bottom: 2px solid var(--ink); font-family: var(--sans); font-size: .85rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+    .how-i-work { margin: 3rem 0 2rem; padding: 1.75rem 2rem; background: var(--bg-soft); border-radius: 12px; border-left: 3px solid var(--accent-2); }
+    .how-i-work h2 { margin-top: 0; font-family: var(--serif); font-size: 1.25rem; }
+    .how-i-work p { margin: 0; color: var(--ink-soft); }
+
+    .coverage-cta { margin: 2.5rem 0 1rem; }
+  </style>
 </head>
 <body style="background:#fbf7ef;color:#1c1a16;">
   <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
@@ -36,50 +72,104 @@
 
   <main class="prose wide">
     <header class="page-head">
-      <p class="eyebrow">Projects</p>
-      <h1>Things I've built and analyzed.</h1>
-      <p class="lede">A working list. Some are research notes, some are models, some are essays that grew up.</p>
+      <p class="eyebrow">Coverage</p>
+      <h1>Equity research, in progress and shipped.</h1>
+      <p class="lede">
+        Single-name pitches and methodology artifacts on cyclicals &mdash;
+        memory, semis, energy. Each entry below links to the full work
+        where it exists, or sketches the thesis where it's still being
+        built.
+      </p>
     </header>
 
-    <article id="project-one" class="project-card">
-      <h2><a href="#project-one">Project One</a></h2>
-      <p class="project-meta">2025 &middot; Research note &middot; <a href="#">Read &rarr;</a></p>
+    <h2 class="coverage-section-head">Shipped</h2>
+
+    <article id="dcf-template" class="project-card">
+      <h2>
+        <a href="dcf-template.html">IB-grade DCF Template</a>
+        <span class="coverage-tag shipped">Live</span>
+      </h2>
+      <p class="project-meta">Apr 2026 &middot; Methodology artifact &middot; <a href="dcf-template.html">Open page &rarr;</a></p>
       <p>
-        Replace this with a paragraph or two on what the project is, why it
-        matters, and what you found. Link out to a PDF, a blog post, a GitHub
-        repo, a Substack piece &mdash; whatever the artifact is.
+        20-tab Excel workbook with a worked Micron example: two-stage
+        FCFF DCF, peer-blended multiples, three scenarios with
+        cycle-aware paths, reverse-DCF decomposition, sensitivity
+        tables. The Python pipeline that auto-populates this for any
+        ticker is available on request. Built around the methodology
+        I used to win the 2023 CFA Institute Research Challenge for
+        the Americas.
       </p>
     </article>
 
-    <article id="project-two" class="project-card">
-      <h2><a href="#project-two">Project Two</a></h2>
-      <p class="project-meta">2025 &middot; Model &middot; <a href="#">Open spreadsheet &rarr;</a></p>
+    <h2 class="coverage-section-head">Forthcoming</h2>
+
+    <article id="mu-through-cycle" class="project-card">
+      <h2>
+        MU &mdash; Through-cycle long
+        <span class="coverage-tag forthcoming">Forthcoming</span>
+      </h2>
+      <p class="project-meta">Target: Q2 2026 &middot; Memory / semiconductors &middot; Single-name pitch</p>
       <p>
-        For a financial model you might link the Google Sheet (view-only) or a
-        downloadable .xlsx. Describe the inputs, the question it answers, and
-        the punchline.
+        Through-cycle thesis on Micron Technology against a cyclical
+        comparable. Workbook is finalised; write-up in progress.
+        Coverage: HBM contribution to the next cycle peak, mid-cycle
+        EBIT margin normalisation, what today's price implicitly
+        requires via reverse-DCF, and the bear-case kill shot for
+        anyone underweighting the name.
       </p>
     </article>
 
-    <article id="project-three" class="project-card">
-      <h2><a href="#project-three">Project Three</a></h2>
-      <p class="project-meta">2024 &middot; Essay &middot; <a href="#">Read on Substack &rarr;</a></p>
+    <article id="energy-cycle" class="project-card">
+      <h2>
+        Integrated oil &mdash; capital-allocation tier list
+        <span class="coverage-tag forthcoming">Forthcoming</span>
+      </h2>
+      <p class="project-meta">Target: Q2 2026 &middot; Energy &middot; Cross-section</p>
       <p>
-        A longer-form piece. The pattern: one tight sentence on what it argues,
-        one on why a reader should care, one on what surprised you while
-        writing it.
+        XOM, CVX, COP, SHEL, BP ranked on through-cycle capital
+        allocation discipline: CapEx versus operating cash flow,
+        buyback cadence, debt paydown, project IRRs against the
+        commodity strip. The thesis: at this point in the cycle, the
+        price/book versus ROCE spread tells you who is still being
+        rewarded for promises and who has actually earned it.
       </p>
     </article>
 
-    <article id="project-four" class="project-card">
-      <h2><a href="#project-four">Project Four</a></h2>
-      <p class="project-meta">2024 &middot; Side project</p>
+    <article id="sector-scorecards" class="project-card">
+      <h2>
+        Sector scorecards
+        <span class="coverage-tag ongoing">Ongoing</span>
+      </h2>
+      <p class="project-meta">Internal tooling &middot; Ships with the DCF pipeline</p>
       <p>
-        Anything counts here &mdash; a script that pulls data from an API, a
-        small dashboard, a Notion template you actually use. The goal of this
-        page is to show range and craft.
+        Per-sector sets of through-cycle factors &mdash; mid-cycle
+        CapEx %, NWC %, EBIT margin floor and ceiling &mdash;
+        calibrated to historical full cycles. Plugs into the DCF
+        pipeline as the default for any ticker in that sector. Memory,
+        energy, and autos are calibrated. Software and industrials are
+        next.
       </p>
     </article>
+
+    <div class="how-i-work">
+      <h2>How I work</h2>
+      <p>
+        Every published pitch ships with the workbook that produced
+        it. Every assumption is named; every fallback is transparent.
+        Where the data is absent &mdash; a private name, a missing
+        fiscal year, a peer with a non-comparable accounting policy
+        &mdash; the model says "N/A" instead of silently filling in a
+        magic number. This is the bar I learned at the CFA Institute
+        Research Challenge and I hold every piece I publish to it.
+      </p>
+    </div>
+
+    <p class="coverage-cta">
+      <a class="btn" href="mailto:brandonpleone@gmail.com">Get in touch &rarr;</a>
+      &nbsp;
+      <a class="btn btn-ghost" href="dcf-template.html">See the template</a>
+    </p>
+
   </main>
 
   <footer class="site-footer">
