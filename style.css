@@ -114,10 +114,14 @@ p  { margin: 0 0 1.1em; }
   /* Hint to the reader that the strip is interactive. */
   touch-action: pan-y;
 }
-.ticker-wrap:hover .ticker-track,
-.ticker-wrap.dragging .ticker-track {
-  /* Pause the marquee while the cursor is over it (read or drag in peace). */
+.ticker-wrap:hover .ticker-track {
+  /* Pause the marquee while the cursor is over it (read in peace). */
   animation-play-state: paused;
+}
+.ticker-wrap.dragging .ticker-track {
+  /* While dragging, fully disable the animation so the inline transform
+     applied by the drag JS isn't overridden by the keyframes. */
+  animation: none;
 }
 .ticker-wrap.dragging {
   cursor: grabbing;
