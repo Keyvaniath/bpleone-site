@@ -453,6 +453,7 @@
                 '<span class="watch-price">$' + price.toFixed(2) + '</span>' +
                 (pctStr ? '<span class="watch-change ' + pctClass + '">' + pctStr + '</span>' : '') +
               '</div>' +
+              '<div class="watch-spark" data-sym="' + escapeAttr(w.sym) + '"></div>' +
               '<p class="watch-thesis">' + w.thesis + '</p>' +
               '<div class="watch-target-row">' +
                 '<span class="muted small">Target $' + w.target.toFixed(2) + '</span>' +
@@ -462,9 +463,129 @@
             '</div>'
           );
         }).join('');
+        // Kick off the (cheap) sparkline + headlines loads -- decoupled from
+        // the price render so they never block the visible card update.
+        loadWatchlistSparklines();
+        loadHeadlinesForFirstPick();
       })
       .catch(function () {
         grid.innerHTML = '<p class="muted small">Watchlist data unavailable.</p>';
+      });
+  }
+
+  // -----------------------------------------------------------------------
+  // Sparkline rendering -- 1y daily closes from the Worker, drawn into each
+  // watchlist card as a small SVG. Up/down stroke colour comes from the
+  // first-vs-last comparison so the trend is visible at a glance.
+  // -----------------------------------------------------------------------
+  function sparklineSvg(values, opts) {
+    opts = opts || {};
+    var w = opts.width || 280;
+    var h = opts.height || 44;
+    var pad = opts.padding || 3;
+    var min = Math.min.apply(null, values);
+    var max = Math.max.apply(null, values);
+    var range = max - min || 1;
+    var stepX = (w - 2 * pad) / Math.max(values.length - 1, 1);
+    var pts = values.map(function (v, i) {
+      var x = pad + i * stepX;
+      var y = h - pad - ((v - min) / range) * (h - 2 * pad);
+      return x.toFixed(1) + ',' + y.toFixed(1);
+    });
+    var up = values[values.length - 1] >= values[0];
+    var stroke = opts.stroke || (up ? '#1a6e3f' : '#b03a2e');
+    var lastPt = pts[pts.length - 1].split(',');
+    return (
+      '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" ' +
+      'aria-hidden="true" style="display:block;width:100%;height:' + h + 'px;overflow:visible">' +
+        '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + stroke +
+        '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ' +
+        'vector-effect="non-scaling-stroke"/>' +
+        '<circle cx="' + lastPt[0] + '" cy="' + lastPt[1] + '" r="2.5" fill="' + stroke + '"/>' +
+      '</svg>'
+    );
+  }
+
+  function loadWatchlistSparklines() {
+    var holders = document.querySelectorAll('.watch-spark[data-sym]');
+    if (!holders.length) return;
+    var unique = [];
+    holders.forEach(function (h) {
+      var s = h.getAttribute('data-sym');
+      if (s && unique.indexOf(s) === -1) unique.push(s);
+    });
+    if (!unique.length) return;
+    fetch(WORKER_URL + '?spark=' + encodeURIComponent(unique.join(',')))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data) return;
+        holders.forEach(function (h) {
+          var sym = h.getAttribute('data-sym');
+          var values = data[sym];
+          if (values && values.length > 1) {
+            h.innerHTML = sparklineSvg(values);
+          }
+        });
+      })
+      .catch(function () { /* silent: cards still look right without sparkline */ });
+  }
+
+  // -----------------------------------------------------------------------
+  // Headlines for the first watchlist pick -- pulled from Google News RSS
+  // through the Worker. Renders into #headlines-list on the homepage.
+  // -----------------------------------------------------------------------
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function relativeTimeShort(d) {
+    var diffMs = Date.now() - d.getTime();
+    if (diffMs < 0) return '';
+    var min = Math.floor(diffMs / 60000);
+    if (min < 60) return Math.max(min, 1) + 'm ago';
+    var h = Math.floor(min / 60);
+    if (h < 24) return h + 'h ago';
+    var days = Math.floor(h / 24);
+    if (days < 7) return days + 'd ago';
+    return d.toLocaleDateString();
+  }
+
+  function loadHeadlinesForFirstPick() {
+    var listEl = document.getElementById('headlines-list');
+    var titleEl = document.getElementById('headlines-title');
+    if (!listEl) return;
+    if (!WATCHLIST.length) return;
+    var first = WATCHLIST[0];
+    if (titleEl) titleEl.textContent = 'On the wire — ' + first.name;
+    // Pass the ticker symbol so the Worker can try Yahoo Finance's
+    // ticker-specific RSS first; falls back to Google News by ticker.
+    fetch(WORKER_URL + '?headlines=' + encodeURIComponent(first.sym) + '&n=5')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !Array.isArray(data.items) || !data.items.length) {
+          listEl.innerHTML = '<p class="muted small">No recent headlines.</p>';
+          return;
+        }
+        listEl.innerHTML = data.items.map(function (item) {
+          var date = '';
+          if (item.pubDate) {
+            var d = new Date(item.pubDate);
+            if (!isNaN(d.getTime())) date = relativeTimeShort(d);
+          }
+          var meta = [];
+          if (item.source) meta.push(escapeHtml(item.source));
+          if (date) meta.push(date);
+          return (
+            '<a class="hl-row" href="' + escapeAttr(item.link) + '" target="_blank" rel="noopener">' +
+              '<span class="hl-title">' + escapeHtml(item.title) + '</span>' +
+              (meta.length ? '<span class="hl-meta">' + meta.join(' &middot; ') + '</span>' : '') +
+            '</a>'
+          );
+        }).join('');
+      })
+      .catch(function () {
+        listEl.innerHTML = '<p class="muted small">Headlines unavailable.</p>';
       });
   }
 
@@ -599,6 +720,42 @@
     return 'Opens ' + dayLabel + ' ' + fmtETClock(openDate) + ' ET';
   }
 
+  // Just the day+time portion (no "Opens " prefix), for use alongside a
+  // countdown like "Opens in 2h 30m · today 9:30 AM ET".
+  function fmtOpenWhen(openDate, now) {
+    var z = getZonedParts(openDate, 'America/New_York');
+    var n = getZonedParts(now,      'America/New_York');
+    var sameDate = (z.year === n.year && z.month === n.month && z.day === n.day);
+    var dayLabel = sameDate ? 'today' : DAY_NAMES[z.dayOfWeek];
+    return dayLabel + ' ' + fmtETClock(openDate) + ' ET';
+  }
+
+  // Compact "time remaining" for the world-markets board.
+  // < 1 min  -> "now"
+  // < 60 min -> "45m"
+  // < 24 h   -> "2h 30m"  (m omitted if exactly on the hour)
+  // >= 24 h  -> "2d 4h"
+  function fmtCountdown(min) {
+    if (!isFinite(min) || min < 1) return 'now';
+    if (min < 60) return Math.round(min) + 'm';
+    var h = Math.floor(min / 60);
+    var m = Math.round(min % 60);
+    if (h < 24) return m > 0 ? (h + 'h ' + m + 'm') : (h + 'h');
+    var d = Math.floor(h / 24);
+    var hr = h % 24;
+    return hr > 0 ? (d + 'd ' + hr + 'h') : (d + 'd');
+  }
+
+  // Minutes from `now` to a target time-of-day (HH:MM) in the market's own
+  // timezone. Used for OPEN markets (time-to-close) and ON BREAK markets
+  // (time-to-reopen). Both endpoints are same-day events, so a simple
+  // (closeMin - nowMin) is correct.
+  function minutesUntilLocalTime(market, now, hm) {
+    var z = getZonedParts(now, market.tz);
+    var nowMin = z.hour * 60 + z.minute;
+    return toMin(hm) - nowMin;
+  }
+
   function renderMarketsStatus() {
     var grid = document.getElementById('markets-status-grid');
     if (!grid) return;
@@ -612,23 +769,31 @@
       var lunchEndLocal = onLunchBreak(m, now);
       var statusEl, bottomEl, cardClass;
       if (open) {
+        var minToClose = minutesUntilLocalTime(m, now, m.close);
         statusEl = '<span class="mkt-dot mkt-dot-open" aria-hidden="true"></span>' +
                    '<span class="mkt-status mkt-status-open">OPEN</span>';
-        bottomEl = '<p class="muted small">Closes ' + m.close + ' local</p>';
+        bottomEl = '<p class="muted small">Closes in ' + fmtCountdown(minToClose) +
+                   ' &middot; ' + m.close + ' local</p>';
         cardClass = 'mkt-card-open';
       } else if (lunchEndLocal) {
         // Within trading hours but on the lunch halt -- show as a distinct state.
+        var minToReopen = minutesUntilLocalTime(m, now, lunchEndLocal);
         statusEl = '<span class="mkt-dot mkt-dot-lunch" aria-hidden="true"></span>' +
                    '<span class="mkt-status mkt-status-lunch">ON BREAK</span>';
-        bottomEl = '<p class="muted small">Reopens ' + lunchEndLocal + ' local</p>';
+        bottomEl = '<p class="muted small">Reopens in ' + fmtCountdown(minToReopen) +
+                   ' &middot; ' + lunchEndLocal + ' local</p>';
         cardClass = 'mkt-card-lunch';
       } else {
         var nextO = nextOpen(m, now);
         statusEl = '<span class="mkt-dot mkt-dot-closed" aria-hidden="true"></span>' +
                    '<span class="mkt-status mkt-status-closed">CLOSED</span>';
-        bottomEl = '<p class="muted small">' +
-                   (nextO ? fmtNextOpenLabel(nextO, now) : 'Opens next session') +
-                   '</p>';
+        if (nextO) {
+          var diffMin = Math.round((nextO.getTime() - now.getTime()) / 60000);
+          bottomEl = '<p class="muted small">Opens in ' + fmtCountdown(diffMin) +
+                     ' &middot; ' + fmtOpenWhen(nextO, now) + '</p>';
+        } else {
+          bottomEl = '<p class="muted small">Opens next session</p>';
+        }
         cardClass = 'mkt-card-closed';
       }
       return (
@@ -673,6 +838,49 @@
     paintMarketsStatusSkeleton();
     renderMarketsStatus();
     setInterval(renderMarketsStatus, 60 * 1000);
+  }
+
+  // =========================================================================
+  // Hero chart -- replaces the static SVG path with a live 1-year S&P 500
+  // line, redrawn into the same dotted-paper SVG aesthetic. Falls back
+  // silently to the placeholder path if the fetch fails.
+  // =========================================================================
+  function loadHeroChart() {
+    var line = document.getElementById('hero-chart-line');
+    if (!line) return;
+    var label = document.getElementById('hero-chart-label');
+    var sym = '^GSPC';  // S&P 500 index
+    fetch(WORKER_URL + '?spark=' + encodeURIComponent(sym))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data || !data[sym] || data[sym].length < 2) return;
+        var values = data[sym];
+        var w = 320, h = 240, padX = 24, padTop = 36, padBottom = 28;
+        var min = Math.min.apply(null, values);
+        var max = Math.max.apply(null, values);
+        var range = max - min || 1;
+        var stepX = (w - 2 * padX) / (values.length - 1);
+        var pts = values.map(function (v, i) {
+          var x = padX + i * stepX;
+          var y = (h - padBottom) - ((v - min) / range) * (h - padTop - padBottom);
+          return x.toFixed(1) + ',' + y.toFixed(1);
+        });
+        var pathD = 'M ' + pts.join(' L ');
+        var lastPt = pts[pts.length - 1].split(',');
+        line.innerHTML =
+          '<path d="' + pathD + '" fill="none" stroke="#b56a3f" stroke-width="3" ' +
+            'stroke-linecap="round" stroke-linejoin="round"/>' +
+          '<circle cx="' + lastPt[0] + '" cy="' + lastPt[1] + '" r="6" fill="#b56a3f"/>' +
+          '<circle cx="' + lastPt[0] + '" cy="' + lastPt[1] + '" r="12" fill="#b56a3f" fill-opacity="0.18"/>';
+        if (label) {
+          var pct = ((values[values.length - 1] - values[0]) / values[0]) * 100;
+          label.textContent = 'S&P 500 · 1Y · ' + (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
+        }
+      })
+      .catch(function () { /* leave placeholder path */ });
+  }
+  if (document.getElementById('hero-chart-line')) {
+    loadHeroChart();
   }
 
 })();

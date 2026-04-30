@@ -1161,6 +1161,73 @@ main.prose.center {
 [data-theme="dark"] .mkt-dot-lunch    { background: #e0a560; }
 [data-theme="dark"] .mkt-status-lunch { color: #e0a560; }
 
+/* Watchlist + headlines two-column row (homepage) -------------------------
+   On desktop, watchlist cards take the left column and a headlines panel
+   sits to the right. Mobile collapses to a single column with headlines
+   stacked below. */
+.watchlist-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 1.5rem;
+  align-items: start;
+}
+@media (max-width: 760px) {
+  .watchlist-row { grid-template-columns: 1fr; }
+}
+.headlines-panel {
+  padding: 1.25rem 1.4rem;
+  background: var(--bg-soft);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+}
+.headlines-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 .85rem;
+  padding-bottom: .55rem;
+  border-bottom: 1px solid var(--rule);
+}
+.headlines-list { display: flex; flex-direction: column; gap: .85rem; }
+.hl-row {
+  display: flex;
+  flex-direction: column;
+  gap: .2rem;
+  text-decoration: none;
+  padding-bottom: .85rem;
+  border-bottom: 1px dashed var(--rule);
+  color: var(--ink);
+}
+.hl-row:last-child { border-bottom: 0; padding-bottom: 0; }
+.hl-row:hover .hl-title { color: var(--accent); }
+.hl-title {
+  font-family: var(--serif);
+  font-size: .95rem;
+  line-height: 1.35;
+  transition: color .15s var(--ease);
+}
+.hl-meta {
+  font-family: var(--sans);
+  font-size: .76rem;
+  color: var(--muted);
+  letter-spacing: .04em;
+}
+
+/* Sparkline holder inside watchlist cards */
+.watch-spark {
+  margin: .15rem 0 .55rem;
+  min-height: 44px;
+}
+
+/* Hero chart label (top-left text inside the SVG) */
+#hero-chart-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
 /* Skeleton loading bars (perceived-speed UX for live data) ---------------
    Use .skel for any standalone shimmering bar. .skel-line is a block bar
    sized to look like a line of text; .tall makes it match the lede price

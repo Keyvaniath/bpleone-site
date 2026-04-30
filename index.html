@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=7" />
+  <link rel="stylesheet" href="style.css?v=8" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
 </head>
@@ -68,8 +68,11 @@
         </div>
       </div>
       <div class="hero-art" aria-hidden="true">
-        <!-- Simple SVG: a stylized growth line on dotted grid paper -->
-        <svg viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stylized chart line">
+        <!-- Live S&P 500 1Y chart on dotted grid paper. The placeholder
+             path inside #hero-chart-line is replaced by script.js with the
+             real Yahoo data once it lands; if the fetch fails the
+             placeholder remains, so the SVG always looks intentional. -->
+        <svg id="hero-chart" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="S&amp;P 500 1-year price chart">
           <defs>
             <pattern id="dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
               <circle cx="2" cy="2" r="1" fill="#d8cfb9"/>
@@ -77,15 +80,17 @@
           </defs>
           <rect width="320" height="240" fill="#f3ece0" rx="14"/>
           <rect width="320" height="240" fill="url(#dots)" rx="14"/>
-          <path d="M 20 200 L 60 170 L 100 180 L 140 130 L 180 150 L 220 90 L 260 110 L 300 50"
-                fill="none" stroke="#b56a3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          <circle cx="300" cy="50" r="6" fill="#b56a3f"/>
-          <circle cx="300" cy="50" r="12" fill="#b56a3f" fill-opacity="0.18"/>
+          <g id="hero-chart-line">
+            <path d="M 24 200 L 64 178 L 104 184 L 144 142 L 184 158 L 224 102 L 264 118 L 296 60"
+                  fill="none" stroke="#b56a3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
+            <circle cx="296" cy="60" r="6" fill="#b56a3f" opacity="0.55"/>
+          </g>
+          <text id="hero-chart-label" x="22" y="28" fill="#534f47" font-weight="600">Loading&hellip;</text>
         </svg>
       </div>
     </section>
 
-    <!-- ====== WATCHLIST (live, mounted via script.js) ====== -->
+    <!-- ====== WATCHLIST + HEADLINES (live, mounted via script.js) ====== -->
     <section class="section">
       <div class="section-head">
         <h2>What I'm watching</h2>
@@ -95,8 +100,16 @@
         Live prices via Yahoo Finance. Targets and theses are mine &mdash;
         not investment advice. <a href="disclaimer.html">Disclaimer</a>.
       </p>
-      <div id="watchlist-grid" class="watchlist-grid" aria-live="polite">
-        <p class="muted small">Loading watchlist&hellip;</p>
+      <div class="watchlist-row">
+        <div id="watchlist-grid" class="watchlist-grid" aria-live="polite">
+          <p class="muted small">Loading watchlist&hellip;</p>
+        </div>
+        <aside class="headlines-panel" aria-label="Recent headlines">
+          <h3 class="headlines-title" id="headlines-title">On the wire</h3>
+          <div id="headlines-list" class="headlines-list">
+            <p class="muted small">Loading headlines&hellip;</p>
+          </div>
+        </aside>
       </div>
     </section>
 
@@ -248,15 +261,15 @@
       <ul class="rw-list">
         <li>
           <span class="rw-tag">Reading</span>
-          <span class="rw-text"><em>[Book title]</em> &mdash; one-line note on why.</span>
+          <span class="rw-text"><em>Capital Returns</em> by Edward Chancellor &mdash; the Marathon Asset Management essays. The cleanest articulation of capital-cycle thinking I&rsquo;ve found, and the lens behind every cyclical pitch on this site.</span>
         </li>
         <li>
           <span class="rw-tag">Watching</span>
-          <span class="rw-text">The 10Y yield. Earnings season for [sector].</span>
+          <span class="rw-text">The 10Y yield, and HBM ASP commentary in the next round of memory prints (NVDA, MU, AVGO).</span>
         </li>
         <li>
           <span class="rw-tag">Listening</span>
-          <span class="rw-text"><em>[Podcast]</em> &mdash; the recent episode on [topic].</span>
+          <span class="rw-text"><em>Odd Lots</em> (Bloomberg) &mdash; Tracy Alloway and Joe Weisenthal on whatever corner of the market is mispriced this week. <em>Capital Allocators</em> when there&rsquo;s a manager I want to hear think out loud.</span>
         </li>
       </ul>
       <p class="muted small">Updated every few weeks on the <a href="now.html">/now</a> page.</p>
@@ -293,6 +306,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=7" defer></script>
+  <script src="script.js?v=8" defer></script>
 </body>
 </html>
