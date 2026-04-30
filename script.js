@@ -484,6 +484,29 @@
     if (n >= 1)    return n.toFixed(2);
     return n.toFixed(4);
   }
+
+  // "Nice numbers" tick generator -- picks tick values at round multiples
+  // (1, 2, 5, 10, 50, 100, 500, ...) close to the requested density.
+  // Returns an array of clean round price values inside [min, max].
+  function niceTicks(min, max, targetCount) {
+    if (!isFinite(min) || !isFinite(max) || max <= min) return [];
+    targetCount = Math.max(2, targetCount || 4);
+    var rough = (max - min) / targetCount;
+    var exp = Math.pow(10, Math.floor(Math.log10(rough)));
+    var f = rough / exp;
+    var nice;
+    if (f < 1.5)      nice = 1;
+    else if (f < 3.5) nice = 2;
+    else if (f < 7.5) nice = 5;
+    else              nice = 10;
+    var step = nice * exp;
+    var first = Math.ceil(min / step) * step;
+    var ticks = [];
+    for (var v = first; v <= max + step * 0.0001; v += step) {
+      if (v >= min - step * 0.0001) ticks.push(v);
+    }
+    return ticks;
+  }
   function sparklineSvg(values, opts) {
     opts = opts || {};
     var w = opts.width || 280;
@@ -508,24 +531,21 @@
 
     var rangeMarkup = '';
     if (showRange) {
-      // Three evenly-spaced y-axis ticks (high / mid / low). Dashed gridlines
-      // at each tick, with the price labeled at the right edge. Bound ticks
-      // (high / low) get slightly stronger ink than the mid tick.
-      var tickCount = 3;
-      for (var ti = 0; ti < tickCount; ti++) {
-        var tFrac = ti / (tickCount - 1);
-        var tVal  = max - tFrac * range;
-        var tY    = pad + tFrac * (h - 2 * pad);
-        var isBound = (ti === 0 || ti === tickCount - 1);
+      // Nice-number y-axis ticks: round prices (multiples of 1/2/5/10...)
+      // at evenly-spaced positions inside the data range. Drops interpolated
+      // values like "6,139" in favour of clean ones like "6,000 / 6,500".
+      var tickValues = niceTicks(min, max, 3);
+      for (var ti = 0; ti < tickValues.length; ti++) {
+        var tVal = tickValues[ti];
+        var tY = pad + ((max - tVal) / range) * (h - 2 * pad);
         rangeMarkup +=
           '<line x1="' + pad + '" x2="' + plotW + '" y1="' + tY.toFixed(1) +
             '" y2="' + tY.toFixed(1) +
             '" stroke="' + stroke + '" stroke-width="0.6" stroke-dasharray="2,3" ' +
-            'opacity="' + (isBound ? '0.4' : '0.2') + '"/>' +
+            'opacity="0.3"/>' +
           '<text x="' + (plotW + 4) + '" y="' + (tY + 3).toFixed(1) +
             '" font-family="Inter,system-ui,sans-serif" font-size="9" ' +
-            'font-weight="' + (isBound ? '600' : '500') + '" ' +
-            'fill="' + (ti === 0 ? '#534f47' : '#8e887d') + '">' +
+            'font-weight="500" fill="#8e887d">' +
             fmtSparkPrice(tVal) + '</text>';
       }
     }
@@ -764,7 +784,7 @@
     if (titleEl) titleEl.textContent = 'On the wire — ' + first.name;
     // Pass the ticker symbol so the Worker can try Yahoo Finance's
     // ticker-specific RSS first; falls back to Google News by ticker.
-    fetch(WORKER_URL + '?headlines=' + encodeURIComponent(first.sym) + '&n=5')
+    fetch(WORKER_URL + '?headlines=' + encodeURIComponent(first.sym) + '&n=8')
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (data) {
         if (!data || !Array.isArray(data.items) || !data.items.length) {
@@ -1085,9 +1105,8 @@
         if (fill) {
           fill.innerHTML = '<path d="' + areaPath + '" fill="url(#hero-fill)" stroke="none"/>';
         }
-        // Y-axis: four evenly-spaced tick lines across the period range,
-        // each with the price labeled at the right edge. Bound ticks
-        // (high + low) print bolder than the interior ticks.
+        // Y-axis: nice-number tick lines (round prices like 6,000 / 6,500 /
+        // 7,000), each with the price labeled at the right edge.
         function fmtHeroPrice(n) {
           if (n >= 1000) return Math.round(n).toLocaleString();
           if (n >= 100)  return n.toFixed(0);
@@ -1095,22 +1114,19 @@
         }
         var rightX = w - padX;
         var dashEndX = rightX - 40;  // leave space for the right-edge label
-        var tickCount = 4;
+        var tickValues = niceTicks(min, max, 4);
         var ticksHtml = '';
-        for (var ti = 0; ti < tickCount; ti++) {
-          var tFrac = ti / (tickCount - 1);
-          var tVal  = max - tFrac * range_v;
-          var tY    = padTop + tFrac * (h - padTop - padBottom);
-          var isBound = (ti === 0 || ti === tickCount - 1);
+        for (var ti = 0; ti < tickValues.length; ti++) {
+          var tVal = tickValues[ti];
+          var tY = padTop + ((max - tVal) / range_v) * (h - padTop - padBottom);
           ticksHtml +=
             '<line x1="' + padX + '" x2="' + dashEndX + '" y1="' + tY.toFixed(1) +
               '" y2="' + tY.toFixed(1) +
               '" stroke="#b56a3f" stroke-width="0.7" stroke-dasharray="3,3" ' +
-              'opacity="' + (isBound ? '0.45' : '0.22') + '"/>' +
+              'opacity="0.3"/>' +
             '<text x="' + rightX + '" y="' + (tY + 3.5).toFixed(1) +
               '" font-family="Inter,system-ui,sans-serif" font-size="10" ' +
-              'font-weight="' + (isBound ? '600' : '500') + '" ' +
-              'fill="' + (ti === 0 ? '#534f47' : '#8e887d') + '" text-anchor="end">' +
+              'font-weight="500" fill="#8e887d" text-anchor="end">' +
               fmtHeroPrice(tVal) + '</text>';
         }
         line.innerHTML =
