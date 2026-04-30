@@ -146,8 +146,10 @@
     var items = [];
 
     var cryptoIds = CRYPTO.map(function (c) { return c.id; }).join(',');
-    var cgUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=' +
-                cryptoIds + '&vs_currencies=usd&include_24hr_change=true';
+    // CoinGecko started blocking CORS for browser requests in 2026 (same
+    // pattern as the Yahoo /v7 lockdown). Proxy through the Worker, which
+    // returns CoinGecko's exact response shape so the parser is unchanged.
+    var cgUrl = WORKER_URL + '?coingecko=' + encodeURIComponent(cryptoIds);
     // currency-api -- USD as the base; lowercase ISO codes in the response.
     var fxUrl = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json';
     // Cloudflare Worker proxy -- one round-trip for 10Y + ETFs + global indexes.

@@ -9,3 +9,8 @@ Thumbs.db
 node_modules/
 dist/
 .cache/
+
+# Cloudflare Worker source kept locally for copy/paste into the dashboard.
+# The actual deployed Worker code lives in the Cloudflare dashboard
+# (Workers & Pages -> bpleon-quotes), not in this repo.
+worker-source.js

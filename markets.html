@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5" />
+  <link rel="stylesheet" href="style.css?v=6" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
 </head>
@@ -133,7 +133,7 @@
     </div>
   </footer>
 
-  <script src="script.js?v=5" defer></script>
+  <script src="script.js?v=6" defer></script>
   <script>
   // =========================================================================
   // Markets page: live crypto + FX + equities + treasuries + commodities.
@@ -280,10 +280,11 @@
 
     // ----- Refresh logic -----
     function refresh() {
-      // 1. Crypto via CoinGecko
+      // 1. Crypto via CoinGecko -- proxied through the Worker since
+      //    CoinGecko started blocking CORS for browser requests in 2026.
+      //    Worker returns the same shape as direct CoinGecko, so no parser change.
       var ids = CRYPTO.map(function (c) { return c.id; }).join(',');
-      var cgUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=' + ids +
-                  '&vs_currencies=usd&include_24hr_change=true';
+      var cgUrl = WORKER_URL + '?coingecko=' + encodeURIComponent(ids);
 
       fetch(cgUrl).then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
         if (!data || !mounts.crypto) return;
