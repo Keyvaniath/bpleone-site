@@ -367,10 +367,13 @@
   //   posted   YYYY-MM-DD when you posted/updated the call
   //   note_url Optional: link to longer write-up (e.g. 'writing.html#mu')
   //
-  // ** PLACEHOLDER ** -- replace MU below with your actual picks before
-  // anyone takes the watchlist seriously. The format demonstrates the shape.
+  // The live source of truth is the /admin watchlist editor, which writes
+  // to Cloudflare KV via the Worker. The array below is only a fallback
+  // shown if the KV fetch fails (Worker down, KV cold, etc.) -- editing it
+  // here will NOT change what visitors see on the homepage. Edit picks at
+  // https://bpleon.com/admin instead.
   // =========================================================================
-  var WATCHLIST = [
+  var WATCHLIST_FALLBACK = [
     {
       sym: 'MU',
       name: 'Micron Technology',
@@ -380,6 +383,27 @@
       note_url: ''
     }
   ];
+  // Mutable; replaced by loadWatchlist() if the KV read succeeds.
+  var WATCHLIST = WATCHLIST_FALLBACK.slice();
+
+  function loadWatchlist(callback) {
+    var url = WORKER_URL + '?watchlist=read';
+    fetch(url)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (list) {
+        if (Array.isArray(list) && list.length) {
+          WATCHLIST = list;
+          console.log('[watchlist] loaded ' + list.length + ' entries from KV');
+        } else {
+          console.log('[watchlist] using fallback (KV empty or unparseable)');
+        }
+        if (callback) callback();
+      })
+      .catch(function (e) {
+        console.warn('[watchlist] KV read failed, using fallback:', e && e.message);
+        if (callback) callback();
+      });
+  }
 
   function renderWatchlist() {
     var grid = document.getElementById('watchlist-grid');
@@ -470,8 +494,10 @@
 
   if (document.getElementById('watchlist-grid')) {
     paintWatchlistSkeleton();
-    renderWatchlist();
-    setInterval(renderWatchlist, 60 * 1000);
+    loadWatchlist(function () {
+      renderWatchlist();
+      setInterval(renderWatchlist, 60 * 1000);
+    });
   }
 
   // =========================================================================
