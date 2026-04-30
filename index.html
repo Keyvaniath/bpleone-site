@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=9" />
+  <link rel="stylesheet" href="style.css?v=10" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
 </head>
@@ -117,6 +117,29 @@
         <div id="watchlist-grid" class="watchlist-grid" aria-live="polite">
           <p class="muted small">Loading watchlist&hellip;</p>
         </div>
+
+        <aside id="snapshot-panel" class="snapshot-panel" aria-labelledby="snapshot-name">
+          <header class="snapshot-head">
+            <p class="snapshot-eyebrow">Snapshot</p>
+            <h3 id="snapshot-name" class="snapshot-name">Loading&hellip;</h3>
+            <p id="snapshot-symbol" class="snapshot-symbol">&nbsp;</p>
+          </header>
+          <div class="snapshot-priceblock">
+            <span id="snapshot-price" class="snapshot-price">$&mdash;</span>
+            <span id="snapshot-change" class="snapshot-change">&nbsp;</span>
+          </div>
+          <div id="snapshot-spark" class="snapshot-spark" aria-hidden="true"></div>
+          <dl id="snapshot-stats" class="snapshot-stats">
+            <div><dt>Mkt Cap</dt><dd>&mdash;</dd></div>
+            <div><dt>P/E (TTM)</dt><dd>&mdash;</dd></div>
+            <div><dt>52W Range</dt><dd>&mdash;</dd></div>
+            <div><dt>Day Range</dt><dd>&mdash;</dd></div>
+            <div><dt>Volume</dt><dd>&mdash;</dd></div>
+            <div><dt>Avg Volume</dt><dd>&mdash;</dd></div>
+          </dl>
+          <a id="snapshot-link" class="snapshot-link" href="https://finance.yahoo.com/" target="_blank" rel="noopener">View on Yahoo Finance &rarr;</a>
+        </aside>
+
         <aside class="headlines-panel" aria-label="Recent headlines">
           <h3 class="headlines-title" id="headlines-title">On the wire</h3>
           <div id="headlines-list" class="headlines-list">
@@ -319,6 +342,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=9" defer></script>
+  <script src="script.js?v=10" defer></script>
 </body>
 </html>

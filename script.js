@@ -464,12 +464,13 @@
             '</div>'
           );
         }).join('');
-        // Kick off the (cheap) sparkline + metrics + headlines loads --
-        // decoupled from the price render so they never block the visible
-        // card update.
+        // Kick off the (cheap) sparkline + metrics + headlines + snapshot
+        // loads -- decoupled from the price render so they never block the
+        // visible card update.
         loadWatchlistSparklines();
         loadWatchlistMetrics();
         loadHeadlinesForFirstPick();
+        loadSnapshotForFirstPick();
       })
       .catch(function () {
         grid.innerHTML = '<p class="muted small">Watchlist data unavailable.</p>';
@@ -568,15 +569,30 @@
     return '$' + r(low) + ' – $' + r(high);
   }
   function metricsRowHtml(m) {
+    // When Yahoo's quoteSummary endpoint is auth-walled (which is the
+    // current default state in 2026), marketCap and trailingPE come back
+    // null. Substitute with chart-meta stats that always work so the row
+    // never has empty cells.
+    var hasMcap = m.marketCap && isFinite(m.marketCap);
+    var hasPe   = m.trailingPE && isFinite(m.trailingPE);
+    function cell(label, val) {
+      return '<div class="wm-cell"><span class="wm-label">' + label + '</span>' +
+             '<span class="wm-val">' + val + '</span></div>';
+    }
+    function fmtPriceShort(n) {
+      if (!isFinite(n)) return '—';
+      if (n >= 1000) return '$' + Math.round(n).toLocaleString();
+      return '$' + n.toFixed(2);
+    }
     return (
-      '<div class="wm-cell"><span class="wm-label">Mkt Cap</span>' +
-        '<span class="wm-val">' + fmtMcap(m.marketCap) + '</span></div>' +
-      '<div class="wm-cell"><span class="wm-label">P/E (TTM)</span>' +
-        '<span class="wm-val">' + fmtPe(m.trailingPE) + '</span></div>' +
-      '<div class="wm-cell"><span class="wm-label">52W</span>' +
-        '<span class="wm-val">' + fmtRange(m.fiftyTwoWeekLow, m.fiftyTwoWeekHigh) + '</span></div>' +
-      '<div class="wm-cell"><span class="wm-label">Vol</span>' +
-        '<span class="wm-val">' + fmtVol(m.volume) + '</span></div>'
+      (hasMcap
+        ? cell('Mkt Cap', fmtMcap(m.marketCap))
+        : cell('Day Range', fmtRange(m.dayLow, m.dayHigh))) +
+      (hasPe
+        ? cell('P/E (TTM)', fmtPe(m.trailingPE))
+        : cell('Prev Close', fmtPriceShort(m.previousClose))) +
+      cell('52W', fmtRange(m.fiftyTwoWeekLow, m.fiftyTwoWeekHigh)) +
+      cell('Vol', fmtVol(m.volume))
     );
   }
   function loadWatchlistMetrics() {
@@ -600,6 +616,98 @@
         });
       })
       .catch(function () { /* silent: card still has price + sparkline */ });
+  }
+
+  // -----------------------------------------------------------------------
+  // "Micron Technology" snapshot panel -- the middle column of the
+  // watchlist row. Bigger 1y sparkline + 6-cell stats grid + a Yahoo
+  // Finance link. Always tracks the FIRST entry in the watchlist.
+  // -----------------------------------------------------------------------
+  function snapshotStatsHtml(m) {
+    function row(label, val) {
+      return '<div><dt>' + label + '</dt><dd>' + val + '</dd></div>';
+    }
+    function fmtPriceShort(n) {
+      if (!isFinite(n)) return '—';
+      if (n >= 1000) return '$' + Math.round(n).toLocaleString();
+      return '$' + n.toFixed(2);
+    }
+    function fmtPctOff52w(price, high) {
+      if (!isFinite(price) || !isFinite(high) || !high) return '—';
+      var pct = ((price - high) / high) * 100;
+      return (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
+    }
+
+    var hasMcap   = m.marketCap && isFinite(m.marketCap);
+    var hasPe     = m.trailingPE && isFinite(m.trailingPE);
+    var hasAvgVol = m.avgVolume && isFinite(m.avgVolume);
+
+    var out = '';
+    out += hasMcap
+      ? row('Mkt Cap',   fmtMcap(m.marketCap))
+      : row('Day Range', fmtRange(m.dayLow, m.dayHigh));
+    out += hasPe
+      ? row('P/E (TTM)', fmtPe(m.trailingPE))
+      : row('Prev Close', fmtPriceShort(m.previousClose));
+    out += row('52W Range', fmtRange(m.fiftyTwoWeekLow, m.fiftyTwoWeekHigh));
+    out += hasMcap
+      ? row('Day Range', fmtRange(m.dayLow, m.dayHigh))
+      : row('% from 52W high', fmtPctOff52w(m.price, m.fiftyTwoWeekHigh));
+    out += row('Volume', fmtVol(m.volume));
+    out += hasAvgVol
+      ? row('Avg Volume', fmtVol(m.avgVolume))
+      : row('Exchange',   m.exchange || '—');
+    return out;
+  }
+  function loadSnapshotForFirstPick() {
+    var panel = document.getElementById('snapshot-panel');
+    if (!panel) return;
+    if (!WATCHLIST.length) return;
+    var first = WATCHLIST[0];
+    var sym = first.sym;
+
+    var nameEl    = document.getElementById('snapshot-name');
+    var symEl     = document.getElementById('snapshot-symbol');
+    var priceEl   = document.getElementById('snapshot-price');
+    var changeEl  = document.getElementById('snapshot-change');
+    var sparkEl   = document.getElementById('snapshot-spark');
+    var statsEl   = document.getElementById('snapshot-stats');
+    var linkEl    = document.getElementById('snapshot-link');
+
+    if (nameEl) nameEl.textContent = first.name;
+    if (linkEl) linkEl.href = 'https://finance.yahoo.com/quote/' + encodeURIComponent(sym) + '/';
+
+    Promise.all([
+      fetch(WORKER_URL + '?metrics=' + encodeURIComponent(sym))
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; }),
+      fetch(WORKER_URL + '?spark=' + encodeURIComponent(sym) + '&range=1y')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .catch(function () { return null; }),
+    ]).then(function (results) {
+      var metrics = results[0] && results[0][sym];
+      var spark   = results[1] && results[1][sym];
+
+      if (metrics) {
+        if (priceEl && isFinite(metrics.price)) {
+          priceEl.textContent = '$' + metrics.price.toFixed(2);
+        }
+        if (changeEl && isFinite(metrics.price) && isFinite(metrics.previousClose) && metrics.previousClose) {
+          var change = metrics.price - metrics.previousClose;
+          var pct = (change / metrics.previousClose) * 100;
+          changeEl.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '% today';
+          changeEl.className = 'snapshot-change ' + (pct >= 0 ? 'up' : 'down');
+        }
+        if (symEl && metrics.exchange) {
+          symEl.textContent = metrics.exchange + ': ' + sym;
+        }
+        if (statsEl) statsEl.innerHTML = snapshotStatsHtml(metrics);
+      }
+
+      if (spark && spark.length > 1 && sparkEl) {
+        sparkEl.innerHTML = sparklineSvg(spark, { width: 320, height: 80, padding: 4 });
+      }
+    });
   }
 
   // -----------------------------------------------------------------------
@@ -961,7 +1069,13 @@
         if (label) {
           var pct = ((values[values.length - 1] - values[0]) / values[0]) * 100;
           var rangeLabel = HERO_RANGE_LABELS[range] || range.toUpperCase();
-          label.textContent = 'S&P 500 · ' + rangeLabel + ' · ' + (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
+          var current = values[values.length - 1];
+          var fmtVal = current >= 1000
+            ? Math.round(current).toLocaleString()
+            : current.toFixed(2);
+          label.textContent = 'S&P 500 · ' + fmtVal +
+            ' · ' + rangeLabel + ' ' +
+            (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
         }
       })
       .catch(function () { /* leave placeholder path */ });
