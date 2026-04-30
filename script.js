@@ -454,7 +454,6 @@
                 (pctStr ? '<span class="watch-change ' + pctClass + '">' + pctStr + '</span>' : '') +
               '</div>' +
               '<div class="watch-spark" data-sym="' + escapeAttr(w.sym) + '"></div>' +
-              '<div class="watch-metrics" data-sym="' + escapeAttr(w.sym) + '"></div>' +
               '<p class="watch-thesis">' + w.thesis + '</p>' +
               '<div class="watch-target-row">' +
                 '<span class="muted small">Target $' + w.target.toFixed(2) + '</span>' +
@@ -464,11 +463,14 @@
             '</div>'
           );
         }).join('');
-        // Kick off the (cheap) sparkline + metrics + headlines + snapshot
-        // loads -- decoupled from the price render so they never block the
-        // visible card update.
+        // Kick off the (cheap) sparkline + snapshot + headlines loads --
+        // decoupled from the price render so they never block the visible
+        // card update. (loadWatchlistMetrics is intentionally not called
+        // here: stats display lives in the dedicated Snapshot panel for
+        // the lead pick. We keep the function defined for future use when
+        // the watchlist grows beyond one pick and non-lead cards need
+        // a compact metrics row.)
         loadWatchlistSparklines();
-        loadWatchlistMetrics();
         loadHeadlinesForFirstPick();
         loadSnapshotForFirstPick();
       })
@@ -478,34 +480,70 @@
   }
 
   // -----------------------------------------------------------------------
-  // Sparkline rendering -- 1y daily closes from the Worker, drawn into each
-  // watchlist card as a small SVG. Up/down stroke colour comes from the
-  // first-vs-last comparison so the trend is visible at a glance.
+  // Sparkline rendering -- daily closes drawn as a small SVG line. Up/down
+  // stroke color comes from the first-vs-last comparison. With
+  // opts.showRange = true, also draws subtle dashed high/low reference
+  // lines and prints the price values at the right edge of each line --
+  // gives the reader an instant range and price anchor.
   // -----------------------------------------------------------------------
+  function fmtSparkPrice(n) {
+    if (!isFinite(n)) return '';
+    if (n >= 1000) return Math.round(n).toLocaleString();
+    if (n >= 100)  return n.toFixed(0);
+    if (n >= 1)    return n.toFixed(2);
+    return n.toFixed(4);
+  }
   function sparklineSvg(values, opts) {
     opts = opts || {};
     var w = opts.width || 280;
     var h = opts.height || 44;
     var pad = opts.padding || 3;
+    var showRange = !!opts.showRange;
+    var labelPad = showRange ? 38 : 0;  // reserve right-edge space for price labels
+    var plotW = w - labelPad;
     var min = Math.min.apply(null, values);
     var max = Math.max.apply(null, values);
     var range = max - min || 1;
-    var stepX = (w - 2 * pad) / Math.max(values.length - 1, 1);
+    var stepX = (plotW - 2 * pad) / Math.max(values.length - 1, 1);
     var pts = values.map(function (v, i) {
       var x = pad + i * stepX;
       var y = h - pad - ((v - min) / range) * (h - 2 * pad);
-      return x.toFixed(1) + ',' + y.toFixed(1);
+      return { x: +x.toFixed(1), y: +y.toFixed(1) };
     });
     var up = values[values.length - 1] >= values[0];
     var stroke = opts.stroke || (up ? '#1a6e3f' : '#b03a2e');
-    var lastPt = pts[pts.length - 1].split(',');
+    var lastPt = pts[pts.length - 1];
+    var pointsAttr = pts.map(function (p) { return p.x + ',' + p.y; }).join(' ');
+
+    var rangeMarkup = '';
+    if (showRange) {
+      var maxIdx = values.indexOf(max);
+      var minIdx = values.indexOf(min);
+      var highY = pts[maxIdx].y;
+      var lowY  = pts[minIdx].y;
+      // Avoid stacked labels at extreme ranges -- nudge if too close.
+      if (Math.abs(highY - lowY) < 12) lowY = Math.min(h - 4, highY + 12);
+      rangeMarkup =
+        '<line x1="' + pad + '" x2="' + plotW + '" y1="' + highY + '" y2="' + highY +
+          '" stroke="' + stroke + '" stroke-width="0.6" stroke-dasharray="2,3" opacity="0.35"/>' +
+        '<line x1="' + pad + '" x2="' + plotW + '" y1="' + lowY  + '" y2="' + lowY  +
+          '" stroke="' + stroke + '" stroke-width="0.6" stroke-dasharray="2,3" opacity="0.35"/>' +
+        '<text x="' + (plotW + 4) + '" y="' + (highY + 3) + '" ' +
+          'font-family="Inter,system-ui,sans-serif" font-size="9" font-weight="500" ' +
+          'fill="#534f47">' + fmtSparkPrice(max) + '</text>' +
+        '<text x="' + (plotW + 4) + '" y="' + (lowY + 3) + '" ' +
+          'font-family="Inter,system-ui,sans-serif" font-size="9" font-weight="500" ' +
+          'fill="#8e887d">' + fmtSparkPrice(min) + '</text>';
+    }
+
     return (
       '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" ' +
       'aria-hidden="true" style="display:block;width:100%;height:' + h + 'px;overflow:visible">' +
-        '<polyline points="' + pts.join(' ') + '" fill="none" stroke="' + stroke +
+        rangeMarkup +
+        '<polyline points="' + pointsAttr + '" fill="none" stroke="' + stroke +
         '" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" ' +
         'vector-effect="non-scaling-stroke"/>' +
-        '<circle cx="' + lastPt[0] + '" cy="' + lastPt[1] + '" r="2.5" fill="' + stroke + '"/>' +
+        '<circle cx="' + lastPt.x + '" cy="' + lastPt.y + '" r="2.5" fill="' + stroke + '"/>' +
       '</svg>'
     );
   }
@@ -705,7 +743,12 @@
       }
 
       if (spark && spark.length > 1 && sparkEl) {
-        sparkEl.innerHTML = sparklineSvg(spark, { width: 320, height: 80, padding: 4 });
+        sparkEl.innerHTML = sparklineSvg(spark, {
+          width: 320,
+          height: 80,
+          padding: 4,
+          showRange: true,
+        });
       }
     });
   }
@@ -1061,7 +1104,35 @@
         if (fill) {
           fill.innerHTML = '<path d="' + areaPath + '" fill="url(#hero-fill)" stroke="none"/>';
         }
+        // High/low reference lines and price labels (right-aligned at the
+        // chart's right edge so the reader has actual numbers to anchor on).
+        var maxIdx = values.indexOf(max);
+        var minIdx = values.indexOf(min);
+        var maxY = pts[maxIdx].y;
+        var minY = pts[minIdx].y;
+        function fmtHeroPrice(n) {
+          if (n >= 1000) return Math.round(n).toLocaleString();
+          if (n >= 100)  return n.toFixed(0);
+          return n.toFixed(2);
+        }
+        var rightX = w - padX;
+        var dashEndX = rightX - 38;  // leave space for the right-edge label
         line.innerHTML =
+          // High/low dashed reference lines
+          '<line x1="' + padX + '" x2="' + dashEndX + '" y1="' + maxY.toFixed(1) +
+            '" y2="' + maxY.toFixed(1) +
+            '" stroke="#b56a3f" stroke-width="0.7" stroke-dasharray="3,3" opacity="0.45"/>' +
+          '<line x1="' + padX + '" x2="' + dashEndX + '" y1="' + minY.toFixed(1) +
+            '" y2="' + minY.toFixed(1) +
+            '" stroke="#b56a3f" stroke-width="0.7" stroke-dasharray="3,3" opacity="0.45"/>' +
+          // High/low price labels at the right edge
+          '<text x="' + rightX + '" y="' + (maxY + 3.5).toFixed(1) +
+            '" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600" ' +
+            'fill="#534f47" text-anchor="end">' + fmtHeroPrice(max) + '</text>' +
+          '<text x="' + rightX + '" y="' + (minY + 3.5).toFixed(1) +
+            '" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="500" ' +
+            'fill="#8e887d" text-anchor="end">' + fmtHeroPrice(min) + '</text>' +
+          // Main line + endpoint dots
           '<path d="' + linePath + '" fill="none" stroke="#b56a3f" stroke-width="3" ' +
             'stroke-linecap="round" stroke-linejoin="round"/>' +
           '<circle cx="' + lastPt.x + '" cy="' + lastPt.y + '" r="6" fill="#b56a3f"/>' +
