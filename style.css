@@ -1235,14 +1235,14 @@ main.prose.center {
 .lp-change.up   { color: #1a6e3f; }
 .lp-change.down { color: #b03a2e; }
 .lp-spark {
-  margin: .25rem 0 .35rem;
+  margin: .25rem auto .35rem;
   min-height: 140px;
-  max-width: 540px;
+  max-width: 420px;
 }
 .lp-spark-periods {
   display: flex;
-  gap: .25rem;
-  justify-content: flex-end;
+  gap: .35rem;
+  justify-content: center;
   margin: 0 0 1.1rem;
   flex-wrap: wrap;
 }
