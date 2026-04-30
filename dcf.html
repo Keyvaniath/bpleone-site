@@ -21,6 +21,86 @@
   <link rel="stylesheet" href="style.css?v=7" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+
+  <style>
+    /* Admin-only saved sessions panel (only visible if you've signed into /admin) */
+    .dcf-sessions {
+      margin: 0 0 1.5rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-soft);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+    }
+    .dcf-sessions-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: .85rem;
+      gap: 1rem;
+    }
+    .dcf-sessions-label {
+      font-family: var(--sans);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .dcf-sessions-back {
+      font-size: .85rem;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .dcf-sessions-back:hover { color: var(--accent); }
+    .dcf-sessions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      align-items: center;
+      margin-bottom: .5rem;
+    }
+    .dcf-sessions-row:last-of-type { margin-bottom: 0; }
+    .dcf-sessions select,
+    .dcf-sessions input[type="text"] {
+      padding: .45rem .65rem;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: .9rem;
+    }
+    .dcf-sessions select { min-width: 14rem; }
+    .dcf-sessions input[type="text"] { min-width: 14rem; flex: 1; }
+    .dcf-sessions .dcf-btn {
+      padding: .45rem .9rem;
+      font-size: .85rem;
+      border-radius: 6px;
+      border: 1px solid var(--rule);
+      background: var(--bg);
+      color: var(--ink);
+      cursor: pointer;
+      font-family: var(--sans);
+    }
+    .dcf-sessions .dcf-btn:hover { background: var(--bg-soft); border-color: var(--accent); }
+    .dcf-sessions .dcf-btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .dcf-sessions .dcf-btn-primary:hover { background: #9a5530; border-color: #9a5530; color: #fff; }
+    .dcf-sessions .dcf-btn-danger {
+      color: #b03a2e;
+      border-color: #b03a2e;
+    }
+    .dcf-sessions .dcf-btn-danger:hover { background: rgba(176,58,46,0.08); }
+    .dcf-sessions-status {
+      margin: .65rem 0 0;
+      min-height: 1.2em;
+      font-size: .85rem;
+    }
+    .dcf-sessions-hidden { display: none; }
+  </style>
 </head>
 <body style="background:#fbf7ef;color:#1c1a16;">
   <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
@@ -46,6 +126,31 @@
         sensitivity table across WACC and terminal growth.
       </p>
     </header>
+
+    <!-- =================================================
+         Admin-only saved sessions panel
+         Hidden by default; only revealed if a valid admin
+         secret is found in localStorage (i.e. you've
+         signed into /admin on this device).
+         ================================================= -->
+    <div id="dcf-sessions-panel" class="dcf-sessions dcf-sessions-hidden">
+      <div class="dcf-sessions-head">
+        <span class="dcf-sessions-label">Admin &middot; Saved sessions</span>
+        <a class="dcf-sessions-back" href="/admin/">&larr; admin</a>
+      </div>
+      <div class="dcf-sessions-row">
+        <select id="dcf-sessions-select" aria-label="Saved sessions">
+          <option value="">&mdash; pick a session &mdash;</option>
+        </select>
+        <button type="button" id="dcf-load-btn" class="dcf-btn">Load</button>
+        <button type="button" id="dcf-delete-btn" class="dcf-btn dcf-btn-danger">Delete</button>
+      </div>
+      <div class="dcf-sessions-row">
+        <input type="text" id="dcf-save-name" placeholder="Name this session (e.g. MU base case)" autocomplete="off" />
+        <button type="button" id="dcf-save-btn" class="dcf-btn dcf-btn-primary">Save current</button>
+      </div>
+      <p id="dcf-sessions-status" class="muted small dcf-sessions-status">&nbsp;</p>
+    </div>
 
     <div class="dcf-grid">
 
@@ -308,6 +413,179 @@
       inputs[id].addEventListener('input', compute);
     });
     compute();
+  })();
+  </script>
+
+  <script>
+  // =========================================================================
+  // Admin-only: saved DCF sessions.
+  //
+  // Reveals a panel above the calculator if the admin secret is in
+  // localStorage (set by signing into /admin). Lets you:
+  //   - save the current set of inputs under a name
+  //   - load a saved set back into the form (triggers a recompute)
+  //   - delete a saved set
+  //
+  // All persistence goes through the bpleon-quotes Worker (?dcfs=read|write)
+  // which in turn uses the ADMIN_KV namespace. Both reads AND writes require
+  // the bearer secret -- these sessions are private analyst notebooks.
+  // =========================================================================
+  (function () {
+    var SECRET_KEY = 'bpleon_admin_secret_v1';
+    var WORKER_URL = 'https://bpleon-quotes.brandonpleone.workers.dev/';
+    var INPUT_IDS = ['revenue','growth','margin','tax','wacc','tg','netdebt','shares'];
+
+    function getSecret() { return localStorage.getItem(SECRET_KEY) || ''; }
+    function clearSecret() { localStorage.removeItem(SECRET_KEY); }
+
+    if (!getSecret()) return;  // not signed in -- do nothing, panel stays hidden
+
+    var panel        = document.getElementById('dcf-sessions-panel');
+    var sel          = document.getElementById('dcf-sessions-select');
+    var loadBtn      = document.getElementById('dcf-load-btn');
+    var deleteBtn    = document.getElementById('dcf-delete-btn');
+    var saveBtn      = document.getElementById('dcf-save-btn');
+    var saveNameEl   = document.getElementById('dcf-save-name');
+    var statusEl     = document.getElementById('dcf-sessions-status');
+
+    if (!panel) return;
+    panel.classList.remove('dcf-sessions-hidden');
+
+    var sessions = {};
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    function setStatus(msg, isError) {
+      statusEl.textContent = msg || '';
+      statusEl.style.color = isError ? '#b03a2e' : '';
+    }
+
+    function captureInputs() {
+      var out = {};
+      INPUT_IDS.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) out[id] = el.value;
+      });
+      return out;
+    }
+
+    function applyInputs(saved) {
+      INPUT_IDS.forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el && saved[id] != null) el.value = saved[id];
+      });
+      // Trigger the calculator's recompute by firing input on the first field.
+      var first = document.getElementById(INPUT_IDS[0]);
+      if (first) first.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    function refreshSelect() {
+      var names = Object.keys(sessions).sort();
+      var html = '<option value="">&mdash; pick a session &mdash;</option>';
+      names.forEach(function (n) {
+        html += '<option value="' + escapeHtml(n) + '">' + escapeHtml(n) + '</option>';
+      });
+      sel.innerHTML = html;
+    }
+
+    function handleAuthFailure() {
+      clearSecret();
+      panel.classList.add('dcf-sessions-hidden');
+      sessions = {};
+    }
+
+    function loadFromKv() {
+      setStatus('Loading saved sessions…');
+      fetch(WORKER_URL + '?dcfs=read', {
+        headers: { 'Authorization': 'Bearer ' + getSecret() }
+      })
+        .then(function (r) {
+          if (r.status === 401) throw new Error('unauthorized');
+          if (!r.ok) throw new Error('load failed (' + r.status + ')');
+          return r.json();
+        })
+        .then(function (data) {
+          sessions = (data && typeof data === 'object' && !Array.isArray(data)) ? data : {};
+          refreshSelect();
+          var n = Object.keys(sessions).length;
+          setStatus(n === 0
+            ? 'No saved sessions yet. Save one with the button above.'
+            : n + ' saved session' + (n === 1 ? '' : 's') + '.');
+        })
+        .catch(function (e) {
+          if (e.message === 'unauthorized') {
+            handleAuthFailure();
+          } else {
+            setStatus('Could not load: ' + e.message, true);
+          }
+        });
+    }
+
+    function persist(successMsg) {
+      setStatus('Saving…');
+      fetch(WORKER_URL + '?dcfs=write', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getSecret(),
+        },
+        body: JSON.stringify(sessions),
+      })
+        .then(function (r) {
+          if (r.status === 401) throw new Error('unauthorized');
+          return r.json().then(function (data) {
+            if (!r.ok) throw new Error((data && data.error) || 'save failed (' + r.status + ')');
+            return data;
+          });
+        })
+        .then(function () {
+          refreshSelect();
+          setStatus(successMsg);
+        })
+        .catch(function (e) {
+          if (e.message === 'unauthorized') {
+            handleAuthFailure();
+          } else {
+            setStatus('Save failed: ' + e.message, true);
+          }
+        });
+    }
+
+    loadBtn.addEventListener('click', function () {
+      var name = sel.value;
+      if (!name || !sessions[name]) { setStatus('Pick a session first.', true); return; }
+      applyInputs(sessions[name].inputs || {});
+      setStatus('Loaded: ' + name);
+    });
+
+    deleteBtn.addEventListener('click', function () {
+      var name = sel.value;
+      if (!name || !sessions[name]) { setStatus('Pick a session first.', true); return; }
+      if (!confirm('Delete saved session "' + name + '"?')) return;
+      delete sessions[name];
+      sel.value = '';
+      persist('Deleted "' + name + '".');
+    });
+
+    saveBtn.addEventListener('click', function () {
+      var name = saveNameEl.value.trim();
+      if (!name) { setStatus('Type a name first.', true); saveNameEl.focus(); return; }
+      if (name.length > 80) { setStatus('Name too long (max 80 chars).', true); return; }
+      if (sessions[name] && !confirm('Overwrite saved session "' + name + '"?')) return;
+      sessions[name] = {
+        inputs: captureInputs(),
+        savedAt: new Date().toISOString(),
+      };
+      sel.value = name;
+      saveNameEl.value = '';
+      persist('Saved as "' + name + '".');
+    });
+
+    loadFromKv();
   })();
   </script>
 </body>

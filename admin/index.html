@@ -285,6 +285,110 @@
     }
     .status-pill.ok { background: rgba(26,110,63,0.12); color: #1a6e3f; }
     .status-pill.err { background: rgba(176,58,46,0.12); color: #b03a2e; }
+
+    /* Tab navigation across admin tools */
+    .admin-tabs {
+      display: flex;
+      gap: .25rem;
+      margin: 0 0 1.5rem;
+      border-bottom: 1px solid var(--rule);
+      flex-wrap: wrap;
+      align-items: stretch;
+    }
+    .admin-tab {
+      padding: .65rem 1.25rem;
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      font-family: var(--sans);
+      font-size: .92rem;
+      font-weight: 500;
+      color: var(--ink-soft);
+      text-decoration: none;
+      margin-bottom: -1px;
+      transition: color .15s, border-color .15s;
+    }
+    .admin-tab:hover { color: var(--ink); }
+    .admin-tab.active {
+      color: var(--ink);
+      border-bottom-color: var(--accent);
+    }
+    .admin-tab-link {
+      margin-left: auto;
+      font-size: .85rem;
+      color: var(--muted);
+      align-self: center;
+      padding: .65rem 1rem;
+    }
+    .admin-tab-link:hover { color: var(--accent); }
+    .admin-pane .admin-page-head { margin-bottom: 1.5rem; }
+
+    /* File vault list */
+    .file-list { margin: 0 0 1.5rem; }
+    .file-list-status { padding: .5rem 0 1rem; }
+    .file-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-soft);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+      margin-bottom: .65rem;
+      flex-wrap: wrap;
+    }
+    .file-row-info {
+      display: flex;
+      flex-direction: column;
+      gap: .25rem;
+      min-width: 0;
+      flex: 1;
+    }
+    .file-row-name {
+      font-family: var(--serif);
+      font-size: 1.05rem;
+      color: var(--ink);
+      font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-row-meta {
+      font-family: var(--sans);
+      font-size: .82rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .file-row-action button {
+      padding: .45rem 1rem;
+      border-radius: 999px;
+      background: var(--accent);
+      color: #fff;
+      border: 1px solid var(--accent);
+      font-family: var(--sans);
+      font-size: .85rem;
+      cursor: pointer;
+    }
+    .file-row-action button:hover { background: #9a5530; border-color: #9a5530; }
+    .file-row-action button:disabled { opacity: .6; cursor: wait; }
+    .file-list-empty {
+      padding: 1.5rem;
+      text-align: center;
+      color: var(--ink-soft);
+      background: var(--bg-soft);
+      border-radius: 12px;
+      border: 1px dashed var(--rule);
+      line-height: 1.55;
+    }
+    .file-list-empty code {
+      background: var(--bg);
+      padding: .12rem .4rem;
+      border-radius: 4px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .9em;
+    }
   </style>
 </head>
 <body style="background:#fbf7ef;color:#1c1a16;">
@@ -319,23 +423,46 @@
 
     <!-- Editor state: shown once authenticated -->
     <div id="editor-view" class="hidden">
-      <div class="admin-page-head">
-        <p class="eyebrow">Watchlist</p>
-        <h1>What I'm watching.</h1>
-        <p>Edit the picks shown on the homepage. Save to publish &mdash; the homepage re-fetches automatically within a minute.</p>
-      </div>
 
-      <div id="pick-list" class="pick-list"></div>
+      <nav class="admin-tabs" aria-label="Admin sections">
+        <button type="button" class="admin-tab active" data-pane="watchlist">Watchlist</button>
+        <button type="button" class="admin-tab" data-pane="files">Files</button>
+        <a class="admin-tab admin-tab-link" href="/dcf.html">DCF Calculator &rarr;</a>
+      </nav>
 
-      <button id="add-pick" type="button" class="btn-add">+ Add another pick</button>
+      <!-- Watchlist pane -->
+      <div id="pane-watchlist" class="admin-pane">
+        <div class="admin-page-head">
+          <p class="eyebrow">Watchlist</p>
+          <h1>What I'm watching.</h1>
+          <p>Edit the picks shown on the homepage. Save to publish &mdash; the homepage re-fetches automatically within a minute.</p>
+        </div>
 
-      <div class="action-bar">
-        <div id="dirty-state" class="action-bar-left">No unsaved changes.</div>
-        <div class="action-bar-right">
-          <button id="discard-changes" type="button" class="btn-danger">Discard</button>
-          <button id="save-changes" type="button" class="btn">Save changes</button>
+        <div id="pick-list" class="pick-list"></div>
+
+        <button id="add-pick" type="button" class="btn-add">+ Add another pick</button>
+
+        <div class="action-bar">
+          <div id="dirty-state" class="action-bar-left">No unsaved changes.</div>
+          <div class="action-bar-right">
+            <button id="discard-changes" type="button" class="btn-danger">Discard</button>
+            <button id="save-changes" type="button" class="btn">Save changes</button>
+          </div>
         </div>
       </div>
+
+      <!-- Files pane (R2-backed) -->
+      <div id="pane-files" class="admin-pane hidden">
+        <div class="admin-page-head">
+          <p class="eyebrow">Files</p>
+          <h1>Private file vault.</h1>
+          <p>Files in your <code>bpleon-files</code> R2 bucket &mdash; tap any to download from any device. Upload new files via the Cloudflare dashboard (R2 &rarr; bpleon-files &rarr; Upload).</p>
+        </div>
+
+        <div id="file-list-status" class="muted small file-list-status">Loading files&hellip;</div>
+        <div id="file-list" class="file-list"></div>
+      </div>
+
     </div>
 
   </div>
@@ -654,6 +781,138 @@
         renderPicks();
       });
   }
+
+  // --- Tabs + Files pane -------------------------------------------------
+  var filesLoaded = false;
+  var fileListEl   = document.getElementById('file-list');
+  var fileStatusEl = document.getElementById('file-list-status');
+
+  function switchTab(name) {
+    var tabs  = document.querySelectorAll('.admin-tab[data-pane]');
+    var panes = document.querySelectorAll('.admin-pane');
+    tabs.forEach(function (t) {
+      t.classList.toggle('active', t.getAttribute('data-pane') === name);
+    });
+    panes.forEach(function (p) {
+      p.classList.toggle('hidden', p.id !== 'pane-' + name);
+    });
+    if (name === 'files' && !filesLoaded) loadFiles();
+  }
+  document.querySelectorAll('.admin-tab[data-pane]').forEach(function (t) {
+    t.addEventListener('click', function () {
+      switchTab(t.getAttribute('data-pane'));
+    });
+  });
+
+  function fmtSize(bytes) {
+    if (!isFinite(bytes)) return '—';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    if (bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+    return (bytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
+  }
+  function fmtDate(d) {
+    if (!d) return 'unknown';
+    try { return new Date(d).toLocaleString(); } catch (e) { return String(d); }
+  }
+
+  function loadFiles() {
+    fileStatusEl.textContent = 'Loading files…';
+    fileListEl.innerHTML = '';
+    fetch(WORKER_URL + '?files=list', {
+      headers: { 'Authorization': 'Bearer ' + getSecret() },
+    })
+      .then(function (r) {
+        if (r.status === 401) throw new Error('unauthorized');
+        if (r.status === 503) {
+          throw new Error('R2 not bound yet. Set up a bucket called "bpleon-files" in the Cloudflare dashboard, then bind it to the Worker as FILES_R2.');
+        }
+        if (!r.ok) throw new Error('list failed (' + r.status + ')');
+        return r.json();
+      })
+      .then(function (files) {
+        filesLoaded = true;
+        if (!Array.isArray(files) || !files.length) {
+          fileStatusEl.textContent = '';
+          fileListEl.innerHTML =
+            '<div class="file-list-empty">No files in the vault yet.<br>' +
+            'Upload via dashboard &rarr; <code>R2</code> &rarr; <code>bpleon-files</code> &rarr; <strong>Upload</strong>.</div>';
+          return;
+        }
+        fileStatusEl.textContent = files.length + ' file' + (files.length === 1 ? '' : 's') + ' in the vault.';
+        fileListEl.innerHTML = files.map(function (f) {
+          return '<div class="file-row">' +
+            '<div class="file-row-info">' +
+              '<span class="file-row-name">' + escapeHtml(f.name) + '</span>' +
+              '<span class="file-row-meta">' + escapeHtml(fmtSize(f.size)) + ' &middot; uploaded ' + escapeHtml(fmtDate(f.uploaded)) + '</span>' +
+            '</div>' +
+            '<div class="file-row-action">' +
+              '<button type="button" data-name="' + escapeHtml(f.name) + '">Download</button>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      })
+      .catch(function (e) {
+        if (e && e.message === 'unauthorized') {
+          toast('Wrong secret. Logged out.', 'error');
+          clearSecret();
+          showLogin();
+          return;
+        }
+        fileStatusEl.textContent = '';
+        fileListEl.innerHTML = '<div class="file-list-empty">' + escapeHtml(e && e.message) + '</div>';
+      });
+  }
+
+  fileListEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-name]');
+    if (!btn) return;
+    var name = btn.getAttribute('data-name');
+    btn.disabled = true;
+    var origText = btn.textContent;
+    btn.textContent = 'Downloading…';
+    fetch(WORKER_URL + '?files=download&name=' + encodeURIComponent(name), {
+      headers: { 'Authorization': 'Bearer ' + getSecret() },
+    })
+      .then(function (r) {
+        if (r.status === 401) throw new Error('unauthorized');
+        if (!r.ok) throw new Error('download failed (' + r.status + ')');
+        return r.blob();
+      })
+      .then(function (blob) {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(function () {
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+        }, 200);
+        btn.disabled = false;
+        btn.textContent = origText;
+        toast('Downloaded ' + name, 'success');
+      })
+      .catch(function (e) {
+        btn.disabled = false;
+        btn.textContent = origText;
+        if (e && e.message === 'unauthorized') {
+          toast('Wrong secret. Logged out.', 'error');
+          clearSecret();
+          showLogin();
+          return;
+        }
+        toast('Download failed: ' + (e && e.message), 'error');
+      });
+  });
+
+  // Reset files cache on logout so it re-loads next session
+  var origShowLogin = showLogin;
+  showLogin = function () {
+    filesLoaded = false;
+    origShowLogin();
+  };
 
   // --- Bootstrap ---------------------------------------------------------
   if (getSecret()) {
