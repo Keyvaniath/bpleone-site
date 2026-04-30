@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=8" />
+  <link rel="stylesheet" href="style.css?v=9" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
 </head>
@@ -67,19 +67,25 @@
           <a class="btn btn-ghost" href="dcf-template.html">Get the DCF template</a>
         </div>
       </div>
-      <div class="hero-art" aria-hidden="true">
-        <!-- Live S&P 500 1Y chart on dotted grid paper. The placeholder
-             path inside #hero-chart-line is replaced by script.js with the
-             real Yahoo data once it lands; if the fetch fails the
-             placeholder remains, so the SVG always looks intentional. -->
-        <svg id="hero-chart" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="S&amp;P 500 1-year price chart">
+      <div class="hero-art">
+        <!-- Live S&P 500 chart on dotted grid paper. Period toggles below
+             switch the range (1M / 6M / YTD / 1Y / 5Y) and a soft terracotta
+             gradient fills below the line. The placeholder path inside
+             #hero-chart-line is replaced by script.js once Yahoo data lands;
+             if the fetch fails the placeholder remains. -->
+        <svg id="hero-chart" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="S&amp;P 500 price chart" aria-hidden="false">
           <defs>
             <pattern id="dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
               <circle cx="2" cy="2" r="1" fill="#d8cfb9"/>
             </pattern>
+            <linearGradient id="hero-fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#b56a3f" stop-opacity="0.30"/>
+              <stop offset="100%" stop-color="#b56a3f" stop-opacity="0.02"/>
+            </linearGradient>
           </defs>
           <rect width="320" height="240" fill="#f3ece0" rx="14"/>
           <rect width="320" height="240" fill="url(#dots)" rx="14"/>
+          <g id="hero-chart-fill"></g>
           <g id="hero-chart-line">
             <path d="M 24 200 L 64 178 L 104 184 L 144 142 L 184 158 L 224 102 L 264 118 L 296 60"
                   fill="none" stroke="#b56a3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
@@ -87,6 +93,13 @@
           </g>
           <text id="hero-chart-label" x="22" y="28" fill="#534f47" font-weight="600">Loading&hellip;</text>
         </svg>
+        <div class="hero-chart-periods" role="tablist" aria-label="S&amp;P 500 chart range">
+          <button type="button" class="period-btn" data-range="1mo">1M</button>
+          <button type="button" class="period-btn" data-range="6mo">6M</button>
+          <button type="button" class="period-btn" data-range="ytd">YTD</button>
+          <button type="button" class="period-btn active" data-range="1y">1Y</button>
+          <button type="button" class="period-btn" data-range="5y">5Y</button>
+        </div>
       </div>
     </section>
 
@@ -261,15 +274,15 @@
       <ul class="rw-list">
         <li>
           <span class="rw-tag">Reading</span>
-          <span class="rw-text"><em>Capital Returns</em> by Edward Chancellor &mdash; the Marathon Asset Management essays. The cleanest articulation of capital-cycle thinking I&rsquo;ve found, and the lens behind every cyclical pitch on this site.</span>
+          <span class="rw-text"><em>Chip War</em> by Chris Miller &mdash; the cleanest narrative of how the semiconductor stack became the most strategically valuable industry on the planet. Mandatory background reading for anyone valuing NVDA, AMD, or Micron.</span>
         </li>
         <li>
           <span class="rw-tag">Watching</span>
-          <span class="rw-text">The 10Y yield, and HBM ASP commentary in the next round of memory prints (NVDA, MU, AVGO).</span>
+          <span class="rw-text">The 10Y yield. HBM ASP commentary in the next round of memory prints. Capex guides from the AI buildout (NVDA, AVGO, the hyperscalers). Crude as an early signal for the energy cycle. Gold and BTC as the macro hedge pair.</span>
         </li>
         <li>
           <span class="rw-tag">Listening</span>
-          <span class="rw-text"><em>Odd Lots</em> (Bloomberg) &mdash; Tracy Alloway and Joe Weisenthal on whatever corner of the market is mispriced this week. <em>Capital Allocators</em> when there&rsquo;s a manager I want to hear think out loud.</span>
+          <span class="rw-text"><em>Odd Lots</em> (Bloomberg) for the macro / commodities / crypto crossovers. <em>Acquired</em> when there&rsquo;s a tech business worth unpacking end-to-end &mdash; recent episodes on the chip stack are excellent.</span>
         </li>
       </ul>
       <p class="muted small">Updated every few weeks on the <a href="now.html">/now</a> page.</p>
@@ -306,6 +319,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=8" defer></script>
+  <script src="script.js?v=9" defer></script>
 </body>
 </html>

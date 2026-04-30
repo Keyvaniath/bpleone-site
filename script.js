@@ -454,6 +454,7 @@
                 (pctStr ? '<span class="watch-change ' + pctClass + '">' + pctStr + '</span>' : '') +
               '</div>' +
               '<div class="watch-spark" data-sym="' + escapeAttr(w.sym) + '"></div>' +
+              '<div class="watch-metrics" data-sym="' + escapeAttr(w.sym) + '"></div>' +
               '<p class="watch-thesis">' + w.thesis + '</p>' +
               '<div class="watch-target-row">' +
                 '<span class="muted small">Target $' + w.target.toFixed(2) + '</span>' +
@@ -463,9 +464,11 @@
             '</div>'
           );
         }).join('');
-        // Kick off the (cheap) sparkline + headlines loads -- decoupled from
-        // the price render so they never block the visible card update.
+        // Kick off the (cheap) sparkline + metrics + headlines loads --
+        // decoupled from the price render so they never block the visible
+        // card update.
         loadWatchlistSparklines();
+        loadWatchlistMetrics();
         loadHeadlinesForFirstPick();
       })
       .catch(function () {
@@ -528,6 +531,75 @@
         });
       })
       .catch(function () { /* silent: cards still look right without sparkline */ });
+  }
+
+  // -----------------------------------------------------------------------
+  // Watchlist metrics -- pulls market cap / P/E / 52w range / volume from
+  // the Worker's ?metrics= route (which aggregates Yahoo's quoteSummary +
+  // chart-meta endpoints) and renders a 4-cell grid at the top of each
+  // watchlist card. Quoted fields fall back to "—" individually if a
+  // particular data point is missing.
+  // -----------------------------------------------------------------------
+  function fmtMcap(n) {
+    if (!n || !isFinite(n)) return '—';
+    if (n >= 1e12) return '$' + (n / 1e12).toFixed(2) + 'T';
+    if (n >= 1e9)  return '$' + (n / 1e9).toFixed(1) + 'B';
+    if (n >= 1e6)  return '$' + (n / 1e6).toFixed(0) + 'M';
+    return '$' + Math.round(n).toLocaleString();
+  }
+  function fmtVol(n) {
+    if (!n || !isFinite(n)) return '—';
+    if (n >= 1e9) return (n / 1e9).toFixed(1) + 'B';
+    if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+    if (n >= 1e3) return (n / 1e3).toFixed(0) + 'K';
+    return String(Math.round(n));
+  }
+  function fmtPe(n) {
+    if (!n || !isFinite(n) || n <= 0) return '—';
+    return n.toFixed(1);
+  }
+  function fmtRange(low, high) {
+    if (!isFinite(low) || !isFinite(high)) return '—';
+    function r(n) {
+      if (n >= 1000) return Math.round(n).toLocaleString();
+      if (n >= 100)  return Math.round(n).toString();
+      return n.toFixed(2).replace(/\.00$/, '');
+    }
+    return '$' + r(low) + ' – $' + r(high);
+  }
+  function metricsRowHtml(m) {
+    return (
+      '<div class="wm-cell"><span class="wm-label">Mkt Cap</span>' +
+        '<span class="wm-val">' + fmtMcap(m.marketCap) + '</span></div>' +
+      '<div class="wm-cell"><span class="wm-label">P/E (TTM)</span>' +
+        '<span class="wm-val">' + fmtPe(m.trailingPE) + '</span></div>' +
+      '<div class="wm-cell"><span class="wm-label">52W</span>' +
+        '<span class="wm-val">' + fmtRange(m.fiftyTwoWeekLow, m.fiftyTwoWeekHigh) + '</span></div>' +
+      '<div class="wm-cell"><span class="wm-label">Vol</span>' +
+        '<span class="wm-val">' + fmtVol(m.volume) + '</span></div>'
+    );
+  }
+  function loadWatchlistMetrics() {
+    var holders = document.querySelectorAll('.watch-metrics[data-sym]');
+    if (!holders.length) return;
+    var unique = [];
+    holders.forEach(function (h) {
+      var s = h.getAttribute('data-sym');
+      if (s && unique.indexOf(s) === -1) unique.push(s);
+    });
+    if (!unique.length) return;
+    fetch(WORKER_URL + '?metrics=' + encodeURIComponent(unique.join(',')))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        if (!data) return;
+        holders.forEach(function (h) {
+          var sym = h.getAttribute('data-sym');
+          var m = data[sym];
+          if (!m) return;
+          h.innerHTML = metricsRowHtml(m);
+        });
+      })
+      .catch(function () { /* silent: card still has price + sparkline */ });
   }
 
   // -----------------------------------------------------------------------
@@ -841,16 +913,24 @@
   }
 
   // =========================================================================
-  // Hero chart -- replaces the static SVG path with a live 1-year S&P 500
-  // line, redrawn into the same dotted-paper SVG aesthetic. Falls back
-  // silently to the placeholder path if the fetch fails.
+  // Hero chart -- live S&P 500 line drawn into the dotted-paper SVG. Supports
+  // a range toggle (1M / 6M / YTD / 1Y / 5Y) and a soft terracotta gradient
+  // fill below the line. Falls back to the placeholder path if the fetch
+  // fails.
   // =========================================================================
-  function loadHeroChart() {
+  var HERO_RANGE_LABELS = {
+    '1mo': '1M', '3mo': '3M', '6mo': '6M', 'ytd': 'YTD',
+    '1y':  '1Y', '2y': '2Y', '5y': '5Y', '10y': '10Y', 'max': 'MAX',
+  };
+
+  function loadHeroChart(range) {
+    range = range || '1y';
     var line = document.getElementById('hero-chart-line');
+    var fill = document.getElementById('hero-chart-fill');
     if (!line) return;
     var label = document.getElementById('hero-chart-label');
     var sym = '^GSPC';  // S&P 500 index
-    fetch(WORKER_URL + '?spark=' + encodeURIComponent(sym))
+    fetch(WORKER_URL + '?spark=' + encodeURIComponent(sym) + '&range=' + encodeURIComponent(range))
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (data) {
         if (!data || !data[sym] || data[sym].length < 2) return;
@@ -858,29 +938,50 @@
         var w = 320, h = 240, padX = 24, padTop = 36, padBottom = 28;
         var min = Math.min.apply(null, values);
         var max = Math.max.apply(null, values);
-        var range = max - min || 1;
+        var range_v = max - min || 1;
         var stepX = (w - 2 * padX) / (values.length - 1);
         var pts = values.map(function (v, i) {
           var x = padX + i * stepX;
-          var y = (h - padBottom) - ((v - min) / range) * (h - padTop - padBottom);
-          return x.toFixed(1) + ',' + y.toFixed(1);
+          var y = (h - padBottom) - ((v - min) / range_v) * (h - padTop - padBottom);
+          return { x: +x.toFixed(1), y: +y.toFixed(1) };
         });
-        var pathD = 'M ' + pts.join(' L ');
-        var lastPt = pts[pts.length - 1].split(',');
+        var linePath = 'M ' + pts.map(function (p) { return p.x + ',' + p.y; }).join(' L ');
+        var areaPath = linePath +
+          ' L ' + pts[pts.length - 1].x + ',' + (h - padBottom) +
+          ' L ' + pts[0].x + ',' + (h - padBottom) + ' Z';
+        var lastPt = pts[pts.length - 1];
+        if (fill) {
+          fill.innerHTML = '<path d="' + areaPath + '" fill="url(#hero-fill)" stroke="none"/>';
+        }
         line.innerHTML =
-          '<path d="' + pathD + '" fill="none" stroke="#b56a3f" stroke-width="3" ' +
+          '<path d="' + linePath + '" fill="none" stroke="#b56a3f" stroke-width="3" ' +
             'stroke-linecap="round" stroke-linejoin="round"/>' +
-          '<circle cx="' + lastPt[0] + '" cy="' + lastPt[1] + '" r="6" fill="#b56a3f"/>' +
-          '<circle cx="' + lastPt[0] + '" cy="' + lastPt[1] + '" r="12" fill="#b56a3f" fill-opacity="0.18"/>';
+          '<circle cx="' + lastPt.x + '" cy="' + lastPt.y + '" r="6" fill="#b56a3f"/>' +
+          '<circle cx="' + lastPt.x + '" cy="' + lastPt.y + '" r="12" fill="#b56a3f" fill-opacity="0.18"/>';
         if (label) {
           var pct = ((values[values.length - 1] - values[0]) / values[0]) * 100;
-          label.textContent = 'S&P 500 · 1Y · ' + (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
+          var rangeLabel = HERO_RANGE_LABELS[range] || range.toUpperCase();
+          label.textContent = 'S&P 500 · ' + rangeLabel + ' · ' + (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
         }
       })
       .catch(function () { /* leave placeholder path */ });
   }
+
+  function setupHeroChartTabs() {
+    var btns = document.querySelectorAll('.hero-chart-periods .period-btn');
+    if (!btns.length) return;
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var r = b.getAttribute('data-range');
+        btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+        loadHeroChart(r);
+      });
+    });
+  }
+
   if (document.getElementById('hero-chart-line')) {
-    loadHeroChart();
+    loadHeroChart('1y');
+    setupHeroChartTabs();
   }
 
 })();

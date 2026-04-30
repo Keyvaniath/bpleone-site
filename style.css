@@ -1220,12 +1220,77 @@ main.prose.center {
   min-height: 44px;
 }
 
+/* Metrics row inside watchlist cards (Mkt Cap / P/E / 52W / Vol) */
+.watch-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: .55rem;
+  padding: .65rem 0 .25rem;
+  margin: 0 0 .35rem;
+  border-top: 1px solid var(--rule);
+  font-variant-numeric: tabular-nums;
+}
+.watch-metrics:empty { display: none; padding: 0; margin: 0; border-top: 0; }
+.wm-cell {
+  display: flex;
+  flex-direction: column;
+  gap: .12rem;
+  min-width: 0;
+}
+.wm-label {
+  font-family: var(--sans);
+  font-size: .65rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.wm-val {
+  font-family: var(--sans);
+  font-size: .85rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 /* Hero chart label (top-left text inside the SVG) */
 #hero-chart-label {
   font-family: var(--sans);
   font-size: 11px;
   letter-spacing: .14em;
   text-transform: uppercase;
+}
+
+/* Hero chart range toggles (1M / 6M / YTD / 1Y / 5Y) */
+.hero-chart-periods {
+  display: flex;
+  gap: .35rem;
+  justify-content: center;
+  margin: .65rem 0 0;
+  flex-wrap: wrap;
+}
+.period-btn {
+  padding: .3rem .8rem;
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .15s var(--ease), background .15s var(--ease), border-color .15s var(--ease);
+}
+.period-btn:hover {
+  color: var(--ink);
+  border-color: var(--ink-soft);
+}
+.period-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
 }
 
 /* Skeleton loading bars (perceived-speed UX for live data) ---------------
