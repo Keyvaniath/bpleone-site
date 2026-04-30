@@ -405,78 +405,69 @@
       });
   }
 
+  // Populate the unified Lead Pick card (replaces the old separate watchlist
+  // card + snapshot panel). Pitch info (name / thesis / target / posted)
+  // comes straight from the WATCHLIST entry. Live price + % change comes
+  // from the Worker's ?symbols= route. Sparkline + stats grid + symbol
+  // exchange prefix are filled in by loadSnapshotForFirstPick(), which
+  // calls ?metrics= and ?spark=.
   function renderWatchlist() {
-    var grid = document.getElementById('watchlist-grid');
-    if (!grid || !WATCHLIST.length) return;
+    var leadEl = document.getElementById('lead-pick');
+    if (!leadEl || !WATCHLIST.length) return;
 
+    var first = WATCHLIST[0];
+
+    // Static pitch info (instant, no network)
+    var nameEl    = document.getElementById('lp-name');
+    var symEl     = document.getElementById('lp-symbol');
+    var thesisEl  = document.getElementById('lp-thesis');
+    var targetEl  = document.getElementById('lp-target');
+    var postedEl  = document.getElementById('lp-posted');
+    var linkEl    = document.getElementById('lp-link');
+    if (nameEl)   nameEl.textContent   = first.name;
+    if (symEl)    symEl.textContent    = first.sym;
+    if (thesisEl) thesisEl.textContent = first.thesis || '';
+    if (targetEl) targetEl.textContent = '$' + first.target.toFixed(2);
+    if (postedEl) postedEl.textContent = first.posted || '';
+    if (linkEl)   linkEl.href = 'https://finance.yahoo.com/quote/' + encodeURIComponent(first.sym) + '/';
+
+    // Live price + change + to-target via Worker
     var symbols = WATCHLIST.map(function (w) { return w.sym; }).join(',');
-    var url = WORKER_URL + '?symbols=' + encodeURIComponent(symbols);
-
-    fetch(url)
+    fetch(WORKER_URL + '?symbols=' + encodeURIComponent(symbols))
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (data) {
         var result = data && data.quoteResponse && data.quoteResponse.result;
-        if (!result) {
-          grid.innerHTML = '<p class="muted small">Watchlist data unavailable.</p>';
-          return;
-        }
+        if (!result) return;
         var bySym = {};
         result.forEach(function (q) { bySym[q.symbol] = q; });
+        var q = bySym[first.sym];
+        if (!q || !isFinite(q.regularMarketPrice)) return;
 
-        grid.innerHTML = WATCHLIST.map(function (w) {
-          var q = bySym[w.sym];
-          if (!q || !isFinite(q.regularMarketPrice)) {
-            return (
-              '<div class="watch-card watch-card-empty">' +
-                '<div class="watch-card-head"><strong>' + w.name + ' (' + w.sym + ')</strong></div>' +
-                '<p class="muted small">Price unavailable</p>' +
-              '</div>'
-            );
+        var price = q.regularMarketPrice;
+        var pct   = q.regularMarketChangePercent;
+        var priceEl = document.getElementById('lp-price');
+        var changeEl = document.getElementById('lp-change');
+        var ttEl = document.getElementById('lp-totarget');
+
+        if (priceEl) priceEl.textContent = '$' + price.toFixed(2);
+        if (changeEl && isFinite(pct)) {
+          changeEl.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '% today';
+          changeEl.className = 'lp-change ' + (pct >= 0 ? 'up' : 'down');
+        }
+        if (ttEl) {
+          var toTarget = ((first.target - price) / price) * 100;
+          if (isFinite(toTarget)) {
+            ttEl.textContent = (toTarget >= 0 ? '+' : '') + toTarget.toFixed(1) + '%';
+            ttEl.className = 'lp-tt ' + (toTarget >= 0 ? 'up' : 'down');
           }
-          var price = q.regularMarketPrice;
-          var pct = q.regularMarketChangePercent;
-          var pctClass = (isFinite(pct) && pct < 0) ? 'down' : 'up';
-          var pctStr = isFinite(pct) ? ((pct >= 0 ? '+' : '') + pct.toFixed(2) + '%') : '';
-
-          var toTarget = ((w.target - price) / price) * 100;
-          var ttClass = toTarget >= 0 ? 'up' : 'down';
-          var ttStr = (toTarget >= 0 ? '+' : '') + toTarget.toFixed(1) + '%';
-
-          var titleEl = w.note_url
-            ? '<a class="watch-link" href="' + escapeAttr(w.note_url) + '">' + w.name + ' <span class="watch-sym">(' + w.sym + ')</span></a>'
-            : '<strong>' + w.name + ' <span class="watch-sym">(' + w.sym + ')</span></strong>';
-
-          return (
-            '<div class="watch-card">' +
-              '<div class="watch-card-head">' + titleEl + '</div>' +
-              '<div class="watch-price-row">' +
-                '<span class="watch-price">$' + price.toFixed(2) + '</span>' +
-                (pctStr ? '<span class="watch-change ' + pctClass + '">' + pctStr + '</span>' : '') +
-              '</div>' +
-              '<div class="watch-spark" data-sym="' + escapeAttr(w.sym) + '"></div>' +
-              '<p class="watch-thesis">' + w.thesis + '</p>' +
-              '<div class="watch-target-row">' +
-                '<span class="muted small">Target $' + w.target.toFixed(2) + '</span>' +
-                '<span class="watch-totarget ' + ttClass + '">' + ttStr + ' to target</span>' +
-              '</div>' +
-              '<p class="muted xsmall">Posted ' + w.posted + '</p>' +
-            '</div>'
-          );
-        }).join('');
-        // Kick off the (cheap) sparkline + snapshot + headlines loads --
-        // decoupled from the price render so they never block the visible
-        // card update. (loadWatchlistMetrics is intentionally not called
-        // here: stats display lives in the dedicated Snapshot panel for
-        // the lead pick. We keep the function defined for future use when
-        // the watchlist grows beyond one pick and non-lead cards need
-        // a compact metrics row.)
-        loadWatchlistSparklines();
-        loadHeadlinesForFirstPick();
-        loadSnapshotForFirstPick();
+        }
       })
-      .catch(function () {
-        grid.innerHTML = '<p class="muted small">Watchlist data unavailable.</p>';
-      });
+      .catch(function () { /* lead-pick keeps placeholders */ });
+
+    // Snapshot data (sparkline + stats grid + exchange prefix) and headlines
+    // load in parallel; decoupled so they never block the price update.
+    loadHeadlinesForFirstPick();
+    loadSnapshotForFirstPick();
   }
 
   // -----------------------------------------------------------------------
@@ -698,22 +689,15 @@
     return out;
   }
   function loadSnapshotForFirstPick() {
-    var panel = document.getElementById('snapshot-panel');
-    if (!panel) return;
+    var leadEl = document.getElementById('lead-pick');
+    if (!leadEl) return;
     if (!WATCHLIST.length) return;
     var first = WATCHLIST[0];
     var sym = first.sym;
 
-    var nameEl    = document.getElementById('snapshot-name');
-    var symEl     = document.getElementById('snapshot-symbol');
-    var priceEl   = document.getElementById('snapshot-price');
-    var changeEl  = document.getElementById('snapshot-change');
-    var sparkEl   = document.getElementById('snapshot-spark');
-    var statsEl   = document.getElementById('snapshot-stats');
-    var linkEl    = document.getElementById('snapshot-link');
-
-    if (nameEl) nameEl.textContent = first.name;
-    if (linkEl) linkEl.href = 'https://finance.yahoo.com/quote/' + encodeURIComponent(sym) + '/';
+    var sparkEl = document.getElementById('lp-spark');
+    var statsEl = document.getElementById('lp-stats');
+    var symEl   = document.getElementById('lp-symbol');
 
     Promise.all([
       fetch(WORKER_URL + '?metrics=' + encodeURIComponent(sym))
@@ -727,15 +711,9 @@
       var spark   = results[1] && results[1][sym];
 
       if (metrics) {
-        if (priceEl && isFinite(metrics.price)) {
-          priceEl.textContent = '$' + metrics.price.toFixed(2);
-        }
-        if (changeEl && isFinite(metrics.price) && isFinite(metrics.previousClose) && metrics.previousClose) {
-          var change = metrics.price - metrics.previousClose;
-          var pct = (change / metrics.previousClose) * 100;
-          changeEl.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '% today';
-          changeEl.className = 'snapshot-change ' + (pct >= 0 ? 'up' : 'down');
-        }
+        // Promote symbol display to "EXCHANGE: SYM" once the exchange
+        // identifier is known. (renderWatchlist() set the bare ticker
+        // earlier as a fallback.)
         if (symEl && metrics.exchange) {
           symEl.textContent = metrics.exchange + ': ' + sym;
         }
@@ -836,8 +814,7 @@
     grid.innerHTML = cards;
   }
 
-  if (document.getElementById('watchlist-grid')) {
-    paintWatchlistSkeleton();
+  if (document.getElementById('lead-pick')) {
     loadWatchlist(function () {
       renderWatchlist();
       setInterval(renderWatchlist, 60 * 1000);
