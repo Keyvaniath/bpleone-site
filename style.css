@@ -1235,9 +1235,66 @@ main.prose.center {
 .lp-change.up   { color: #1a6e3f; }
 .lp-change.down { color: #b03a2e; }
 .lp-spark {
+  position: relative;
   margin: .25rem auto .35rem;
   min-height: 140px;
   max-width: 420px;
+  cursor: crosshair;
+}
+.lp-spark-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .12s ease;
+}
+.lp-spark-overlay.active { opacity: 1; }
+.lp-spark-cross {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--ink-soft, #6b6558);
+  opacity: .35;
+  transform: translateX(-0.5px);
+}
+.lp-spark-dot {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink, #1c1a16);
+  border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+  transform: translate(-50%, -50%);
+}
+.lp-spark-tip {
+  position: absolute;
+  background: rgba(28, 26, 22, .93);
+  color: #fbf7ef;
+  font-family: var(--sans);
+  font-size: .72rem;
+  line-height: 1.25;
+  padding: .35rem .6rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .18);
+}
+.lp-spark-tip strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: .9rem;
+  font-weight: 600;
+}
+.lp-spark-tip span {
+  display: block;
+  margin-top: 1px;
+  color: #c8c4ba;
+  font-size: .62rem;
+  letter-spacing: .04em;
+  font-weight: 500;
 }
 .lp-spark-periods {
   display: flex;

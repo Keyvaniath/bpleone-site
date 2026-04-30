@@ -750,20 +750,120 @@
     var sparkEl = document.getElementById('lp-spark');
     if (!sparkEl) return;
     fetch(WORKER_URL + '?spark=' + encodeURIComponent(sym) +
-                       '&range=' + encodeURIComponent(currentSparkRange))
+                       '&range=' + encodeURIComponent(currentSparkRange) +
+                       '&withDates=1')
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (data) {
-        var spark = data && data[sym];
-        if (spark && spark.length > 1) {
-          sparkEl.innerHTML = sparklineSvg(spark, {
-            width: 320,
-            height: 140,
-            padding: 6,
-            showRange: true,
-          });
+        var entry = data && data[sym];
+        if (!entry) return;
+        // Tolerate both shapes: { values, timestamps } (new) or [..closes] (old).
+        var values = Array.isArray(entry) ? entry : entry.values;
+        var timestamps = Array.isArray(entry) ? null : entry.timestamps;
+        if (!values || values.length < 2) return;
+        var sparkOpts = { width: 320, height: 140, padding: 6, showRange: true };
+        sparkEl.innerHTML = sparklineSvg(values, sparkOpts) + buildSparkOverlay();
+        if (timestamps && timestamps.length === values.length) {
+          attachSparkHover(sparkEl, values, timestamps, sparkOpts);
         }
       })
       .catch(function () { /* leave placeholder */ });
+  }
+
+  // Hover overlay markup: a vertical crosshair line, a dot marker, and a
+  // floating tooltip. Positioned in container pixels by attachSparkHover().
+  function buildSparkOverlay() {
+    return (
+      '<div class="lp-spark-overlay" aria-hidden="true">' +
+        '<div class="lp-spark-cross"></div>' +
+        '<div class="lp-spark-dot"></div>' +
+        '<div class="lp-spark-tip"></div>' +
+      '</div>'
+    );
+  }
+
+  // Wire up mousemove / touch handlers that map cursor X to the nearest
+  // data index and reveal the crosshair, dot, and price/date tooltip.
+  function attachSparkHover(container, values, timestamps, opts) {
+    var overlay = container.querySelector('.lp-spark-overlay');
+    if (!overlay) return;
+    var cross = overlay.querySelector('.lp-spark-cross');
+    var dot = overlay.querySelector('.lp-spark-dot');
+    var tip = overlay.querySelector('.lp-spark-tip');
+
+    var w = opts.width || 320;
+    var h = opts.height || 140;
+    var pad = opts.padding || 6;
+    // sparklineSvg() reserves 38px of viewBox for the right-edge price labels.
+    var labelPad = opts.showRange ? 38 : 0;
+    var plotW = w - labelPad;
+    var stepX = (plotW - 2 * pad) / Math.max(values.length - 1, 1);
+
+    var min = Math.min.apply(null, values);
+    var max = Math.max.apply(null, values);
+    var range = max - min || 1;
+
+    function moveTo(clientX) {
+      var rect = container.getBoundingClientRect();
+      if (rect.width <= 0) return;
+      var px = clientX - rect.left;
+      // Container width displays the full viewBox width (0..w).
+      var vbX = (px / rect.width) * w;
+      // Find nearest data point by viewBox X.
+      var bestIdx = 0;
+      var bestDist = Infinity;
+      for (var i = 0; i < values.length; i++) {
+        var ptX = pad + i * stepX;
+        var d = Math.abs(ptX - vbX);
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      }
+      var pickVbX = pad + bestIdx * stepX;
+      var pickPxX = (pickVbX / w) * rect.width;
+      var pickVbY = h - pad - ((values[bestIdx] - min) / range) * (h - 2 * pad);
+      var pickPxY = (pickVbY / h) * rect.height;
+
+      overlay.classList.add('active');
+      cross.style.left = pickPxX.toFixed(1) + 'px';
+      dot.style.left = pickPxX.toFixed(1) + 'px';
+      dot.style.top = pickPxY.toFixed(1) + 'px';
+
+      var ts = timestamps[bestIdx];
+      var dateStr = '';
+      if (ts) {
+        var d2 = new Date(ts * 1000);
+        // Show intraday time for 1D / 5D, dates for everything else.
+        if (currentSparkRange === '1d' || currentSparkRange === '5d') {
+          dateStr = d2.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+            ' &middot; ' + d2.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        } else {
+          dateStr = d2.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+      }
+      tip.innerHTML = '<strong>' + fmtSparkPrice(values[bestIdx]) + '</strong>' +
+                      (dateStr ? '<span>' + dateStr + '</span>' : '');
+
+      // Keep the tooltip inside the container.
+      var tipW = tip.offsetWidth || 90;
+      var halfTip = tipW / 2;
+      var tipX = pickPxX;
+      if (tipX - halfTip < 4) tipX = halfTip + 4;
+      if (tipX + halfTip > rect.width - 4) tipX = rect.width - halfTip - 4;
+      tip.style.left = tipX.toFixed(1) + 'px';
+      var tipTop = pickPxY - 46;
+      if (tipTop < 2) tipTop = pickPxY + 14;
+      tip.style.top = tipTop.toFixed(1) + 'px';
+    }
+
+    function onMouseMove(e) { moveTo(e.clientX); }
+    function onTouchMove(e) {
+      if (e.touches && e.touches[0]) moveTo(e.touches[0].clientX);
+    }
+    function onLeave() { overlay.classList.remove('active'); }
+
+    container.addEventListener('mousemove', onMouseMove);
+    container.addEventListener('mouseleave', onLeave);
+    container.addEventListener('touchstart', onTouchMove, { passive: true });
+    container.addEventListener('touchmove', onTouchMove, { passive: true });
+    container.addEventListener('touchend', onLeave);
   }
 
   function setupLeadPickSparkTabs() {
