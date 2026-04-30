@@ -508,23 +508,26 @@
 
     var rangeMarkup = '';
     if (showRange) {
-      var maxIdx = values.indexOf(max);
-      var minIdx = values.indexOf(min);
-      var highY = pts[maxIdx].y;
-      var lowY  = pts[minIdx].y;
-      // Avoid stacked labels at extreme ranges -- nudge if too close.
-      if (Math.abs(highY - lowY) < 12) lowY = Math.min(h - 4, highY + 12);
-      rangeMarkup =
-        '<line x1="' + pad + '" x2="' + plotW + '" y1="' + highY + '" y2="' + highY +
-          '" stroke="' + stroke + '" stroke-width="0.6" stroke-dasharray="2,3" opacity="0.35"/>' +
-        '<line x1="' + pad + '" x2="' + plotW + '" y1="' + lowY  + '" y2="' + lowY  +
-          '" stroke="' + stroke + '" stroke-width="0.6" stroke-dasharray="2,3" opacity="0.35"/>' +
-        '<text x="' + (plotW + 4) + '" y="' + (highY + 3) + '" ' +
-          'font-family="Inter,system-ui,sans-serif" font-size="9" font-weight="500" ' +
-          'fill="#534f47">' + fmtSparkPrice(max) + '</text>' +
-        '<text x="' + (plotW + 4) + '" y="' + (lowY + 3) + '" ' +
-          'font-family="Inter,system-ui,sans-serif" font-size="9" font-weight="500" ' +
-          'fill="#8e887d">' + fmtSparkPrice(min) + '</text>';
+      // Three evenly-spaced y-axis ticks (high / mid / low). Dashed gridlines
+      // at each tick, with the price labeled at the right edge. Bound ticks
+      // (high / low) get slightly stronger ink than the mid tick.
+      var tickCount = 3;
+      for (var ti = 0; ti < tickCount; ti++) {
+        var tFrac = ti / (tickCount - 1);
+        var tVal  = max - tFrac * range;
+        var tY    = pad + tFrac * (h - 2 * pad);
+        var isBound = (ti === 0 || ti === tickCount - 1);
+        rangeMarkup +=
+          '<line x1="' + pad + '" x2="' + plotW + '" y1="' + tY.toFixed(1) +
+            '" y2="' + tY.toFixed(1) +
+            '" stroke="' + stroke + '" stroke-width="0.6" stroke-dasharray="2,3" ' +
+            'opacity="' + (isBound ? '0.4' : '0.2') + '"/>' +
+          '<text x="' + (plotW + 4) + '" y="' + (tY + 3).toFixed(1) +
+            '" font-family="Inter,system-ui,sans-serif" font-size="9" ' +
+            'font-weight="' + (isBound ? '600' : '500') + '" ' +
+            'fill="' + (ti === 0 ? '#534f47' : '#8e887d') + '">' +
+            fmtSparkPrice(tVal) + '</text>';
+      }
     }
 
     return (
@@ -1047,6 +1050,7 @@
   // fails.
   // =========================================================================
   var HERO_RANGE_LABELS = {
+    '1d': '1D', '5d': '5D',
     '1mo': '1M', '3mo': '3M', '6mo': '6M', 'ytd': 'YTD',
     '1y':  '1Y', '2y': '2Y', '5y': '5Y', '10y': '10Y', 'max': 'MAX',
   };
@@ -1081,34 +1085,36 @@
         if (fill) {
           fill.innerHTML = '<path d="' + areaPath + '" fill="url(#hero-fill)" stroke="none"/>';
         }
-        // High/low reference lines and price labels (right-aligned at the
-        // chart's right edge so the reader has actual numbers to anchor on).
-        var maxIdx = values.indexOf(max);
-        var minIdx = values.indexOf(min);
-        var maxY = pts[maxIdx].y;
-        var minY = pts[minIdx].y;
+        // Y-axis: four evenly-spaced tick lines across the period range,
+        // each with the price labeled at the right edge. Bound ticks
+        // (high + low) print bolder than the interior ticks.
         function fmtHeroPrice(n) {
           if (n >= 1000) return Math.round(n).toLocaleString();
           if (n >= 100)  return n.toFixed(0);
           return n.toFixed(2);
         }
         var rightX = w - padX;
-        var dashEndX = rightX - 38;  // leave space for the right-edge label
+        var dashEndX = rightX - 40;  // leave space for the right-edge label
+        var tickCount = 4;
+        var ticksHtml = '';
+        for (var ti = 0; ti < tickCount; ti++) {
+          var tFrac = ti / (tickCount - 1);
+          var tVal  = max - tFrac * range_v;
+          var tY    = padTop + tFrac * (h - padTop - padBottom);
+          var isBound = (ti === 0 || ti === tickCount - 1);
+          ticksHtml +=
+            '<line x1="' + padX + '" x2="' + dashEndX + '" y1="' + tY.toFixed(1) +
+              '" y2="' + tY.toFixed(1) +
+              '" stroke="#b56a3f" stroke-width="0.7" stroke-dasharray="3,3" ' +
+              'opacity="' + (isBound ? '0.45' : '0.22') + '"/>' +
+            '<text x="' + rightX + '" y="' + (tY + 3.5).toFixed(1) +
+              '" font-family="Inter,system-ui,sans-serif" font-size="10" ' +
+              'font-weight="' + (isBound ? '600' : '500') + '" ' +
+              'fill="' + (ti === 0 ? '#534f47' : '#8e887d') + '" text-anchor="end">' +
+              fmtHeroPrice(tVal) + '</text>';
+        }
         line.innerHTML =
-          // High/low dashed reference lines
-          '<line x1="' + padX + '" x2="' + dashEndX + '" y1="' + maxY.toFixed(1) +
-            '" y2="' + maxY.toFixed(1) +
-            '" stroke="#b56a3f" stroke-width="0.7" stroke-dasharray="3,3" opacity="0.45"/>' +
-          '<line x1="' + padX + '" x2="' + dashEndX + '" y1="' + minY.toFixed(1) +
-            '" y2="' + minY.toFixed(1) +
-            '" stroke="#b56a3f" stroke-width="0.7" stroke-dasharray="3,3" opacity="0.45"/>' +
-          // High/low price labels at the right edge
-          '<text x="' + rightX + '" y="' + (maxY + 3.5).toFixed(1) +
-            '" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="600" ' +
-            'fill="#534f47" text-anchor="end">' + fmtHeroPrice(max) + '</text>' +
-          '<text x="' + rightX + '" y="' + (minY + 3.5).toFixed(1) +
-            '" font-family="Inter,system-ui,sans-serif" font-size="10" font-weight="500" ' +
-            'fill="#8e887d" text-anchor="end">' + fmtHeroPrice(min) + '</text>' +
+          ticksHtml +
           // Main line + endpoint dots
           '<path d="' + linePath + '" fill="none" stroke="#b56a3f" stroke-width="3" ' +
             'stroke-linecap="round" stroke-linejoin="round"/>' +
