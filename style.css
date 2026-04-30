@@ -1235,8 +1235,37 @@ main.prose.center {
 .lp-change.up   { color: #1a6e3f; }
 .lp-change.down { color: #b03a2e; }
 .lp-spark {
-  margin: .25rem 0 1.25rem;
+  margin: .25rem 0 .35rem;
   min-height: 80px;
+}
+.lp-spark-periods {
+  display: flex;
+  gap: .25rem;
+  justify-content: flex-end;
+  margin: 0 0 1.1rem;
+  flex-wrap: wrap;
+}
+.period-btn-sm {
+  padding: .2rem .6rem;
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: .65rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color .15s var(--ease), background .15s var(--ease), border-color .15s var(--ease);
+}
+.period-btn-sm:hover {
+  color: var(--ink);
+  border-color: var(--ink-soft);
+}
+.period-btn-sm.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
 }
 .lp-thesis {
   font-family: var(--serif);

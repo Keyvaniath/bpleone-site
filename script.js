@@ -464,10 +464,12 @@
       })
       .catch(function () { /* lead-pick keeps placeholders */ });
 
-    // Snapshot data (sparkline + stats grid + exchange prefix) and headlines
-    // load in parallel; decoupled so they never block the price update.
+    // Stats grid + sparkline + headlines load in parallel; decoupled so
+    // they never block the price update. The sparkline uses whichever range
+    // the user last selected via the period toggles (default 1M).
     loadHeadlinesForFirstPick();
     loadSnapshotForFirstPick();
+    loadLeadPickSpark();
   }
 
   // -----------------------------------------------------------------------
@@ -718,39 +720,61 @@
     var first = WATCHLIST[0];
     var sym = first.sym;
 
-    var sparkEl = document.getElementById('lp-spark');
     var statsEl = document.getElementById('lp-stats');
     var symEl   = document.getElementById('lp-symbol');
 
-    Promise.all([
-      fetch(WORKER_URL + '?metrics=' + encodeURIComponent(sym))
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .catch(function () { return null; }),
-      fetch(WORKER_URL + '?spark=' + encodeURIComponent(sym) + '&range=1y')
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .catch(function () { return null; }),
-    ]).then(function (results) {
-      var metrics = results[0] && results[0][sym];
-      var spark   = results[1] && results[1][sym];
-
-      if (metrics) {
-        // Promote symbol display to "EXCHANGE: SYM" once the exchange
-        // identifier is known. (renderWatchlist() set the bare ticker
-        // earlier as a fallback.)
+    fetch(WORKER_URL + '?metrics=' + encodeURIComponent(sym))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        var metrics = data && data[sym];
+        if (!metrics) return;
         if (symEl && metrics.exchange) {
           symEl.textContent = metrics.exchange + ': ' + sym;
         }
         if (statsEl) statsEl.innerHTML = snapshotStatsHtml(metrics);
-      }
+      })
+      .catch(function () { /* keep placeholders */ });
+  }
 
-      if (spark && spark.length > 1 && sparkEl) {
-        sparkEl.innerHTML = sparklineSvg(spark, {
-          width: 320,
-          height: 80,
-          padding: 4,
-          showRange: true,
-        });
-      }
+  // Lead-pick sparkline -- separate from the metrics fetch so the user can
+  // switch ranges (1D / 1W / 1M / 3M / 1Y / 5Y) without re-pulling the
+  // stats grid. Default is 1M so the recent action shows up proportionally
+  // instead of being compressed by a 1Y view of a stock that 7x'd.
+  var currentSparkRange = '1mo';
+
+  function loadLeadPickSpark(range) {
+    if (range) currentSparkRange = range;
+    if (!WATCHLIST.length) return;
+    var first = WATCHLIST[0];
+    var sym = first.sym;
+    var sparkEl = document.getElementById('lp-spark');
+    if (!sparkEl) return;
+    fetch(WORKER_URL + '?spark=' + encodeURIComponent(sym) +
+                       '&range=' + encodeURIComponent(currentSparkRange))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        var spark = data && data[sym];
+        if (spark && spark.length > 1) {
+          sparkEl.innerHTML = sparklineSvg(spark, {
+            width: 320,
+            height: 80,
+            padding: 4,
+            showRange: true,
+          });
+        }
+      })
+      .catch(function () { /* leave placeholder */ });
+  }
+
+  function setupLeadPickSparkTabs() {
+    var btns = document.querySelectorAll('.lp-spark-periods .period-btn-sm');
+    if (!btns.length) return;
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var r = b.getAttribute('data-range');
+        btns.forEach(function (x) { x.classList.toggle('active', x === b); });
+        loadLeadPickSpark(r);
+      });
     });
   }
 
@@ -838,6 +862,7 @@
   }
 
   if (document.getElementById('lead-pick')) {
+    setupLeadPickSparkTabs();
     loadWatchlist(function () {
       renderWatchlist();
       setInterval(renderWatchlist, 60 * 1000);
