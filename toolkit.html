@@ -19,6 +19,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=5" />
+  <style>
+    .toolkit-forthcoming {
+      padding: 1.5rem 1.75rem;
+      background: var(--bg-soft);
+      border-radius: 12px;
+      border-left: 3px solid var(--accent-2);
+      margin: 1rem 0 2rem;
+    }
+    .toolkit-forthcoming p { margin: 0; color: var(--ink-soft); }
+    .toolkit-forthcoming strong { font-family: var(--serif); }
+  </style>
+
+  <!-- Cloudflare Web Analytics: paste your beacon token below and uncomment.
+       Get the token from dash.cloudflare.com -> Analytics & Logs -> Web Analytics
+       -> add site bpleon.com -> copy value after data-cf-beacon='{"token":"...". -->
+  <!-- <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"YOUR_CF_BEACON_TOKEN"}'></script> -->
 </head>
 <body style="background:#fbf7ef;color:#1c1a16;">
   <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
@@ -79,58 +95,19 @@
         </div>
       </li>
 
-      <li>
-        <div>
-          <h3>Trading Comps</h3>
-          <p>Side-by-side multiples (EV/EBITDA, P/E, P/S, EV/Sales)
-          across a peer set, with median and quartile rows. Drop your
-          tickers and revenue figures into the input tab.</p>
-          <p class="tool-meta">v1.0 &middot; .xlsx (placeholder)</p>
-        </div>
-        <div class="tool-actions">
-          <a class="btn btn-ghost" href="assets/toolkit/comps-template.xlsx" download>Download</a>
-        </div>
-      </li>
-
-      <li>
-        <div>
-          <h3>LBO / M&amp;A Model</h3>
-          <p>Sources &amp; uses, debt schedule, cash flow waterfall,
-          IRR / MOIC outputs. Built for quick-and-dirty deal screening,
-          not investment-committee polish.</p>
-          <p class="tool-meta">v0.9 &middot; .xlsx (placeholder)</p>
-        </div>
-        <div class="tool-actions">
-          <a class="btn btn-ghost" href="assets/toolkit/lbo-template.xlsx" download>Download</a>
-        </div>
-      </li>
-
-      <li>
-        <div>
-          <h3>Quarterly Earnings Tracker</h3>
-          <p>One row per company, columns for revenue / EPS estimate vs.
-          actual, surprise %, guide vs. consensus. Useful during peak
-          earnings weeks.</p>
-          <p class="tool-meta">v1.0 &middot; .xlsx (placeholder)</p>
-        </div>
-        <div class="tool-actions">
-          <a class="btn btn-ghost" href="assets/toolkit/earnings-tracker.xlsx" download>Download</a>
-        </div>
-      </li>
-
     </ol>
 
-    <p class="muted small">
+    <div class="toolkit-forthcoming">
+      <p><strong>Forthcoming templates.</strong> Trading Comps, an LBO /
+      M&amp;A model, and a quarterly earnings tracker are queued behind
+      the IB-grade DCF. Each will ship as a standalone .xlsx workbook
+      with a worked example, in the same shape as the DCF template
+      above.</p>
+    </div>
+
+    <p class="muted small" style="margin-top:2.5rem;">
       Looking for finished long-form research? See the
       <a href="reports.html">reports</a> page.
-    </p>
-
-    <p class="muted small" style="margin-top:1rem">
-      <strong>How to add a new template:</strong> drop the .xlsx into
-      <code>bpleone-site/assets/toolkit/</code>, copy any
-      <code>&lt;li&gt;</code> block above, edit the title / description /
-      filename, run <code>wizard/sync-to-github.bat</code>. Live in 20
-      seconds.
     </p>
 
   </main>

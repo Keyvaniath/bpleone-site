@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MU &mdash; Through-cycle long &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="DRAFT &mdash; through-cycle long thesis on Micron Technology against a cyclical comparable. HBM, mid-cycle margin normalisation, reverse-DCF, peer comp math." />
+  <!-- DRAFT: not yet published. The noindex below keeps this page out of
+       Google + Bing until you remove it. Remove the meta tag (and the
+       .draft-banner in <main> below) when you ship the real content. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href="https://bpleon.com/mu-through-cycle.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/mu-through-cycle.html" />
+  <meta property="og:title" content="MU &mdash; Through-cycle long" />
+  <meta property="og:description" content="Through-cycle long thesis on Micron Technology against a cyclical comparable. HBM contribution, mid-cycle margin normalisation, reverse-DCF, peer comp math." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=5" />
+
+  <!-- Page-scoped styles (draft banner, pitch sections, scenario table, kill list) -->
+  <style>
+    .draft-banner {
+      background: var(--accent);
+      color: #fff;
+      padding: .85rem 1.25rem;
+      border-radius: 10px;
+      margin: 0 0 2.25rem;
+      font-family: var(--sans);
+      font-size: .92rem;
+      line-height: 1.45;
+    }
+    .draft-banner strong {
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: .78rem;
+      margin-right: .55rem;
+      padding: .12rem .5rem;
+      background: rgba(0,0,0,.18);
+      border-radius: 999px;
+      vertical-align: 1px;
+    }
+    .draft-banner code {
+      background: rgba(0,0,0,.18);
+      padding: .05em .35em;
+      border-radius: 3px;
+      font-size: .9em;
+    }
+
+    .pitch-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-family: var(--sans);
+      font-size: .85rem;
+      color: var(--muted);
+      letter-spacing: .04em;
+      margin: .25rem 0 1.5rem;
+    }
+    .pitch-meta span strong {
+      color: var(--ink-soft);
+      font-weight: 500;
+      margin-right: .35em;
+      letter-spacing: .04em;
+    }
+
+    .pitch-thesis {
+      padding: 1.6rem 1.85rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent-2);
+      border-radius: 12px;
+      margin: 1.25rem 0 2.5rem;
+      font-family: var(--serif);
+      font-size: 1.18rem;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+    .pitch-thesis p { margin: 0 0 1em; }
+    .pitch-thesis p:last-child { margin: 0; }
+    .pitch-thesis .pitch-thesis-label {
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 .65em;
+      display: block;
+    }
+
+    .pitch-section {
+      margin: 3rem 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+    }
+    .pitch-section:first-of-type { border-top: 0; padding-top: 0; }
+    .pitch-section h2 { margin-top: 0; font-size: 1.55rem; }
+    .pitch-section h3 { font-size: 1.15rem; margin-top: 1.6em; }
+
+    .placeholder-block {
+      padding: 1rem 1.25rem;
+      background: rgba(181, 106, 63, 0.07);
+      border: 1px dashed var(--accent);
+      border-radius: 8px;
+      color: var(--ink-soft);
+      font-family: var(--sans);
+      font-size: .92rem;
+      line-height: 1.55;
+      margin: 1rem 0;
+    }
+    .placeholder-block strong {
+      color: var(--accent);
+      letter-spacing: .04em;
+    }
+
+    .kill-list { padding-left: 1.4rem; margin: 1rem 0 0; }
+    .kill-list li { margin-bottom: 1rem; line-height: 1.55; }
+    .kill-list li:last-child { margin-bottom: 0; }
+
+    .pitch-cta {
+      margin: 3rem 0 1rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+  </style>
+
+  <!-- Cloudflare Web Analytics: paste your beacon token below and uncomment.
+       Get the token from dash.cloudflare.com -> Analytics & Logs -> Web Analytics
+       -> add site bpleon.com -> copy value after data-cf-beacon='{"token":"...". -->
+  <!-- <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"YOUR_CF_BEACON_TOKEN"}'></script> -->
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html" aria-current="page">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+
+    <!--
+      ============================================================
+        DRAFT SCAFFOLD: MU through-cycle long
+      ============================================================
+      This page is a structural scaffold. Each <div class="placeholder-block">
+      below marks where a piece of analysis goes. Replace each one with your
+      actual prose, charts, tables, or model output.
+
+      To ship:
+        1. Replace every .placeholder-block with real content.
+        2. Delete the <div class="draft-banner"> immediately below.
+        3. Delete the <meta name="robots" content="noindex, nofollow" />
+           line in <head> (or change to "index, follow").
+        4. In writing.html: change the MU forthcoming entry into a real
+           link to this page and move it into a "Recent" section above
+           the empty-state.
+        5. In projects.html: move the MU entry from "Forthcoming" into
+           the "Shipped" section and link it here.
+        6. In about.html: update "What I'm working on now" to point here.
+        7. Bump cache-bust to ?v=6 in any HTML file you touch.
+      ============================================================
+    -->
+
+    <div class="draft-banner">
+      <strong>Draft</strong> Not yet published &mdash; <code>noindex</code>
+      is set so this page won't appear in search until you remove the meta
+      tag and ship.
+    </div>
+
+    <header class="page-head">
+      <p class="eyebrow">Coverage &middot; Memory / semis &middot; Long</p>
+      <h1>MU &mdash; Through-cycle long.</h1>
+
+      <p class="pitch-meta">
+        <span><strong>Ticker</strong> NASDAQ: MU</span>
+        <span><strong>Sector</strong> Memory / semiconductors</span>
+        <span><strong>Posted</strong> [DATE]</span>
+        <span><strong>Author</strong> Brandon Leon</span>
+      </p>
+
+      <div class="pitch-thesis">
+        <span class="pitch-thesis-label">Thesis in one paragraph</span>
+        <div class="placeholder-block">
+          <strong>Brandon writes:</strong> 2&ndash;4 sentences. The whole
+          pitch in one paragraph &mdash; what mid-cycle Micron is worth,
+          what the market is implicitly pricing in via reverse-DCF, the
+          one or two things that close the gap, and what would make you
+          wrong. This is what a reader gets if they only read one
+          paragraph.
+        </div>
+      </div>
+    </header>
+
+    <!-- ============== 1. BUSINESS + CYCLE CONTEXT ============== -->
+    <section class="pitch-section" id="business-and-cycle">
+      <h2>1. The business and where we are in the cycle</h2>
+      <div class="placeholder-block">
+        <strong>Brandon writes:</strong> Frame Micron's business in
+        2&ndash;3 paragraphs. DRAM vs. NAND mix, where HBM fits, the
+        customer concentration story (hyperscalers, automotive, mobile).
+        Then locate this moment in the memory cycle &mdash; coming off a
+        trough? Mid-cycle? &mdash; and explain why that framing matters
+        for valuation. Embed any cycle chart here (CapEx %, ASP per Gb,
+        days of inventory, etc.).
+      </div>
+
+      <h3>Why memory is a through-cycle game, not a quarterly one</h3>
+      <div class="placeholder-block">
+        <strong>Brandon writes:</strong> The argument for valuing Micron
+        on mid-cycle earnings rather than next-twelve-months consensus.
+        Why a single trough quarter mis-prices the business and why a
+        single peak quarter gives the bulls too much air cover.
+      </div>
+    </section>
+
+    <!-- ============== 2. MODEL OUTPUT ============== -->
+    <section class="pitch-section" id="model-output">
+      <h2>2. Model output</h2>
+      <div class="placeholder-block">
+        <strong>Brandon writes:</strong> Headline numbers from the
+        workbook. Revenue, EBIT margin, FCF over the explicit forecast
+        window. WACC, terminal growth, exit multiple. Implied share
+        price vs. spot. Embed the summary table from the IB-grade DCF
+        workbook here as an image or a clean HTML table.
+      </div>
+
+      <h3>Key assumptions</h3>
+      <div class="placeholder-block">
+        <strong>Brandon writes:</strong> The handful of inputs that move
+        the answer most. Mid-cycle DRAM ASP, mid-cycle EBIT margin, HBM
+        contribution to mix by year, CapEx as % of sales, working-capital
+        intensity. Each one with a one-sentence justification grounded
+        in cycle history.
+      </div>
+    </section>
+
+    <!-- ============== 3. SCENARIOS + REVERSE-DCF ============== -->
+    <section class="pitch-section" id="scenarios-reverse-dcf">
+      <h2>3. Scenarios and reverse-DCF</h2>
+      <div class="placeholder-block">
+        <strong>Brandon writes:</strong> Bull / base / bear scenarios in
+        a clean table. For each: implied share price, % return from
+        spot, the one-line reason that scenario plays out. Then the
+        reverse-DCF: what does today's price <em>require</em> in terms
+        of mid-cycle margin and growth? Compare that to the cycle
+        history. The whole pitch leans on the size of that gap.
+      </div>
+    </section>
+
+    <!-- ============== 4. THREE THINGS THAT WOULD CHANGE MY MIND ============== -->
+    <section class="pitch-section" id="kill-shots">
+      <h2>4. Three things that would change my mind</h2>
+      <p>
+        The honest version of the bear case. If any of these turn up in
+        the data, the thesis is wrong and I'll say so on the next
+        update.
+      </p>
+      <ol class="kill-list">
+        <li>
+          <div class="placeholder-block">
+            <strong>Brandon writes #1:</strong> One sentence.
+            Specific and falsifiable &mdash; an observable that would
+            actually arrive in earnings or industry data. Then 1&ndash;2
+            sentences on why it would matter.
+          </div>
+        </li>
+        <li>
+          <div class="placeholder-block">
+            <strong>Brandon writes #2:</strong> Same shape.
+          </div>
+        </li>
+        <li>
+          <div class="placeholder-block">
+            <strong>Brandon writes #3:</strong> Same shape.
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ============== 5. COMP SET + PEER MATH ============== -->
+    <section class="pitch-section" id="comp-set">
+      <h2>5. Comp set and peer math</h2>
+      <div class="placeholder-block">
+        <strong>Brandon writes:</strong> The peer set you actually used
+        with one-line justification for each. Then the multiples table
+        (EV/EBITDA, P/E, P/B, EV/Sales) with median + quartile rows.
+        Pull the cycle-aware comp argument: which peers are mid-cycle
+        right now and which aren't, and what that does to the median.
+      </div>
+
+      <h3>Why these peers and not others</h3>
+      <div class="placeholder-block">
+        <strong>Brandon writes:</strong> Defend the comp set explicitly.
+        Why SK Hynix and Samsung's memory segment but not Intel. Why
+        you may include or exclude Western Digital or Sandisk. The
+        rigor of the comp set is half the argument.
+      </div>
+    </section>
+
+    <!-- ============== METHODOLOGY + DOWNLOADS ============== -->
+    <section class="pitch-section" id="methodology-and-downloads">
+      <h2>Methodology and downloads</h2>
+      <p>
+        The workbook that produced these numbers is the
+        <a href="dcf-template.html">IB-grade DCF Template</a> with a
+        Micron worked example. Free download. The Python pipeline that
+        auto-populates the workbook for any ticker is available on
+        request &mdash; same page.
+      </p>
+      <p>
+        I may hold positions in the names discussed. See
+        <a href="disclaimer.html">disclaimer</a>. Nothing on this page
+        is investment advice.
+      </p>
+    </section>
+
+    <!-- ============== CTA ============== -->
+    <div class="pitch-cta">
+      <a class="btn" href="https://bpleon.substack.com/subscribe" target="_blank" rel="noopener">Subscribe for the next pitch &rarr;</a>
+      &nbsp;
+      <a class="btn btn-ghost" href="writing.html">All writing</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandonpleone@gmail.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/Keyvaniath" rel="me noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=5" defer></script>
+</body>
+</html>

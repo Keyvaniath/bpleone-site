@@ -19,6 +19,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=5" />
+  <style>
+    .reports-empty-state {
+      padding: 1.75rem 2rem;
+      background: var(--bg-soft);
+      border-radius: 12px;
+      border-left: 3px solid var(--accent-2);
+      margin: 1rem 0 2rem;
+    }
+    .reports-empty-state p { margin: 0; color: var(--ink-soft); }
+    .reports-empty-state strong { font-family: var(--serif); }
+  </style>
+
+  <!-- Cloudflare Web Analytics: paste your beacon token below and uncomment.
+       Get the token from dash.cloudflare.com -> Analytics & Logs -> Web Analytics
+       -> add site bpleon.com -> copy value after data-cf-beacon='{"token":"...". -->
+  <!-- <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"YOUR_CF_BEACON_TOKEN"}'></script> -->
 </head>
 <body style="background:#fbf7ef;color:#1c1a16;">
   <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
@@ -45,67 +61,23 @@
       </p>
     </header>
 
-    <ol class="tool-list">
+    <div class="reports-empty-state">
+      <p><strong>No reports posted yet.</strong> When the
+      <a href="writing.html">forthcoming pitches</a> are formalised,
+      the long-form PDF versions land here. First one targets Q2
+      2026 &mdash; a through-cycle long on a memory name with a
+      cyclical comparable.</p>
+      <p style="margin:1rem 0 0;">
+        <a class="btn btn-ghost" href="writing.html">See what's on deck &rarr;</a>
+      </p>
+    </div>
 
-      <li>
-        <div>
-          <h3>Example Report: A Sector Deep-Dive</h3>
-          <p class="tool-meta">2026 &middot; 12 pages &middot; PDF (placeholder)</p>
-          <p>
-            Replace this with a real abstract: one or two sentences
-            framing the question, one sentence on what you found, and
-            who should care. The kind of thing that survives skimming.
-          </p>
-        </div>
-        <div class="tool-actions">
-          <a class="btn btn-ghost" href="assets/reports/example-sector-deep-dive.pdf" download>Download PDF</a>
-        </div>
-      </li>
-
-      <li>
-        <div>
-          <h3>Example Report: A Quarterly Earnings Preview</h3>
-          <p class="tool-meta">2026 &middot; 6 pages &middot; PDF (placeholder)</p>
-          <p>
-            What I'm watching this quarter, what consensus is mispricing,
-            and the one or two lines on each name that actually matter.
-          </p>
-        </div>
-        <div class="tool-actions">
-          <a class="btn btn-ghost" href="assets/reports/example-earnings-preview.pdf" download>Download PDF</a>
-        </div>
-      </li>
-
-      <li>
-        <div>
-          <h3>Example Report: An Industry Primer</h3>
-          <p class="tool-meta">2025 &middot; 18 pages &middot; PDF (placeholder)</p>
-          <p>
-            Background reading for a sector I think most generalists
-            misunderstand. Structure, key economics, who actually makes
-            money, and where the cycle is now.
-          </p>
-        </div>
-        <div class="tool-actions">
-          <a class="btn btn-ghost" href="assets/reports/example-industry-primer.pdf" download>Download PDF</a>
-        </div>
-      </li>
-
-    </ol>
-
-    <p class="muted small">
-      Templates I built or use to produce these reports live on the
+    <p class="muted small" style="margin-top:2.5rem;">
+      Templates that produce these reports live on the
       <a href="toolkit.html">toolkit</a> page.
     </p>
 
-    <p class="muted small" style="margin-top:1rem">
-      <strong>How to add a new report:</strong> drop the PDF into
-      <code>bpleone-site/assets/reports/</code>, copy any
-      <code>&lt;li&gt;</code> block above, edit the title / abstract /
-      filename, run <code>wizard/sync-to-github.bat</code>.
-    </p>
-
-    <p class="muted small" style="margin-top:1rem">
+    <p class="muted small" style="margin-top:1rem;">
       <em>Nothing on this page is investment advice.</em> See
       <a href="disclaimer.html">disclaimer</a>.
     </p>
