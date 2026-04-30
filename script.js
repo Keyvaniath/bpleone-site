@@ -372,7 +372,7 @@
     {
       sym: 'MU',
       name: 'Micron Technology',
-      target: 145.00,
+      target: 565.00,
       thesis: 'HBM share gains + DRAM cycle bottoming.',
       posted: '2026-04-01',
       note_url: ''
