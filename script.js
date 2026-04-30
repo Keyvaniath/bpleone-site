@@ -757,8 +757,8 @@
         if (spark && spark.length > 1) {
           sparkEl.innerHTML = sparklineSvg(spark, {
             width: 320,
-            height: 80,
-            padding: 4,
+            height: 140,
+            padding: 6,
             showRange: true,
           });
         }

@@ -1236,7 +1236,8 @@ main.prose.center {
 .lp-change.down { color: #b03a2e; }
 .lp-spark {
   margin: .25rem 0 .35rem;
-  min-height: 80px;
+  min-height: 140px;
+  max-width: 540px;
 }
 .lp-spark-periods {
   display: flex;
