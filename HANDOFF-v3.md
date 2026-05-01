@@ -1,7 +1,7 @@
 # bpleon.com — Handoff v3 (post April 30, 2026 session)
 
 **Last updated:** April 30, 2026
-**Owner:** Brandon Leon (brandonpleone@gmail.com)
+**Owner:** Brandon Leon (brandon@bpleon.com — Cloudflare Email Routing forwards to brandonpleone@gmail.com)
 **Live site:** https://bpleon.com
 **Repo:** https://github.com/Keyvaniath/bpleone-site
 **Workspace folder (active):** `C:\Dev\bpleone-site\`

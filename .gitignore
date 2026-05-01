@@ -20,3 +20,8 @@ worker-source.js
 *.broken2
 *.head
 *.tail
+*.tmp
+.test-write
+
+# Drafts (markdown sources, scheduling notes) — local only.
+drafts/
