@@ -1503,6 +1503,70 @@ main.prose.center {
   text-transform: uppercase;
 }
 
+/* Hover crosshair + price/date tooltip on the S&P chart. */
+.hero-chart-wrap {
+  position: relative;
+  cursor: crosshair;
+}
+.hero-chart-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .12s ease;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.hero-chart-overlay.active { opacity: 1; }
+.hero-chart-cross {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #b56a3f;
+  opacity: .55;
+  transform: translateX(-0.5px);
+}
+.hero-chart-dot {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #b56a3f;
+  border: 2px solid #fbf7ef;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+  transform: translate(-50%, -50%);
+}
+.hero-chart-tip {
+  position: absolute;
+  background: rgba(28, 26, 22, .94);
+  color: #fbf7ef;
+  font-family: var(--sans);
+  font-size: .75rem;
+  line-height: 1.25;
+  padding: .4rem .65rem;
+  border-radius: 6px;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, .22);
+}
+.hero-chart-tip strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.hero-chart-tip span {
+  display: block;
+  margin-top: 1px;
+  color: #c8c4ba;
+  font-size: .65rem;
+  letter-spacing: .04em;
+  font-weight: 500;
+}
+
 /* Hero chart range toggles (1M / 6M / YTD / 1Y / 5Y) */
 .hero-chart-periods {
   display: flex;

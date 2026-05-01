@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=16" />
+  <link rel="stylesheet" href="style.css?v=17" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
 </head>
@@ -74,7 +74,10 @@
              switch the range (1M / 6M / YTD / 1Y / 5Y) and a soft terracotta
              gradient fills below the line. The placeholder path inside
              #hero-chart-line is replaced by script.js once Yahoo data lands;
-             if the fetch fails the placeholder remains. -->
+             if the fetch fails the placeholder remains. The wrapper is the
+             positioning container for the hover crosshair + price/date
+             tooltip overlay. -->
+        <div class="hero-chart-wrap">
         <svg id="hero-chart" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="S&amp;P 500 price chart" aria-hidden="false">
           <defs>
             <pattern id="dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
@@ -95,6 +98,12 @@
           </g>
           <text id="hero-chart-label" x="22" y="28" fill="#534f47" font-weight="600">Loading&hellip;</text>
         </svg>
+        <div class="hero-chart-overlay" aria-hidden="true">
+          <div class="hero-chart-cross"></div>
+          <div class="hero-chart-dot"></div>
+          <div class="hero-chart-tip"></div>
+        </div>
+        </div>
         <div class="hero-chart-periods" role="tablist" aria-label="S&amp;P 500 chart range">
           <button type="button" class="period-btn" data-range="1d">1D</button>
           <button type="button" class="period-btn" data-range="5d">5D</button>
@@ -353,15 +362,4 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
-      <ul class="social">
-        <li><a href="now.html">Now</a></li>
-        <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="mailto:brandonpleone@gmail.com">Email</a></li>
-        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
-      </ul>
-    </div>
-  </footer>
-
-  <script src="script.js?v=16" defer></script>
-</body>
-</html>
+      <ul cl

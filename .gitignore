@@ -14,3 +14,9 @@ dist/
 # The actual deployed Worker code lives in the Cloudflare dashboard
 # (Workers & Pages -> bpleon-quotes), not in this repo.
 worker-source.js
+
+# Stray edit-recovery temp files (safe to delete from Windows).
+*.broken
+*.broken2
+*.head
+*.tail

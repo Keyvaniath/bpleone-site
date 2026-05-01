@@ -1200,18 +1200,27 @@
     '1y':  '1Y', '2y': '2Y', '5y': '5Y', '10y': '10Y', 'max': 'MAX',
   };
 
+  var currentHeroRange = '1y';
+
   function loadHeroChart(range) {
     range = range || '1y';
+    currentHeroRange = range;
     var line = document.getElementById('hero-chart-line');
     var fill = document.getElementById('hero-chart-fill');
     if (!line) return;
     var label = document.getElementById('hero-chart-label');
     var sym = '^GSPC';  // S&P 500 index
-    fetch(WORKER_URL + '?spark=' + encodeURIComponent(sym) + '&range=' + encodeURIComponent(range))
+    fetch(WORKER_URL + '?spark=' + encodeURIComponent(sym) +
+                       '&range=' + encodeURIComponent(range) +
+                       '&withDates=1')
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (data) {
-        if (!data || !data[sym] || data[sym].length < 2) return;
-        var values = data[sym];
+        if (!data || !data[sym]) return;
+        var entry = data[sym];
+        // Tolerate both shapes: { values, timestamps } or [..closes].
+        var values = Array.isArray(entry) ? entry : entry.values;
+        var timestamps = Array.isArray(entry) ? null : entry.timestamps;
+        if (!values || values.length < 2) return;
         var w = 320, h = 240, padX = 24, padTop = 36, padBottom = 28;
         var min = Math.min.apply(null, values);
         var max = Math.max.apply(null, values);
@@ -1272,8 +1281,107 @@
             ' · ' + rangeLabel + ' ' +
             (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
         }
+        // Wire (or re-wire) hover crosshair + tooltip when timestamps are
+        // available. Re-attaching is safe because we replace the geometry
+        // each load and remove old listeners first.
+        if (timestamps && timestamps.length === values.length) {
+          attachHeroHover(values, timestamps, {
+            w: w, h: h, padX: padX, padTop: padTop, padBottom: padBottom,
+            min: min, max: max, range: range_v, range_label: range,
+          });
+        }
       })
       .catch(function () { /* leave placeholder path */ });
+  }
+
+  // Attach (or re-attach) hover handlers to the hero S&P chart. Mouse X is
+  // mapped to the nearest data index, then a vertical crosshair line, a
+  // dot, and a price/date tooltip are positioned in pixel coords.
+  var _heroHoverCleanup = null;
+  function attachHeroHover(values, timestamps, geom) {
+    var wrap = document.querySelector('.hero-chart-wrap');
+    var overlay = wrap && wrap.querySelector('.hero-chart-overlay');
+    if (!wrap || !overlay) return;
+    var cross = overlay.querySelector('.hero-chart-cross');
+    var dot = overlay.querySelector('.hero-chart-dot');
+    var tip = overlay.querySelector('.hero-chart-tip');
+    var stepX = (geom.w - 2 * geom.padX) / Math.max(values.length - 1, 1);
+
+    function fmtHeroPriceTip(n) {
+      if (n >= 1000) return Math.round(n).toLocaleString();
+      if (n >= 100)  return n.toFixed(0);
+      return n.toFixed(2);
+    }
+    function fmtHeroDate(ts) {
+      if (!ts) return '';
+      var d = new Date(ts * 1000);
+      if (geom.range_label === '1d' || geom.range_label === '5d') {
+        return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+          ' · ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      }
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function moveTo(clientX) {
+      // The SVG fills the wrap (width:100% height:auto, viewBox 320x240).
+      var rect = wrap.getBoundingClientRect();
+      if (rect.width <= 0) return;
+      var px = clientX - rect.left;
+      var vbX = (px / rect.width) * geom.w;
+      var bestIdx = 0;
+      var bestDist = Infinity;
+      for (var i = 0; i < values.length; i++) {
+        var ptX = geom.padX + i * stepX;
+        var d = Math.abs(ptX - vbX);
+        if (d < bestDist) { bestDist = d; bestIdx = i; }
+      }
+      var pickVbX = geom.padX + bestIdx * stepX;
+      var pickVbY = (geom.h - geom.padBottom) -
+                    ((values[bestIdx] - geom.min) / geom.range) *
+                    (geom.h - geom.padTop - geom.padBottom);
+      var pickPxX = (pickVbX / geom.w) * rect.width;
+      var pickPxY = (pickVbY / geom.h) * rect.height;
+
+      overlay.classList.add('active');
+      cross.style.left = pickPxX.toFixed(1) + 'px';
+      dot.style.left = pickPxX.toFixed(1) + 'px';
+      dot.style.top = pickPxY.toFixed(1) + 'px';
+
+      var dateStr = fmtHeroDate(timestamps[bestIdx]);
+      tip.innerHTML = '<strong>' + fmtHeroPriceTip(values[bestIdx]) + '</strong>' +
+                      (dateStr ? '<span>' + dateStr + '</span>' : '');
+
+      var tipW = tip.offsetWidth || 110;
+      var halfTip = tipW / 2;
+      var tipX = pickPxX;
+      if (tipX - halfTip < 6) tipX = halfTip + 6;
+      if (tipX + halfTip > rect.width - 6) tipX = rect.width - halfTip - 6;
+      tip.style.left = tipX.toFixed(1) + 'px';
+      var tipTop = pickPxY - 54;
+      if (tipTop < 4) tipTop = pickPxY + 18;
+      tip.style.top = tipTop.toFixed(1) + 'px';
+    }
+
+    function onMouseMove(e) { moveTo(e.clientX); }
+    function onTouchMove(e) {
+      if (e.touches && e.touches[0]) moveTo(e.touches[0].clientX);
+    }
+    function onLeave() { overlay.classList.remove('active'); }
+
+    // Tear down previous listeners (range switch re-binds).
+    if (_heroHoverCleanup) { _heroHoverCleanup(); _heroHoverCleanup = null; }
+    wrap.addEventListener('mousemove', onMouseMove);
+    wrap.addEventListener('mouseleave', onLeave);
+    wrap.addEventListener('touchstart', onTouchMove, { passive: true });
+    wrap.addEventListener('touchmove', onTouchMove, { passive: true });
+    wrap.addEventListener('touchend', onLeave);
+    _heroHoverCleanup = function () {
+      wrap.removeEventListener('mousemove', onMouseMove);
+      wrap.removeEventListener('mouseleave', onLeave);
+      wrap.removeEventListener('touchstart', onTouchMove);
+      wrap.removeEventListener('touchmove', onTouchMove);
+      wrap.removeEventListener('touchend', onLeave);
+    };
   }
 
   function setupHeroChartTabs() {
