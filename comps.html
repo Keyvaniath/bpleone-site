@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Comps Calculator — Brandon Leon</title>
+<meta name="description" content="Plug in target metrics + peer median multiples. Get implied share price across every standard methodology.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F5EFE0;
+  --card: #FAF6E8;
+  --card-border: #E0D5BA;
+  --text: #1F1B14;
+  --text-muted: #6B6453;
+  --text-faint: #9C9684;
+  --accent: #C46A2C;
+  --accent-light: #E5A572;
+  --accent-bg: #F5E4CE;
+  --rule: #D8CDB0;
+  --input-bg: #FFFEF7;
+  --input-border: #C9BD9F;
+  --table-stripe: #F2EBD6;
+  --green: #4F7A3F;
+  --red: #B0432A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 17px; line-height: 1.6;
+  padding: 60px 40px 100px; min-height: 100vh;
+}
+.container { max-width: 1080px; margin: 0 auto; }
+.kicker { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+h1 { font-size: 44px; font-weight: 600; line-height: 1.05; margin-bottom: 14px; letter-spacing: -0.015em; }
+.subhead { color: var(--text-muted); font-size: 18px; font-style: italic; line-height: 1.5; margin-bottom: 36px; max-width: 760px; }
+.grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 24px; }
+@media (max-width: 900px) { body { padding: 40px 20px 60px; } .grid { grid-template-columns: 1fr; } h1 { font-size: 32px; } }
+.card { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 24px 28px; }
+.card h2 { font-size: 22px; font-weight: 600; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+.subgroup { padding-top: 14px; margin-top: 12px; border-top: 1px dashed var(--rule); }
+.subgroup-title { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 8px; }
+.row { display: grid; grid-template-columns: 1fr 100px; gap: 14px; align-items: center; padding: 6px 0; }
+.row.three { grid-template-columns: 1fr 70px 70px 70px; }
+.row .lbl { font-size: 15px; }
+.row .lbl-sm { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-muted); text-align: center; padding-bottom: 4px; }
+input[type="number"], input[type="text"] {
+  background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 3px;
+  padding: 7px 10px; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text);
+  text-align: right; width: 100%;
+}
+input[type="text"] { text-align: left; }
+input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-light); }
+.implied-kicker { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+.implied-price { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+.implied-meta { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
+.implied-meta .pos { color: var(--green); font-weight: 600; }
+.implied-meta .neg { color: var(--red); font-weight: 600; }
+table.football { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; margin-top: 12px; }
+table.football th { padding: 8px 10px; text-align: left; border-bottom: 1px solid var(--rule); color: var(--text-muted); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+table.football th.num { text-align: right; }
+table.football td { padding: 7px 10px; border-bottom: 1px solid var(--rule); }
+table.football td.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.football tr:nth-child(even) td { background: var(--table-stripe); }
+table.football .pos { color: var(--green); font-weight: 600; }
+table.football .neg { color: var(--red); font-weight: 600; }
+.sens-section { margin-top: 40px; }
+.sens-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; margin-bottom: 6px; }
+.sens-section p.hint { color: var(--text-muted); font-style: italic; margin-bottom: 16px; }
+table.sens { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; }
+table.sens th, table.sens td { padding: 9px 10px; border: 1px solid var(--rule); text-align: center; font-variant-numeric: tabular-nums; }
+table.sens th { background: var(--card); color: var(--text-muted); font-weight: 600; font-size: 12px; }
+table.sens td.center { background: var(--accent); color: white; font-weight: 600; }
+.howworks { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--rule); }
+.howworks h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 10px; }
+.howworks p { color: var(--text); margin-bottom: 12px; max-width: 800px; }
+.howworks p strong { color: var(--accent); }
+.disclaimer { margin-top: 30px; font-size: 13px; color: var(--text-faint); font-style: italic; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="kicker">TOOLKIT · TRADING COMPS</div>
+  <h1>Trading Comps Calculator</h1>
+  <p class="subhead">Plug in a target's metrics and your peer-set median multiples. See implied share price across every standard methodology, with premium/discount to current price. The same framework I use for my own research notes.</p>
+
+  <div class="grid">
+    <!-- INPUTS -->
+    <div class="card">
+      <h2>Inputs</h2>
+
+      <div class="subgroup-title" style="margin-top:0;">Target</div>
+      <div class="row"><div class="lbl">Ticker</div><input type="text" id="ticker" value="MU"></div>
+      <div class="row"><div class="lbl">Current price ($)</div><input type="number" id="price" value="110.00" step="0.01"></div>
+      <div class="row"><div class="lbl">Diluted shares (mm)</div><input type="number" id="shares" value="1126"></div>
+      <div class="row"><div class="lbl">Net debt ($mm)</div><input type="number" id="netDebt" value="-6600"></div>
+
+      <div class="subgroup">
+        <div class="subgroup-title">Target metrics ($mm except EPS)</div>
+        <div class="row"><div class="lbl">LTM Revenue</div><input type="number" id="revLTM" value="58000"></div>
+        <div class="row"><div class="lbl">FY1E Revenue</div><input type="number" id="revFY1" value="95000"></div>
+        <div class="row"><div class="lbl">LTM EBITDA</div><input type="number" id="ebitdaLTM" value="18740"></div>
+        <div class="row"><div class="lbl">FY1E EBITDA</div><input type="number" id="ebitdaFY1" value="32500"></div>
+        <div class="row"><div class="lbl">LTM EPS ($)</div><input type="number" id="epsLTM" value="19.81" step="0.01"></div>
+        <div class="row"><div class="lbl">FY1E EPS ($)</div><input type="number" id="epsFY1" value="56.00" step="0.01"></div>
+        <div class="row"><div class="lbl">Book value / share ($)</div><input type="number" id="bvps" value="32" step="0.01"></div>
+      </div>
+
+      <div class="subgroup">
+        <div class="subgroup-title">Peer Median Multiples</div>
+        <div class="row three">
+          <div class="lbl"></div>
+          <div class="lbl-sm">25th</div>
+          <div class="lbl-sm">Median</div>
+          <div class="lbl-sm">75th</div>
+        </div>
+        <div class="row three"><div class="lbl">EV / Revenue LTM</div><input type="number" id="evRev_lo" value="4.4" step="0.1"><input type="number" id="evRev_med" value="9.4" step="0.1"><input type="number" id="evRev_hi" value="12.6" step="0.1"></div>
+        <div class="row three"><div class="lbl">EV / EBITDA LTM</div><input type="number" id="evEbitda_lo" value="14.5" step="0.1"><input type="number" id="evEbitda_med" value="22.5" step="0.1"><input type="number" id="evEbitda_hi" value="27.6" step="0.1"></div>
+        <div class="row three"><div class="lbl">EV / EBITDA FY1E</div><input type="number" id="evEbitdaF_lo" value="12.7" step="0.1"><input type="number" id="evEbitdaF_med" value="15.2" step="0.1"><input type="number" id="evEbitdaF_hi" value="22.0" step="0.1"></div>
+        <div class="row three"><div class="lbl">P / E LTM</div><input type="number" id="peLTM_lo" value="18.9" step="0.1"><input type="number" id="peLTM_med" value="28.4" step="0.1"><input type="number" id="peLTM_hi" value="47.5" step="0.1"></div>
+        <div class="row three"><div class="lbl">P / E FY1E</div><input type="number" id="peFY1_lo" value="18.7" step="0.1"><input type="number" id="peFY1_med" value="24.2" step="0.1"><input type="number" id="peFY1_hi" value="36.9" step="0.1"></div>
+        <div class="row three"><div class="lbl">P / Book</div><input type="number" id="pb_lo" value="3.6" step="0.1"><input type="number" id="pb_med" value="6.1" step="0.1"><input type="number" id="pb_hi" value="20.0" step="0.1"></div>
+      </div>
+    </div>
+
+    <!-- OUTPUT -->
+    <div class="card">
+      <div class="implied-kicker">Implied Share Price (Median Methodology)</div>
+      <div class="implied-price" id="impliedPrice">$—</div>
+      <div class="implied-meta" id="impliedMeta">—</div>
+
+      <h2 style="margin-top: 28px;">Football Field — Implied Share Price by Methodology</h2>
+      <table class="football">
+        <thead>
+          <tr>
+            <th>Methodology</th>
+            <th class="num">Low</th>
+            <th class="num">Mid</th>
+            <th class="num">High</th>
+            <th class="num">vs Mid</th>
+          </tr>
+        </thead>
+        <tbody id="footballBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="sens-section">
+    <h2>Sensitivity: implied price across EV/EBITDA × LTM EBITDA</h2>
+    <p class="hint">Center cell (highlighted) uses your current peer median EV/EBITDA × your LTM EBITDA.</p>
+    <table class="sens" id="sensTable"></table>
+  </div>
+
+  <div class="howworks">
+    <h3>How this works</h3>
+    <p>For each multiple, implied enterprise value = peer multiple × target metric. Implied equity value = EV minus net debt. Implied share price = equity value ÷ diluted shares. For per-share multiples (P/E, P/B), implied price = multiple × per-share metric directly.</p>
+    <p><strong>The Football Field</strong> shows implied prices across every standard methodology. The "Median Methodology" headline is the median of the median-multiple implied prices — your central tendency across approaches. The premium/discount column tells you how cheap or rich a methodology says the stock is vs. the current price.</p>
+    <p><strong>Through-cycle note for cyclicals.</strong> If your target is in semis, oil &amp; gas, or materials, LTM multiples are misleading at peaks and troughs. Swap LTM EBITDA for mid-cycle EBITDA before applying peer multiples. The output then represents through-cycle fair value.</p>
+    <p>This is a clean, classroom-grade tool — useful for a quick read or stress-testing assumptions, not a substitute for a proper model with full financials. For the full IB-grade workbook, see the toolkit page.</p>
+  </div>
+
+  <p class="disclaimer">Nothing on this page is investment advice. Built by Brandon Leon — independent research focused on cyclical industries.</p>
+</div>
+
+<script>
+function v(id) { var x = parseFloat(document.getElementById(id).value); return isNaN(x) ? null : x; }
+function fmtPx(x) { if (x === null || !isFinite(x)) return '—'; return '$' + x.toFixed(2); }
+function fmtPct(x) { if (x === null || !isFinite(x)) return '—'; var s = x >= 0 ? '+' : ''; return s + (x * 100).toFixed(1) + '%'; }
+function median(arr) {
+  var f = arr.filter(function(x){return x !== null && isFinite(x);});
+  if (!f.length) return null;
+  var s = f.slice().sort(function(a,b){return a-b;});
+  var m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : (s[m-1] + s[m]) / 2;
+}
+
+var METHODS = [
+  { name: 'EV / Revenue LTM',  target: 'revLTM',     mult: 'evRev',     type: 'ev' },
+  { name: 'EV / EBITDA LTM',   target: 'ebitdaLTM',  mult: 'evEbitda',  type: 'ev' },
+  { name: 'EV / EBITDA FY1E',  target: 'ebitdaFY1',  mult: 'evEbitdaF', type: 'ev' },
+  { name: 'P / E LTM',         target: 'epsLTM',     mult: 'peLTM',     type: 'p'  },
+  { name: 'P / E FY1E',        target: 'epsFY1',     mult: 'peFY1',     type: 'p'  },
+  { name: 'P / Book',          target: 'bvps',       mult: 'pb',        type: 'p'  }
+];
+
+function calcImplied(method, percentile) {
+  var tgt = v(method.target);
+  var mult = v(method.mult + '_' + percentile);
+  if (tgt === null || mult === null) return null;
+  var shares = v('shares');
+  var netDebt = v('netDebt');
+  if (method.type === 'ev') {
+    if (shares === null || netDebt === null || shares <= 0) return null;
+    return (tgt * mult - netDebt) / shares;
+  } else {
+    return tgt * mult;
+  }
+}
+
+function recompute() {
+  var price = v('price');
+  var tbody = document.getElementById('footballBody');
+  tbody.innerHTML = '';
+  var midPrices = [];
+
+  for (var i = 0; i < METHODS.length; i++) {
+    var m = METHODS[i];
+    var lo = calcImplied(m, 'lo');
+    var mid = calcImplied(m, 'med');
+    var hi = calcImplied(m, 'hi');
+    var prem = (price !== null && mid !== null && mid > 0) ? (price / mid - 1) : null;
+    var premClass = prem === null ? '' : (prem >= 0 ? 'pos' : 'neg');
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td>' + m.name + '</td>' +
+      '<td class="num">' + fmtPx(lo) + '</td>' +
+      '<td class="num">' + fmtPx(mid) + '</td>' +
+      '<td class="num">' + fmtPx(hi) + '</td>' +
+      '<td class="num ' + premClass + '">' + fmtPct(prem) + '</td>';
+    tbody.appendChild(tr);
+    if (mid !== null && isFinite(mid)) midPrices.push(mid);
+  }
+
+  var medPrice = median(midPrices);
+  document.getElementById('impliedPrice').textContent = fmtPx(medPrice);
+  if (price !== null && medPrice !== null && medPrice > 0) {
+    var prem = price / medPrice - 1;
+    var cls = prem >= 0 ? 'pos' : 'neg';
+    var txt = prem >= 0 ? 'premium to' : 'discount vs';
+    document.getElementById('impliedMeta').innerHTML =
+      'vs current $' + price.toFixed(2) + ' — current trades at <span class="' + cls + '">' + fmtPct(prem) + '</span> ' + txt + ' median methodology';
+  } else {
+    document.getElementById('impliedMeta').textContent = '—';
+  }
+
+  buildSensitivity();
+}
+
+function buildSensitivity() {
+  var ebitda = v('ebitdaLTM');
+  var shares = v('shares');
+  var netDebt = v('netDebt');
+  var baseMult = v('evEbitda_med');
+  if (!ebitda || !shares || baseMult === null) return;
+  var ebitdaShifts = [-0.20, -0.10, 0, 0.10, 0.20];
+  var multShifts = [-4, -2, 0, 2, 4];
+  var html = '<thead><tr><th>EV/EBITDA →<br>EBITDA ↓</th>';
+  for (var i = 0; i < multShifts.length; i++) {
+    var m = baseMult + multShifts[i];
+    html += '<th>' + m.toFixed(1) + 'x</th>';
+  }
+  html += '</tr></thead><tbody>';
+  for (var r = 0; r < ebitdaShifts.length; r++) {
+    var es = ebitdaShifts[r];
+    var adj = ebitda * (1 + es);
+    var sign = es > 0 ? '+' : (es < 0 ? '−' : '');
+    html += '<tr><th>' + sign + Math.abs(es * 100).toFixed(0) + '%</th>';
+    for (var c = 0; c < multShifts.length; c++) {
+      var mu = baseMult + multShifts[c];
+      var ev = adj * mu;
+      var px = (ev - netDebt) / shares;
+      var isCenter = (r === 2 && c === 2);
+      html += '<td class="' + (isCenter ? 'center' : '') + '">$' + px.toFixed(2) + '</td>';
+    }
+    html += '</tr>';
+  }
+  html += '</tbody>';
+  document.getElementById('sensTable').innerHTML = html;
+}
+
+var inputs = document.querySelectorAll('input');
+for (var i = 0; i < inputs.length; i++) {
+  inputs[i].addEventListener('input', recompute);
+}
+recompute();
+</script>
+</body>
+</html>
