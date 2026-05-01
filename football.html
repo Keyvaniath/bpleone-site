@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Football Field Calculator — Brandon Leon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #F5EFE0; --card: #FAF6E8; --card-border: #E0D5BA;
+    --text: #1F1B14; --text-muted: #6B6453; --text-faint: #9C9684;
+    --accent: #C46A2C; --accent-light: #E5A572; --accent-bg: #F5E4CE;
+    --rule: #D8CDB0; --input-bg: #FFFEF7; --input-border: #C9BD9F;
+    --table-stripe: #F2EBD6; --green: #4F7A3F; --red: #B0432A;
+    --bar: #C46A2C; --bar-light: #E5A572; --bar-bg: #ECE3CB;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 17px; line-height: 1.6; padding: 60px 40px 100px; min-height: 100vh; }
+.container { max-width: 1100px; margin: 0 auto; }
+.headline { font-size: 42px; font-weight: 600; line-height: 1.15; margin-bottom: 16px; letter-spacing: -0.01em; }
+.subhead { color: var(--text-muted); font-size: 18px; font-style: italic; margin-bottom: 40px; max-width: 720px; }
+.breadcrumb { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); margin-bottom: 16px; letter-spacing: 0.05em; }
+.breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+.grid-main { display: grid; grid-template-columns: 1fr 1.4fr; gap: 28px; margin-bottom: 40px; }
+@media (max-width: 900px) { .grid-main { grid-template-columns: 1fr; } body { padding: 40px 20px 80px; } .headline { font-size: 32px; } }
+.card { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 28px 30px; }
+.card-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.subgroup-title { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin: 16px 0 8px; }
+.row { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 8px; align-items: center; padding: 5px 0; }
+.row-header { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; padding: 4px 0; }
+.method-name { font-size: 14px; font-family: 'Inter', sans-serif; }
+input[type="number"], input[type="text"] { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 3px; padding: 6px 9px; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text); text-align: right; width: 100%; }
+input[type="text"] { text-align: left; }
+input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-light); }
+.summary-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--rule); margin-bottom: 18px; }
+.summary-cell .label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+.summary-cell .value { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; }
+.summary-cell.target .value { color: var(--accent); }
+.field-chart { padding: 12px 0; }
+.field-row { display: grid; grid-template-columns: 200px 1fr 80px; gap: 12px; align-items: center; padding: 8px 0; font-family: 'Inter', sans-serif; font-size: 13px; }
+.field-row .name { font-weight: 500; color: var(--text); }
+.field-row .range { color: var(--text-muted); font-size: 11px; text-align: right; font-variant-numeric: tabular-nums; }
+.bar-track { position: relative; height: 26px; background: var(--bar-bg); border-radius: 3px; overflow: visible; }
+.bar { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, var(--bar-light), var(--bar)); border-radius: 3px; }
+.bar-label { position: absolute; top: 50%; transform: translateY(-50%); color: white; font-weight: 600; font-size: 11px; padding: 0 8px; white-space: nowrap; }
+.current-line { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--text); z-index: 5; }
+.current-tick { position: absolute; top: -16px; transform: translateX(-50%); font-size: 10px; font-weight: 600; color: var(--text); white-space: nowrap; }
+.scale-row { display: grid; grid-template-columns: 200px 1fr 80px; gap: 12px; padding-top: 8px; border-top: 1px solid var(--rule); margin-top: 12px; }
+.scale-ticks { position: relative; height: 16px; font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-muted); }
+.scale-tick { position: absolute; transform: translateX(-50%); font-variant-numeric: tabular-nums; }
+.howworks { margin-top: 50px; padding-top: 28px; border-top: 1px solid var(--rule); }
+.howworks h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+.howworks p { color: var(--text); margin-bottom: 12px; max-width: 800px; }
+.cta { margin-top: 40px; padding: 24px 28px; background: var(--accent-bg); border: 1px solid var(--accent-light); border-radius: 4px; }
+.cta-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+.cta-body { color: var(--text-muted); margin-bottom: 12px; }
+.cta a { color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--accent); }
+.disclaimer { margin-top: 30px; font-size: 13px; color: var(--text-faint); font-style: italic; }
+
+/* SHARE BUTTON */
+.share-btn { position: fixed; top: 24px; right: 24px; background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 90; transition: background 0.15s; }
+.share-btn:hover { background: #A85A22; }
+.share-toast { position: fixed; top: 70px; right: 24px; background: var(--text); color: white; padding: 12px 18px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; z-index: 91; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.share-toast.show { opacity: 1; }
+@media (max-width: 700px) { .share-btn { top: 12px; right: 12px; padding: 8px 12px; font-size: 11px; } }
+
+/* EMAIL MODAL */
+.email-modal { position: fixed; bottom: 24px; right: 24px; max-width: 360px; background: var(--card); border: 1px solid var(--accent-light); border-radius: 6px; padding: 22px 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 100; transform: translateY(120%); opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease; }
+.email-modal.show { transform: translateY(0); opacity: 1; }
+.email-modal-close { position: absolute; top: 8px; right: 12px; background: none; border: none; font-size: 22px; color: var(--text-muted); cursor: pointer; line-height: 1; }
+.email-modal-close:hover { color: var(--accent); }
+.email-modal h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; line-height: 1.2; }
+.email-modal p { font-size: 14px; color: var(--text-muted); font-style: italic; margin-bottom: 14px; line-height: 1.5; }
+.email-modal form { display: flex; gap: 8px; }
+.email-modal input[type="email"] { flex: 1; padding: 9px 12px; border: 1px solid var(--input-border); border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; background: var(--input-bg); }
+.email-modal button[type="submit"] { padding: 9px 16px; background: var(--accent); color: white; border: none; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; }
+.email-modal button[type="submit"]:hover { background: #A85A22; }
+.email-modal .footnote { font-size: 11px; color: var(--text-faint); margin-top: 10px; font-style: normal; }
+@media (max-width: 700px) { .email-modal { max-width: calc(100% - 24px); right: 12px; bottom: 12px; padding: 18px 20px; } }
+
+</style>
+</head>
+<body>
+
+<!-- SHARE BUTTON + TOAST -->
+<button class="share-btn" id="shareBtn" title="Copy a shareable link with your inputs">📋 SHARE THIS</button>
+<div class="share-toast" id="shareToast">Link copied — paste it anywhere</div>
+
+<!-- EMAIL CAPTURE MODAL -->
+<div class="email-modal" id="emailModal">
+    <button class="email-modal-close" id="emailModalClose" aria-label="Close">×</button>
+    <h4>Get the full toolkit</h4>
+    <p>Live-refresh Excel workbook + 19 tabs + Python source. Cyclical industries focus. Free monthly research notes.</p>
+
+        <!-- ──────────────────────────────────────────────────────────────────────
+         SUBSTACK EMBED — Substack handles the email signup natively.
+         Default URL: https://bpleon.substack.com/embed
+         To use a different Substack publication, replace 'bpleon' below.
+         ────────────────────────────────────────────────────────────────────── -->
+    <iframe src="https://bpleon.substack.com/embed" width="100%" height="200" style="border:none; background:transparent;" frameborder="0" scrolling="no"></iframe>
+    <p class="footnote" style="margin-top:6px;">Substack handles signup — no spam, unsubscribe anytime.</p>
+</div>
+
+<div class="container">
+    <div class="breadcrumb"><a href="./index.html">← Toolkit</a></div>
+    <h1 class="headline">Football Field Calculator</h1>
+    <p class="subhead">Drop in your low and high implied price for each valuation methodology. See the visual range chart that synthesizes your view — the same artifact you'd put on the cover slide of a pitchbook.</p>
+
+    <div class="grid-main">
+        <!-- LEFT: INPUTS -->
+        <div class="card">
+            <div class="card-title">Inputs</div>
+            <div class="subgroup-title" style="margin-top:0;">Target</div>
+            <div class="row" style="grid-template-columns: 1fr 1fr;"><div class="method-name">Ticker / name</div><input type="text" id="ticker" value="MU"></div>
+            <div class="row" style="grid-template-columns: 1fr 1fr;"><div class="method-name">Current price ($)</div><input type="number" id="curPrice" value="499.45" step="0.01"></div>
+
+            <div class="subgroup-title">Valuation Range by Method ($/share)</div>
+            <div class="row row-header"><div></div><div style="text-align:right;">Low</div><div style="text-align:right;">High</div></div>
+            <div class="row"><div class="method-name">52-Week Trading Range</div><input type="number" id="m1_lo" value="160" step="1"><input type="number" id="m1_hi" value="524" step="1"></div>
+            <div class="row"><div class="method-name">Analyst Price Targets</div><input type="number" id="m2_lo" value="350" step="1"><input type="number" id="m2_hi" value="700" step="1"></div>
+            <div class="row"><div class="method-name">EV / Revenue (peers)</div><input type="number" id="m3_lo" value="215" step="1"><input type="number" id="m3_hi" value="595" step="1"></div>
+            <div class="row"><div class="method-name">EV / EBITDA LTM (peers)</div><input type="number" id="m4_lo" value="255" step="1"><input type="number" id="m4_hi" value="453" step="1"></div>
+            <div class="row"><div class="method-name">EV / EBITDA FY1E (peers)</div><input type="number" id="m5_lo" value="304" step="1"><input type="number" id="m5_hi" value="632" step="1"></div>
+            <div class="row"><div class="method-name">P / E LTM (peers)</div><input type="number" id="m6_lo" value="431" step="1"><input type="number" id="m6_hi" value="856" step="1"></div>
+            <div class="row"><div class="method-name">P / E FY1E (peers)</div><input type="number" id="m7_lo" value="1021" step="1"><input type="number" id="m7_hi" value="1531" step="1"></div>
+            <div class="row"><div class="method-name">Through-Cycle EV/EBITDA</div><input type="number" id="m8_lo" value="204" step="1"><input type="number" id="m8_hi" value="429" step="1"></div>
+            <div class="row"><div class="method-name">Mini DCF</div><input type="number" id="m9_lo" value="32" step="1"><input type="number" id="m9_hi" value="78" step="1"></div>
+        </div>
+
+        <!-- RIGHT: CHART -->
+        <div class="card">
+            <div class="card-title">Football Field</div>
+            <div class="summary-row">
+                <div class="summary-cell"><div class="label">Min Implied</div><div class="value" id="sum_min">$—</div></div>
+                <div class="summary-cell"><div class="label">Max Implied</div><div class="value" id="sum_max">$—</div></div>
+                <div class="summary-cell"><div class="label">Median Mid</div><div class="value" id="sum_median">$—</div></div>
+                <div class="summary-cell target"><div class="label">Current</div><div class="value" id="sum_current">$—</div></div>
+            </div>
+            <div class="field-chart" id="fieldChart"></div>
+            <div class="scale-row">
+                <div></div>
+                <div class="scale-ticks" id="scaleTicks"></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="howworks">
+        <h3>How this works</h3>
+        <p>Each row is a valuation methodology with its low and high implied share price. The bar's width represents the range; the dark vertical line is the current market price. Methods are sorted from narrowest to widest range so the cleanest signals are at the top.</p>
+        <p><strong>Reading the chart:</strong> if the current price line falls within most bars, the market is roughly in line with consensus methodologies. If it's to the right of most bars, the stock is trading rich. If it's to the left, cheap. The methods that disagree most loudly are the ones to investigate.</p>
+        <p><strong>For cyclicals,</strong> the Through-Cycle EV/EBITDA row often diverges sharply from LTM EV/EBITDA — that gap IS the cyclical positioning. Watch it carefully when sentiment is at extremes.</p>
+        <p>This is a clean, classroom-grade tool — useful for a quick read or stress-testing assumptions. For a fully-loaded football field that ties into a 19-tab IB workbook, see the toolkit.</p>
+    </div>
+
+    <div class="cta">
+        <div class="cta-title">Want this auto-generated for any ticker?</div>
+        <p class="cta-body">The full toolkit pulls live financials from Yahoo Finance and computes every implied price methodology automatically. Football field tab updates instantly. 19 tabs of analysis, 3,049 formulas.</p>
+        <a href="#">→ See the full toolkit</a>
+    </div>
+
+    <p class="disclaimer">Nothing on this page is investment advice. Built by Brandon Leon — independent research focused on cyclical industries.</p>
+</div>
+
+<script>
+const METHODS = [
+    { name: '52-Week Trading Range', lo: 'm1_lo', hi: 'm1_hi' },
+    { name: 'Analyst Price Targets', lo: 'm2_lo', hi: 'm2_hi' },
+    { name: 'EV / Revenue (peers)', lo: 'm3_lo', hi: 'm3_hi' },
+    { name: 'EV / EBITDA LTM (peers)', lo: 'm4_lo', hi: 'm4_hi' },
+    { name: 'EV / EBITDA FY1E (peers)', lo: 'm5_lo', hi: 'm5_hi' },
+    { name: 'P / E LTM (peers)', lo: 'm6_lo', hi: 'm6_hi' },
+    { name: 'P / E FY1E (peers)', lo: 'm7_lo', hi: 'm7_hi' },
+    { name: 'Through-Cycle EV/EBITDA', lo: 'm8_lo', hi: 'm8_hi' },
+    { name: 'Mini DCF', lo: 'm9_lo', hi: 'm9_hi' }
+];
+
+function val(id) { const v = parseFloat(document.getElementById(id).value); return isNaN(v) ? null : v; }
+function fmt(v) { return v === null || isNaN(v) ? '—' : '$' + v.toFixed(0); }
+function median(arr) { const f = arr.filter(x => x !== null && isFinite(x)); if (!f.length) return null; const s = [...f].sort((a,b)=>a-b); const m = Math.floor(s.length/2); return s.length % 2 ? s[m] : (s[m-1] + s[m]) / 2; }
+
+function recompute() {
+    const cur = val('curPrice');
+    const data = METHODS.map(m => ({ name: m.name, lo: val(m.lo), hi: val(m.hi), mid: ((val(m.lo) + val(m.hi)) / 2) }))
+                        .filter(d => d.lo !== null && d.hi !== null);
+    if (!data.length) return;
+    const allValues = data.flatMap(d => [d.lo, d.hi]);
+    if (cur !== null) allValues.push(cur);
+    const minVal = Math.min(...allValues) * 0.95;
+    const maxVal = Math.max(...allValues) * 1.05;
+    const range = maxVal - minVal;
+
+    document.getElementById('sum_min').textContent = fmt(Math.min(...data.map(d => d.lo)));
+    document.getElementById('sum_max').textContent = fmt(Math.max(...data.map(d => d.hi)));
+    document.getElementById('sum_median').textContent = fmt(median(data.map(d => d.mid)));
+    document.getElementById('sum_current').textContent = fmt(cur);
+
+    const sorted = [...data].sort((a,b) => (a.hi - a.lo) - (b.hi - b.lo));
+    let html = '';
+    sorted.forEach(d => {
+        const loPct = ((d.lo - minVal) / range) * 100;
+        const hiPct = ((d.hi - minVal) / range) * 100;
+        const widthPct = hiPct - loPct;
+        let curLine = '';
+        if (cur !== null) {
+            const curPct = ((cur - minVal) / range) * 100;
+            curLine = `<div class="current-line" style="left:${curPct}%;"></div>`;
+        }
+        html += `<div class="field-row">
+            <div class="name">${d.name}</div>
+            <div class="bar-track">
+                <div class="bar" style="left:${loPct}%; width:${widthPct}%;">
+                    <div class="bar-label" style="left:0;">$${d.lo.toFixed(0)}</div>
+                    <div class="bar-label" style="right:0;">$${d.hi.toFixed(0)}</div>
+                </div>
+                ${curLine}
+            </div>
+            <div class="range">$${(d.hi - d.lo).toFixed(0)} wide</div>
+        </div>`;
+    });
+    document.getElementById('fieldChart').innerHTML = html;
+
+    // X-axis ticks
+    const numTicks = 5;
+    let ticksHtml = '';
+    for (let i = 0; i <= numTicks; i++) {
+        const v = minVal + (range * i / numTicks);
+        const pct = (i / numTicks) * 100;
+        ticksHtml += `<div class="scale-tick" style="left:${pct}%;">$${v.toFixed(0)}</div>`;
+    }
+    if (cur !== null) {
+        const curPct = ((cur - minVal) / range) * 100;
+        ticksHtml += `<div class="scale-tick" style="left:${curPct}%; color:var(--accent); font-weight:700; top:-14px;">▼ $${cur.toFixed(2)}</div>`;
+    }
+    document.getElementById('scaleTicks').innerHTML = ticksHtml;
+}
+
+document.querySelectorAll('input').forEach(el => el.addEventListener('input', recompute));
+recompute();
+</script>
+
+<script>
+(function() {
+    // ─── SHARE URL ──────────────────────────────────────────────────────────
+    function collectInputs() {
+        const data = {};
+        document.querySelectorAll('input[type="number"], input[type="text"]').forEach(el => {
+            if (el.id) data[el.id] = el.value;
+        });
+        return data;
+    }
+    function applyInputs(data) {
+        Object.keys(data).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = data[id];
+        });
+        document.querySelectorAll('input').forEach(el => el.dispatchEvent(new Event('input', { bubbles: true })));
+    }
+    function encodeInputs(data) {
+        try { return btoa(encodeURIComponent(JSON.stringify(data))); } catch(e) { return ''; }
+    }
+    function decodeInputs(s) {
+        try { return JSON.parse(decodeURIComponent(atob(s))); } catch(e) { return null; }
+    }
+    function loadFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const enc = params.get('s');
+        if (enc) {
+            const data = decodeInputs(enc);
+            if (data) applyInputs(data);
+        }
+    }
+    function showToast(msg) {
+        const toast = document.getElementById('shareToast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+    document.getElementById('shareBtn').addEventListener('click', () => {
+        const data = collectInputs();
+        const url = window.location.origin + window.location.pathname + '?s=' + encodeInputs(data);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(() => showToast('Link copied — paste it anywhere'));
+        } else {
+            // Fallback for older browsers / non-secure contexts
+            const tmp = document.createElement('textarea');
+            tmp.value = url; document.body.appendChild(tmp); tmp.select();
+            try { document.execCommand('copy'); showToast('Link copied'); } catch(e) { prompt('Copy this link:', url); }
+            document.body.removeChild(tmp);
+        }
+    });
+
+    // ─── EMAIL MODAL ────────────────────────────────────────────────────────
+    const MODAL_DELAY_MS = 60000;
+    const STORAGE_KEY = 'bp_modal_dismissed';
+    function showModal() {
+        if (sessionStorage.getItem(STORAGE_KEY)) return; // dismissed this session
+        if (localStorage.getItem(STORAGE_KEY)) return;   // dismissed permanently
+        document.getElementById('emailModal').classList.add('show');
+    }
+    function dismissModal(permanent) {
+        document.getElementById('emailModal').classList.remove('show');
+        if (permanent) localStorage.setItem(STORAGE_KEY, '1');
+        else sessionStorage.setItem(STORAGE_KEY, '1');
+    }
+    document.getElementById('emailModalClose').addEventListener('click', () => dismissModal(true));
+    // Auto-trigger
+    setTimeout(showModal, MODAL_DELAY_MS);
+
+    // ─── PRELOAD FROM URL ───────────────────────────────────────────────────
+    loadFromUrl();
+})();
+</script>
+
+</body>
+</html>
