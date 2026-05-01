@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Fed After Powell &mdash; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="Notes on the April 29, 2026 FOMC meeting. The market is watching the rate path; it should be watching the institution. Powell stays on the Board, four dissents, Warsh advances toward confirmation." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/fed-april-2026.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/fed-april-2026.html" />
+  <meta property="og:title" content="The Fed After Powell" />
+  <meta property="og:description" content="Notes on the April 29, 2026 FOMC meeting. The market is watching the rate path; it should be watching the institution." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="article:published_time" content="2026-04-30" />
+  <meta property="article:author" content="Brandon Leon" />
+  <meta property="article:section" content="Macro Notes" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=17" />
+
+  <!-- Page-scoped article styles. -->
+  <style>
+    .pitch-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-family: var(--sans);
+      font-size: .85rem;
+      color: var(--muted);
+      letter-spacing: .04em;
+      margin: .25rem 0 1.75rem;
+    }
+    .pitch-meta span strong {
+      color: var(--ink-soft);
+      font-weight: 500;
+      margin-right: .35em;
+      letter-spacing: .04em;
+    }
+
+    .pitch-thesis {
+      padding: 1.6rem 1.85rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent-2);
+      border-radius: 12px;
+      margin: 1.25rem 0 2.75rem;
+      font-family: var(--serif);
+      font-size: 1.16rem;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+    .pitch-thesis p { margin: 0 0 1em; }
+    .pitch-thesis p:last-child { margin: 0; }
+    .pitch-thesis-label {
+      display: block;
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 .65em;
+    }
+
+    .pitch-section {
+      margin: 3rem 0;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--rule);
+    }
+    .pitch-section:first-of-type { border-top: 0; padding-top: 0; }
+    .pitch-section h2 { margin-top: 0; font-size: 1.55rem; }
+    .pitch-section h3 {
+      font-size: 1.18rem;
+      margin: 2em 0 .55em;
+      font-family: var(--serif);
+      font-weight: 600;
+    }
+
+    /* Scenario probability table. */
+    .scenario-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0 1.5rem;
+      font-family: var(--sans);
+      font-size: .92rem;
+    }
+    .scenario-table th,
+    .scenario-table td {
+      padding: .85rem 1rem;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--rule);
+    }
+    .scenario-table thead th {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 2px solid var(--ink);
+      background: transparent;
+    }
+    .scenario-table tbody tr:last-child th,
+    .scenario-table tbody tr:last-child td { border-bottom: none; }
+    .scenario-table .scenario-name {
+      font-family: var(--serif);
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .scenario-table .scenario-prob {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    @media (max-width: 640px) {
+      .scenario-table { font-size: .82rem; }
+      .scenario-table th,
+      .scenario-table td { padding: .65rem .55rem; }
+    }
+
+    /* "What would change my mind" list. */
+    .change-mind-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0 1.5rem;
+    }
+    .change-mind-list li {
+      position: relative;
+      padding: .65rem 0 .65rem 1.75rem;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.55;
+    }
+    .change-mind-list li:last-child { border-bottom: none; }
+    .change-mind-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 1.05rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-2);
+    }
+
+    /* Sources block at the bottom. */
+    .sources-block {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+      font-family: var(--sans);
+      font-size: .88rem;
+    }
+    .sources-block h3 {
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 .85rem;
+    }
+    .sources-block ol {
+      padding-left: 1.25rem;
+      margin: 0;
+      color: var(--ink-soft);
+    }
+    .sources-block li { margin-bottom: .35em; line-height: 1.45; }
+    .sources-block a {
+      color: var(--ink-soft);
+      text-decoration-color: var(--rule);
+    }
+    .sources-block a:hover { color: var(--accent); }
+
+    /* Article-end disclaimer. */
+    .article-disclaimer {
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--rule);
+      font-style: italic;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+  </style>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html" aria-current="page">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+
+    <article>
+
+      <header class="page-head">
+        <p class="eyebrow">Macro notes &middot; Federal Reserve</p>
+        <h1>The Fed After Powell.</h1>
+        <p class="lede">
+          The market is watching the rate path. It should be watching the
+          institution.
+        </p>
+
+        <p class="pitch-meta">
+          <span><strong>Posted</strong> <time datetime="2026-04-30">April 30, 2026</time></span>
+          <span><strong>Topic</strong> Federal Reserve / Macro</span>
+          <span><strong>Author</strong> Brandon Leon</span>
+        </p>
+      </header>
+
+      <div class="pitch-thesis">
+        <span class="pitch-thesis-label">Executive summary</span>
+        <p>
+          The April 29 FOMC meeting was important for the obvious reason
+          &mdash; Jerome Powell held rates steady in what is widely
+          expected to be his final meeting as chair. It was more important
+          for a less obvious one: Powell announced he will remain on the
+          Board of Governors after his term ends, an unusual choice that
+          reframes the handoff to Kevin Warsh as more than a routine
+          transition. With four dissents on the vote &mdash; the most since
+          1992 &mdash; the committee is divided not just on timing but on
+          the policy bias itself. My base case is an extended hold with
+          limited easing over the next 12&ndash;18 months. The
+          under-priced risk is not stickier inflation; it is a governance
+          shock that pushes term premium higher and re-rates the long end
+          independently of the policy path.
+        </p>
+      </div>
+
+      <section class="pitch-section">
+        <h2>What happened</h2>
+        <p>
+          The Federal Open Market Committee left the federal funds target
+          range unchanged at 3.50%&ndash;3.75%, an outcome that was broadly
+          priced going into the meeting. The surprise was the disagreement
+          around the statement, not the headline decision.
+        </p>
+        <p>
+          The vote was 8&ndash;4 &mdash; the most dissents at a single
+          meeting since October 1992. Governor Stephen Miran favored an
+          immediate quarter-point cut. The three regional presidents
+          &mdash; Beth Hammack (Cleveland), Neel Kashkari (Minneapolis),
+          and Lorie Logan (Dallas) &mdash; supported holding rates steady
+          but objected to language preserving an easing bias at a time
+          when inflation remains too high and energy risks remain
+          elevated. That distinction matters. The committee is no longer
+          split simply between &ldquo;cut now&rdquo; and &ldquo;cut
+          later.&rdquo; It is also split between officials who still see
+          the next move as down and officials who are no longer
+          comfortable communicating that assumption.
+        </p>
+        <p>
+          Powell&rsquo;s press conference reinforced the same message. He
+          acknowledged that core inflation has moved &ldquo;slightly in
+          the wrong direction,&rdquo; and the statement itself flagged
+          recent increases in global energy prices. The Fed is no longer
+          debating inflation in the abstract. It is debating inflation in
+          the context of an external shock that may or may not bleed into
+          broader price-setting behavior.
+        </p>
+      </section>
+
+      <section class="pitch-section">
+        <h2>Why Powell staying changes the story</h2>
+        <p>
+          The most important development of the day is the one most market
+          summaries treated as secondary. Powell will stay on the Board of
+          Governors after his term as chair ends on May 15. Outgoing
+          chairs typically step away. Powell is not &mdash; and tied his
+          decision specifically to the ongoing investigation into the
+          renovation of the central bank&rsquo;s headquarters, saying he
+          will not leave the board &ldquo;until this investigation is well
+          and truly over.&rdquo;
+        </p>
+        <p>
+          His broader characterization of the political backdrop was
+          equally direct. He described recent pressure on the Fed as
+          &ldquo;unprecedented&rdquo; and said events had &ldquo;left me
+          no choice&rdquo; but to stay. Whether one agrees with the
+          decision or not, the market implication is straightforward: this
+          transition is no longer just about who sets the tone at the next
+          press conference. It is about whether the Fed can preserve both
+          the appearance and the reality of institutional continuity while
+          political pressure rises. By staying, Powell also denies the
+          administration an immediate majority on the Board.
+        </p>
+        <p>
+          That is what makes the handoff to Warsh consequential. The
+          Senate Banking Committee voted 13&ndash;11 along party lines to
+          advance his nomination on Wednesday &mdash; the first fully
+          partisan committee vote on a Fed chair in its history. The full
+          Senate is expected to vote the week of May 11. Warsh inherits a
+          committee that just delivered its most divided vote in over
+          thirty years, while his predecessor remains physically present
+          on the Board and politically salient in public.
+        </p>
+      </section>
+
+      <section class="pitch-section">
+        <h2>The macro picture Warsh inherits</h2>
+        <p>
+          The macro backdrop still argues for caution. Inflation has not
+          reaccelerated dramatically, but progress has stalled. Core PCE
+          &mdash; the Fed&rsquo;s preferred measure &mdash; sits at 3.2%
+          and policymakers are openly worried that higher global energy
+          prices could extend the journey back to target. (Headline and
+          core CPI have continued to drift lower, but the gap between the
+          two measures is itself a reason for caution.) An immediate pivot
+          is hard to justify on the data, even if parts of the market
+          would prefer one.
+        </p>
+        <p>
+          At the same time, growth is slowing rather than breaking. The
+          labor market is cooling without yet signaling a sharp downturn.
+          That leaves the Fed in an uncomfortable middle ground &mdash;
+          inflation is too high to ease aggressively, but growth is not
+          weak enough to force its hand.
+        </p>
+        <p>
+          That is why the base case is still an extended hold. The
+          committee&rsquo;s own projections continue to point to only one
+          cut this year and another in 2027, and market pricing has
+          effectively pushed easing further out than consensus assumed
+          three months ago. The macro setup supports &ldquo;higher for
+          longer.&rdquo; But the institution delivering that message is
+          entering a more fragile phase.
+        </p>
+      </section>
+
+      <section class="pitch-section">
+        <h2>Market reaction</h2>
+        <p>
+          Equities were mixed rather than disorderly, with the Dow softer
+          and the Nasdaq somewhat firmer as investors balanced the Fed
+          against large-cap earnings. Treasury yields moved higher, with
+          the front end under pressure and the 10-year settling near 4.4%.
+          That is consistent with a lower probability of near-term easing
+          and a modest repricing of term premium.
+        </p>
+        <p>
+          The crude move was at least as important as anything in rates.
+          Oil remained elevated as the market continued to price
+          geopolitical supply risk, reinforcing the Fed&rsquo;s concern
+          that headline inflation could stay sticky even as domestic
+          demand cools. That is a difficult combination &mdash; the kind
+          of inflation that can keep expectations uneasy without offering
+          the Fed a clean, demand-driven problem it knows how to solve.
+        </p>
+        <p>
+          The tape, however, may be too calm. Markets appear comfortable
+          viewing this as a conventional policy handoff plus a slightly
+          hawkish hold. That reading may be reasonable in the short run;
+          it may also be incomplete. A more divided committee, a
+          politically exposed outgoing chair who is staying on, and an
+          incoming chair navigating Senate confirmation is not normal Fed
+          plumbing. It is a governance regime change inside an otherwise
+          familiar macro setup.
+        </p>
+      </section>
+
+      <section class="pitch-section">
+        <h2>Scenario framework</h2>
+        <p>
+          Probabilities reflect my reading of the historical base rate for
+          benign Fed transitions, the composition of today&rsquo;s
+          dissent, and the current political backdrop. They are
+          judgments, not precision estimates.
+        </p>
+
+        <table class="scenario-table">
+          <thead>
+            <tr>
+              <th scope="col">Scenario</th>
+              <th scope="col">Probability</th>
+              <th scope="col">Core view</th>
+              <th scope="col">Likely market outcome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="scenario-name">Base case</td>
+              <td class="scenario-prob">50%</td>
+              <td>Inflation drifts lower slowly; Fed stays restrictive; Warsh begins cautiously.</td>
+              <td>Mild bear-steepening; choppy but positive equities; manageable credit conditions.</td>
+            </tr>
+            <tr>
+              <td class="scenario-name">Optimistic case</td>
+              <td class="scenario-prob">20%</td>
+              <td>Energy shock fades; disinflation resumes; Fed delivers a controlled easing cycle.</td>
+              <td>Bull-steepener; broader equity participation; tighter credit spreads.</td>
+            </tr>
+            <tr>
+              <td class="scenario-name">Pessimistic case</td>
+              <td class="scenario-prob">30%</td>
+              <td>Inflation stays sticky and Fed governance becomes an active risk premium.</td>
+              <td>Bear-steepener; multiple compression; wider credit spreads; real-asset leadership.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Base case &mdash; extended hold, managed risk</h3>
+        <p>
+          The base case is the least dramatic outcome and, for that
+          reason, probably the most likely. Inflation slowly improves but
+          remains above target long enough to keep the Fed cautious. Oil
+          does not spiral but does not fully retrace. Growth cools without
+          forcing an abrupt policy response.
+        </p>
+        <p>
+          Warsh does not begin his tenure by trying to redefine the
+          institution. He inherits Powell&rsquo;s restrictive posture,
+          communicates continuity, and preserves optionality while waiting
+          for cleaner inflation data. Investors continue to wait for cuts
+          that arrive later and in smaller size than the market once
+          expected.
+        </p>
+
+        <h3>Optimistic case &mdash; orderly disinflation, gradual pivot</h3>
+        <p>
+          The optimistic case requires two things to happen at once:
+          external inflation pressure fades and institutional noise stays
+          contained. If the Middle East risk premium embedded in oil
+          recedes and core inflation resumes a cleaner downward trend,
+          the Fed can frame modest cuts as a recalibration of real rates
+          rather than a growth rescue.
+        </p>
+        <p>
+          That outcome would likely support a bull-steepener in rates,
+          broader equity participation, and tighter credit spreads. It
+          also depends on something the market may be taking for granted
+          &mdash; that the transition from Powell to Warsh stays orderly
+          enough that communication itself does not become a source of
+          volatility.
+        </p>
+
+        <h3>Pessimistic case &mdash; governance risk meets sticky inflation</h3>
+        <p>
+          The downside scenario is not simply &ldquo;inflation runs hot
+          for longer.&rdquo; It is that inflation stays uncomfortably high
+          while the market begins to attach a visible credibility discount
+          to the Fed itself. Investors then are not just debating the
+          terminal rate. They are debating how much confidence to place in
+          the institution that communicates it.
+        </p>
+        <p>
+          That tends to show up in term premium first, not in the
+          front-end policy path. A market that suspects the Fed is
+          becoming politically constrained does not need a large upward
+          revision to near-term policy rates to push the long end higher.
+          It only needs a larger premium for uncertainty around inflation
+          control, policy consistency, and institutional independence.
+          That is the scenario in which the 10-year revisits levels
+          consensus currently considers tail risk.
+        </p>
+      </section>
+
+      <section class="pitch-section">
+        <h2>What the market may be missing</h2>
+        <p>
+          The consensus debate is still focused too narrowly on the next
+          cut. That is understandable &mdash; rates markets are built to
+          price path and timing &mdash; but three issues look
+          underappreciated.
+        </p>
+        <p>
+          <strong>Composition of dissent matters more than the headline
+          count.</strong> Today was not four dissents pointing in one
+          direction. It was one dissenter calling for an immediate cut and
+          three objecting to the Fed maintaining even a rhetorical easing
+          bias. That is a more complicated signal than a simple
+          hawkish-or-dovish split. It means the next chair inherits a
+          committee that disagrees not just on timing, but on framework.
+        </p>
+        <p>
+          <strong>Powell staying on the Board creates a new source of
+          interpretive risk.</strong> Even if Powell does not intend to
+          act as a &ldquo;shadow chair,&rdquo; investors will inevitably
+          parse his speeches, votes, and dissents through the lens of
+          personal and institutional tension. The result may be a more
+          volatile Fed communication function even if the data themselves
+          do not become more volatile.
+        </p>
+        <p>
+          <strong>Term premium is the likely release valve.</strong> If
+          markets conclude that policy is becoming politicized, the
+          repricing may happen less through the expected path of fed funds
+          and more through a higher premium embedded in longer-duration
+          assets. That matters for everything from equity multiples to
+          credit spreads to relative real-asset performance.
+        </p>
+      </section>
+
+      <section class="pitch-section">
+        <h2>What would change my mind</h2>
+        <p>
+          I am explicit about the conditions under which I would step away
+          from the pessimistic-case weight. The thesis is not
+          unfalsifiable.
+        </p>
+        <ul class="change-mind-list">
+          <li>Warsh confirmed without significant dissent or public friction.</li>
+          <li>Two consecutive core CPI prints back below 3.0%.</li>
+          <li>Crude rolls back below ~$70 and holds, reducing the energy passthrough risk.</li>
+          <li>A unanimous or near-unanimous next FOMC, suggesting the committee is re-converging.</li>
+          <li>Powell returning to a low public profile after the chair handoff.</li>
+        </ul>
+        <p>
+          If three of those five conditions are met by year-end, the
+          governance-risk premium I am pricing into the pessimistic
+          scenario should compress, and the base case becomes more
+          dominant.
+        </p>
+      </section>
+
+      <section class="pitch-section">
+        <h2>Investment conclusion</h2>
+        <p>
+          The straightforward read of today is that Powell exited with a
+          hold, a divided committee, and a message that rates are likely
+          to stay restrictive for longer. That is true. It is also
+          incomplete.
+        </p>
+        <p>
+          The differentiated view is that markets are entering a phase
+          where Fed governance itself could become a macro variable.
+          Powell&rsquo;s decision to stay on the Board, the unusually
+          fractured vote, and Warsh&rsquo;s imminent confirmation
+          together suggest that the next major repricing may come not
+          from a single inflation print or payroll number, but from a
+          visible institutional rupture &mdash; an open conflict, a
+          prominent resignation, or a shift in how markets judge the
+          Fed&rsquo;s independence.
+        </p>
+        <p>
+          The obvious debate is when the first cut arrives. The less
+          obvious &mdash; and potentially more important &mdash; debate
+          is whether investors are being paid enough for the possibility
+          that the Fed transition becomes a credibility event rather than
+          just a policy event.
+        </p>
+      </section>
+
+      <aside class="sources-block">
+        <h3>Sources &amp; references</h3>
+        <ol>
+          <li><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" rel="noopener">FOMC statement and press materials</a> (Federal Reserve, April 29, 2026).</li>
+          <li><a href="https://www.cnbc.com/2026/04/29/fed-interest-rate-decision-april-2026.html" rel="noopener">CNBC &mdash; Fed holds rates steady amid highest dissent since 1992</a>.</li>
+          <li><a href="https://www.cnbc.com/2026/04/29/jerome-powell-says-he-will-continue-to-serve-as-a-fed-governor-even-after-chairmanship-ends-.html" rel="noopener">CNBC &mdash; Powell to continue serving as Fed governor</a>.</li>
+          <li><a href="https://www.cnbc.com/2026/04/29/trump-fed-nominee-kevin-warsh-senate-approval.html" rel="noopener">CNBC &mdash; Warsh clears key Senate hurdle</a>.</li>
+          <li><a href="https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20260318.pdf" rel="noopener">FOMC Summary of Economic Projections (March 18, 2026)</a>.</li>
+        </ol>
+      </aside>
+
+      <p class="article-disclaimer">
+        Nothing on this page is investment advice. See
+        <a href="disclaimer.html">disclaimer</a>. Charts and figures
+        cited are accurate as of publication; this piece is not updated
+        as data revises.
+      </p>
+
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandonpleone@gmail.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=17" defer></script>
+</body>
+</html>
