@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mid-Cycle EBITDA Calculator — Brandon Leon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #F5EFE0; --card: #FAF6E8; --card-border: #E0D5BA;
+    --text: #1F1B14; --text-muted: #6B6453; --text-faint: #9C9684;
+    --accent: #C46A2C; --accent-light: #E5A572; --accent-bg: #F5E4CE;
+    --rule: #D8CDB0; --input-bg: #FFFEF7; --input-border: #C9BD9F;
+    --table-stripe: #F2EBD6; --green: #4F7A3F; --red: #B0432A;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 17px; line-height: 1.6; padding: 60px 40px 100px; min-height: 100vh; }
+.container { max-width: 1100px; margin: 0 auto; }
+.headline { font-size: 42px; font-weight: 600; line-height: 1.15; margin-bottom: 16px; letter-spacing: -0.01em; }
+.subhead { color: var(--text-muted); font-size: 18px; font-style: italic; margin-bottom: 40px; max-width: 720px; }
+.breadcrumb { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+.grid-main { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; margin-bottom: 40px; }
+@media (max-width: 900px) { .grid-main { grid-template-columns: 1fr; } body { padding: 40px 20px 80px; } .headline { font-size: 32px; } }
+.card { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 28px 30px; }
+.card-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.subgroup-title { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin: 16px 0 8px; }
+.row { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 12px; align-items: center; padding: 6px 0; }
+.row-header { display: grid; grid-template-columns: 100px 1fr 1fr; gap: 12px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); margin-bottom: 6px; }
+.row-header div { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
+.row-header .num-h { text-align: right; }
+.year-label { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text); font-weight: 500; }
+input[type="number"] { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 3px; padding: 7px 10px; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text); text-align: right; width: 100%; }
+input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-light); }
+.implied-headline { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.implied-price { font-family: 'Cormorant Garamond', serif; font-size: 64px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 12px; }
+.implied-meta { font-size: 14px; color: var(--text-muted); font-family: 'Inter', sans-serif; margin-bottom: 18px; }
+.summary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 18px; }
+.sum-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+.sum-value { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; }
+.detail-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; }
+.detail-table th { padding: 8px 10px; border-bottom: 1px solid var(--rule); color: var(--text-muted); text-align: left; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+.detail-table th.num { text-align: right; }
+.detail-table td { padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+.detail-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.detail-table tr:nth-child(even) td { background: var(--table-stripe); }
+.peak { color: var(--green); font-weight: 600; }
+.trough { color: var(--red); font-weight: 600; }
+.howworks { margin-top: 50px; padding-top: 28px; border-top: 1px solid var(--rule); }
+.howworks h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+.howworks p { color: var(--text); margin-bottom: 12px; max-width: 800px; }
+.cta { margin-top: 40px; padding: 24px 28px; background: var(--accent-bg); border: 1px solid var(--accent-light); border-radius: 4px; }
+.cta-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+.cta-body { color: var(--text-muted); margin-bottom: 12px; }
+.cta a { color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--accent); }
+.disclaimer { margin-top: 30px; font-size: 13px; color: var(--text-faint); font-style: italic; }
+.spec-row { display: grid; grid-template-columns: 1fr 140px; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--rule); }
+.spec-row .label { font-size: 15px; }
+
+/* SHARE BUTTON */
+.share-btn { position: fixed; top: 24px; right: 24px; background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 90; transition: background 0.15s; }
+.share-btn:hover { background: #A85A22; }
+.share-toast { position: fixed; top: 70px; right: 24px; background: var(--text); color: white; padding: 12px 18px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; z-index: 91; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.share-toast.show { opacity: 1; }
+@media (max-width: 700px) { .share-btn { top: 12px; right: 12px; padding: 8px 12px; font-size: 11px; } }
+
+/* EMAIL MODAL */
+.email-modal { position: fixed; bottom: 24px; right: 24px; max-width: 360px; background: var(--card); border: 1px solid var(--accent-light); border-radius: 6px; padding: 22px 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 100; transform: translateY(120%); opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease; }
+.email-modal.show { transform: translateY(0); opacity: 1; }
+.email-modal-close { position: absolute; top: 8px; right: 12px; background: none; border: none; font-size: 22px; color: var(--text-muted); cursor: pointer; line-height: 1; }
+.email-modal-close:hover { color: var(--accent); }
+.email-modal h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; line-height: 1.2; }
+.email-modal p { font-size: 14px; color: var(--text-muted); font-style: italic; margin-bottom: 14px; line-height: 1.5; }
+.email-modal form { display: flex; gap: 8px; }
+.email-modal input[type="email"] { flex: 1; padding: 9px 12px; border: 1px solid var(--input-border); border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; background: var(--input-bg); }
+.email-modal button[type="submit"] { padding: 9px 16px; background: var(--accent); color: white; border: none; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; }
+.email-modal button[type="submit"]:hover { background: #A85A22; }
+.email-modal .footnote { font-size: 11px; color: var(--text-faint); margin-top: 10px; font-style: normal; }
+@media (max-width: 700px) { .email-modal { max-width: calc(100% - 24px); right: 12px; bottom: 12px; padding: 18px 20px; } }
+
+</style>
+</head>
+<body>
+
+<!-- SHARE BUTTON + TOAST -->
+<button class="share-btn" id="shareBtn" title="Copy a shareable link with your inputs">📋 SHARE THIS</button>
+<div class="share-toast" id="shareToast">Link copied — paste it anywhere</div>
+
+<!-- EMAIL CAPTURE MODAL -->
+<div class="email-modal" id="emailModal">
+    <button class="email-modal-close" id="emailModalClose" aria-label="Close">×</button>
+    <h4>Get the full toolkit</h4>
+    <p>Live-refresh Excel workbook + 19 tabs + Python source. Cyclical industries focus. Free monthly research notes.</p>
+
+        <!-- ──────────────────────────────────────────────────────────────────────
+         SUBSTACK EMBED — Substack handles the email signup natively.
+         Default URL: https://bpleon.substack.com/embed
+         To use a different Substack publication, replace 'bpleon' below.
+         ────────────────────────────────────────────────────────────────────── -->
+    <iframe src="https://bpleon.substack.com/embed" width="100%" height="200" style="border:none; background:transparent;" frameborder="0" scrolling="no"></iframe>
+    <p class="footnote" style="margin-top:6px;">Substack handles signup — no spam, unsubscribe anytime.</p>
+</div>
+
+<div class="container">
+    <div class="breadcrumb"><a href="./index.html">← Toolkit</a></div>
+    <h1 class="headline">Mid-Cycle EBITDA Calculator</h1>
+    <p class="subhead">For cyclicals — semis, oil & gas, materials, mining. Plug in 7-10 years of revenue and EBITDA. The tool computes mid-cycle margin, normalized EBITDA, and through-cycle EV/EBITDA. The IB-correct way to value a stock at the top OR bottom of a cycle.</p>
+
+    <div class="grid-main">
+        <!-- LEFT: HISTORICAL INPUTS -->
+        <div class="card">
+            <div class="card-title">Historical Cycle Data</div>
+            <p style="color:var(--text-muted); font-size:14px; margin-bottom:16px; font-style: italic;">Annual revenue and EBITDA for the most recent full cycle. 7+ years recommended.</p>
+            <div class="row-header">
+                <div>Year</div>
+                <div class="num-h">Revenue ($mm)</div>
+                <div class="num-h">EBITDA ($mm)</div>
+            </div>
+            <div id="historyRows"></div>
+
+            <div class="subgroup-title">Current State</div>
+            <div class="spec-row"><div class="label">Current EV ($mm)</div><input type="number" id="curEV" value="563400"></div>
+            <div class="spec-row"><div class="label">Diluted shares (mm)</div><input type="number" id="shares" value="1126"></div>
+            <div class="spec-row"><div class="label">Net debt ($mm)</div><input type="number" id="netDebt" value="-6600"></div>
+            <div class="spec-row"><div class="label">Current price ($)</div><input type="number" id="curPrice" value="499.45" step="0.01"></div>
+        </div>
+
+        <!-- RIGHT: OUTPUT -->
+        <div class="card">
+            <div class="implied-headline">Through-Cycle EV / EBITDA</div>
+            <div class="implied-price" id="thruCycleMult">—</div>
+            <div class="implied-meta" id="thruCycleMeta">vs LTM <strong id="ltmMult">—</strong> · cyclical positioning <strong id="positioning">—</strong></div>
+
+            <div class="summary-row">
+                <div><div class="sum-label">Mid-Cycle Margin</div><div class="sum-value" id="midMargin">—</div></div>
+                <div><div class="sum-label">Mid-Cycle EBITDA</div><div class="sum-value" id="midEbitda">—</div></div>
+            </div>
+
+            <div class="card-title" style="margin-top: 24px;">Cycle Detail</div>
+            <table class="detail-table">
+                <thead>
+                    <tr>
+                        <th>Year</th>
+                        <th class="num">Revenue</th>
+                        <th class="num">EBITDA</th>
+                        <th class="num">Margin</th>
+                        <th>vs Mean</th>
+                    </tr>
+                </thead>
+                <tbody id="cycleDetail"></tbody>
+            </table>
+
+            <div class="summary-row" style="margin-top: 24px;">
+                <div><div class="sum-label">Implied Price (Through-Cycle)</div><div class="sum-value" id="impliedPrice">$—</div></div>
+                <div><div class="sum-label">vs Current</div><div class="sum-value" id="vsCurrent">—</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="howworks">
+        <h3>How this works</h3>
+        <p><strong>Mid-cycle margin</strong> = mean of (EBITDA ÷ Revenue) across the cycle window. By averaging across peaks AND troughs, you smooth out the noise and get the company's structural earnings power.</p>
+        <p><strong>Mid-cycle EBITDA</strong> = mid-cycle margin × LTM revenue. This is the "normalized" earnings number — what the company would earn at average cycle conditions on today's revenue base.</p>
+        <p><strong>Through-cycle EV/EBITDA</strong> = current EV ÷ mid-cycle EBITDA. The honest multiple for cyclicals. LTM EV/EBITDA at a peak makes everything look cheap; through-cycle EV/EBITDA tells you what you're really paying.</p>
+        <p><strong>Implied price</strong> = (mid-cycle EBITDA × your benchmark multiple − net debt) ÷ shares. Use the historical median EV/EBITDA for that company or sector as the benchmark.</p>
+        <p><strong>When to use this:</strong> any time a company is at the top or bottom of its operating cycle. Memory (MU, Hynix), oil & gas (XOM, CVX, EOG), industrial commodities (FCX, NUE), shipping (ZIM, FRO). The further LTM is from mid-cycle, the more this tool changes your view.</p>
+    </div>
+
+    <div class="cta">
+        <div class="cta-title">Want this auto-computed for any ticker?</div>
+        <p class="cta-body">The full toolkit pulls 10-year financials from Yahoo Finance and computes mid-cycle EBITDA + through-cycle multiples for any ticker, plus 19 tabs of supporting analysis (Football Field, Mini DCF, WACC, Sensitivity).</p>
+        <a href="#">→ See the full toolkit</a>
+    </div>
+
+    <p class="disclaimer">Nothing on this page is investment advice. Built by Brandon Leon — independent research focused on cyclical industries.</p>
+</div>
+
+<script>
+// MU 10-yr historical defaults
+const DEFAULT_HISTORY = [
+    { year: 2017, rev: 20322, ebitda: 9089 },
+    { year: 2018, rev: 30391, ebitda: 16586 },
+    { year: 2019, rev: 23406, ebitda: 9180 },
+    { year: 2020, rev: 21435, ebitda: 6896 },
+    { year: 2021, rev: 27705, ebitda: 11681 },
+    { year: 2022, rev: 30758, ebitda: 13180 },
+    { year: 2023, rev: 15540, ebitda: 1145 },
+    { year: 2024, rev: 25111, ebitda: 6740 },
+    { year: 2025, rev: 37378, ebitda: 14200 },
+    { year: 2026, rev: 58000, ebitda: 18740 }
+];
+
+// Render history input rows
+function renderHistory() {
+    const container = document.getElementById('historyRows');
+    container.innerHTML = '';
+    DEFAULT_HISTORY.forEach((row, i) => {
+        const div = document.createElement('div');
+        div.className = 'row';
+        div.innerHTML = `
+            <div class="year-label">FY${row.year}</div>
+            <input type="number" id="rev_${i}" value="${row.rev}" data-idx="${i}" data-field="rev">
+            <input type="number" id="ebitda_${i}" value="${row.ebitda}" data-idx="${i}" data-field="ebitda">
+        `;
+        container.appendChild(div);
+    });
+}
+
+function val(id) { const v = parseFloat(document.getElementById(id).value); return isNaN(v) ? null : v; }
+function fmtPct(v, d=1) { return v === null || isNaN(v) ? '—' : (v * 100).toFixed(d) + '%'; }
+function fmtNum(v) { return v === null || isNaN(v) ? '—' : v.toLocaleString(undefined, { maximumFractionDigits: 0 }); }
+function fmtMult(v) { return v === null || isNaN(v) || !isFinite(v) ? '—' : v.toFixed(2) + 'x'; }
+
+function recompute() {
+    const margins = [];
+    const cycleData = [];
+    DEFAULT_HISTORY.forEach((_, i) => {
+        const rev = val('rev_' + i);
+        const eb = val('ebitda_' + i);
+        if (rev && eb !== null && rev > 0) {
+            const m = eb / rev;
+            margins.push(m);
+            cycleData.push({ year: DEFAULT_HISTORY[i].year, rev, eb, margin: m });
+        }
+    });
+    if (!margins.length) return;
+    const meanMargin = margins.reduce((a,b)=>a+b, 0) / margins.length;
+    const ltmRev = cycleData[cycleData.length - 1]?.rev || 0;
+    const ltmEbitda = cycleData[cycleData.length - 1]?.eb || 0;
+    const midEbitda = meanMargin * ltmRev;
+
+    document.getElementById('midMargin').textContent = fmtPct(meanMargin);
+    document.getElementById('midEbitda').textContent = '$' + fmtNum(midEbitda) + 'mm';
+
+    const curEV = val('curEV');
+    const ltmMult = (curEV && ltmEbitda) ? curEV / ltmEbitda : null;
+    const thruCycleMult = (curEV && midEbitda) ? curEV / midEbitda : null;
+    document.getElementById('thruCycleMult').textContent = fmtMult(thruCycleMult);
+    document.getElementById('ltmMult').textContent = fmtMult(ltmMult);
+
+    let positioning = '—';
+    if (thruCycleMult !== null && ltmMult !== null) {
+        const gap = thruCycleMult - ltmMult;
+        if (gap > 5) positioning = 'EARNINGS AT PEAK (LTM understates true multiple)';
+        else if (gap < -5) positioning = 'EARNINGS AT TROUGH (LTM overstates multiple)';
+        else positioning = 'NEAR MID-CYCLE';
+    }
+    document.getElementById('positioning').textContent = positioning;
+
+    // Cycle detail table
+    let html = '';
+    const peakMargin = Math.max(...margins);
+    const troughMargin = Math.min(...margins);
+    cycleData.forEach(d => {
+        let tag = '';
+        if (d.margin === peakMargin) tag = '<span class="peak">PEAK</span>';
+        else if (d.margin === troughMargin) tag = '<span class="trough">TROUGH</span>';
+        else tag = '<span style="color:var(--text-muted);">' + (d.margin > meanMargin ? 'above' : 'below') + '</span>';
+        html += `<tr>
+            <td>FY${d.year}</td>
+            <td class="num">$${fmtNum(d.rev)}</td>
+            <td class="num">$${fmtNum(d.eb)}</td>
+            <td class="num">${fmtPct(d.margin)}</td>
+            <td>${tag}</td>
+        </tr>`;
+    });
+    html += `<tr style="background:var(--accent-bg) !important;">
+        <td><strong>Mid-Cycle</strong></td>
+        <td class="num">—</td>
+        <td class="num"><strong>$${fmtNum(midEbitda)}</strong></td>
+        <td class="num"><strong>${fmtPct(meanMargin)}</strong></td>
+        <td><strong style="color:var(--accent);">10-yr mean</strong></td>
+    </tr>`;
+    document.getElementById('cycleDetail').innerHTML = html;
+
+    // Implied price using historical median multiple as benchmark
+    const sortedMargins = [...margins].sort((a,b)=>a-b);
+    const benchmarkMult = thruCycleMult; // use what we computed
+    // Implied price using mid-cycle EBITDA × historical median EV/EBITDA estimate
+    // Use a default of 10x for cyclicals if not estimable; show range 8-12x
+    const benchMultMid = 10; // typical cyclical mid-cycle multiple
+    const shares = val('shares');
+    const netDebt = val('netDebt');
+    const curPrice = val('curPrice');
+    if (shares && shares > 0) {
+        const impliedEV = midEbitda * benchMultMid;
+        const impliedEquity = impliedEV - netDebt;
+        const impliedPx = impliedEquity / shares;
+        document.getElementById('impliedPrice').textContent = '$' + impliedPx.toFixed(2);
+        if (curPrice && impliedPx > 0) {
+            const prem = curPrice / impliedPx - 1;
+            const cls = prem >= 0 ? 'peak' : 'trough';
+            document.getElementById('vsCurrent').innerHTML =
+                `<span class="${cls}">${(prem*100).toFixed(1)}%</span><div style="font-size:11px; color:var(--text-muted); font-family:Inter; margin-top:4px;">at 10x mid-cycle EBITDA</div>`;
+        }
+    }
+}
+
+renderHistory();
+document.querySelectorAll('input').forEach(el => el.addEventListener('input', recompute));
+recompute();
+</script>
+
+<script>
+(function() {
+    // ─── SHARE URL ──────────────────────────────────────────────────────────
+    function collectInputs() {
+        const data = {};
+        document.querySelectorAll('input[type="number"], input[type="text"]').forEach(el => {
+            if (el.id) data[el.id] = el.value;
+        });
+        return data;
+    }
+    function applyInputs(data) {
+        Object.keys(data).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = data[id];
+        });
+        document.querySelectorAll('input').forEach(el => el.dispatchEvent(new Event('input', { bubbles: true })));
+    }
+    function encodeInputs(data) {
+        try { return btoa(encodeURIComponent(JSON.stringify(data))); } catch(e) { return ''; }
+    }
+    function decodeInputs(s) {
+        try { return JSON.parse(decodeURIComponent(atob(s))); } catch(e) { return null; }
+    }
+    function loadFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        const enc = params.get('s');
+        if (enc) {
+            const data = decodeInputs(enc);
+            if (data) applyInputs(data);
+        }
+    }
+    function showToast(msg) {
+        const toast = document.getElementById('shareToast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+    document.getElementById('shareBtn').addEventListener('click', () => {
+        const data = collectInputs();
+        const url = window.location.origin + window.location.pathname + '?s=' + encodeInputs(data);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(() => showToast('Link copied — paste it anywhere'));
+        } else {
+            // Fallback for older browsers / non-secure contexts
+            const tmp = document.createElement('textarea');
+            tmp.value = url; document.body.appendChild(tmp); tmp.select();
+            try { document.execCommand('copy'); showToast('Link copied'); } catch(e) { prompt('Copy this link:', url); }
+            document.body.removeChild(tmp);
+        }
+    });
+
+    // ─── EMAIL MODAL ────────────────────────────────────────────────────────
+    const MODAL_DELAY_MS = 60000;
+    const STORAGE_KEY = 'bp_modal_dismissed';
+    function showModal() {
+        if (sessionStorage.getItem(STORAGE_KEY)) return; // dismissed this session
+        if (localStorage.getItem(STORAGE_KEY)) return;   // dismissed permanently
+        document.getElementById('emailModal').classList.add('show');
+    }
+    function dismissModal(permanent) {
+        document.getElementById('emailModal').classList.remove('show');
+        if (permanent) localStorage.setItem(STORAGE_KEY, '1');
+        else sessionStorage.setItem(STORAGE_KEY, '1');
+    }
+    document.getElementById('emailModalClose').addEventListener('click', () => dismissModal(true));
+    // Auto-trigger
+    setTimeout(showModal, MODAL_DELAY_MS);
+
+    // ─── PRELOAD FROM URL ───────────────────────────────────────────────────
+    loadFromUrl();
+})();
+</script>
+
+</body>
+</html>
