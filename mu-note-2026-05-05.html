@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MU &mdash; A note on today's move &mdash; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="Micron printed +11% on May 5, 2026, pushing past a $700B market cap on a four-corner catalyst stack: a Street-high $1,000 PT from DA Davidson, hyperscaler memory-cost commentary, sold-out HBM capacity, and momentum chasing. Why I'm pulling the price target pending the full through-cycle pitch." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/mu-note-2026-05-05.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/mu-note-2026-05-05.html" />
+  <meta property="og:title" content="MU &mdash; A note on today's move" />
+  <meta property="og:description" content="Why I'm pulling the price target on Micron pending the full through-cycle pitch. Discipline beats chasing the tape." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="article:published_time" content="2026-05-05" />
+  <meta property="article:author" content="Brandon Leon" />
+  <meta property="article:section" content="Single-name notes" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=19" />
+
+  <!-- Page-scoped article styles. Same patterns as fed-april-2026.html. -->
+  <style>
+    .pitch-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-family: var(--sans);
+      font-size: .85rem;
+      color: var(--muted);
+      letter-spacing: .04em;
+      margin: .25rem 0 1.75rem;
+    }
+    .pitch-meta span strong {
+      color: var(--ink-soft);
+      font-weight: 500;
+      margin-right: .35em;
+      letter-spacing: .04em;
+    }
+
+    .pitch-thesis {
+      padding: 1.6rem 1.85rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent-2);
+      border-radius: 12px;
+      margin: 1.25rem 0 2.75rem;
+      font-family: var(--serif);
+      font-size: 1.16rem;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+    .pitch-thesis p { margin: 0 0 1em; }
+    .pitch-thesis p:last-child { margin: 0; }
+    .pitch-thesis-label {
+      display: block;
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 .65em;
+    }
+
+    .pitch-section {
+      margin: 3rem 0;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--rule);
+    }
+    .pitch-section:first-of-type { border-top: 0; padding-top: 0; }
+    .pitch-section h2 { margin-top: 0; font-size: 1.55rem; }
+    .pitch-section h3 {
+      font-size: 1.18rem;
+      margin: 2em 0 .55em;
+      font-family: var(--serif);
+      font-weight: 600;
+    }
+
+    /* Catalyst stack table. */
+    .catalyst-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0 1.5rem;
+      font-family: var(--sans);
+      font-size: .92rem;
+    }
+    .catalyst-table th,
+    .catalyst-table td {
+      padding: .85rem 1rem;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--rule);
+    }
+    .catalyst-table thead th {
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 2px solid var(--ink);
+      background: transparent;
+    }
+    .catalyst-table tbody tr:last-child th,
+    .catalyst-table tbody tr:last-child td { border-bottom: none; }
+    .catalyst-table .cat-name {
+      font-family: var(--serif);
+      font-weight: 600;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .catalyst-table .cat-weight {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    @media (max-width: 640px) {
+      .catalyst-table { font-size: .82rem; }
+      .catalyst-table th,
+      .catalyst-table td { padding: .65rem .55rem; }
+    }
+
+    /* "What I'm watching" list. */
+    .watch-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.25rem 0 1.5rem;
+    }
+    .watch-list li {
+      position: relative;
+      padding: .65rem 0 .65rem 1.75rem;
+      border-bottom: 1px solid var(--rule);
+      line-height: 1.55;
+    }
+    .watch-list li:last-child { border-bottom: none; }
+    .watch-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 1.05rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-2);
+    }
+
+    /* Sources block at the bottom. */
+    .sources-block {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+      font-family: var(--sans);
+      font-size: .88rem;
+    }
+    .sources-block h3 {
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 .85rem;
+    }
+    .sources-block ol {
+      padding-left: 1.25rem;
+      margin: 0;
+      color: var(--ink-soft);
+    }
+    .sources-block li { margin-bottom: .35em; line-height: 1.45; }
+    .sources-block a {
+      color: var(--ink-soft);
+      text-decoration-color: var(--rule);
+    }
+    .sources-block a:hover { color: var(--accent); }
+
+    /* Pulled-PT banner. */
+    .pt-banner {
+      margin: 1.5rem 0 2rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      font-family: var(--sans);
+      font-size: .92rem;
+    }
+    .pt-banner strong { color: var(--ink); }
+
+    /* Article-end disclaimer. */
+    .article-disclaimer {
+      margin-top: 2.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--rule);
+      font-style: italic;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+  </style>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon &mdash; Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html" aria-current="page">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+
+    <article>
+
+      <header class="page-head">
+        <p class="eyebrow">Single-name note &middot; Memory / semis</p>
+        <h1>MU &mdash; A note on today's move.</h1>
+        <p class="lede">
+          The directional call was right. The price target wasn't a model
+          output. Pulling it pending the full pitch.
+        </p>
+
+        <p class="pitch-meta">
+          <span><strong>Posted</strong> <time datetime="2026-05-05">May 5, 2026</time></span>
+          <span><strong>Topic</strong> Single-name &middot; MU</span>
+          <span><strong>Author</strong> Brandon Leon</span>
+        </p>
+      </header>
+
+      <div class="pitch-thesis">
+        <span class="pitch-thesis-label">In one paragraph</span>
+        <p>
+          Micron printed +11% on Tuesday May 5 and crossed a $700&nbsp;billion
+          market cap for the first time, with the stock trading near $680 in
+          the after-hours session. The move sits on a four-corner catalyst
+          stack: a Street-high $1,000 price target from DA Davidson, fresh
+          hyperscaler commentary that memory cost is the new bottleneck on AI
+          capex, the industry-wide message that HBM is sold out through 2026,
+          and the kind of momentum that builds when a name passes a
+          round-number market-cap threshold. The directional view I posted in
+          April &mdash; HBM share gains plus a DRAM cycle bottoming &mdash; is
+          playing out faster than expected. The price target on the lead-pick
+          card was directional, not a defended model output, and the disciplined
+          response to that gap is to pull it rather than chase it. The full
+          through-cycle pitch with a real PT lands Friday May 8.
+        </p>
+      </div>
+
+      <div class="pt-banner">
+        <strong>Action:</strong> Lead-pick card updated. Price target shown as
+        <em>under review</em>. Directional bias <em>maintained</em>. Full
+        bottom-up pitch with new PT publishes Friday May 8 alongside the
+        weekly note.
+      </div>
+
+      <section class="pitch-section">
+        <h2>What happened</h2>
+        <p>
+          Micron shares closed Tuesday up roughly 11% in a session where the
+          tape was already broadly positive, lifting the company's market cap
+          past $700&nbsp;billion for the first time on record. The stock is
+          now up more than 120% year-to-date and has multiplied roughly seven
+          times over the trailing twelve months, putting Micron among the ten
+          most valuable U.S. technology companies by market value. After
+          hours, the bid extended modestly higher, with prints in the
+          $680&nbsp;area suggesting the tape did not exhaust into the close.
+        </p>
+        <p>
+          One unusual data point on the day worth flagging: a Form 4 filing
+          showed the chief executive sold 40,000 shares. Insider sales are
+          frequently scheduled and rarely a clean signal on their own, but a
+          sale of that size on the same day a company crosses a major
+          market-cap threshold is the kind of footprint that bears will point
+          to first. I am not reading it as a thesis-breaking event. I am
+          reading it as a reminder that the people closest to the business
+          chose today, of all days, to take some chips off.
+        </p>
+      </section>
+
+      <section class="pitch-section">
+        <h2>Why now &mdash; the four-corner catalyst stack</h2>
+        <p>
+          The move is large, but the conditions for it have been building for
+          weeks. Four catalysts converged on the same tape, and each one is
+          the type that pulls in a different buyer cohort.
+        </p>
+
+        <table class="catalyst-table">
+          <thead>
+            <tr>
+              <th scope="col">Catalyst</th>
+              <th scope="col">Weight</th>
+              <th scope="col">What it actually says</th>
+              <th scope="col">Cohort it pulls in</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="cat-name">DA Davidson initiates at $1,000</td>
+              <td class="cat-weight">Heavy</td>
+              <td>A new Street-high price target sets a fresh ceiling and triggers re-rating math across the analyst tape; TD Cowen separately raised its target into the $660 area.</td>
+              <td>Sell-side-sensitive long-only mandates and momentum funds.</td>
+            </tr>
+            <tr>
+              <td class="cat-name">Hyperscaler memory-cost commentary</td>
+              <td class="cat-weight">Heavy</td>
+              <td>Mega-cap AI buyers have begun openly attributing capex pressure to memory pricing; a ~$25&nbsp;billion impact figure has been cited in the discussion of one large hyperscaler's outlook, and the broader read is that demand is well in front of supply.</td>
+              <td>Macro and AI-thematic funds re-rating the memory bucket within the AI complex.</td>
+            </tr>
+            <tr>
+              <td class="cat-name">HBM sold-out narrative</td>
+              <td class="cat-weight">Medium</td>
+              <td>Industry trackers and supplier disclosures point to HBM3E and HBM4 capacity being effectively committed through 2026 across SK Hynix, Samsung, and Micron, with HBM3E contract pricing for 2026 reportedly raised by roughly 20% year over year.</td>
+              <td>Specialist semis funds and supply-chain-aware buyers.</td>
+            </tr>
+            <tr>
+              <td class="cat-name">$700&nbsp;billion market-cap threshold</td>
+              <td class="cat-weight">Medium-light</td>
+              <td>Not a fundamental catalyst, but round-number thresholds matter mechanically &mdash; index weighting, ETF flows, and headline visibility all step up when a name crosses a level the market did not have in its 2025 mental model.</td>
+              <td>Passive flows, retail momentum, headline-driven buyers.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>
+          The stack matters because no one of these four would have produced
+          a move of this magnitude on its own. A Street-high price target on
+          a quiet tape gets faded. Hyperscaler cost commentary without an
+          analyst pull would have been treated as a margin tax, not a memory
+          windfall. The HBM narrative has been priced in waves since 2024.
+          What did the work today is the simultaneity &mdash; and the
+          $700&nbsp;billion print gave the tape a clean, quotable story that
+          carried the bid into the close and beyond.
+        </p>
+      </section>
+
+      <section class="pitch-section">
+        <h2>Will it continue near term?</h2>
+        <p>
+          The honest answer is that one-day +11% prints in semi names tend
+          to mean-revert at least partially within five-to-ten trading days,
+          but the conditions for further upside in the very short run are in
+          place. Three points argue for follow-through; two argue for caution.
+        </p>
+
+        <h3>For follow-through</h3>
+        <p>
+          First, after-hours trading near $680 is not a fade pattern &mdash;
+          it suggests buyers were still active into the close and willing to
+          pay up post-bell, which historically correlates with at least one
+          higher session before the first meaningful pullback. Second, the
+          DA Davidson $1,000 target is a magnet that other sell-side desks
+          will be tempted to walk toward; even partial follow-on revisions
+          across the analyst tape over the next two weeks would create new
+          headlines. Third, the round-number market-cap break tends to pull
+          in momentum and quant flows that are agnostic to the fundamentals.
+        </p>
+
+        <h3>For caution</h3>
+        <p>
+          First, the stock is up roughly 700% trailing twelve months. That
+          history alone changes the marginal buyer's profile from
+          fundamentals-driven to flow-driven, which makes the next 5%
+          unstable in either direction. Second, the CEO Form 4 on the day of
+          the rally is the kind of detail that gets indexed in any
+          well-built bear deck and may not matter today, but compounds the
+          first time the tape gives bears an opening. Third, Micron's
+          actual share of the global HBM market is in the
+          single-to-low-double digits depending on whose tracker you read,
+          while SK Hynix and Samsung dominate; the &ldquo;HBM is sold
+          out&rdquo; narrative is broadly true at the industry level but
+          translates to Micron-specific upside that's smaller than the tape
+          implies.
+        </p>
+
+        <h3>How I'd handicap the next ten sessions</h3>
+        <p>
+          The base case is one or two more sessions of momentum continuation,
+          with first resistance somewhere between the $700 round number and
+          the $725&ndash;$750 area, followed by a 5&ndash;8% pullback as
+          insider-sale flow and profit-taking filter through. The bull case
+          is that follow-on analyst revisions hit early in the week and the
+          stock prints into the $750&ndash;$800 zone before any meaningful
+          fade. The bear case is a 10%+ single-session reversal triggered by
+          a hyperscaler walking back capex commentary, an unexpected supply
+          announcement from Samsung or SK Hynix, or simply a rotation day in
+          tech that pulls the highest-momentum names down first. I would
+          weight those at roughly 50 / 25 / 25.
+        </p>
+      </section>
+
+      <section class="pitch-section">
+        <h2>Why I'm pulling the price target</h2>
+        <p>
+          The price target on the homepage lead-pick card was a directional
+          stake in the ground &mdash; the kind of number you put down when
+          you're confident in the direction and have not yet finished the
+          full bottom-up valuation work. That's an honest description of
+          where my Micron coverage was on April 27. The full through-cycle
+          model &mdash; mid-cycle EBIT margin normalization, HBM
+          contribution to the next cycle peak, and reverse-DCF
+          decomposition of what today's price implies &mdash; is what I'm
+          shipping Friday May 8. Until that work is published, naming a
+          revised target under tape pressure would be the wrong move on two
+          counts: it would commit me to a number I can't yet defend in an
+          interview, and it would imply the original $565 was a model
+          output it never was.
+        </p>
+        <p>
+          Pulling a placeholder target while the analytical work is being
+          completed is the cleaner read than chasing the tape with a new
+          number. The directional bias stays. The price target comes back
+          on Friday with a number I can defend down to the last assumption.
+        </p>
+      </section>
+
+      <section class="pitch-section">
+        <h2>What changes the picture before Friday</h2>
+        <p>
+          Things that would force me to revise the framing of the May 8
+          pitch before publication, in rough order of weight:
+        </p>
+        <ul class="watch-list">
+          <li>A second hyperscaler explicitly walks back AI capex and frames the cause as memory cost rather than demand &mdash; a margin-side, not a volume-side, statement.</li>
+          <li>Samsung or SK Hynix announces a supply-side acceleration meaningfully above current capacity-expansion plans for 2026.</li>
+          <li>Micron itself pre-announces or guides ahead of its scheduled fiscal Q3 release; either direction matters because it would re-anchor consensus and partially reset the catalyst stack.</li>
+          <li>A 10-Y move toward 5.0% on a bear-steepener; long-duration semi multiples are the first to compress when term premium re-rates.</li>
+          <li>A second insider-sale Form 4 from a senior officer in the same week.</li>
+        </ul>
+      </section>
+
+      <section class="pitch-section">
+        <h2>Bottom line</h2>
+        <p>
+          The directional view from late April is being validated by the
+          tape; the price target needs to come from the model, not from the
+          tape. The lead-pick card now reads PT-under-review with the
+          directional thesis line intact. The full through-cycle pitch
+          publishes Friday May 8. Anyone reading this who wants the
+          underlying methodology in the meantime can open the
+          <a href="dcf-template.html">DCF template</a> or the
+          <a href="comps-template.html">trading comps workbook</a>;
+          the Micron model lives inside both as a worked example.
+        </p>
+      </section>
+
+      <aside class="sources-block">
+        <h3>Sources &amp; references</h3>
+        <ol>
+          <li><a href="https://www.cnbc.com/2026/05/05/micron-zooms-past-700-billion-market-cap-rally-in-memory-stocks-.html" rel="noopener">CNBC &mdash; Micron crosses $700&nbsp;billion market cap as memory rally accelerates (May 5, 2026)</a>.</li>
+          <li><a href="https://finance.yahoo.com/quote/MU/" rel="noopener">Yahoo Finance &mdash; MU quote, range, and after-hours print</a>.</li>
+          <li><a href="https://www.dailypolitical.com/2026/05/05/insider-selling-micron-technology-nasdaqmu-ceo-sells-40000-shares-of-stock.html" rel="noopener">Form 4 coverage &mdash; CEO sale of 40,000 shares on May 5, 2026</a>.</li>
+          <li><a href="https://www.alphaspread.com/market-news/earnings/micron-rallies-as-ai-demand-sells-out-2026-hbm-production-strong-q1-results-and-analyst-upgrades-fuel-optimism" rel="noopener">Alpha Spread &mdash; analyst upgrades and HBM sold-out commentary (2026)</a>.</li>
+          <li><a href="https://www.tikr.com/blog/micron-stock-is-up-70-in-2026-heres-why-analysts-still-see-more-upside-ahead" rel="noopener">Tikr &mdash; year-to-date analyst price-target distribution on MU (2026)</a>.</li>
+          <li><a href="https://www.trendforce.com/news/2025/12/24/news-samsung-sk-hynix-reportedly-plan-20-hbm3e-price-hike-for-2026-as-nvidia-h200-asic-demand-rises/" rel="noopener">TrendForce &mdash; HBM3E pricing for 2026 contracts (December 2025)</a>.</li>
+          <li><a href="https://news.skhynix.com/2026-market-outlook-focus-on-the-hbm-led-memory-supercycle/" rel="noopener">SK hynix newsroom &mdash; 2026 market outlook on the HBM-led memory cycle</a>.</li>
+          <li><a href="https://siliconanalysts.com/tools/hbm-analysis" rel="noopener">Silicon Analysts &mdash; HBM market share and pricing tracker (2026)</a>.</li>
+        </ol>
+      </aside>
+
+      <p class="article-disclaimer">
+        Nothing on this page is investment advice. See
+        <a href="disclaimer.html">disclaimer</a>. Charts, prices, and
+        figures cited are accurate as of publication; this piece is not
+        updated as data revises.
+      </p>
+
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=19" defer></script>
+</body>
+</html>

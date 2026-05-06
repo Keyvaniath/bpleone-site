@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=18" />
+  <link rel="stylesheet" href="style.css?v=19" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
 </head>
@@ -122,26 +122,23 @@
         <h2>Just published</h2>
         <a class="more" href="writing.html">All writing &rarr;</a>
       </div>
-      <a class="feature-card" href="fed-april-2026.html">
+      <a class="feature-card" href="mu-note-2026-05-05.html">
         <div class="feature-card-art" aria-hidden="true">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <rect width="200" height="200" fill="#b56a3f" rx="10"/>
-            <!-- Pediment / roof line -->
-            <polygon points="38,58 100,28 162,58" fill="#fbf7ef"/>
-            <rect x="36" y="58" width="128" height="6" fill="#fbf7ef"/>
-            <!-- Three pillars -->
-            <rect x="52" y="66" width="14" height="78" fill="#fbf7ef"/>
-            <rect x="93" y="66" width="14" height="78" fill="#fbf7ef"/>
-            <rect x="134" y="66" width="14" height="78" fill="#fbf7ef"/>
-            <!-- Steps -->
-            <rect x="36" y="144" width="128" height="6" fill="#fbf7ef"/>
-            <rect x="28" y="150" width="144" height="8" fill="#fbf7ef"/>
+            <rect width="200" height="200" fill="#5b7f6b" rx="10"/>
+            <!-- Spiking line chart: low base, sharp rip up, evokes the +11% session. -->
+            <polyline points="22,150 48,148 74,144 100,140 126,128 152,80 178,46"
+                      stroke="#fbf7ef" stroke-width="3.5" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="178" cy="46" r="6" fill="#fbf7ef"/>
+            <!-- Subtle baseline -->
+            <line x1="22" y1="170" x2="178" y2="170" stroke="#fbf7ef" stroke-width="1" opacity="0.45"/>
           </svg>
         </div>
         <div class="feature-card-body">
-          <p class="eyebrow">Just published &middot; Apr 30, 2026</p>
-          <h3>The Fed After Powell</h3>
-          <p>The market is watching the rate path; it should be watching the institution. Notes on the April 29 FOMC meeting &mdash; four dissents, Powell staying on the Board, Warsh advancing toward confirmation, and where the next major repricing is most likely to come from.</p>
+          <p class="eyebrow">Just published &middot; May 5, 2026</p>
+          <h3>MU &mdash; A note on today's move</h3>
+          <p>Micron printed +11% Tuesday and crossed $700&nbsp;billion in market cap for the first time. The four-corner catalyst stack behind the move &mdash; DA Davidson's $1,000 PT, hyperscaler memory-cost commentary, sold-out HBM through 2026, and round-number flow &mdash; plus a CEO Form 4 on the same day. Pulling the price target pending the full pitch Friday.</p>
           <p class="feature-card-cta">Read the piece &rarr;</p>
         </div>
       </a>
@@ -383,65 +380,4 @@
         </li>
         <li>
           <a href="writing.html#reading-10k">
-            <span class="post-title">Notes on reading a 10-K like you mean it</span>
-            <span class="post-date">Forthcoming</span>
-          </a>
-        </li>
-      </ul>
-    </section>
-
-    <!-- ====== READING + WATCHING ====== -->
-    <section class="section">
-      <div class="section-head">
-        <h2>Currently reading &amp; watching</h2>
-      </div>
-      <ul class="rw-list">
-        <li>
-          <span class="rw-tag">Reading</span>
-          <span class="rw-text"><em>Chip War</em> by Chris Miller &mdash; the cleanest narrative of how the semiconductor stack became the most strategically valuable industry on the planet. Mandatory background reading for anyone valuing NVDA, AMD, or Micron.</span>
-        </li>
-        <li>
-          <span class="rw-tag">Watching</span>
-          <span class="rw-text">The 10Y yield. HBM ASP commentary in the next round of memory prints. Capex guides from the AI buildout (NVDA, AVGO, the hyperscalers). Crude as an early signal for the energy cycle. Gold and BTC as the macro hedge pair.</span>
-        </li>
-        <li>
-          <span class="rw-tag">Listening</span>
-          <span class="rw-text"><em>Odd Lots</em> (Bloomberg) for the macro / commodities / crypto crossovers. <em>Acquired</em> when there&rsquo;s a tech business worth unpacking end-to-end &mdash; recent episodes on the chip stack are excellent.</span>
-        </li>
-      </ul>
-      <p class="muted small">Updated every few weeks on the <a href="now.html">/now</a> page.</p>
-    </section>
-
-    <!-- ====== SUBSCRIBE ====== -->
-    <section class="section subscribe">
-      <h2>Subscribe</h2>
-      <p>New essays and research notes, sent occasionally. No spam, unsubscribe any time.</p>
-      <iframe
-        src="https://bpleon.substack.com/embed"
-        title="Subscribe"
-        width="100%"
-        height="150"
-        style="border:1px solid var(--rule); border-radius:8px; background:var(--bg);"
-        frameborder="0"
-        scrolling="no"></iframe>
-      <p class="subscribe-fallback">
-        Or subscribe directly on Substack: <a href="https://bpleon.substack.com" rel="noopener">bpleon.substack.com</a>
-      </p>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
-      <ul class="social">
-        <li><a href="now.html">Now</a></li>
-        <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
-        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
-      </ul>
-    </div>
-  </footer>
-
-  <script src="script.js?v=18" defer></script>
-</body>
-</html>
+            <span class="post-title">Notes on reading a 10-K like you mea

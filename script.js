@@ -377,10 +377,10 @@
     {
       sym: 'MU',
       name: 'Micron Technology',
-      target: 565.00,
-      thesis: 'HBM share gains + DRAM cycle bottoming.',
-      posted: '2026-04-01',
-      note_url: ''
+      target: null, // PT under review pending full pitch (publishes Fri May 8). Set to null to render "Under review" in the card. Restore a number when the model-defended PT lands.
+      thesis: 'HBM share gains + DRAM cycle bottoming. Directional view from late April playing out faster than expected; full pitch lands May 8.',
+      posted: '2026-05-05',
+      note_url: 'mu-note-2026-05-05.html'
     }
   ];
   // Mutable; replaced by loadWatchlist() if the KV read succeeds.
@@ -427,7 +427,16 @@
     if (nameEl)   nameEl.textContent   = first.name;
     if (symEl)    symEl.textContent    = first.sym;
     if (thesisEl) thesisEl.textContent = first.thesis || '';
-    if (targetEl) targetEl.textContent = '$' + first.target.toFixed(2);
+    // Target: render the dollar value when present; render "Under review"
+    // when the field is null / missing / non-numeric (e.g. PT pulled pending
+    // a full pitch). This avoids broadcasting a stale or placeholder number.
+    if (targetEl) {
+      if (first.target != null && isFinite(first.target)) {
+        targetEl.textContent = '$' + Number(first.target).toFixed(2);
+      } else {
+        targetEl.textContent = 'Under review';
+      }
+    }
     if (postedEl) postedEl.textContent = first.posted || '';
     if (linkEl)   linkEl.href = 'https://finance.yahoo.com/quote/' + encodeURIComponent(first.sym) + '/';
 
@@ -455,10 +464,19 @@
           changeEl.className = 'lp-change ' + (pct >= 0 ? 'up' : 'down');
         }
         if (ttEl) {
-          var toTarget = ((first.target - price) / price) * 100;
-          if (isFinite(toTarget)) {
-            ttEl.textContent = (toTarget >= 0 ? '+' : '') + toTarget.toFixed(1) + '%';
-            ttEl.className = 'lp-tt ' + (toTarget >= 0 ? 'up' : 'down');
+          // Only render a "to target" % when a numeric target is set; while
+          // the PT is under review, show an em-dash rather than a misleading
+          // number. Reset the className so prior up/down coloring doesn't
+          // linger across renders.
+          if (first.target != null && isFinite(first.target)) {
+            var toTarget = ((first.target - price) / price) * 100;
+            if (isFinite(toTarget)) {
+              ttEl.textContent = (toTarget >= 0 ? '+' : '') + toTarget.toFixed(1) + '%';
+              ttEl.className = 'lp-tt ' + (toTarget >= 0 ? 'up' : 'down');
+            }
+          } else {
+            ttEl.textContent = '—'; // em-dash
+            ttEl.className = 'lp-tt';
           }
         }
       })
