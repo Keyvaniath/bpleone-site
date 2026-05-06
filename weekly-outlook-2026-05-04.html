@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Weekly Market Outlook &mdash; Week of May 4, 2026 &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="Weekly market outlook for the week of May 4, 2026 — payrolls, ISM Services, JOLTS, the geopolitical backdrop as a structural macro input, plus four sector calls and four macro options structures." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/weekly-outlook-2026-05-04.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/weekly-outlook-2026-05-04.html" />
+  <meta property="og:title" content="Weekly Market Outlook — Week of May 4, 2026" />
+  <meta property="og:description" content="Soft-landing narrative meets sticky inflation, a concentrated AI rally, and an increasingly structural geopolitical tape." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="article:published_time" content="2026-05-04" />
+  <meta property="article:author" content="Brandon Leon" />
+  <meta property="article:section" content="Weekly Outlook" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=18" />
+
+  <!-- Page-scoped article styles, matching the fed-april-2026 piece. -->
+  <style>
+    .pitch-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-family: var(--sans);
+      font-size: .85rem;
+      color: var(--muted);
+      letter-spacing: .04em;
+      margin: .25rem 0 1.75rem;
+    }
+    .pitch-meta span strong {
+      color: var(--ink-soft);
+      font-weight: 500;
+      margin-right: .35em;
+      letter-spacing: .04em;
+    }
+
+    .pitch-thesis {
+      padding: 1.6rem 1.85rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent-2);
+      border-radius: 12px;
+      margin: 1.25rem 0 2.75rem;
+      font-family: var(--serif);
+      font-size: 1.16rem;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+    .pitch-thesis p { margin: 0 0 1em; }
+    .pitch-thesis p:last-child { margin: 0; }
+    .pitch-thesis-label {
+      display: block;
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 .65em;
+    }
+
+    .pitch-section {
+      margin: 3rem 0;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--rule);
+    }
+    .pitch-section:first-of-type { border-top: 0; padding-top: 0; }
+    .pitch-section h2 { margin-top: 0; font-size: 1.55rem; }
+    .pitch-section h3 { font-size: 1.15rem; margin-top: 1.6em; }
+
+    .calendar-table-wrap {
+      margin: 1.25rem 0 1.5rem;
+      overflow-x: auto;
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+    }
+    table.calendar {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--sans);
+      font-size: .92rem;
+      line-height: 1.5;
+    }
+    table.calendar th,
+    table.calendar td {
+      padding: .65rem .9rem;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--rule);
+    }
+    table.calendar thead th {
+      background: var(--bg-soft);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+    table.calendar tbody tr:last-child td { border-bottom: none; }
+    table.calendar td:first-child {
+      white-space: nowrap;
+      color: var(--ink-soft);
+      font-variant-numeric: tabular-nums;
+    }
+    table.calendar td:nth-child(2) { font-weight: 500; }
+
+    sup.fn-ref {
+      font-family: var(--sans);
+      font-size: .72em;
+      font-weight: 500;
+      vertical-align: super;
+      line-height: 0;
+      margin-left: .12em;
+    }
+    sup.fn-ref a {
+      text-decoration: none;
+      color: var(--accent);
+    }
+    sup.fn-ref a:hover { color: var(--ink); }
+
+    .footnotes {
+      margin-top: 3.5rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--rule);
+    }
+    .footnotes h2 {
+      font-family: var(--sans);
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      margin: 0 0 1.25rem;
+    }
+    .footnotes ol {
+      padding-left: 2.25rem;
+      font-family: var(--sans);
+      font-size: .88rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+    .footnotes li { padding: .35rem 0; scroll-margin-top: 1rem; }
+    .footnotes li:target {
+      background: var(--bg-soft);
+      border-radius: 4px;
+      padding-left: .35rem;
+    }
+    .footnotes a.fn-back {
+      margin-left: .35em;
+      font-size: .9em;
+      text-decoration: none;
+      color: var(--muted);
+    }
+    .footnotes a.fn-back:hover { color: var(--accent); }
+
+    .disclosure {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+      font-family: var(--sans);
+      font-size: .82rem;
+      line-height: 1.55;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .pitch-cta {
+      margin: 3rem 0 1rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+  </style>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html" aria-current="page">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+
+    <article>
+
+      <header class="page-head">
+        <p class="eyebrow">Weekly Outlook &middot; Week of May 4, 2026</p>
+        <h1>Soft landing on a tighter wire.</h1>
+
+        <p class="pitch-meta">
+          <span><strong>Posted</strong> May 4, 2026</span>
+          <span><strong>Author</strong> Brandon Leon</span>
+          <span><strong>Coverage</strong> US equities &middot; macro &middot; options</span>
+        </p>
+
+        <div class="pitch-thesis">
+          <span class="pitch-thesis-label">Executive summary</span>
+          <p>Global markets enter the first full week of May with U.S. equities near record highs, inflation still above target, and growth showing signs of moderation rather than collapse.<sup class="fn-ref"><a href="#fn1" id="fnref1">1</a></sup><sup class="fn-ref"><a href="#fn3" id="fnref3a">3</a></sup> That combination keeps the soft-landing narrative intact, but it also means incoming macro data still have the power to reprice rates, valuations, and sector leadership very quickly.</p>
+          <p>The key event this week is Friday's U.S. employment report, followed closely by Tuesday's ISM Services print and JOLTS job openings.<sup class="fn-ref"><a href="#fn2" id="fnref2">2</a></sup><sup class="fn-ref"><a href="#fn3" id="fnref3b">3</a></sup> The market does not need perfect data; it needs evidence that growth is slowing in an orderly way while inflation pressure does not re-accelerate.<sup class="fn-ref"><a href="#fn4" id="fnref4">4</a></sup></p>
+          <p>The house view remains constructive but selective. Broad index momentum is still favorable, but the more compelling setup is in high-quality companies with durable earnings, strong balance sheets, and structural growth drivers that can hold up under either a slower-growth or higher-for-longer rate regime.<sup class="fn-ref"><a href="#fn12" id="fnref12a">12</a></sup><sup class="fn-ref"><a href="#fn13" id="fnref13a">13</a></sup></p>
+        </div>
+      </header>
+
+      <section class="pitch-section" id="market-setup">
+        <h2>Market setup entering the week</h2>
+        <p>The S&amp;P 500 and Nasdaq Composite enter the week after a strong April rally, with both indices reaching or approaching record highs as earnings came in better than feared.<sup class="fn-ref"><a href="#fn1" id="fnref1b">1</a></sup><sup class="fn-ref"><a href="#fn2" id="fnref2b">2</a></sup> More than half of S&amp;P 500 companies have reported and a strong majority have beaten expectations, which has helped offset the pressure from a less-dovish policy outlook.</p>
+        <p>That said, the rally remains concentrated. Leadership is still centered on large-cap growth, semiconductors, and other AI-related beneficiaries rather than broad participation across the market.<sup class="fn-ref"><a href="#fn14" id="fnref14a">14</a></sup><sup class="fn-ref"><a href="#fn16" id="fnref16a">16</a></sup> That concentration has supported the indices, but it also increases vulnerability if yields rise, earnings expectations cool, or investor positioning becomes too one-sided.<sup class="fn-ref"><a href="#fn12" id="fnref12b">12</a></sup></p>
+      </section>
+
+      <section class="pitch-section" id="macro-backdrop">
+        <h2>Macro backdrop</h2>
+        <p>The macro backdrop is best described as resilient but less comfortable than it appeared earlier in the year. U.S. real GDP grew at a 2.0% annualized pace in the first quarter, stronger than the prior quarter but slightly below expectations, suggesting an economy that is still expanding even as momentum cools.<sup class="fn-ref"><a href="#fn3" id="fnref3c">3</a></sup><sup class="fn-ref"><a href="#fn4" id="fnref4b">4</a></sup> This is not recessionary on its face, but it is consistent with a late-cycle environment in which policy remains restrictive and the margin for macro disappointment is getting thinner.<sup class="fn-ref"><a href="#fn11" id="fnref11a">11</a></sup><sup class="fn-ref"><a href="#fn25" id="fnref25a">25</a></sup></p>
+
+        <p>Inflation remains the core complication. According to S&amp;P Global's preview, the March PCE price index accelerated to 3.5% year over year and core PCE moved up to 3.2%, reinforcing the view that inflation is proving sticky enough to keep the Federal Reserve cautious.<sup class="fn-ref"><a href="#fn3" id="fnref3d">3</a></sup> That keeps markets highly sensitive to labor-market and services data, because those releases help determine whether cuts are merely delayed or whether higher-for-longer becomes the more durable policy regime.<sup class="fn-ref"><a href="#fn12" id="fnref12c">12</a></sup></p>
+
+        <p>Layered on top of the cyclical picture is a geopolitical backdrop that has shifted from an episodic risk to monitor into a structural input to the macro view. The trade and tariff regime is the most direct channel: elevated U.S. tariffs and the reciprocal measures they have triggered abroad continue to act as a goods-side inflation impulse and a tax on cross-border supply chains, reinforcing the case that inflation normalization will be slower than a purely demand-driven model would suggest.<sup class="fn-ref"><a href="#fn11" id="fnref11b">11</a></sup><sup class="fn-ref"><a href="#fn25" id="fnref25b">25</a></sup> Persistent conflict in Eastern Europe and across the Israel/Iran corridor, alongside intermittent disruption in Red Sea shipping lanes, continues to support a structural risk premium in oil and refined products and to underwrite a multi-year tailwind for defense spending across NATO and partner countries.<sup class="fn-ref"><a href="#fn11" id="fnref11c">11</a></sup><sup class="fn-ref"><a href="#fn12" id="fnref12d">12</a></sup> U.S.&ndash;China strategic competition is the third thread: export controls on advanced semiconductors, equipment, and AI-related capacity, paired with Chinese countermeasures around critical minerals and rare earths, are reshaping where capex flows and how supply chains are rebuilt.<sup class="fn-ref"><a href="#fn11" id="fnref11d">11</a></sup> Counterintuitively, this strengthens rather than weakens the domestic AI and semiconductor capex thesis, since it concentrates incentives, government support, and customer urgency inside the U.S. industrial base.<sup class="fn-ref"><a href="#fn14" id="fnref14b">14</a></sup><sup class="fn-ref"><a href="#fn15" id="fnref15a">15</a></sup></p>
+
+        <p>The useful frame is that geopolitical risk in 2026 is no longer a single binary catalyst waiting to be priced. It is an ongoing flow of policy actions, tariffs, sanctions, and conflict overhangs that compounds the inflation and rate picture, and it is part of why higher-for-longer remains a credible base case even when labor and growth data soften.<sup class="fn-ref"><a href="#fn11" id="fnref11e">11</a></sup><sup class="fn-ref"><a href="#fn12" id="fnref12e">12</a></sup><sup class="fn-ref"><a href="#fn25" id="fnref25c">25</a></sup></p>
+      </section>
+
+      <section class="pitch-section" id="economic-calendar">
+        <h2>The economic calendar that matters this week</h2>
+        <p>The most important releases this week are concentrated in U.S. labor and services activity, with additional context coming from credit conditions and global demand indicators.<sup class="fn-ref"><a href="#fn2" id="fnref2c">2</a></sup><sup class="fn-ref"><a href="#fn3" id="fnref3e">3</a></sup><sup class="fn-ref"><a href="#fn23" id="fnref23a">23</a></sup></p>
+
+        <div class="calendar-table-wrap">
+          <table class="calendar">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Release</th>
+                <th>Why it matters</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Mon, May 4</td><td>Factory Orders; Senior Loan Officer Opinion Survey</td><td>Read on business demand and bank lending standards.</td></tr>
+              <tr><td>Tue, May 5</td><td>ISM Services; final S&amp;P Global Services PMI</td><td>Best near-term read on the largest part of the U.S. economy.</td></tr>
+              <tr><td>Tue, May 5</td><td>JOLTS Job Openings</td><td>Gauges labor demand and cooling beneath the surface.</td></tr>
+              <tr><td>Wed, May 6</td><td>China Caixin Services PMI</td><td>Useful for global demand and cyclical sentiment.</td></tr>
+              <tr><td>Thu, May 7</td><td>Initial Claims; Productivity and Unit Labor Costs</td><td>Helpful for understanding labor turning points and inflation pressure.</td></tr>
+              <tr><td>Fri, May 8</td><td>U.S. Employment Situation</td><td>Main macro event for rates, equities, and the dollar.</td></tr>
+              <tr><td>Fri, May 8</td><td>Michigan Consumer Sentiment</td><td>Secondary check on inflation expectations and the consumer.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Current consensus points to roughly 50,000 nonfarm payrolls added in April with the unemployment rate holding at 4.3%.<sup class="fn-ref"><a href="#fn2" id="fnref2d">2</a></sup><sup class="fn-ref"><a href="#fn3" id="fnref3f">3</a></sup> A result near that range would likely support the soft-landing narrative by showing a cooling but still-functioning labor market. A hot report could push yields higher and pressure long-duration equities, while a weak report could shift attention from inflation to growth risk.<sup class="fn-ref"><a href="#fn12" id="fnref12f">12</a></sup></p>
+      </section>
+
+      <section class="pitch-section" id="off-consensus">
+        <h2>What Wall Street might not be thinking about yet</h2>
+        <p>The consensus narrative entering this week is relatively clean: a soft landing, modest disinflation, and an AI-driven capex cycle that keeps earnings firm enough to justify elevated multiples.<sup class="fn-ref"><a href="#fn12" id="fnref12g">12</a></sup><sup class="fn-ref"><a href="#fn13" id="fnref13b">13</a></sup><sup class="fn-ref"><a href="#fn16" id="fnref16b">16</a></sup> There is nothing irrational about that view, but it may understate how narrow the path really is from here.</p>
+
+        <p><strong>Issue one: the soft-landing path is tighter than current pricing implies.</strong> Markets seem comfortable assuming growth can cool, inflation can gradually normalize, and earnings can stay resilient all at once, even though that combination tends to become less stable when policy remains restrictive and valuations already discount a favorable outcome.<sup class="fn-ref"><a href="#fn11" id="fnref11f">11</a></sup><sup class="fn-ref"><a href="#fn25" id="fnref25d">25</a></sup></p>
+
+        <p><strong>Issue two: labor-market revisions may become as important as the headline payroll number.</strong> If hiring data continue to cool beneath the surface while headline figures remain superficially solid, the market may be slow to recognize that the economy is moving from resilience toward late-cycle softness.<sup class="fn-ref"><a href="#fn3" id="fnref3g">3</a></sup><sup class="fn-ref"><a href="#fn23" id="fnref23b">23</a></sup></p>
+
+        <p><strong>Issue three: concentration.</strong> The AI and mega-cap leadership story is fundamentally real, but it is increasingly a positioning story too, and markets may be underestimating how correlated those risks become if yields rise or if spending expectations get trimmed.<sup class="fn-ref"><a href="#fn14" id="fnref14c">14</a></sup><sup class="fn-ref"><a href="#fn16" id="fnref16c">16</a></sup></p>
+
+        <p><strong>Issue four: the geopolitical compounding effect.</strong> Tariff incidence, energy risk premia, and supply-chain reshoring do not show up cleanly in any single data release, but they continue to lift the floor under inflation and the term premium. A model that treats geopolitics as separable from the rate path is likely to under-price how durable higher-for-longer can be.<sup class="fn-ref"><a href="#fn11" id="fnref11g">11</a></sup><sup class="fn-ref"><a href="#fn12" id="fnref12h">12</a></sup></p>
+      </section>
+
+      <section class="pitch-section" id="investment-thesis">
+        <h2>Investment thesis</h2>
+        <p>The investment thesis for this week is that markets are still trading a soft-landing narrative, but the better opportunity is not simply to chase that consensus. The more durable setup is to own the parts of the market that can survive both sides of the macro distribution: growth that slows more than expected, and inflation that cools more slowly than expected.<sup class="fn-ref"><a href="#fn11" id="fnref11h">11</a></sup><sup class="fn-ref"><a href="#fn12" id="fnref12i">12</a></sup></p>
+        <p>That means favoring companies and sectors with three characteristics. First, <strong>earnings durability</strong> &mdash; revenue and margins that are less dependent on a perfect macro backdrop. Second, <strong>balance-sheet flexibility</strong>, because higher-for-longer rates reward firms that do not need easy capital to defend growth. Third, <strong>structural demand drivers</strong> such as AI infrastructure, productivity software, cybersecurity, and mission-critical services.<sup class="fn-ref"><a href="#fn14" id="fnref14d">14</a></sup><sup class="fn-ref"><a href="#fn16" id="fnref16d">16</a></sup></p>
+        <p>The differentiated view is that broad market beta is probably a weaker opportunity than selective exposure to quality growth, profitable AI enablers, and businesses with pricing power. Lower-quality cyclicals, heavily levered firms, and stocks that depend on a rapid fall in yields still look more fragile than the headline indices imply.<sup class="fn-ref"><a href="#fn12" id="fnref12j">12</a></sup><sup class="fn-ref"><a href="#fn13" id="fnref13c">13</a></sup></p>
+      </section>
+
+      <section class="pitch-section" id="opportunities">
+        <h2>Investment opportunities: sectors and stocks to watch</h2>
+
+        <h3>1. AI infrastructure and semis</h3>
+        <p>AI infrastructure remains one of the clearest structural growth themes in the market. Recent reporting highlights names such as Micron Technology (MU), Broadcom (AVGO), Ciena (CIEN), SanDisk, and Credo Technology (CRDO) as beneficiaries of sustained hyperscaler and data-center spending.<sup class="fn-ref"><a href="#fn14" id="fnref14e">14</a></sup><sup class="fn-ref"><a href="#fn15" id="fnref15b">15</a></sup> Yahoo Finance's summary of Zacks research notes that hyperscalers are expected to spend roughly $650 billion in 2026 on AI infrastructure, up 71.1% year over year, while McKinsey sees AI data-center capex potentially reaching around $7 trillion by 2030.<sup class="fn-ref"><a href="#fn14" id="fnref14f">14</a></sup></p>
+        <p>The key point for investors is not that every AI stock is attractive, but that the bottlenecks continue to migrate across the stack. Semiconductors, networking, memory, and supporting infrastructure remain central to the AI buildout, and those areas still have better fundamental support than many traditional cyclical sectors. For a selective list, MU and AVGO stand out for memory and connectivity exposure, while AMD remains relevant as a compute and accelerator beneficiary into earnings this week.<sup class="fn-ref"><a href="#fn15" id="fnref15c">15</a></sup></p>
+
+        <h3>2. AI power and energy infrastructure</h3>
+        <p>One underappreciated angle inside the AI theme is power. Discussion around AI often focuses on chips and cloud, but the infrastructure buildout increasingly depends on electricity generation, power distribution, and supporting industrial capacity.<sup class="fn-ref"><a href="#fn14" id="fnref14g">14</a></sup><sup class="fn-ref"><a href="#fn24" id="fnref24a">24</a></sup> Independent investor analysis has argued that AI power supply may be one of the less fully priced parts of the broader AI infrastructure chain, especially compared with networking, cooling, and data-center construction, which have already seen major re-ratings.<sup class="fn-ref"><a href="#fn24" id="fnref24b">24</a></sup></p>
+        <p>For a macro audience, this theme is best framed as an extension of the AI buildout rather than a separate call. If the AI capex boom persists, beneficiaries may include utilities with data-center exposure, electrical equipment suppliers, grid modernization plays, and industrial firms tied to power distribution and backup systems. It is a useful differentiator because it looks beyond the most crowded semiconductor names without abandoning the core AI thesis.</p>
+
+        <h3>3. Cybersecurity and defense</h3>
+        <p>If policy uncertainty, geopolitical risk, and enterprise digital spending remain elevated, cybersecurity and defense retain support as structurally funded themes.<sup class="fn-ref"><a href="#fn11" id="fnref11i">11</a></sup><sup class="fn-ref"><a href="#fn12" id="fnref12k">12</a></sup> These sectors tend to hold up better than economically sensitive cyclicals when growth moderates, because customer demand is often driven by security requirements and government budgets rather than discretionary capex timing.</p>
+        <p>The case here is not valuation-driven so much as resilience-driven. In a market where macro visibility is imperfect and the geopolitical tape is constantly active, sectors with stronger contractual demand, government backing, or mission-critical enterprise relevance can offer a cleaner earnings profile than broad cyclicals.</p>
+
+        <h3>4. Selective quality healthcare and defensive growth</h3>
+        <p>If the labor market softens faster than expected, investors may want exposure to sectors that can absorb a weaker macro backdrop without a severe earnings reset. Selective healthcare &mdash; particularly companies with durable product cycles or strong cash generation &mdash; can serve that role.<sup class="fn-ref"><a href="#fn17" id="fnref17a">17</a></sup><sup class="fn-ref"><a href="#fn19" id="fnref19a">19</a></sup> It is not necessarily the most exciting trade, but it is a high-quality complement to more growth-oriented exposures.</p>
+        <p>For stock-level readers, screens emphasizing earnings quality, free cash flow, and pricing power are likely more useful than chasing the highest-momentum names into a macro event week.<sup class="fn-ref"><a href="#fn17" id="fnref17b">17</a></sup><sup class="fn-ref"><a href="#fn18" id="fnref18a">18</a></sup><sup class="fn-ref"><a href="#fn19" id="fnref19b">19</a></sup> That framework is especially relevant if the index-level strength continues to mask weaker breadth underneath.</p>
+      </section>
+
+      <section class="pitch-section" id="options-ideas">
+        <h2>Macro-level options ideas for this week</h2>
+        <p>These are not personalized recommendations, but reasonable macro-level structures traders often consider in event-heavy weeks shaped by labor data, rates volatility, and index concentration.<sup class="fn-ref"><a href="#fn20" id="fnref20a">20</a></sup><sup class="fn-ref"><a href="#fn22" id="fnref22a">22</a></sup></p>
+
+        <h3>1. Long straddle or long strangle on a broad index</h3>
+        <p>If the view is that Friday's payrolls report could produce a larger-than-expected move in rates and index futures, a long straddle or long strangle on a broad benchmark such as SPY or QQQ is the classic volatility expression.<sup class="fn-ref"><a href="#fn20" id="fnref20b">20</a></sup><sup class="fn-ref"><a href="#fn22" id="fnref22b">22</a></sup> The trade works best when realized volatility after the event exceeds what is already priced into implied volatility.</p>
+        <p>The risk is paying too much premium ahead of a well-known catalyst. Event weeks often see implied volatility rise into the release and collapse immediately afterward, so these structures require a view that the actual move will be large enough to overcome post-event volatility crush.<sup class="fn-ref"><a href="#fn20" id="fnref20c">20</a></sup></p>
+
+        <h3>2. Put spread on duration-sensitive equity exposure</h3>
+        <p>If the view is that a hotter jobs report could push yields higher and pressure expensive growth stocks, a put spread on QQQ or another duration-sensitive growth vehicle can express that thesis with defined risk.<sup class="fn-ref"><a href="#fn12" id="fnref12l">12</a></sup><sup class="fn-ref"><a href="#fn20" id="fnref20d">20</a></sup> This structure is more capital-efficient than buying outright puts in a high-volatility environment, because it reduces premium outlay while still offering downside participation if rates reprice sharply.</p>
+        <p>The logic is macro rather than company-specific: if labor data come in too firm, the market may revisit the idea that cuts are being pushed further out, and long-duration equities tend to be among the first segments pressured by that shift.</p>
+
+        <h3>3. Call spread on defensive quality or energy if inflation risk rises</h3>
+        <p>If the concern is not weak growth but sticky inflation and energy-driven pressure on rates, a call spread on a defensive quality ETF or an energy-related vehicle can be a more targeted way to express that risk than shorting the entire market.<sup class="fn-ref"><a href="#fn20" id="fnref20e">20</a></sup><sup class="fn-ref"><a href="#fn22" id="fnref22c">22</a></sup> This works best if oil remains firm &mdash; reinforced by ongoing Middle East and Red Sea risk &mdash; and macro releases reinforce the higher-for-longer narrative.<sup class="fn-ref"><a href="#fn11" id="fnref11j">11</a></sup></p>
+        <p>The advantage of a call spread in this context is that it keeps the expression directional but disciplined. Rather than betting on a wholesale risk-off move, it focuses on the possibility that inflation-resilient sectors continue to outperform if yields stay elevated.</p>
+
+        <h3>4. Calendar spread around macro volatility normalization</h3>
+        <p>For more advanced traders, a calendar spread can be a way to express the view that near-term event volatility is rich relative to what follows immediately after payrolls.<sup class="fn-ref"><a href="#fn20" id="fnref20f">20</a></sup> This is more nuanced than a simple directional trade and depends on the shape of implied volatility across expiries rather than just index direction.</p>
+        <p>This type of structure is useful when the expectation is that the market may move, but not enough to justify the full premium in the front week. It is a cleaner expression of the volatility term-structure view than a pure directional bet.</p>
+      </section>
+
+      <section class="pitch-section" id="takeaway">
+        <h2>Practical takeaway</h2>
+        <p>The clearest way to frame this week is that the opportunity set is not about predicting one number perfectly. It is about identifying exposures that can work across multiple macro paths: AI infrastructure and adjacent power themes if structural capex stays intact, defense and cybersecurity if the geopolitical tape stays active, selective defensives and healthcare if growth softens more quickly, and disciplined options structures if event risk produces outsized moves.<sup class="fn-ref"><a href="#fn14" id="fnref14h">14</a></sup><sup class="fn-ref"><a href="#fn24" id="fnref24c">24</a></sup></p>
+        <p>The best stocks and sectors to watch this week are those where fundamentals are not entirely dependent on lower yields or a perfect economy. The most compelling opportunities still appear to be in quality growth, AI enablers, selective infrastructure, and resilient earnings compounders rather than the weakest parts of the cyclical complex.<sup class="fn-ref"><a href="#fn12" id="fnref12m">12</a></sup><sup class="fn-ref"><a href="#fn16" id="fnref16e">16</a></sup></p>
+      </section>
+
+      <section class="footnotes" id="sources">
+        <h2>Sources</h2>
+        <ol>
+          <li id="fn1">CNBC, "S&amp;P 500 closes at a new record to usher in May as oil prices cool and Apple rises." <a href="https://www.cnbc.com/2026/04/30/stock-market-today-live-updates.html" rel="noopener">cnbc.com</a> <a class="fn-back" href="#fnref1" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn2">CNBC, "Jobs and earnings will dominate the first full week of May. Here's what's ahead." <a href="https://www.cnbc.com/2026/05/01/stock-market-next-week-outlook-for-may-4-8-2026.html" rel="noopener">cnbc.com</a> <a class="fn-back" href="#fnref2" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn3">S&amp;P Global, "Week Ahead Economic Preview: Week of 4 May 2026." <a href="https://www.spglobal.com/market-intelligence/en/news-insights/research/2026/05/week-ahead-economic-preview-week-of-4-may-2026" rel="noopener">spglobal.com</a> <a class="fn-back" href="#fnref3a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn4">CI Markets Forecast, "Weekly Outlook: May 04, 2026." <a href="https://completeintel.com/weekly-outlook-may-4-2026/" rel="noopener">completeintel.com</a> <a class="fn-back" href="#fnref4" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn5">ATB Financial, "Weekly Market Update May 4 2026." <a href="https://www.atb.com/wealth/good-advice/markets/weekly-market-update-may-4-2026/" rel="noopener">atb.com</a></li>
+          <li id="fn6">Six Sigma Research, "Preview of the Week Ahead: W/C May 4, 2026." <a href="https://sixsigmaresearch.com/p/preview-of-the-week-ahead-wc-may" rel="noopener">sixsigmaresearch.com</a></li>
+          <li id="fn7">FinancialJuice, "Week Ahead: Economic Indicators 4th&ndash;8th May (US)." <a href="https://features.financialjuice.com/2026/05/01/week-ahead-economic-indicators-4th-8th-may-us/" rel="noopener">financialjuice.com</a></li>
+          <li id="fn8">LiteFinance, "Weekly Economic Calendar for 04.05.2026&ndash;10.05.2026." <a href="https://www.litefinance.org/blog/analysts-opinions/weekly-economic-calendar-for-04052026-10052026/" rel="noopener">litefinance.org</a></li>
+          <li id="fn9">Carnegie Investment, "Monthly Market Commentary: May 2026." <a href="https://blog.carnegieinvest.com/monthly-market-commentary-may-2026" rel="noopener">carnegieinvest.com</a></li>
+          <li id="fn10">Stanford SIEPR, "The U.S. economy in 2026: What to watch for." <a href="https://siepr.stanford.edu/publications/policy-brief/us-economy-2026-what-watch" rel="noopener">siepr.stanford.edu</a></li>
+          <li id="fn11">IMF, "World Economic Outlook, April 2026." <a href="https://www.imf.org/en/publications/weo/issues/2026/04/14/world-economic-outlook-april-2026" rel="noopener">imf.org</a> <a class="fn-back" href="#fnref11a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn12">Morgan Stanley, "Stock Market Outlook 2026: Political Risks Loom." <a href="https://www.morganstanley.com/insights/articles/2026-market-optimism-and-risks" rel="noopener">morganstanley.com</a> <a class="fn-back" href="#fnref12a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn13">Goldman Sachs, "2026 Outlooks." <a href="https://www.goldmansachs.com/insights/outlooks/2026-outlooks" rel="noopener">goldmansachs.com</a> <a class="fn-back" href="#fnref13a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn14">Yahoo Finance / Zacks, "5 Top-Ranked AI Infrastructure Bigwigs for Sparkling Returns in 2026." <a href="https://finance.yahoo.com/sectors/technology/articles/5-top-ranked-ai-infrastructure-115000795.html" rel="noopener">finance.yahoo.com</a> <a class="fn-back" href="#fnref14a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn15">Zacks, "5 Top-Ranked AI Infrastructure Bigwigs for Sparkling Returns in 2026." <a href="https://www.zacks.com/stock/news/2905202/5-top-ranked-ai-infrastructure-bigwigs-for-sparkling-returns-in-2026" rel="noopener">zacks.com</a> <a class="fn-back" href="#fnref15a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn16">Fidelity, "AI stocks | Outlook for 2026." <a href="https://www.fidelity.com/learning-center/trading-investing/AI-outlook" rel="noopener">fidelity.com</a> <a class="fn-back" href="#fnref16a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn17">Morningstar, "Best AI Stocks to Buy Now." <a href="https://www.morningstar.com/stocks/best-ai-stocks-buy-now" rel="noopener">morningstar.com</a> <a class="fn-back" href="#fnref17a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn18">WallStreetZen, "5 Stocks to Watch: Week of 5/4/2026." <a href="https://www.wallstreetzen.com/news/5-stocks-to-watch-week-of-5-4-2026" rel="noopener">wallstreetzen.com</a></li>
+          <li id="fn19">Zacks, "Best Stocks to Buy Now for May 2026." <a href="https://www.zacks.com/featured-articles/101/best-stocks-to-buy-now" rel="noopener">zacks.com</a> <a class="fn-back" href="#fnref19a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn20">Interactive Brokers, "What the Options Market is Telling Us About May CPI." <a href="https://www.interactivebrokers.com/campus/traders-insight/securities/options/what-the-options-market-is-telling-us-about-may-cpi" rel="noopener">interactivebrokers.com</a> <a class="fn-back" href="#fnref20a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn21">Kraken, "NFP, CPI, and an unresolved conflict." <a href="https://blog.kraken.com/economic-brief/nfp-cpi-and-an-unresolved-conflict" rel="noopener">blog.kraken.com</a></li>
+          <li id="fn22">CNBC, "A big inflation report is due Friday. How to trade the upcoming CPI report." <a href="https://www.cnbc.com/2026/04/09/a-big-inflation-report-is-due-friday-how-to-trade-the-upcoming-cpi-report.html" rel="noopener">cnbc.com</a> <a class="fn-back" href="#fnref22a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn23">Bureau of Labor Statistics, "Schedule of Selected Releases 2026." <a href="https://www.bls.gov/schedule/news_release/current_year.asp" rel="noopener">bls.gov</a> <a class="fn-back" href="#fnref23a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn24">r/investing, AI power and infrastructure baskets discussion. <a href="https://www.reddit.com/r/investing/comments/1szemcc/i_tried_to_find_which_ai_infrastructure_sector/" rel="noopener">reddit.com</a> <a class="fn-back" href="#fnref24a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn25">Wells Fargo, "Our report on the economy for the rest of the year." <a href="https://sites.wf.com/outlook/" rel="noopener">sites.wf.com</a> <a class="fn-back" href="#fnref25a" aria-label="Back to text">&#x21A9;</a></li>
+          <li id="fn26">J.P. Morgan Asset Management, "A Baseline Forecast for 2026." <a href="https://am.jpmorgan.com/us/en/asset-management/adv/insights/market-insights/market-updates/notes-on-the-week-ahead/a-baseline-forecast-for-2026/" rel="noopener">am.jpmorgan.com</a></li>
+          <li id="fn27">New York Fed, "Economic Indicators Calendar." <a href="https://www.newyorkfed.org/research/calendars/i-may26.html" rel="noopener">newyorkfed.org</a></li>
+        </ol>
+      </section>
+
+      <p class="disclosure">
+        This commentary is for informational and educational purposes only and does not constitute investment, tax, or legal advice or a solicitation to buy or sell any security. Views expressed are the author's own and may not reflect those of any employer or affiliated institution. Past performance is not indicative of future results. Readers should conduct their own research and consult a qualified financial professional before making investment decisions. See <a href="disclaimer.html">disclaimer</a>.
+      </p>
+
+      <div class="pitch-cta">
+        <a class="btn" href="https://bpleon.substack.com/subscribe" target="_blank" rel="noopener">Get next week's outlook by email &rarr;</a>
+        &nbsp;
+        <a class="btn btn-ghost" href="writing.html">All writing</a>
+      </div>
+
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=18" defer></script>
+</body>
+</html>

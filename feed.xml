@@ -11,11 +11,19 @@
          Same workflow as adding a new entry to writing.html. -->
 
     <item>
-      <title>Welcome — what this site is for</title>
-      <link>https://YOURNAME.substack.com/p/welcome</link>
-      <guid isPermaLink="true">https://YOURNAME.substack.com/p/welcome</guid>
-      <pubDate>Sat, 25 Apr 2026 12:00:00 -0500</pubDate>
-      <description>A short note on why I'm writing here, what to expect, and how often.</description>
+      <title>Weekly Market Outlook — Week of May 4, 2026</title>
+      <link>https://bpleon.com/weekly-outlook-2026-05-04.html</link>
+      <guid isPermaLink="true">https://bpleon.com/weekly-outlook-2026-05-04.html</guid>
+      <pubDate>Mon, 04 May 2026 06:00:00 -0700</pubDate>
+      <description>Soft-landing narrative meets sticky inflation, a concentrated AI rally, and an increasingly structural geopolitical tape. Ideas into payrolls, ISM Services, and JOLTS — plus four sector calls and four macro options structures.</description>
+    </item>
+
+    <item>
+      <title>The Fed After Powell</title>
+      <link>https://bpleon.com/fed-april-2026.html</link>
+      <guid isPermaLink="true">https://bpleon.com/fed-april-2026.html</guid>
+      <pubDate>Thu, 30 Apr 2026 18:00:00 -0700</pubDate>
+      <description>Notes on the April 29 FOMC meeting. The market is watching the rate path; the more differentiated story is the institution. Powell stays on the Board, four dissents, Warsh advances toward confirmation, and the under-priced risk shows up in term premium rather than the front-end policy path.</description>
     </item>
 
   </channel>
