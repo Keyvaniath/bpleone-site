@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>LBO / M&amp;A Template &mdash; IB-grade LBO &amp; M&amp;A workbook for any company &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="Free 17-tab IB-grade LBO / M&A workbook with two worked Micron examples (through-cycle and AI-cycle). Sources & uses, debt schedule with covenant tracking, returns attribution, reverse-LBO, peer-blended comps, sensitivity tables. Python pipeline available on request." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/lbo-ma-template.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bpleon.com/lbo-ma-template.html" />
+  <meta property="og:title" content="LBO / M&A Template &mdash; IB-grade workbook (free) by Brandon Leon" />
+  <meta property="og:description" content="17-tab IB-grade LBO / M&A workbook with cycle diagnostics, reverse-LBO take-private analysis, returns attribution. Free; pipeline on request." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=18" />
+
+  <style>
+    /* Mirror dcf-template.html exactly so the two pages feel identical. */
+    .gate-card {
+      padding: 2rem; background: var(--accent); color: #fff;
+      border-radius: 14px; margin: 2rem 0 2.5rem;
+      box-shadow: 0 4px 16px rgba(181, 106, 63, 0.18);
+    }
+    .gate-card h2 { color: #fff; margin: 0 0 .35em; font-family: var(--serif); font-size: 1.5rem; }
+    .gate-card p  { color: rgba(255,255,255,0.88); margin: 0 0 1rem; }
+    .gate-form { display: grid; grid-template-columns: 1fr auto; gap: .6rem; margin: 1rem 0 .25rem; }
+    .gate-form input[type="email"] {
+      padding: .75rem 1rem; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.95); color: var(--ink);
+      font: 500 1rem var(--sans); outline: none;
+    }
+    .gate-form input[type="email"]:focus {
+      border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,0.25);
+    }
+    .gate-form button {
+      background: #fff; color: var(--accent); border-color: #fff;
+      cursor: pointer; font-family: var(--sans);
+    }
+    .gate-form button:hover {
+      background: var(--bg-soft); color: var(--accent); border-color: var(--bg-soft);
+    }
+    .gate-fineprint { font-size: .82rem; color: rgba(255,255,255,0.78); margin: .35rem 0 0; }
+    .gate-fineprint a { color: #fff; text-decoration-color: rgba(255,255,255,0.5); }
+    .gate-fineprint a:hover { color: #fff; text-decoration-color: #fff; }
+    .gate-thanks { display: none; }
+    .gate-thanks.show { display: block; }
+    .gate-thanks .download-row { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; margin-top: .5rem; }
+    .gate-thanks .meta { color: rgba(255,255,255,0.78); font-size: .85rem; margin: .5rem 0 0; }
+    .gate-error { display: none; margin-top: .6rem; padding: .6rem .85rem;
+      background: rgba(255,255,255,0.14); border-radius: 8px;
+      color: #fff; font-size: .9rem; }
+    .gate-error.show { display: block; }
+    .gate-consent {
+      display: flex; gap: .55rem; align-items: flex-start; margin: .35rem 0 .15rem;
+      color: rgba(255,255,255,0.92); font-size: .9rem; line-height: 1.45;
+      cursor: pointer; user-select: none;
+    }
+    .gate-consent input[type="checkbox"] {
+      margin-top: .25rem; flex-shrink: 0; accent-color: #fff;
+      width: 1rem; height: 1rem; cursor: pointer;
+    }
+    @media (max-width: 600px) { .gate-form { grid-template-columns: 1fr; } }
+
+    .pipeline-card {
+      padding: 1.75rem 2rem; background: var(--bg-soft); border: 1px solid var(--rule);
+      border-left: 4px solid var(--accent-2); border-radius: 14px; margin: 0 0 2.5rem;
+    }
+    .pipeline-card h2 { color: var(--ink); font-family: var(--serif); font-size: 1.4rem; margin: 0 0 .5em; }
+    .pipeline-card p { color: var(--ink-soft); margin: 0 0 1rem; }
+    .pipeline-form { display: grid; gap: .75rem; max-width: 100%; }
+    .pipeline-form input[type="email"], .pipeline-form textarea {
+      padding: .7rem 1rem; border: 1px solid var(--rule); border-radius: 8px;
+      background: var(--bg); font: 1rem var(--sans); color: var(--ink); resize: vertical;
+    }
+    .pipeline-form input[type="email"]:focus, .pipeline-form textarea:focus {
+      outline: none; border-color: var(--accent-2); box-shadow: 0 0 0 3px rgba(91,127,107,0.18);
+    }
+    .pipeline-form textarea { font-family: var(--sans); min-height: 5rem; }
+    .pipeline-form button { justify-self: start; cursor: pointer; }
+    .pipeline-fineprint { font-size: .8rem; color: var(--muted); margin: .25rem 0 0; }
+    .pipeline-error { display:none; margin-top:.6rem; padding:.6rem .85rem; background:#f8d7da; color:#7f2700; border-radius:8px; font-size:.9rem; }
+    .pipeline-error.show { display:block; }
+    .pipeline-thanks { display: none; }
+    .pipeline-thanks.show { display: block; }
+
+    .feat-grid { list-style: none; padding: 0; margin: 1.5rem 0 2rem;
+      display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+    .feat-grid li { padding: 1.25rem; border: 1px solid var(--rule);
+      border-radius: 10px; background: var(--bg); }
+    .feat-grid li.highlight { border-color: var(--accent); background: var(--bg-soft); }
+    .feat-grid h3 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .5em; }
+    .feat-grid p  { font-size: .9rem; color: var(--ink-soft); margin: 0; }
+
+    .steps { list-style: none; padding: 0; margin: 1.25rem 0 2rem;
+      counter-reset: step; border-top: 1px solid var(--rule); }
+    .steps li { counter-increment: step; padding: 1.1rem 0 1.1rem 3rem;
+      border-bottom: 1px solid var(--rule); position: relative; }
+    .steps li::before { content: counter(step); position: absolute; left: 0; top: 1.1rem;
+      width: 2rem; height: 2rem; background: var(--accent); color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font: 600 .95rem var(--sans); }
+    .steps li strong { display: block; font-family: var(--serif); font-size: 1.05rem; margin-bottom: .15em; color: var(--ink); }
+    .steps li p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+    .steps code { background: var(--bg-soft); padding: .1em .45em; border-radius: 4px;
+      font-size: .88em; font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; }
+
+    .req-box { padding: 1.25rem 1.5rem; background: #ecf3ee; border-radius: 10px;
+      margin: 1.25rem 0 2.5rem; border-left: 3px solid var(--accent-2); }
+    .req-box h3 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .5em; color: var(--ink); }
+    .req-box ul { list-style: none; padding: 0; margin: 0; }
+    .req-box li { padding: .25rem 0 .25rem 1.5rem; position: relative; color: var(--ink-soft); font-size: .95rem; }
+    .req-box li::before { content: "✓"; position: absolute; left: 0; top: .25rem;
+      color: var(--accent-2); font-weight: 700; }
+
+    .faq { margin: 1.25rem 0 2.5rem; }
+    .faq details { border: 1px solid var(--rule); border-radius: 10px; padding: 0;
+      margin: 0 0 .65rem; background: var(--bg); transition: border-color .2s var(--ease); }
+    .faq details[open] { border-color: var(--accent); }
+    .faq summary { list-style: none; cursor: pointer; padding: .9rem 1.25rem;
+      font-family: var(--serif); font-size: 1.02rem; font-weight: 500; color: var(--ink);
+      position: relative; padding-right: 2.75rem; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; position: absolute; right: 1.25rem; top: 50%;
+      transform: translateY(-50%); font-size: 1.4rem; color: var(--muted);
+      transition: transform .2s var(--ease); }
+    .faq details[open] summary::after { content: "−"; color: var(--accent); }
+    .faq details > div { padding: 0 1.25rem 1.1rem; color: var(--ink-soft);
+      font-size: .95rem; line-height: 1.6; }
+
+    .footer-cta { margin: 3rem 0 2rem; padding: 2rem; background: var(--bg-soft);
+      border-radius: 14px; text-align: center; }
+    .footer-cta h2 { margin: 0 0 .5em; font-family: var(--serif); }
+    .footer-cta p { margin: 0 0 1rem; color: var(--ink-soft); }
+
+    /* Dual workbook download row — specific to LBO/M&A page */
+    .dual-dl { display: grid; gap: .55rem; margin-top: .5rem; }
+    .dual-dl .btn { background: #fff; color: var(--accent); border-color: #fff; }
+    .dual-dl .btn:hover { background: var(--bg-soft); }
+    .dual-dl-meta { color: rgba(255,255,255,0.78); font-size: .85rem; margin: 0; }
+  </style>
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+
+    <header class="page-head">
+      <p class="eyebrow">Toolkit &middot; Free template</p>
+      <h1>An IB-grade LBO &amp; M&amp;A workbook. Free.</h1>
+      <p class="lede">
+        17 tabs, every formula auditable: sources &amp; uses, year-by-year
+        debt schedule with covenant tracking, returns attribution
+        (EBITDA growth / multiple expansion / debt paydown), reverse-LBO
+        take-private analysis, peer-blended comps, accretion/dilution under
+        three financing mixes, sensitivity tables. Built around the same
+        cycle-aware methodology as the DCF template &mdash; with two worked
+        Micron examples shipped together so you can see how the through-cycle
+        and AI-cycle scorecards disagree on whether the name is cheap.
+        The Python pipeline that auto-populates this for any ticker is
+        available on request.
+      </p>
+    </header>
+
+    <!-- ============ TIER 1: WORKBOOK GATE ============ -->
+    <section id="gate" class="gate-card" aria-labelledby="gate-heading">
+      <h2 id="gate-heading">Get the workbooks</h2>
+      <p>Two 17-tab Excel workbooks &mdash; <strong>MU through-cycle</strong>
+      and <strong>MU AI-cycle</strong> &mdash; so you can see methodology
+      disagreement in action on a real cyclical name. Drop your email, the
+      downloads appear here. ~36 KB each, no follow-up unless you opt in.</p>
+
+      <form class="gate-form" id="gate-form" action="https://formspree.io/f/xdayqzkj" method="POST" novalidate>
+        <input type="email" name="email" id="gate-email" required autocomplete="email" placeholder="you@firm.com" aria-label="Email address" />
+        <button class="btn" type="submit" id="gate-submit">Send me the workbooks &rarr;</button>
+        <input type="hidden" name="tier" value="lbo-ma-workbook" />
+        <input type="hidden" name="_subject" value="LBO/M&A Workbook download request" />
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+      </form>
+      <label class="gate-consent">
+        <input type="checkbox" name="subscribe" value="yes" form="gate-form" id="gate-subscribe" />
+        <span>Also send me Brandon's newsletter when there's a new report or template (occasional, no spam).</span>
+      </label>
+      <p class="gate-fineprint">Just the files by default. <a href="disclaimer.html">Disclaimer</a>.</p>
+      <div class="gate-error" id="gate-error" role="alert"></div>
+
+      <div class="gate-thanks" id="gate-thanks" aria-live="polite">
+        <p style="margin:0 0 .5rem;font-family:var(--serif);font-size:1.15rem;">Thanks &mdash; here are the workbooks.</p>
+        <div class="dual-dl">
+          <a class="btn" id="gate-download-tc" href="assets/toolkit/MU_through_cycle.xlsx" download>
+            Workbook &mdash; MU Through-cycle (.xlsx, ~36 KB)
+          </a>
+          <a class="btn" id="gate-download-ai" href="assets/toolkit/MU_ai_cycle.xlsx" download>
+            Workbook &mdash; MU AI-cycle (.xlsx, ~38 KB)
+          </a>
+          <a class="btn" href="assets/toolkit/MU_through_cycle_tearsheet.pdf" download>
+            Tear sheet &mdash; MU Through-cycle (.pdf, ~80 KB)
+          </a>
+          <a class="btn" href="assets/toolkit/MU_ai_cycle_tearsheet.pdf" download>
+            Tear sheet &mdash; MU AI-cycle (.pdf, ~78 KB)
+          </a>
+          <p class="dual-dl-meta">Run the workbooks side by side. The methodology disagreement IS the recommendation. The tear sheets are one-page PDF summaries — IC-ready.</p>
+        </div>
+        <p class="gate-fineprint" style="margin-top:.85rem;">
+          Want the Python pipeline that auto-populates this for any ticker? Scroll down &darr;
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ TIER 2: PIPELINE REQUEST ============ -->
+    <section id="pipeline" class="pipeline-card" aria-labelledby="pipeline-heading">
+      <h2 id="pipeline-heading">Want the full Python pipeline?</h2>
+      <p>
+        The workbooks above are static templates. The Python + Jupyter pipeline
+        I built around them pulls live data from yfinance, runs the full
+        end-to-end build (loader &rarr; sector scorecard &rarr; 5y forecast
+        &rarr; DCF &rarr; LBO &rarr; M&amp;A &rarr; comps &rarr; reverse
+        analytics &rarr; Excel) and produces fully populated workbooks for
+        any ticker in ~60 seconds. I send the source on request to analysts,
+        researchers, and students with a real use case &mdash; tell me what
+        you're working on and I'll send it over.
+      </p>
+
+      <form class="pipeline-form" id="pipeline-form" action="https://formspree.io/f/xdayqzkj" method="POST" novalidate>
+        <input type="email" name="email" required autocomplete="email" placeholder="you@firm.com" aria-label="Email address" />
+        <textarea name="use_case" required rows="3" placeholder="What are you working on? (a name, a sector, a thesis, a class assignment, an internship task &mdash; short answer is fine)"></textarea>
+        <button class="btn" type="submit">Request access &rarr;</button>
+        <input type="hidden" name="tier" value="lbo-ma-pipeline" />
+        <input type="hidden" name="_subject" value="LBO/M&A Python pipeline access request" />
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+      </form>
+      <p class="pipeline-fineprint">I read every request and reply personally. Usually within 24 hours.</p>
+      <div class="pipeline-error" id="pipeline-error" role="alert"></div>
+      <div class="pipeline-thanks" id="pipeline-thanks" aria-live="polite">
+        <p style="margin:0;font-family:var(--serif);font-size:1.1rem;">Got it &mdash; I'll be in touch within a day.</p>
+      </div>
+    </section>
+
+    <!-- ============ WHAT'S INSIDE ============ -->
+    <h2>What's in the template</h2>
+    <ul class="feat-grid">
+      <li>
+        <h3>Sources &amp; Uses + Debt Schedule</h3>
+        <p>Year-by-year amortization, interest, cash sweep, ending leverage, interest coverage, DSCR. Covenant breach auto-flags (Lev &gt; 7×, Coverage &lt; 1.5×).</p>
+      </li>
+      <li class="highlight">
+        <h3>Returns Attribution</h3>
+        <p>Decomposes sponsor IRR into EBITDA growth / multiple expansion / debt paydown. Tells you whether the deal works on operations or financial engineering.</p>
+      </li>
+      <li class="highlight">
+        <h3>Reverse-LBO take-private analysis</h3>
+        <p>Solves backward for the maximum entry multiple at which a sponsor still hits target IRR (15%, 20%, 25%, 30%). The take-private price ceiling.</p>
+      </li>
+      <li class="highlight">
+        <h3>Reverse-DCF decomposition</h3>
+        <p>What perpetual growth rate does today's price imply? What EBITDA margin does it require? Joint-sensitivity grid shows exactly where the market sits in (margin × growth) space.</p>
+      </li>
+      <li>
+        <h3>Cycle Diagnostic tab</h3>
+        <p>Where is the company in its own historical margin range? "Near peak" / "Mid-cycle" / "Near trough". Sets the methodology choice before you read the DCF.</p>
+      </li>
+      <li>
+        <h3>Sector scorecards</h3>
+        <p>Pre-calibrated assumption packs: semiconductors, semiconductors_ai_cycle, energy, materials, industrials, generic. Mid-cycle margins via winsorize / median / peak-half methods.</p>
+      </li>
+      <li>
+        <h3>3-Statement projection</h3>
+        <p>Full P&amp;L + Balance Sheet + Cash Flow with retained-earnings roll-forward and balance-sheet plug. Internally consistent.</p>
+      </li>
+      <li>
+        <h3>WACC with re-levered β</h3>
+        <p>Hamada equation. Delever observed equity β to asset β at current D/E, re-lever at target D/E. The right way to do it.</p>
+      </li>
+      <li>
+        <h3>M&amp;A accretion / dilution</h3>
+        <p>Pro-forma EPS under all-stock, all-cash, 50/50 financing. Synergies modeled with phased realization. Premium &times; synergy sensitivity grid.</p>
+      </li>
+      <li>
+        <h3>Comps with percentile bands</h3>
+        <p>Peer set with EV/Revenue, EV/EBITDA (LTM + Adj for SBC), P/E (LTM + Forward), P/B. Implied valuation at p25 / median / p75.</p>
+      </li>
+      <li>
+        <h3>Football field (rigorous bands)</h3>
+        <p>52-week range, DCF (WACC ±100bps), Comps (peer p25-p75), LBO (entry mult at 15%/20%/25% IRR brackets). Each band derived from real sensitivity, not arbitrary ±15%.</p>
+      </li>
+      <li>
+        <h3>Sanity Checks tab</h3>
+        <p>Auto-flags: negative FCF, leverage breach, TV &gt; 85% of EV, IRR &lt; 15%, peer dispersion, terminal g &gt; GDP. The model audits itself.</p>
+      </li>
+      <li>
+        <h3>Live data via yfinance <span class="muted small" style="font-weight:400;">(pipeline tier)</span></h3>
+        <p>Pipeline pulls IS, BS, CF, peer financials automatically. Workbook tier is the worked MU example; pipeline tier auto-populates everything for any ticker.</p>
+      </li>
+      <li>
+        <h3>Cover tab &mdash; IC-ready</h3>
+        <p>Headline outputs (DCF $/sh, LBO IRR, MOIC), cycle phase, sanity-check status, audit trail link. Print-ready for committee.</p>
+      </li>
+      <li>
+        <h3>Audit trail (Notes tab)</h3>
+        <p>Every fallback, derivation, or imputation is logged automatically. No silent magic numbers.</p>
+      </li>
+    </ul>
+
+    <!-- ============ HOW TO USE IT ============ -->
+    <h2>How to use it</h2>
+    <p class="muted small">Two paths, depending on which tier you have.</p>
+
+    <h3 style="font-family:var(--serif);font-size:1.1rem;margin-top:1.5rem;">Workbook tier (manual fill-in)</h3>
+    <ol class="steps">
+      <li>
+        <strong>Download both workbooks</strong>
+        <p>Drop your email at the top to reveal the downloads. You get <code>MU_through_cycle.xlsx</code> and <code>MU_ai_cycle.xlsx</code> &mdash; same target, two scorecards. Open in Excel or LibreOffice.</p>
+      </li>
+      <li>
+        <strong>Read both side by side</strong>
+        <p>The point of shipping two workbooks is to show methodology disagreement. The through-cycle scorecard winsorizes the FY23 trough out and lands at $90/sh implied. The AI-cycle scorecard uses peak-half margins and lands at $134/sh. The spread between them is the option value of your structural call.</p>
+      </li>
+      <li>
+        <strong>Replace MU with your own company</strong>
+        <p>Overwrite the yellow-highlighted Drivers cells: ticker, shares, beta, debt, revenue / margin / capex assumptions, entry &amp; exit multiples, leverage, hold period. Live formulas recalculate automatically. Source the data manually (yfinance, SEC filings, FactSet, Bloomberg) &mdash; or get the pipeline tier and skip the manual sourcing entirely.</p>
+      </li>
+    </ol>
+
+    <h3 style="font-family:var(--serif);font-size:1.1rem;margin-top:2rem;">Pipeline tier (request access above &uarr;)</h3>
+    <ol class="steps">
+      <li>
+        <strong>Email me a use case</strong>
+        <p>Use the request form near the top. Tell me what you're working on. I send the source over after a quick read.</p>
+      </li>
+      <li>
+        <strong>Run setup</strong>
+        <p>Mac/Linux: <code>./setup.sh</code> &nbsp;&middot;&nbsp; Windows: double-click <code>setup.bat</code>. Installs Python dependencies (yfinance, openpyxl, xlsxwriter, pandas, jupyter, matplotlib).</p>
+      </li>
+      <li>
+        <strong>Edit Cell 1 of the notebook (or use the CLI)</strong>
+        <p>Plug in your ticker, peer set, and scorecard. <code>jupyter notebook IB_Model_Template.ipynb</code> &rarr; Run All. Or use <code>python run_model.py MU --peers WDC,STX,NVDA --preset semiconductors</code>. Pipeline produces a fully populated 17-tab workbook in ~60 seconds.</p>
+      </li>
+    </ol>
+
+    <div class="req-box">
+      <h3>What you need</h3>
+      <ul>
+        <li><strong>Workbook tier:</strong> Microsoft Excel or LibreOffice. That's it.</li>
+        <li><strong>Pipeline tier:</strong> Excel + Python 3.10 or later (free, install from python.org) + an internet connection.</li>
+      </ul>
+    </div>
+
+    <!-- ============ FAQ ============ -->
+    <h2>FAQ</h2>
+    <div class="faq">
+
+      <details>
+        <summary>Why ship two workbooks instead of one?</summary>
+        <div>For cyclicals especially, the methodology choice <em>is</em> the recommendation. Shipping the through-cycle scorecard (winsorized — drops the FY23 trough and the FY21 peak) alongside the AI-cycle scorecard (peak-half — assumes HBM long-term agreements put a floor under memory margins) makes the bull/bear framing explicit instead of hiding it inside one preset. If both presets agree, you have conviction. If they disagree (as is currently the case for memory), the spread between them tells you how much your view depends on the structural-vs.-cyclical call. This is the same framework I'd present to an IC.</div>
+      </details>
+
+      <details>
+        <summary>What's the difference between the workbook and the pipeline?</summary>
+        <div>The <strong>workbooks</strong> are the two 17-tab Excel files (through-cycle + AI-cycle). They come pre-populated with Micron as a worked example so you can see what a finished IC analysis looks like. To run a different company, you replace MU's inputs manually with your own data. <strong>The pipeline</strong> is the Python + Jupyter system that automates the data sourcing &mdash; it pulls financials from yfinance, builds the peer set, runs the full build, and produces fully populated workbooks for any ticker in ~60 seconds. The workbooks are a free direct download; the pipeline is sent on request to people with a real use case.</div>
+      </details>
+
+      <details>
+        <summary>What's the Reverse-LBO tab?</summary>
+        <div>It solves backward. Given preset exit multiple and leverage, what's the maximum entry multiple at which a sponsor still hits 20% IRR? Convert that entry multiple to a $/share take-private price. Compare to current market. If take-private &gt; current price, the public market is paying LESS than a sponsor would &mdash; possibly attractive. If take-private &lt; current, the public is paying MORE than patient capital would; sponsor wouldn't bid. Useful framework even for names that aren't actual buyout candidates &mdash; tells you where private capital would step in.</div>
+      </details>
+
+      <details>
+        <summary>What's the Reverse-DCF tab?</summary>
+        <div>Same logic, applied to the public-market valuation. Decomposes the current EV into the perpetual-growth-rate the market price implies, given preset margin assumptions. Often surfaces "the market is implying NEGATIVE long-term growth" or "the market is implying 8% perpetual growth — above global GDP" &mdash; either of which is a real signal. Includes a joint-sensitivity grid: every (margin × growth) cell shows the implied EV ÷ current EV ratio. Cells near 1.0 are where the market sits.</div>
+      </details>
+
+      <details>
+        <summary>Is this really free?</summary>
+        <div>Yes &mdash; both tiers. The workbooks are a free download. The pipeline is also free for analysts, researchers, and students with a real use case &mdash; I just want to know what you're working on before I send the source. Built on open-source libraries (yfinance, openpyxl, xlsxwriter, pandas, jupyter). No paid data feeds required.</div>
+      </details>
+
+      <details>
+        <summary>Why gate the pipeline behind a request form?</summary>
+        <div>Two reasons. (1) The pipeline is a real piece of work and I'd rather it goes to people with a use case I can engage with. (2) Every request is a conversation &mdash; if you tell me you're building a thesis on a name, I'll often have something useful to add. The form isn't a filter to keep people out; it's a filter to start better conversations.</div>
+      </details>
+
+      <details>
+        <summary>Does this work for any ticker?</summary>
+        <div>The workbooks work for any public company &mdash; you just have to source the data manually. The pipeline (request access above) auto-pulls from yfinance, which covers most US-listed equities and major international tickers (NYSE, NASDAQ, LSE, TSE). For names yfinance doesn't track, both versions handle missing data gracefully (visible "N/A" in the Notes tab instead of silent magic numbers).</div>
+      </details>
+
+      <details>
+        <summary>What sectors are calibrated?</summary>
+        <div>Six scorecards ship with the template: <code>semiconductors</code>, <code>semiconductors_ai_cycle</code>, <code>energy</code>, <code>materials</code>, <code>industrials</code>, <code>generic</code>. Each is a calibrated set of through-cycle factors &mdash; mid-cycle EBITDA margin method (winsorize / median / peak-half), capex intensity, NWC %, target leverage, entry/exit multiples. Cyclicals (semis/energy/materials/industrials) use winsorized mid-cycle by default to avoid being dragged by a single trough. Memory in the current cycle uses peak-half (semiconductors_ai_cycle). Add your own scorecards by editing one Python dict.</div>
+      </details>
+
+      <details>
+        <summary>Will this give me the same answer as a top-tier sell-side desk?</summary>
+        <div>It uses the same methodology (Hamada re-levering for WACC, mid-year discount convention, blended Gordon + exit-multiple terminal value, peer-blended multiples with percentile bands, returns attribution). The answer depends on your scorecard choice and any overrides &mdash; growth path, margin assumption, entry/exit multiples. The template is dynamic &mdash; change one Drivers cell, the entire model recalculates. The Sanity Checks tab will tell you when you've drifted into territory the model doesn't trust (TV &gt; 85% of EV, terminal g above GDP, leverage covenant breach).</div>
+      </details>
+
+      <details>
+        <summary>I'm not technical. Is this hard to use?</summary>
+        <div>The workbook tier is just Excel &mdash; if you can open a .xlsx and overwrite cells, you can use it. The pipeline tier requires Python (free; install from python.org) and double-clicking a setup script &mdash; the README walks through every step and most users have it working in 5 minutes.</div>
+      </details>
+
+      <details>
+        <summary>Can I customize it?</summary>
+        <div>Yes &mdash; every formula in the workbook is editable. If you have the pipeline tier, every Python module is open too: want a 7-year forecast? Edit <code>financials.py</code>. Want to add a new scorecard? Edit <code>presets.py</code>. Want a new sensitivity dimension? Edit <code>sensitivity.py</code>. Every module is independently testable.</div>
+      </details>
+
+      <details>
+        <summary>Does it work on Mac?</summary>
+        <div>Yes. Tested on macOS, Windows, and Linux.</div>
+      </details>
+
+      <details>
+        <summary>How is this different from a free LBO spreadsheet on the internet?</summary>
+        <div>Most free templates are static one-pagers with a hardcoded company. This is a 17-tab IB-grade workbook with a full sources &amp; uses, year-by-year debt schedule with covenant tracking, returns attribution decomposition, reverse-LBO take-private analysis, reverse-DCF, peer-blended comps with percentile bands, accretion/dilution under three financing mixes, sanity-check auto-flags, and a full 3-statement projection. The pipeline tier auto-populates everything for any ticker via yfinance. The methodology shares a backbone with the DCF template that emerged from the 2023 CFA Institute Research Challenge for the Americas.</div>
+      </details>
+
+    </div>
+
+    <!-- ============ FOOTER CTA ============ -->
+    <section class="footer-cta">
+      <h2>Two ways in.</h2>
+      <p>Workbooks are a free download. Pipeline is on request.</p>
+      <a class="btn" href="#gate" style="margin-right:.5rem;">Get the workbooks &uarr;</a>
+      <a class="btn btn-ghost" href="#pipeline">Request pipeline access &uarr;</a>
+    </section>
+
+    <p class="muted small" style="margin-top:1rem">
+      Universal Edition &middot; May 2026 &middot; License: MIT-style for personal,
+      academic, and research use; please credit if you publish off this work. For
+      the matching DCF template, see <a href="dcf-template.html">DCF Template</a>.
+      For other free templates, see the <a href="toolkit.html">toolkit</a>.
+    </p>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/Keyvaniath" rel="me noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=18" defer></script>
+
+  <script>
+    /* Email-gate handler — Formspree AJAX submit, persist with localStorage */
+    (function () {
+      var form    = document.getElementById('gate-form');
+      var thanks  = document.getElementById('gate-thanks');
+      var errBox  = document.getElementById('gate-error');
+      var submit  = document.getElementById('gate-submit');
+      if (!form) return;
+      var STORAGE_KEY = 'bpleon-lbo-ma-template-unlocked';
+
+      function showThanks() { form.style.display = 'none'; thanks.classList.add('show'); }
+      function showError(msg) { errBox.textContent = msg; errBox.classList.add('show'); }
+
+      try {
+        if (localStorage.getItem(STORAGE_KEY) === '1') showThanks();
+      } catch (e) {}
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        errBox.classList.remove('show');
+        var email = (document.getElementById('gate-email').value || '').trim();
+        if (!email || email.indexOf('@') === -1) { showError('Please enter a valid email.'); return; }
+        if (form._gotcha && form._gotcha.value) return;
+        submit.disabled = true; submit.textContent = 'Sending...';
+
+        var endpoint = form.getAttribute('action');
+        if (endpoint.indexOf('REPLACE_WITH_FORMSPREE_ID') !== -1) {
+          console.warn('[gate] Formspree endpoint not configured.');
+          try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+          showThanks(); return;
+        }
+        fetch(endpoint, { method:'POST', headers:{'Accept':'application/json'},
+                          body: new FormData(form) })
+          .then(function (res) {
+            if (res.ok) {
+              try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+              showThanks();
+            } else {
+              return res.json().then(function (data) {
+                var msg = (data && data.errors && data.errors[0] && data.errors[0].message)
+                          || 'Something went wrong. Try again, or email brandon@bpleon.com.';
+                throw new Error(msg);
+              });
+            }
+          }).catch(function (err) {
+            submit.disabled = false; submit.textContent = 'Send me the workbooks →';
+            showError(err.message || 'Network error. Try again.');
+          });
+      });
+    })();
+
+    /* Pipeline-request handler */
+    (function () {
+      var form    = document.getElementById('pipeline-form');
+      var thanks  = document.getElementById('pipeline-thanks');
+      var errBox  = document.getElementById('pipeline-error');
+      if (!form) return;
+      var submit  = form.querySelector('button[type="submit"]');
+      function showThanks() { form.style.display='none'; thanks.classList.add('show'); }
+      function showError(msg) { errBox.textContent = msg; errBox.classList.add('show'); }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        errBox.classList.remove('show');
+        var email = (form.querySelector('input[type="email"]').value || '').trim();
+        var useCase = (form.querySelector('textarea[name="use_case"]').value || '').trim();
+        if (!email || email.indexOf('@') === -1) { showError('Please enter a valid email.'); return; }
+        if (useCase.length < 10) { showError('Tell me a bit more about what you’re working on.'); return; }
+        if (form._gotcha && form._gotcha.value) return;
+        submit.disabled = true; submit.textContent = 'Sending...';
+        fetch(form.getAttribute('action'), { method:'POST',
+              headers:{'Accept':'application/json'}, body: new FormData(form) })
+          .then(function (res) {
+            if (res.ok) showThanks()

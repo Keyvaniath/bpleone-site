@@ -1,0 +1,67 @@
+# Nightly refresh of LBO/M&A worked examples.
+# Runs the Python pipeline against the coverage list, regenerates .xlsx
+# files, commits if anything changed. Cloudflare Pages auto-rebuilds on push.
+name: Refresh LBO/M&A worked examples
+
+on:
+  schedule:
+    - cron: "0 8 * * *"      # 08:00 UTC = 04:00 ET (post-close US, pre-open EU)
+  workflow_dispatch:           # Manual run from Actions tab
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout site repo
+        uses: actions/checkout@v4
+
+      - name: Checkout LBO/M&A model repo
+        uses: actions/checkout@v4
+        with:
+          repository: brandonpleone/lbo-ma-model    # change to your repo
+          path: lbo-ma-model
+          token: ${{ secrets.MODEL_REPO_TOKEN }}    # PAT for private repo
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        working-directory: lbo-ma-model
+        run: |
+          pip install -r requirements.txt --quiet
+
+      - name: Run model on coverage list (both presets)
+        working-directory: lbo-ma-model
+        run: |
+          python run_model.py MU --preset semiconductors          --peers WDC,STX,NVDA,TSM,AVGO,INTC,AMD --out output
+          python run_model.py MU --preset semiconductors_ai_cycle --peers WDC,STX,NVDA,TSM,AVGO,INTC,AMD --out output
+          # Future names:
+          # python run_model.py XOM  --preset energy        --peers CVX,COP,EOG,OXY,SLB
+          # python run_model.py NVDA --preset semiconductors_ai_cycle --peers AMD,AVGO,TSM,INTC
+
+          # Rename to canonical filenames
+          mv output/MU_LBO_MA_Model.xlsx output/MU_through_cycle.xlsx 2>/dev/null || true
+
+      - name: Copy refreshed workbooks to site assets
+        run: |
+          cp lbo-ma-model/output/MU_through_cycle.xlsx assets/toolkit/
+          cp lbo-ma-model/output/MU_ai_cycle.xlsx       assets/toolkit/
+          # Tag with build date for the meta line on landing page
+          date -u +"Last refreshed %Y-%m-%d %H:%M UTC" > assets/toolkit/LAST_REFRESH.txt
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name  "bpleon-bot"
+          git config user.email "bot@bpleon.com"
+          git add assets/toolkit/
+          if git diff --staged --quiet; then
+            echo "No changes — skipping commit."
+          else
+            git commit -m "chore(toolkit): refresh LBO/M&A worked examples [auto]"
+            git push
+          fi

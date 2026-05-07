@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LBO Calculator — Brandon Leon</title>
+<meta name="description" content="Interactive LBO calculator. Tune entry/exit multiple, leverage, hold period — watch sponsor IRR, MOIC, and returns attribution recalculate live.">
+<link rel="canonical" href="https://bpleon.com/lbo.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #F5EFE0; --card: #FAF6E8; --card-border: #E0D5BA;
+    --text: #1F1B14; --text-muted: #6B6453; --text-faint: #9C9684;
+    --accent: #C46A2C; --accent-light: #E5A572; --accent-bg: #F5E4CE;
+    --rule: #D8CDB0; --input-bg: #FFFEF7; --input-border: #C9BD9F;
+    --table-stripe: #F2EBD6; --green: #4F7A3F; --red: #B0432A;
+    --sage: #5b7f6b; --sage-bg: #E5EFE6;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 17px; line-height: 1.6; padding: 60px 40px 100px; min-height: 100vh; }
+.container { max-width: 1100px; margin: 0 auto; }
+.headline { font-size: 42px; font-weight: 600; line-height: 1.15; margin-bottom: 16px; letter-spacing: -0.01em; }
+.subhead { color: var(--text-muted); font-size: 18px; font-style: italic; margin-bottom: 32px; max-width: 760px; }
+.breadcrumb { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+
+/* SECTOR SCORECARD CHIPS */
+.scorecard-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; align-items: center; }
+.scorecard-label { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-right: 4px; }
+.chip { font-family: 'Inter', sans-serif; font-size: 12px; padding: 6px 12px; border-radius: 999px; background: var(--card); border: 1px solid var(--card-border); color: var(--text); cursor: pointer; transition: all 0.15s; }
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+.chip.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+.grid-main { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; margin-bottom: 40px; }
+@media (max-width: 900px) { .grid-main { grid-template-columns: 1fr; } body { padding: 40px 20px 80px; } .headline { font-size: 32px; } }
+
+.card { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 28px 30px; }
+.card-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.subgroup-title { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin: 18px 0 8px; }
+
+.spec-row { display: grid; grid-template-columns: 1fr 130px; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--rule); align-items: center; }
+.spec-row:last-child { border-bottom: none; }
+.spec-row .label { font-size: 15px; color: var(--text); }
+.spec-row .label small { color: var(--text-muted); font-size: 12px; font-style: italic; }
+input[type="number"], input[type="text"] { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 3px; padding: 7px 10px; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text); text-align: right; width: 100%; }
+input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-light); }
+
+.implied-headline { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.implied-price { font-family: 'Cormorant Garamond', serif; font-size: 64px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+.implied-meta { font-size: 14px; color: var(--text-muted); font-family: 'Inter', sans-serif; margin-bottom: 18px; }
+
+.summary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 18px; }
+.sum-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+.sum-value { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; }
+
+.detail-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; margin-top: 8px; }
+.detail-table th { padding: 8px 10px; border-bottom: 1px solid var(--rule); color: var(--text-muted); text-align: left; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+.detail-table th.num { text-align: right; }
+.detail-table td { padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+.detail-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.detail-table tr:nth-child(even) td { background: var(--table-stripe); }
+.detail-table .breach { color: var(--red); font-weight: 600; }
+.detail-table .total td { background: var(--accent-bg) !important; font-weight: 600; }
+.detail-table .total td:first-child { color: var(--accent); }
+
+/* RETURNS ATTRIBUTION BAR */
+.attrib-bar { height: 32px; display: flex; border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; margin: 12px 0 8px; background: var(--input-bg); }
+.attrib-bar div { display: flex; align-items: center; justify-content: center; color: white; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; transition: width 0.25s; min-width: 0; }
+.attrib-legend { display: flex; gap: 18px; flex-wrap: wrap; font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+.attrib-legend .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+
+/* SENSITIVITY GRID */
+.sens-grid { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 12px; font-variant-numeric: tabular-nums; margin-top: 8px; }
+.sens-grid th, .sens-grid td { padding: 6px 8px; text-align: center; border: 1px solid var(--rule); }
+.sens-grid th { background: var(--input-bg); font-weight: 600; font-size: 11px; color: var(--text-muted); }
+.sens-grid td.center-cell { background: var(--accent); color: white; font-weight: 600; }
+
+/* SECTIONS BELOW THE FOLD */
+.full-row { margin-bottom: 28px; }
+
+.howworks { margin-top: 50px; padding-top: 28px; border-top: 1px solid var(--rule); }
+.howworks h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+.howworks p { color: var(--text); margin-bottom: 12px; max-width: 800px; }
+.howworks strong { color: var(--text); }
+
+.cta { margin-top: 40px; padding: 24px 28px; background: var(--accent-bg); border: 1px solid var(--accent-light); border-radius: 4px; }
+.cta-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+.cta-body { color: var(--text-muted); margin-bottom: 12px; }
+.cta a { color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--accent); }
+
+.cta-sage { margin-top: 20px; padding: 22px 28px; background: var(--sage-bg); border: 1px solid var(--sage); border-radius: 4px; }
+.cta-sage .cta-title { color: var(--sage); }
+.cta-sage a { color: var(--sage); border-bottom-color: var(--sage); }
+
+.disclaimer { margin-top: 30px; font-size: 13px; color: var(--text-faint); font-style: italic; }
+
+/* SHARE BUTTON */
+.share-btn { position: fixed; top: 24px; right: 24px; background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 90; transition: background 0.15s; }
+.share-btn:hover { background: #A85A22; }
+.share-toast { position: fixed; top: 70px; right: 24px; background: var(--text); color: white; padding: 12px 18px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; z-index: 91; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.share-toast.show { opacity: 1; }
+@media (max-width: 700px) { .share-btn { top: 12px; right: 12px; padding: 8px 12px; font-size: 11px; } }
+
+/* EMAIL MODAL */
+.email-modal { position: fixed; bottom: 24px; right: 24px; max-width: 360px; background: var(--card); border: 1px solid var(--accent-light); border-radius: 6px; padding: 22px 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 100; transform: translateY(120%); opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease; }
+.email-modal.show { transform: translateY(0); opacity: 1; }
+.email-modal-close { position: absolute; top: 8px; right: 12px; background: none; border: none; font-size: 22px; color: var(--text-muted); cursor: pointer; line-height: 1; }
+.email-modal-close:hover { color: var(--accent); }
+.email-modal h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; line-height: 1.2; }
+.email-modal p { font-size: 14px; color: var(--text-muted); font-style: italic; margin-bottom: 14px; line-height: 1.5; }
+.email-modal .footnote { font-size: 11px; color: var(--text-faint); margin-top: 10px; font-style: normal; }
+@media (max-width: 700px) { .email-modal { max-width: calc(100% - 24px); right: 12px; bottom: 12px; padding: 18px 20px; } }
+</style>
+</head>
+<body>
+
+<button class="share-btn" id="shareBtn" title="Copy a shareable link with your inputs">📋 SHARE THIS</button>
+<div class="share-toast" id="shareToast">Link copied — paste it anywhere</div>
+
+<div class="email-modal" id="emailModal">
+    <button class="email-modal-close" id="emailModalClose" aria-label="Close">×</button>
+    <h4>Get the full toolkit</h4>
+    <p>Live-refresh Excel workbook + 17 tabs + Python source. Cyclical industries focus. Free monthly research notes.</p>
+    <iframe src="https://bpleon.substack.com/embed" width="100%" height="200" style="border:none; background:transparent;" frameborder="0" scrolling="no"></iframe>
+    <p class="footnote" style="margin-top:6px;">Substack handles signup — no spam, unsubscribe anytime.</p>
+</div>
+
+<div class="container">
+    <div class="breadcrumb"><a href="./toolkit.html">← Toolkit</a></div>
+    <h1 class="headline">LBO Calculator</h1>
+    <p class="subhead">Pick a sector scorecard, plug in current EBITDA, watch sponsor IRR and returns attribution recalculate live. Same engine as the 17-tab Python pipeline — just stripped down to the levers that actually move the deal.</p>
+
+    <div class="scorecard-row">
+        <span class="scorecard-label">Sector scorecard:</span>
+        <button class="chip active" data-preset="semiconductors">Semis (through-cycle)</button>
+        <button class="chip" data-preset="semiconductors_ai_cycle">Semis (AI cycle)</button>
+        <button class="chip" data-preset="energy">Energy</button>
+        <button class="chip" data-preset="materials">Materials</button>
+        <button class="chip" data-preset="industrials">Industrials</button>
+        <button class="chip" data-preset="generic">Generic</button>
+    </div>
+
+    <div class="grid-main">
+        <!-- LEFT: INPUTS -->
+        <div class="card">
+            <div class="card-title">Deal Inputs</div>
+
+            <div class="subgroup-title">Operating</div>
+            <div class="spec-row"><div class="label">Entry EBITDA <small>($B)</small></div><input type="number" id="i-ebitda" value="13.8" step="0.1"></div>
+            <div class="spec-row"><div class="label">EBITDA growth p.a. <small>(%)</small></div><input type="number" id="i-growth" value="6" step="0.5"></div>
+            <div class="spec-row"><div class="label">EBITDA margin <small>(%)</small></div><input type="number" id="i-ebmgn" value="55" step="1"></div>
+            <div class="spec-row"><div class="label">Capex <small>(% revenue)</small></div><input type="number" id="i-capex" value="25" step="0.5"></div>
+            <div class="spec-row"><div class="label">NWC <small>(% Δ revenue)</small></div><input type="number" id="i-nwc" value="2" step="0.5"></div>
+            <div class="spec-row"><div class="label">Tax rate <small>(%)</small></div><input type="number" id="i-tax" value="15" step="0.5"></div>
+
+            <div class="subgroup-title">Deal Structure</div>
+            <div class="spec-row"><div class="label">Entry multiple <small>(EV / EBITDA)</small></div><input type="number" id="i-entry" value="8.0" step="0.25"></div>
+            <div class="spec-row"><div class="label">Exit multiple <small>(EV / EBITDA)</small></div><input type="number" id="i-exit" value="8.0" step="0.25"></div>
+            <div class="spec-row"><div class="label">Debt / EBITDA <small>at close</small></div><input type="number" id="i-lev" value="4.5" step="0.25"></div>
+            <div class="spec-row"><div class="label">Cost of debt <small>(%)</small></div><input type="number" id="i-kd" value="8.5" step="0.25"></div>
+            <div class="spec-row"><div class="label">Cash sweep <small>(%)</small></div><input type="number" id="i-sweep" value="75" step="5"></div>
+            <div class="spec-row"><div class="label">Hold period <small>(yrs)</small></div><input type="number" id="i-hold" value="5" min="3" max="7" step="1"></div>
+            <div class="spec-row"><div class="label">Transaction fees <small>(% EV)</small></div><input type="number" id="i-fees" value="2" step="0.25"></div>
+        </div>
+
+        <!-- RIGHT: HEADLINE OUTPUT -->
+        <div class="card">
+            <div class="implied-headline">Sponsor IRR</div>
+            <div class="implied-price" id="o-irr">—</div>
+            <div class="implied-meta">target 20%+ · MOIC <strong id="o-moic">—</strong> over <strong id="o-hold-yr">—</strong> years</div>
+
+            <div class="summary-row">
+                <div><div class="sum-label">Entry EV</div><div class="sum-value" id="o-entryev">—</div></div>
+                <div><div class="sum-label">Sponsor Equity</div><div class="sum-value" id="o-eq">—</div></div>
+            </div>
+            <div class="summary-row" style="margin-top: -18px;">
+                <div><div class="sum-label">Exit Equity</div><div class="sum-value" id="o-exiteq">—</div></div>
+                <div><div class="sum-label">Exit Net Debt / EBITDA</div><div class="sum-value" id="o-exitlev">—</div></div>
+            </div>
+
+            <div class="card-title" style="margin-top: 24px;">Returns Attribution</div>
+            <div class="attrib-bar" id="attrib-bar"></div>
+            <div class="attrib-legend">
+                <span><span class="swatch" style="background:#0B3D91"></span><span id="leg-ebitda"></span></span>
+                <span><span class="swatch" style="background:var(--accent)"></span><span id="leg-mult"></span></span>
+                <span><span class="swatch" style="background:var(--sage)"></span><span id="leg-debt"></span></span>
+            </div>
+
+            <div class="card-title" style="margin-top: 24px;">Sources &amp; Uses</div>
+            <table class="detail-table" id="su-table"></table>
+        </div>
+    </div>
+
+    <!-- DEBT SCHEDULE (full-width) -->
+    <div class="card full-row">
+        <div class="card-title">Debt Schedule</div>
+        <table class="detail-table" id="ds-table"></table>
+        <p style="font-family:'Inter',sans-serif; font-size:12px; color:var(--text-muted); margin-top:10px;">
+            Years where Net Debt / EBITDA &gt; 7× or Interest Coverage &lt; 1.5× will flag in red — covenant breach territory.
+        </p>
+    </div>
+
+    <!-- REVERSE-LBO + SENSITIVITY (two-column) -->
+    <div class="grid-main" style="grid-template-columns: 1fr 1.4fr;">
+        <div class="card">
+            <div class="card-title">Reverse-LBO</div>
+            <p style="font-family:'Inter',sans-serif; font-size:13px; color:var(--text-muted); margin-bottom:14px;">
+                Max entry multiple a sponsor would pay at each target IRR, given the exit multiple and leverage above.
+            </p>
+            <table class="detail-table" id="rev-table"></table>
+        </div>
+        <div class="card">
+            <div class="card-title">Sensitivity — Sponsor IRR</div>
+            <p style="font-family:'Inter',sans-serif; font-size:13px; color:var(--text-muted); margin-bottom:14px;">
+                Rows = entry multiple. Cols = exit multiple. Center cell = your current case.
+            </p>
+            <table class="sens-grid" id="sens-table"></table>
+        </div>
+    </div>
+
+    <div class="howworks">
+        <h3>How this works</h3>
+        <p><strong>Sources &amp; Uses.</strong> Entry EV = entry multiple × LTM EBITDA. New debt = leverage × EBITDA. Sponsor equity plugs the gap (plus 2% fees). Existing debt assumed refinanced (clean capital structure at close).</p>
+        <p><strong>Debt schedule.</strong> Each year: 1% mandatory amort + 100% × CFADS sweep (after capex, NWC, taxes, interest) — capped so debt can't go below zero. Net Debt / EBITDA and Interest Coverage tracked through the hold; covenant breach (Lev &gt; 7× or Cov &lt; 1.5×) auto-flags.</p>
+        <p><strong>Sponsor IRR.</strong> Bisection on the cash-flow stream: −sponsor equity at t=0, exit equity (= exit EV − exit debt + retained cash) at hold-end. MOIC = total cash returned ÷ equity in.</p>
+        <p><strong>Returns attribution.</strong> Decomposes the sponsor's value creation into three drivers: <strong>EBITDA growth</strong> = (exit EBITDA − entry EBITDA) × entry multiple; <strong>multiple expansion</strong> = exit EBITDA × (exit mult − entry mult); <strong>debt paydown + retained cash</strong>. If multiple expansion dominates, the deal is a re-rating bet — fragile. If EBITDA growth dominates, it's an operational thesis.</p>
+        <p><strong>Reverse-LBO.</strong> Solves the inverse: given the exit multiple and leverage you set, what's the maximum entry multiple at which a sponsor still hits target IRR? Convert to an implied take-private price. Useful framework even outside actual buyout situations — tells you where private capital would step in.</p>
+        <p><strong>Sensitivity.</strong> Re-runs the full LBO across an entry × exit multiple grid. Green cells = above 20% IRR (PE-financeable). Yellow = 15–20%. Red = below 15% or negative.</p>
+    </div>
+
+    <div class="cta">
+        <div class="cta-title">Want this auto-computed for any ticker?</div>
+        <p class="cta-body">The full toolkit pulls live financials from Yahoo Finance and runs the LBO + reverse-LBO + accretion / dilution + peer comps + sanity checks for any ticker. 17-tab workbook with two MU worked examples (through-cycle and AI-cycle scorecards) so methodology disagreement is explicit.</p>
+        <a href="./lbo-ma-template.html">→ Open the LBO &amp; M&amp;A template</a>
+    </div>
+
+    <div class="cta cta-sage">
+        <div class="cta-title">Need the Python pipeline?</div>
+        <p class="cta-body">Sent on request to analysts, researchers, and students with a real use case. yfinance loader, sector scorecards, three-statement projection, reverse-DCF / reverse-LBO, sensitivity grids, PDF tear sheet generator. Full source.</p>
+        <a href="./lbo-ma-template.html#pipeline">→ Request access</a>
+    </div>
+
+    <p class="disclaimer">Nothing on this page is investment advice. Built by Brandon Leon — independent research focused on cyclical industries.</p>
+</div>
+
+<script>
+/* ============================================================
+   LBO ENGINE — pure JS, mirrors ib_model/lbo.py
+   ============================================================ */
+(function () {
+    'use strict';
+
+    const PRESETS = {
+        semiconductors:           { entry: 8.0,  exit: 8.0,  lev: 4.5, capex: 25, growth: 6,  ebmgn: 55, kd: 8.5, tax: 15 },
+        semiconductors_ai_cycle:  { entry: 11.0, exit: 10.0, lev: 4.0, capex: 32, growth: 12, ebmgn: 58, kd: 8.5, tax: 15 },
+        energy:                   { entry: 5.5,  exit: 5.5,  lev: 3.5, capex: 18, growth: 3,  ebmgn: 45, kd: 9.0, tax: 22 },
+        materials:                { entry: 7.0,  exit: 7.0,  lev: 4.0, capex: 10, growth: 4,  ebmgn: 50, kd: 8.5, tax: 24 },
+        industrials:              { entry: 9.0,  exit: 9.0,  lev: 5.0, capex: 5,  growth: 4,  ebmgn: 55, kd: 8.0, tax: 23 },
+        generic:                  { entry: 10.0, exit: 10.0, lev: 5.5, capex: 5,  growth: 5,  ebmgn: 60, kd: 7.5, tax: 22 },
+    };
+
+    const $ = id => document.getElementById(id);
+    const I = ['ebitda','growth','ebmgn','capex','nwc','tax','entry','exit','lev','kd','sweep','hold','fees']
+        .reduce((a,k) => { a[k] = $('i-' + k); return a; }, {});
+
+    /* ---- IRR via bisection ---- */
+    function irr(cf) {
+        let lo = -0.99, hi = 5.0, mid = 0;
+        for (let i = 0; i < 100; i++) {
+            mid = (lo + hi) / 2;
+            let npv = 0;
+            for (let t = 0; t < cf.length; t++) npv += cf[t] / Math.pow(1 + mid, t);
+            if (Math.abs(npv) < 1e-7) return mid;
+            if (npv > 0) lo = mid; else hi = mid;
+        }
+        return mid;
+    }
+
+    /* ---- Run a single LBO ---- */
+    function runLBO(p) {
+        const ebitdaPath = [], capexPath = [], nwcPath = [], ebitPath = [];
+        const rev0 = p.ebitda / (p.ebmgn / 100);
+        let prevRev = rev0;
+        for (let t = 0; t < p.hold; t++) {
+            const g = (p.growth / 100) * Math.pow(0.92, t);
+            const rev = prevRev * (1 + g);
+            const eb = rev * (p.ebmgn / 100);
+            ebitdaPath.push(eb);
+            ebitPath.push(eb * 0.7);
+            capexPath.push(rev * (p.capex / 100));
+            nwcPath.push((rev - prevRev) * (p.nwc / 100));
+            prevRev = rev;
+        }
+
+        const entryEV = p.ebitda * p.entry;
+        const fees = entryEV * (p.fees / 100);
+        let debtClose = p.ebitda * p.lev;
+        let equityIn = entryEV + fees - debtClose;
+        if (equityIn < 0) { debtClose = entryEV + fees; equityIn = 0; }
+
+        const sched = []; let curDebt = debtClose; let retainedCash = 0;
+        for (let i = 0; i < p.hold; i++) {
+            const beg = curDebt;
+            const mand = beg * 0.01;
+            const interest = beg * (p.kd / 100);
+            const ebitda = ebitdaPath[i];
+            const capex = capexPath[i];
+            const dnwc = nwcPath[i];
+            const ebit = ebitPath[i];
+            const taxes = Math.max(0, (ebit - interest) * (p.tax / 100));
+            const cfads = ebitda - interest - taxes - capex - dnwc;
+            let sweep = Math.max(0, cfads - mand) * (p.sweep / 100);
+            sweep = Math.min(sweep, Math.max(0, beg - mand));
+            const ending = beg - mand - sweep;
+            retainedCash += Math.max(0, cfads - mand - sweep);
+            sched.push({ year: i+1, beg, mand, interest, ebitda, taxes, capex, dnwc, cfads, sweep, ending,
+                          leverage: ending / Math.max(ebitda, 0.01),
+                          coverage: ebitda / Math.max(interest, 0.01) });
+            curDebt = ending;
+        }
+
+        const exitEbitda = ebitdaPath[p.hold - 1];
+        const exitEV = exitEbitda * p.exit;
+        const exitEq = exitEV - curDebt + retainedCash;
+        const moic = equityIn > 0 ? exitEq / equityIn : NaN;
+
+        const cf = [-equityIn];
+        for (let j = 1; j < p.hold; j++) cf.push(0);
+        cf.push(exitEq);
+        const rate = irr(cf);
+
+        const ebitdaGrowth = (exitEbitda - p.ebitda) * p.entry;
+        const multChange = exitEbitda * (p.exit - p.entry);
+        const debtPaydown = (debtClose - curDebt) + retainedCash;
+
+        return { entryEV, debtClose, fees, equityIn, exitEbitda, exitEV, exitDebt: curDebt,
+                  retainedCash, exitEq, moic, irr: rate, sched,
+                  attrib: { ebitda: ebitdaGrowth, mult: multChange, debt: debtPaydown,
+                             total: ebitdaGrowth + multChange + debtPaydown } };
+    }
+
+    /* ---- Reverse-LBO: bisect entry mult for each target IRR ---- */
+    function reverseLBO(p) {
+        const targets = [0.15, 0.20, 0.25, 0.30];
+        const out = [];
+        targets.forEach(t => {
+            let lo = 3.0, hi = 18.0, mid = 0;
+            for (let k = 0; k < 50; k++) {
+                mid = (lo + hi) / 2;
+                const r = runLBO(Object.assign({}, p, { entry: mid }));
+                if (r.irr > t) lo = mid; else hi = mid;
+            }
+            out.push({ tgt: t, maxEntry: mid });
+        });
+        return out;
+    }
+
+    /* ---- Formatting ---- */
+    function fmtMoney(v) {
+        if (!isFinite(v)) return '—';
+        const sign = v < 0 ? '-' : ''; v = Math.abs(v);
+        if (v >= 1000) return sign + '$' + (v / 1000).toFixed(2) + 'T';
+        if (v >= 1)    return sign + '$' + v.toFixed(2) + 'B';
+        return sign + '$' + (v * 1000).toFixed(0) + 'M';
+    }
+    const fmtPct = v => isFinite(v) ? (v * 100).toFixed(1) + '%' : '—';
+    const fmtMult = v => isFinite(v) ? v.toFixed(2) + 'x' : '—';
+    const fmtPctSig = v => (v >= 0 ? '+' : '') + (v * 100).toFixed(0) + '%';
+
+    /* ---- Render ---- */
+    function render() {
+        const p = {};
+        for (const k in I) p[k] = parseFloat(I[k].value);
+        if (Object.values(p).some(isNaN)) return;
+
+        const r = runLBO(p);
+
+        $('o-irr').textContent     = fmtPct(r.irr);
+        $('o-moic').textContent    = fmtMult(r.moic);
+        $('o-hold-yr').textContent = p.hold;
+        $('o-entryev').textContent = fmtMoney(r.entryEV);
+        $('o-eq').textContent      = fmtMoney(r.equityIn);
+        $('o-exiteq').textContent  = fmtMoney(r.exitEq);
+        $('o-exitlev').textContent = fmtMult(r.sched[r.sched.length - 1].leverage);
+
+        // Sources & Uses
+        $('su-table').innerHTML = `
+            <thead><tr><th>Sources</th><th class="num">Amount</th><th class="num">% Total</th></tr></thead>
+            <tbody>
+                <tr><td>New Term Debt</td><td class="num">${fmtMoney(r.debtClose)}</td><td class="num">${((r.debtClose/(r.debtClose+r.equityIn))*100).toFixed(0)}%</td></tr>
+                <tr><td>Sponsor Equity</td><td class="num">${fmtMoney(r.equityIn)}</td><td class="num">${((r.equityIn/(r.debtClose+r.equityIn))*100).toFixed(0)}%</td></tr>
+                <tr class="total"><td>Total Sources</td><td class="num">${fmtMoney(r.debtClose+r.equityIn)}</td><td class="num">100%</td></tr>
+                <tr><td>&nbsp;</td><td></td><td></td></tr>
+                <tr><td>Equity Purchase</td><td class="num">${fmtMoney(r.entryEV)}</td><td></td></tr>
+                <tr><td>Transaction Fees</td><td class="num">${fmtMoney(r.fees)}</td><td></td></tr>
+                <tr class="total"><td>Total Uses</td><td class="num">${fmtMoney(r.entryEV+r.fees)}</td><td></td></tr>
+            </tbody>`;
+
+        // Debt schedule
+        const fields = ['beg','mand','interest','ebitda','taxes','capex','dnwc','cfads','sweep','ending','leverage','coverage'];
+        const labels = ['Beginning Debt','Mandatory Amort (1%)','Cash Interest','EBITDA',
+                         '(−) Cash Taxes','(−) Capex','(−) Δ NWC','CFADS','Cash Sweep',
+                         'Ending Debt','Net Debt / EBITDA','Interest Coverage'];
+        let dsHtml = '<thead><tr><th></th>';
+        r.sched.forEach(s => dsHtml += `<th class="num">Y${s.year}</th>`);
+        dsHtml += '</tr></thead><tbody>';
+        labels.forEach((lbl, ri) => {
+            dsHtml += `<tr><td>${lbl}</td>`;
+            r.sched.forEach(s => {
+                const v = s[fields[ri]];
+                let cls = 'num';
+                if (fields[ri] === 'leverage' && v > 7) cls += ' breach';
+                if (fields[ri] === 'coverage' && v < 1.5) cls += ' breach';
+                const fmt = (fields[ri] === 'leverage' || fields[ri] === 'coverage') ? fmtMult(v) : fmtMoney(v);
+                dsHtml += `<td class="${cls}">${fmt}</td>`;
+            });
+            dsHtml += '</tr>';
+        });
+        dsHtml += '</tbody>';
+        $('ds-table').innerHTML = dsHtml;
+
+        // Returns attribution bar
+        const a = r.attrib;
+        const totalAbs = Math.abs(a.ebitda) + Math.abs(a.mult) + Math.abs(a.debt) || 1;
+        const pE = Math.abs(a.ebitda) / totalAbs * 100;
+        const pM = Math.abs(a.mult) / totalAbs * 100;
+        const pD = Math.abs(a.debt) / totalAbs * 100;
+        const segE = `<div style="background:#0B3D91;width:${pE.toFixed(1)}%">${pE >= 8 ? fmtPctSig(a.ebitda/totalAbs) : ''}</div>`;
+        const segM = `<div style="background:var(--accent);width:${pM.toFixed(1)}%">${pM >= 8 ? fmtPctSig(a.mult/totalAbs) : ''}</div>`;
+        const segD = `<div style="background:var(--sage);width:${pD.toFixed(1)}%">${pD >= 8 ? fmtPctSig(a.debt/totalAbs) : ''}</div>`;
+        $('attrib-bar').innerHTML = segE + segM + segD;
+        $('leg-ebitda').textContent = `EBITDA growth: ${fmtMoney(a.ebitda)}`;
+        $('leg-mult').textContent   = `Multiple Δ: ${fmtMoney(a.mult)}`;
+        $('leg-debt').textContent   = `Debt paydown + cash: ${fmtMoney(a.debt)}`;
+
+        // Reverse-LBO table
+        const rev = reverseLBO(p);
+        let rh = `<thead><tr><th>Target IRR</th><th class="num">Max Entry Mult</th><th class="num">Δ vs current</th></tr></thead><tbody>`;
+        rev.forEach(row => {
+            const delta = row.maxEntry - p.entry;
+            const cls = delta >= 0 ? '' : ' style="color:var(--red)"';
+            rh += `<tr><td>${(row.tgt*100).toFixed(0)}%</td><td class="num">${row.maxEntry.toFixed(2)}x</td><td class="num"${cls}>${delta >= 0 ? '+' : ''}${delta.toFixed(2)}x</td></tr>`;
+        });
+        rh += '</tbody>';
+        $('rev-table').innerHTML = rh;
+
+        // Sensitivity grid (entry × exit)
+        const entries = [p.entry-1.5, p.entry-0.75, p.entry, p.entry+0.75, p.entry+1.5];
+        const exits   = [p.exit-1.5,  p.exit-0.75,  p.exit,  p.exit+0.75,  p.exit+1.5];
+        let sh = '<thead><tr><th>Entry \\ Exit</th>';
+        exits.forEach(x => sh += `<th>${x.toFixed(1)}x</th>`);
+        sh += '</tr></thead><tbody>';
+        entries.forEach((e, ei) => {
+            sh += `<tr><th>${e.toFixed(1)}x</th>`;
+            exits.forEach((x, xi) => {
+                const rr = runLBO(Object.assign({}, p, { entry: e, exit: x }));
+                let bg = '#fff';
+                if (isFinite(rr.irr)) {
+                    if (rr.irr >= 0.25)      bg = '#a9d18e';
+                    else if (rr.irr >= 0.20) bg = '#c5e0b4';
+                    else if (rr.irr >= 0.15) bg = '#e2efda';
+                    else if (rr.irr < 0)     bg = '#fce4d6';
+                    else                     bg = '#fff2cc';
+                }
+                const isCenter = (ei === 2 && xi === 2);
+                const cls = isCenter ? ' class="center-cell"' : '';
+                const style = isCenter ? '' : ` style="background:${bg};color:var(--text)"`;
+                sh += `<td${cls}${style}>${fmtPct(rr.irr)}</td>`;
+            });
+            sh += '</tr>';
+        });
+        sh += '</tbody>';
+        $('sens-table').innerHTML = sh;
+    }
+
+    /* ---- Wire up ---- */
+    Object.values(I).forEach(el => {
+        el.addEventListener('input', render);
+        el.addEventListener('change', render);
+    });
+
+    document.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            const p = PRESETS[chip.dataset.preset];
+            if (!p) return;
+            I.entry.value = p.entry; I.exit.value = p.exit; I.lev.value = p.lev;
+            I.capex.value = p.capex; I.growth.value = p.growth; I.ebmgn.value = p.ebmgn;
+            I.kd.value = p.kd; I.tax.value = p.tax;
+            render();
+        });
+    });
+
+    render();
+})();
+
+/* ============================================================
+   SHARE URL + EMAIL MODAL — shared utility from midcycle pattern
+   ============================================================ */
+(function() {
+    function collectInputs() {
+        const data = {};
+        document.querySelectorAll('input[type="number"], input[type="text"]').forEach(el => {
+            if (el.id) data[el.id] = el.value;
+        });
+        // Save active scorecard
+        const active = document.querySelector('.chip.active');
+        if (active) data._scorecard = active.dataset.preset;
+        return data;
+    }
+    function applyInputs(data) {
+        Object.keys(data).forEach(id => {
+            if (id === '_scorecard') {
+                const c = document.querySelector(`.chip[data-preset="${data[id]}"]`);
+                if (c) {
+                    document.querySelectorAll('.chip').forEach(x => x.classList.remove('active'));
+                    c.classList.add('active');
+                }
+                return;
+            }
+            const el = document.getElementById(id);
+            if (el) el.value = data[id];
+        });
+        document.querySelectorAll('input').forEach(el => el.dispatchEvent(new Event('input', { bubbles: true })));
+    }
+    function encodeInputs(d) { try { return btoa(encodeURIComponent(JSON.stringify(d))); } catch(e) { return ''; } }
+    function decodeInputs(s) { try { return JSON.parse(decodeURIComponent(atob(s))); } catch(e) { return null; } }
+    function loadFromUrl() {
+        const enc = new URLSearchParams(window.location.search).get('s');
+        if (enc) { const d = decodeInputs(enc); if (d) applyInputs(d); }
+    }
+    function showToast(msg) {
+        const t = document.getElementById('shareToast');
+        t.textContent = msg; t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2200);
+    }
+    document.getElementById('shareBtn').addEventListener('click', () => {
+        const data = collectInputs();
+        const url = window.location.origin + window.location.pathname + '?s=' + encodeInputs(data);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(() => showToast('Link copied — paste it anywhere'));
+        } else {
+            const tmp = document.createElement('textarea');
+            tmp.value = url; document.body.appendChild(tmp); tmp.select();
+            try { document.execCommand('copy'); showToast('Link copied'); }
+            catch(e) { prompt('Copy this link:', url); }
+            document.body.removeChild(tmp);
+        }
+    });
+
+    const STORAGE_KEY = 'bp_lbo_modal_dismissed';
+    function showModal() {
+        if (sessionStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY)) return;
+        document.getElementById('emailModal').classList.add('show');
+    }
+    function dismissModal(perm) {
+        document.getElementById('emailModal').classList.remove('show');
+        if (perm) localStorage.setItem(STORAGE_KEY, '1');
+        else sessionStorage.setItem(STORAGE_KEY, '1');
+    }
+    document.getElementById('emailModalClose').addEventListener('click', () => dismissModal(true));
+    setTimeout(showModal, 60000);
+    loadFromUrl();
+})();
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</body>
+</html>
