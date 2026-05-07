@@ -20,15 +20,50 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20" />
   <style>
-    .reports-empty-state {
-      padding: 1.75rem 2rem;
-      background: var(--bg-soft);
-      border-radius: 12px;
-      border-left: 3px solid var(--accent-2);
-      margin: 1rem 0 2rem;
+    /* Report meta row beneath each featured report */
+    .report-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.6rem 1.2rem;
+      margin: 0.85rem 0 0;
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--muted);
     }
-    .reports-empty-state p { margin: 0; color: var(--ink-soft); }
-    .reports-empty-state strong { font-family: var(--serif); }
+    .report-meta strong { color: var(--ink-soft); font-weight: 600; }
+    .report-meta .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      color: var(--ink-soft);
+      font-weight: 500;
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
+    }
+    .report-meta .pill.buy {
+      background: rgba(91, 127, 107, 0.14);
+      color: #3f5d4f;
+    }
+    /* Download CTA row */
+    .report-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 1rem 0 0;
+    }
+    .report-actions .btn {
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      padding: 0.55rem 1.1rem;
+    }
+    /* Tighten the feature-card body for a report listing */
+    .reports-page .feature-card-body p { margin: 0.65rem 0 0; }
+    .reports-page .feature-card-body h3 { margin: 0.25rem 0 0; }
+    .reports-page .feature-card { margin-bottom: 2.2rem; }
   </style>
 
   <!-- Cloudflare Web Analytics -->
@@ -48,7 +83,7 @@
     </nav>
   </header>
 
-  <main class="prose wide">
+  <main class="prose wide reports-page">
     <header class="page-head">
       <p class="eyebrow">Reports</p>
       <h1>Long-form research.</h1>
@@ -59,16 +94,51 @@
       </p>
     </header>
 
-    <div class="reports-empty-state">
-      <p><strong>No reports posted yet.</strong> When the
-      <a href="writing.html">forthcoming pitches</a> are formalised,
-      the long-form PDF versions land here. First one targets Q2
-      2026 &mdash; a through-cycle long on a memory name with a
-      cyclical comparable.</p>
-      <p style="margin:1rem 0 0;">
-        <a class="btn btn-ghost" href="writing.html">See what's on deck &rarr;</a>
-      </p>
-    </div>
+    <!-- ====== FEATURED REPORT — MU INITIATION ====== -->
+    <article aria-labelledby="rep-mu-init">
+      <a class="feature-card" href="assets/reports/mu-er-initiation-2026-05.pdf" target="_blank" rel="noopener">
+        <div class="feature-card-art" aria-hidden="true">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#0b1f3a" rx="10"/>
+            <!-- HBM stack motif: three horizontal "die" bars climbing -->
+            <rect x="40"  y="138" width="120" height="14" rx="2" fill="#c9a961" opacity="0.55"/>
+            <rect x="40"  y="118" width="120" height="14" rx="2" fill="#c9a961" opacity="0.72"/>
+            <rect x="40"  y="98"  width="120" height="14" rx="2" fill="#c9a961" opacity="0.88"/>
+            <rect x="40"  y="78"  width="120" height="14" rx="2" fill="#c9a961"/>
+            <!-- Spiking line above the stack: AI demand inflection -->
+            <polyline points="30,68 60,62 90,52 120,38 160,22"
+                      stroke="#fbf7ef" stroke-width="3" fill="none"
+                      stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="160" cy="22" r="5" fill="#fbf7ef"/>
+            <!-- Subtle rule -->
+            <line x1="40" y1="166" x2="160" y2="166" stroke="#c9a961" stroke-width="1" opacity="0.4"/>
+          </svg>
+        </div>
+        <div class="feature-card-body">
+          <p class="eyebrow">Equity research initiation &middot; May 2026</p>
+          <h3 id="rep-mu-init">Micron Technology (MU) &mdash; Riding the AI Memory Supercycle</h3>
+          <p>
+            14-slide initiation deck on Micron with a Buy rating and a $895 12-month
+            price target (+34% upside). Thesis: HBM4 volume ramp into NVIDIA Vera Rubin,
+            CY26 capacity sold out under multi-year LTAs (including Micron's first-ever
+            five-year customer agreement), structural DRAM tightness, and an earnings
+            inflection that compounds through FY28E. Bull / Base / Bear with
+            probability-weighted PT of $865.
+          </p>
+          <div class="report-meta">
+            <span class="pill buy">BUY</span>
+            <span><strong>PT $895</strong> (+34%)</span>
+            <span>FY27E EPS $74.50 &middot; 12.0&times;</span>
+            <span>14 slides &middot; 449&nbsp;KB</span>
+          </div>
+          <p class="feature-card-cta" style="margin-top:1rem;">Open the PDF &rarr;</p>
+        </div>
+      </a>
+      <div class="report-actions">
+        <a class="btn btn-primary" href="assets/reports/mu-er-initiation-2026-05.pdf" download>Download PDF</a>
+        <a class="btn btn-ghost" href="mu-note-2026-05-05.html">Read the May&nbsp;5 short note &rarr;</a>
+      </div>
+    </article>
 
     <p class="muted small" style="margin-top:2.5rem;">
       Templates that produce these reports live on the
