@@ -373,6 +373,41 @@
     }
     .file-row-action button:hover { background: #9a5530; border-color: #9a5530; }
     .file-row-action button:disabled { opacity: .6; cursor: wait; }
+    .upload-zone {
+      border: 2px dashed var(--rule);
+      border-radius: 12px;
+      padding: 1.4rem 1.2rem;
+      margin: 0 0 1.2rem;
+      background: var(--bg-soft);
+      transition: border-color .15s var(--ease), background .15s var(--ease);
+    }
+    .upload-zone.dragover {
+      border-color: var(--accent);
+      background: rgba(181, 106, 63, 0.08);
+    }
+    .upload-zone-inner { text-align: center; }
+    .upload-zone-title { margin: 0 0 .35rem; font-family: var(--serif); font-size: 1.05rem; color: var(--ink); }
+    .upload-zone-hint { margin: 0; color: var(--muted); }
+    .upload-zone .link-btn {
+      background: none; border: none; color: var(--accent); padding: 0;
+      font: inherit; cursor: pointer; text-decoration: underline; text-decoration-thickness: 1px;
+    }
+    .upload-zone .link-btn:hover { color: var(--ink); }
+    .upload-progress { margin-top: .85rem; text-align: left; }
+    .upload-progress.hidden { display: none; }
+    .upload-progress .row {
+      display: flex; align-items: center; gap: .6rem;
+      padding: .5rem .75rem; background: var(--bg);
+      border: 1px solid var(--rule); border-radius: 8px;
+      margin-bottom: .35rem; font-size: .85rem;
+    }
+    .upload-progress .row .name { flex: 1; color: var(--ink-soft); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .upload-progress .row .bar { width: 100px; height: 4px; background: var(--rule); border-radius: 999px; overflow: hidden; }
+    .upload-progress .row .fill { height: 100%; background: var(--accent); width: 0%; transition: width .15s var(--ease); }
+    .upload-progress .row .status { font-size: .75rem; color: var(--muted); min-width: 4.5rem; text-align: right; }
+    .upload-progress .row.done .status { color: var(--accent-2); }
+    .upload-progress .row.err .status { color: #b03a2e; }
+    .upload-progress .row.err .fill { background: #b03a2e; }
     .file-list-empty {
       padding: 1.5rem;
       text-align: center;
@@ -461,6 +496,14 @@
           <p>Files in your <code>bpleon-files</code> R2 bucket &mdash; tap any to download from any device. Upload new files via the Cloudflare dashboard (R2 &rarr; bpleon-files &rarr; Upload).</p>
         </div>
 
+        <div class="upload-zone" id="upload-zone">
+          <input type="file" id="upload-input" multiple style="display:none" />
+          <div class="upload-zone-inner">
+            <p class="upload-zone-title">Drop files here, or <button type="button" id="upload-browse" class="link-btn">browse</button></p>
+            <p class="muted small upload-zone-hint">Anything &mdash; .pdf, .xlsx, .zip, .py, etc. Files land in your <code>bpleon-files</code> R2 bucket and become accessible from any device that's signed into admin. Max 100&nbsp;MB per file.</p>
+            <div id="upload-progress" class="upload-progress hidden"></div>
+          </div>
+        </div>
         <div id="file-list-status" class="muted small file-list-status">Loading files&hellip;</div>
         <div id="file-list" class="file-list"></div>
       </div>
@@ -876,8 +919,9 @@
               '<span class="file-row-name">' + escapeHtml(f.name) + '</span>' +
               '<span class="file-row-meta">' + escapeHtml(fmtSize(f.size)) + ' &middot; uploaded ' + escapeHtml(fmtDate(f.uploaded)) + '</span>' +
             '</div>' +
-            '<div class="file-row-action">' +
+            '<div class="file-row-action" style="display:flex;gap:.4rem;">' +
               '<button type="button" data-name="' + escapeHtml(f.name) + '">Download</button>' +
+              '<button type="button" data-delete="' + escapeHtml(f.name) + '" style="background:transparent;border:1px solid var(--rule);color:var(--muted);">Delete</button>' +
             '</div>' +
           '</div>';
         }).join('');
@@ -950,6 +994,149 @@
   } else {
     showLogin();
   }
+
+  // --- File upload (R2 via Worker) ---------------------------------------
+  var uploadZone   = document.getElementById('upload-zone');
+  var uploadInput  = document.getElementById('upload-input');
+  var uploadBrowse = document.getElementById('upload-browse');
+  var uploadProg   = document.getElementById('upload-progress');
+
+  function uploadOne(file) {
+    return new Promise(function (resolve) {
+      var row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = '<span class="name"></span>' +
+                      '<span class="bar"><span class="fill"></span></span>' +
+                      '<span class="status">queued</span>';
+      row.querySelector('.name').textContent = file.name + ' (' + fmtSize(file.size) + ')';
+      uploadProg.appendChild(row);
+      var fill = row.querySelector('.fill');
+      var statusEl = row.querySelector('.status');
+
+      var xhr = new XMLHttpRequest();
+      var url = WORKER_URL + '?files=upload&name=' + encodeURIComponent(file.name);
+      xhr.open('PUT', url);
+      xhr.setRequestHeader('Authorization', 'Bearer ' + getSecret());
+      xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+      xhr.upload.onprogress = function (e) {
+        if (!e.lengthComputable) return;
+        var pct = Math.round((e.loaded / e.total) * 100);
+        fill.style.width = pct + '%';
+        statusEl.textContent = pct + '%';
+      };
+      xhr.onload = function () {
+        if (xhr.status === 401) {
+          row.classList.add('err');
+          statusEl.textContent = 'auth';
+          toast('Wrong secret. Logged out.', 'error');
+          clearSecret();
+          showLogin();
+          resolve(false);
+          return;
+        }
+        if (xhr.status >= 200 && xhr.status < 300) {
+          row.classList.add('done');
+          fill.style.width = '100%';
+          statusEl.textContent = 'done';
+          resolve(true);
+        } else {
+          row.classList.add('err');
+          var msg = 'failed';
+          try { msg = (JSON.parse(xhr.responseText).error || msg); } catch (e) {}
+          statusEl.textContent = msg.slice(0, 12);
+          resolve(false);
+        }
+      };
+      xhr.onerror = function () {
+        row.classList.add('err');
+        statusEl.textContent = 'network';
+        resolve(false);
+      };
+      xhr.send(file);
+      statusEl.textContent = 'uploading';
+    });
+  }
+
+  function uploadFiles(fileList) {
+    if (!fileList || !fileList.length) return;
+    uploadProg.classList.remove('hidden');
+    var queue = Array.from(fileList);
+    var anyOk = false;
+    function next() {
+      if (!queue.length) {
+        if (anyOk) {
+          // Refresh the file listing
+          filesLoaded = false;
+          loadFiles();
+          toast('Upload complete.', 'success');
+        }
+        return;
+      }
+      var f = queue.shift();
+      uploadOne(f).then(function (ok) {
+        if (ok) anyOk = true;
+        next();
+      });
+    }
+    next();
+  }
+
+  uploadBrowse.addEventListener('click', function () { uploadInput.click(); });
+  uploadInput.addEventListener('change', function (e) {
+    uploadFiles(e.target.files);
+    uploadInput.value = '';
+  });
+
+  ['dragenter', 'dragover'].forEach(function (ev) {
+    uploadZone.addEventListener(ev, function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      uploadZone.classList.add('dragover');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (ev) {
+    uploadZone.addEventListener(ev, function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      uploadZone.classList.remove('dragover');
+    });
+  });
+  uploadZone.addEventListener('drop', function (e) {
+    if (e.dataTransfer && e.dataTransfer.files) uploadFiles(e.dataTransfer.files);
+  });
+
+  // --- File deletion (in the existing file row Download button area) -----
+  // Add a delete button next to each download button at render time. Hook
+  // into clicks on the file list using event delegation.
+  fileListEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-delete]');
+    if (!btn) return;
+    var name = btn.getAttribute('data-delete');
+    if (!confirm('Delete ' + name + ' from R2? This cannot be undone.')) return;
+    btn.disabled = true;
+    btn.textContent = 'Deleting…';
+    fetch(WORKER_URL + '?files=delete&name=' + encodeURIComponent(name), {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + getSecret() },
+    }).then(function (r) {
+      if (r.status === 401) throw new Error('unauthorized');
+      if (!r.ok) throw new Error('delete failed (' + r.status + ')');
+      toast('Deleted ' + name, 'success');
+      filesLoaded = false;
+      loadFiles();
+    }).catch(function (e) {
+      btn.disabled = false;
+      btn.textContent = 'Delete';
+      if (e && e.message === 'unauthorized') {
+        toast('Wrong secret. Logged out.', 'error');
+        clearSecret();
+        showLogin();
+        return;
+      }
+      toast('Delete failed: ' + e.message, 'error');
+    });
+  });
+
   // --- Reports pane (auto-discovered from manifest) ----------------------
   var reportsLoaded = false;
   var reportsListEl   = document.getElementById('reports-list');
