@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=22" />
+  <link rel="stylesheet" href="style.css?v=23" />
 
   <!-- Page-scoped styles (gate form, feature grid, FAQ, requirements, steps) -->
   <style>
@@ -565,7 +565,7 @@
     </div>
   </footer>
 
-  <script src="script.js?v=22" defer></script>
+  <script src="script.js?v=23" defer></script>
 
   <!-- Email-gate handler — Formspree AJAX submit, persist with localStorage -->
   <script>
@@ -578,6 +578,19 @@
       if (!form) return;
 
       var STORAGE_KEY = 'bpleon-dcf-template-unlocked';
+
+      // Shared email memory across all gates on this device. Pre-fill the
+      // email input from any earlier gate submission so the visitor doesn't
+      // have to retype it; submit still hits Formspree so per-asset analytics stay.
+      var SHARED_EMAIL_KEY = 'bpleon-gate-email';
+      try {
+        var savedEmail = localStorage.getItem(SHARED_EMAIL_KEY);
+        var emailInput = document.getElementById('gate-email');
+        if (savedEmail && emailInput && !emailInput.value) {
+          emailInput.value = savedEmail;
+          if (submit) submit.textContent = 'Continue as ' + savedEmail + ' \u2192';
+        }
+      } catch (e) { /* localStorage unavailable */ }
 
       function showThanks() {
         form.style.display = 'none';
@@ -618,6 +631,7 @@
           // but log a console warning for the site owner.
           console.warn('[gate] Formspree endpoint not configured. Showing download without sending.');
           try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+            try { localStorage.setItem(SHARED_EMAIL_KEY, email); } catch (e) {}
           showThanks();
           return;
         }
