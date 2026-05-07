@@ -1,0 +1,10 @@
+{
+  "name": "bpleone-site",
+  "private": true,
+  "description": "Static site for bpleon.com (Cloudflare Pages). No build step for the site itself; npm scripts only regenerate the admin manifests.",
+  "scripts": {
+    "manifests": "node tools/build-reports-manifest.js && node tools/build-site-index.js",
+    "manifest:reports": "node tools/build-reports-manifest.js",
+    "manifest:site": "node tools/build-site-index.js"
+  }
+}

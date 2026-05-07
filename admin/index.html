@@ -428,6 +428,7 @@
         <button type="button" class="admin-tab active" data-pane="watchlist">Watchlist</button>
         <button type="button" class="admin-tab" data-pane="files">Files</button>
         <button type="button" class="admin-tab" data-pane="reports">Reports</button>
+        <button type="button" class="admin-tab" data-pane="site">Site</button>
         <a class="admin-tab admin-tab-link" href="/dcf.html">DCF Calculator &rarr;</a>
       </nav>
 
@@ -473,6 +474,21 @@
         </div>
         <div id="reports-list-status" class="muted small file-list-status">Loading reports&hellip;</div>
         <div id="reports-list" class="file-list"></div>
+      </div>
+
+      <!-- Site pane (every deployed file, auto-discovered from assets/site-index.json) -->
+      <div id="pane-site" class="admin-pane hidden">
+        <div class="admin-page-head">
+          <p class="eyebrow">Site</p>
+          <h1>Every file on bpleon.com.</h1>
+          <p>Whole-site index pulled from <code>assets/site-index.json</code>. Pages, reports, toolkit, brand, code, everything. Search and filter, click to open or download. To refresh after adding/removing files: <code>node tools/build-site-index.js</code>.</p>
+        </div>
+        <div class="site-controls" style="display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:0 0 1rem;">
+          <input id="site-search" type="search" placeholder="Search filename or path&hellip;" autocomplete="off" style="flex:1;min-width:14rem;padding:.55rem .85rem;border:1px solid var(--rule);border-radius:8px;background:var(--bg);font:400 .95rem var(--sans);color:var(--ink);outline:none;" />
+          <div id="site-cat-filters" style="display:flex;flex-wrap:wrap;gap:.3rem;"></div>
+        </div>
+        <div id="site-list-status" class="muted small file-list-status">Loading site index&hellip;</div>
+        <div id="site-list" class="file-list"></div>
       </div>
 
     </div>
@@ -810,6 +826,7 @@
     });
     if (name === 'files' && !filesLoaded) loadFiles();
     if (name === 'reports' && !reportsLoaded) loadReports();
+    if (name === 'site' && !siteLoaded) loadSite();
   }
   document.querySelectorAll('.admin-tab[data-pane]').forEach(function (t) {
     t.addEventListener('click', function () {
@@ -984,6 +1001,102 @@
         reportsStatusEl.textContent = '';
         reportsListEl.innerHTML = '<div class="file-list-empty">' + escapeHtml(e && e.message) + '</div>';
       });
+  }
+
+
+  // --- Site pane (whole-site index from assets/site-index.json) ----------
+  var siteLoaded = false;
+  var siteIndex = null;
+  var siteListEl   = document.getElementById('site-list');
+  var siteStatusEl = document.getElementById('site-list-status');
+  var siteSearchEl = document.getElementById('site-search');
+  var siteCatFiltersEl = document.getElementById('site-cat-filters');
+  var siteActiveCat = 'all';
+
+  var CAT_LABELS = {
+    all: 'All', pages: 'Pages', reports: 'Reports', toolkit: 'Toolkit',
+    brand: 'Brand', 'site-code': 'Code', 'site-meta': 'Meta', admin: 'Admin', other: 'Other'
+  };
+
+  function loadSite() {
+    siteStatusEl.textContent = 'Loading site index\u2026';
+    siteListEl.innerHTML = '';
+    fetch('/assets/site-index.json', { cache: 'no-cache' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('site index fetch failed (' + r.status + ')');
+        return r.json();
+      })
+      .then(function (data) {
+        siteLoaded = true;
+        siteIndex = data;
+        renderSiteFilters();
+        renderSiteList();
+      })
+      .catch(function (e) {
+        siteStatusEl.textContent = '';
+        siteListEl.innerHTML = '<div class="file-list-empty">' + escapeHtml(e && e.message) + '<br><br>Run <code>node tools/build-site-index.js</code> from the repo root to generate it.</div>';
+      });
+  }
+
+  function renderSiteFilters() {
+    if (!siteIndex) return;
+    var counts = siteIndex.countsByCategory || {};
+    var cats = ['all'].concat(Object.keys(counts).sort());
+    siteCatFiltersEl.innerHTML = cats.map(function (c) {
+      var label = CAT_LABELS[c] || c;
+      var n = c === 'all' ? siteIndex.fileCount : (counts[c] || 0);
+      var active = (c === siteActiveCat);
+      var bg = active ? 'var(--accent)' : 'var(--bg-soft)';
+      var fg = active ? '#fff' : 'var(--ink-soft)';
+      return '<button type="button" data-cat="' + escapeHtml(c) + '" class="site-cat" style="border:1px solid var(--rule);background:' + bg + ';color:' + fg + ';padding:.32rem .7rem;border-radius:999px;font:500 .8rem var(--sans);cursor:pointer;">' + escapeHtml(label) + ' \u00b7 ' + n + '</button>';
+    }).join('');
+  }
+
+  siteCatFiltersEl.addEventListener('click', function (e) {
+    var btn = e.target.closest('button[data-cat]');
+    if (!btn) return;
+    siteActiveCat = btn.getAttribute('data-cat');
+    renderSiteFilters();
+    renderSiteList();
+  });
+
+  siteSearchEl.addEventListener('input', function () { renderSiteList(); });
+
+  function renderSiteList() {
+    if (!siteIndex) return;
+    var q = (siteSearchEl.value || '').trim().toLowerCase();
+    var files = siteIndex.files.filter(function (f) {
+      if (siteActiveCat !== 'all' && f.category !== siteActiveCat) return false;
+      if (!q) return true;
+      return f.path.toLowerCase().indexOf(q) !== -1 || f.name.toLowerCase().indexOf(q) !== -1;
+    });
+
+    if (!files.length) {
+      siteStatusEl.textContent = '';
+      siteListEl.innerHTML = '<div class="file-list-empty">No files match.</div>';
+      return;
+    }
+
+    siteStatusEl.textContent = files.length + ' of ' + siteIndex.fileCount + ' file' + (siteIndex.fileCount === 1 ? '' : 's') + ' shown \u00b7 indexed ' + new Date(siteIndex.generated).toLocaleString();
+
+    siteListEl.innerHTML = files.map(function (f) {
+      var isHtml = f.ext === '.html';
+      var openLabel = isHtml ? 'Open' : 'Download';
+      var openAttrs = isHtml
+        ? 'target="_blank" rel="noopener"'
+        : 'download';
+      var url = '/' + f.path;
+      var catBadge = '<span class="status-pill" style="background:var(--bg-soft);color:var(--ink-soft);font-size:.68rem;padding:.08rem .45rem;border-radius:999px;margin-right:.4rem;text-transform:uppercase;letter-spacing:.06em;">' + escapeHtml(CAT_LABELS[f.category] || f.category) + '</span>';
+      return '<div class="file-row">' +
+        '<div class="file-row-info">' +
+          '<span class="file-row-name">' + catBadge + escapeHtml(f.name) + '</span>' +
+          '<span class="file-row-meta">' + escapeHtml(f.path) + ' \u00b7 ' + escapeHtml(f.sizeText) + ' \u00b7 ' + escapeHtml(new Date(f.modified).toLocaleDateString()) + '</span>' +
+        '</div>' +
+        '<div class="file-row-action">' +
+          '<a class="btn" href="' + escapeHtml(url) + '" ' + openAttrs + ' style="text-decoration:none;display:inline-block;padding:.4rem .8rem;font-size:.82rem;">' + openLabel + '</a>' +
+        '</div>' +
+      '</div>';
+    }).join('');
   }
 
 
