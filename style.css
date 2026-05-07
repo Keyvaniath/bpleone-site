@@ -58,7 +58,11 @@ body {
   font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* Hide the blinking text caret that appears when clicking on prose. */
+  caret-color: transparent;
 }
+/* Re-enable the caret only inside actual form inputs. */
+input, textarea, [contenteditable="true"] { caret-color: auto; }
 img, svg { max-width: 100%; height: auto; display: block; }
 a {
   color: var(--ink);
