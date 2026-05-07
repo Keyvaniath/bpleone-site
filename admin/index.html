@@ -427,6 +427,7 @@
       <nav class="admin-tabs" aria-label="Admin sections">
         <button type="button" class="admin-tab active" data-pane="watchlist">Watchlist</button>
         <button type="button" class="admin-tab" data-pane="files">Files</button>
+        <button type="button" class="admin-tab" data-pane="reports">Reports</button>
         <a class="admin-tab admin-tab-link" href="/dcf.html">DCF Calculator &rarr;</a>
       </nav>
 
@@ -461,6 +462,17 @@
 
         <div id="file-list-status" class="muted small file-list-status">Loading files&hellip;</div>
         <div id="file-list" class="file-list"></div>
+      </div>
+
+      <!-- Reports pane (auto-discovered from assets/reports/manifest.json) -->
+      <div id="pane-reports" class="admin-pane hidden">
+        <div class="admin-page-head">
+          <p class="eyebrow">Reports</p>
+          <h1>Research vault.</h1>
+          <p>Every long-form report and pitchbook in <code>assets/reports/</code>, auto-listed from <code>manifest.json</code>. Both the public preview and the gated full deck are downloadable here regardless of the email gate. To add a new report, drop the PDF in <code>assets/reports/</code> and run <code>node tools/build-reports-manifest.js</code>.</p>
+        </div>
+        <div id="reports-list-status" class="muted small file-list-status">Loading reports&hellip;</div>
+        <div id="reports-list" class="file-list"></div>
       </div>
 
     </div>
@@ -797,6 +809,7 @@
       p.classList.toggle('hidden', p.id !== 'pane-' + name);
     });
     if (name === 'files' && !filesLoaded) loadFiles();
+    if (name === 'reports' && !reportsLoaded) loadReports();
   }
   document.querySelectorAll('.admin-tab[data-pane]').forEach(function (t) {
     t.addEventListener('click', function () {
@@ -920,6 +933,60 @@
   } else {
     showLogin();
   }
+  // --- Reports pane (auto-discovered from manifest) ----------------------
+  var reportsLoaded = false;
+  var reportsListEl   = document.getElementById('reports-list');
+  var reportsStatusEl = document.getElementById('reports-list-status');
+
+  function loadReports() {
+    reportsStatusEl.textContent = 'Loading reports\u2026';
+    reportsListEl.innerHTML = '';
+    fetch('/assets/reports/manifest.json', { cache: 'no-cache' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('manifest fetch failed (' + r.status + ')');
+        return r.json();
+      })
+      .then(function (data) {
+        reportsLoaded = true;
+        var reports = (data && data.reports) || [];
+        if (!reports.length) {
+          reportsStatusEl.textContent = '';
+          reportsListEl.innerHTML = '<div class="file-list-empty">No reports yet. Drop a PDF in <code>assets/reports/</code> and run <code>node tools/build-reports-manifest.js</code>.</div>';
+          return;
+        }
+        var totalFiles = reports.reduce(function (n, r) { return n + (r.files || []).length; }, 0);
+        reportsStatusEl.textContent = reports.length + ' report' + (reports.length === 1 ? '' : 's') + ' \u00b7 ' + totalFiles + ' file' + (totalFiles === 1 ? '' : 's') + '.';
+        reportsListEl.innerHTML = reports.map(function (rep) {
+          var meta = [];
+          if (rep.published) meta.push('published ' + escapeHtml(rep.published));
+          if (rep.type) meta.push(escapeHtml(rep.type));
+          var title = '<div style="margin:1rem 0 .35rem;"><div style="font-family:var(--serif);font-weight:500;font-size:1.05rem;color:var(--ink);">' + escapeHtml(rep.title || rep.id) + '</div>' +
+            (rep.subtitle ? '<div class="muted small" style="margin-top:.15rem;">' + escapeHtml(rep.subtitle) + '</div>' : '') +
+            '<div class="muted small" style="margin-top:.25rem;">' + meta.join(' \u00b7 ') + (rep.page ? ' \u00b7 <a href="' + escapeHtml(rep.page) + '">live page \u2192</a>' : '') + '</div></div>';
+          var rows = (rep.files || []).map(function (f) {
+            var gateBadge = f.gated
+              ? '<span class="status-pill" style="background:#0b1f3a;color:#c9a961;font-size:.72rem;padding:.1rem .5rem;border-radius:999px;margin-left:.4rem;">GATED</span>'
+              : '<span class="status-pill ok" style="font-size:.72rem;padding:.1rem .5rem;border-radius:999px;margin-left:.4rem;">PUBLIC</span>';
+            return '<div class="file-row">' +
+              '<div class="file-row-info">' +
+                '<span class="file-row-name">' + escapeHtml(f.label || f.path.split('/').pop()) + gateBadge + '</span>' +
+                '<span class="file-row-meta">' + escapeHtml(fmtSize(f.size)) + ' \u00b7 ' + escapeHtml(f.path) + '</span>' +
+              '</div>' +
+              '<div class="file-row-action">' +
+                '<a class="btn" href="/' + escapeHtml(f.path) + '" download style="text-decoration:none;display:inline-block;padding:.45rem .9rem;font-size:.85rem;">Download</a>' +
+              '</div>' +
+            '</div>';
+          }).join('');
+          return title + rows;
+        }).join('<hr style="border:none;border-top:1px solid var(--rule);margin:1.5rem 0 0;">');
+      })
+      .catch(function (e) {
+        reportsStatusEl.textContent = '';
+        reportsListEl.innerHTML = '<div class="file-list-empty">' + escapeHtml(e && e.message) + '</div>';
+      });
+  }
+
+
 })();
 </script>
 </body>
