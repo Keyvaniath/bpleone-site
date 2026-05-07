@@ -1,0 +1,34 @@
+# Belt-and-suspenders: regenerate manifests on every push to main and
+# fail the workflow if they would have changed (i.e. the contributor
+# forgot to enable the local pre-commit hook). Runs in ~10 seconds.
+#
+# This intentionally does NOT auto-commit back. The Cloudflare Pages
+# build command (npm run manifests) is the runtime source of truth;
+# this job just nags you in CI.
+
+name: Verify manifests are fresh
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-manifests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Regenerate manifests
+        run: npm run manifests
+      - name: Fail if any manifest changed
+        run: |
+          if ! git diff --quiet assets/reports/manifest.json assets/site-index.json; then
+            echo "::error::Manifests are stale. Run 'npm run manifests' locally and commit the result, or activate the pre-commit hook with: git config core.hooksPath .githooks"
+            git diff assets/reports/manifest.json assets/site-index.json
+            exit 1
+          fi
+          echo "Manifests are fresh."

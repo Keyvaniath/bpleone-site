@@ -1,0 +1,31 @@
+#!/bin/sh
+# bpleone-site pre-commit hook — auto-regenerate admin manifests
+#
+# Runs `npm run manifests` and re-stages the resulting JSON files
+# so every commit ships with fresh manifests. Skip with `git commit --no-verify`.
+#
+# Activate once per clone with:
+#   git config core.hooksPath .githooks
+
+set -e
+
+# Skip if we have no node (e.g. shell-only environment)
+if ! command -v node >/dev/null 2>&1; then
+  echo "[pre-commit] node not found — skipping manifest rebuild"
+  exit 0
+fi
+
+# Skip if we have no tools/ scripts (e.g. fresh checkout missing them)
+if [ ! -f tools/build-site-index.js ] || [ ! -f tools/build-reports-manifest.js ]; then
+  echo "[pre-commit] manifest scripts missing — skipping"
+  exit 0
+fi
+
+echo "[pre-commit] regenerating manifests..."
+node tools/build-reports-manifest.js >/dev/null
+node tools/build-site-index.js >/dev/null
+
+# Re-stage the regenerated files if they changed
+git add assets/reports/manifest.json assets/site-index.json 2>/dev/null || true
+
+echo "[pre-commit] manifests up to date"
