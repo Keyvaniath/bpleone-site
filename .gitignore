@@ -26,3 +26,10 @@ worker-source.js
 # Drafts (markdown sources, scheduling notes) — local only.
 drafts/
 _goldman_prep/
+
+# Toolkit preview JPGs (auto-generated for QA, not for deployment)
+assets/toolkit/*_preview-*.jpg
+assets/toolkit/*.~lock.*
+
+# Editor lock files
+.~lock.*
