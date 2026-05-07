@@ -20,50 +20,46 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=20" />
   <style>
-    /* Report meta row beneath each featured report */
-    .report-meta {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 0.6rem 1.2rem;
-      margin: 0.85rem 0 0;
-      font-family: var(--sans);
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
+    .report-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem 1.2rem; margin: 0.85rem 0 0; font-family: var(--sans); font-size: 0.82rem; color: var(--muted); }
     .report-meta strong { color: var(--ink-soft); font-weight: 600; }
-    .report-meta .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.18rem 0.55rem;
-      border-radius: 999px;
-      background: var(--bg-soft);
-      color: var(--ink-soft);
-      font-weight: 500;
-      font-size: 0.78rem;
-      letter-spacing: 0.02em;
-    }
-    .report-meta .pill.buy {
-      background: rgba(91, 127, 107, 0.14);
-      color: #3f5d4f;
-    }
-    /* Download CTA row */
-    .report-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      margin: 1rem 0 0;
-    }
-    .report-actions .btn {
-      font-family: var(--sans);
-      font-size: 0.92rem;
-      padding: 0.55rem 1.1rem;
-    }
-    /* Tighten the feature-card body for a report listing */
+    .report-meta .pill { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.18rem 0.55rem; border-radius: 999px; background: var(--bg-soft); color: var(--ink-soft); font-weight: 500; font-size: 0.78rem; letter-spacing: 0.02em; }
+    .report-meta .pill.buy { background: rgba(91, 127, 107, 0.14); color: #3f5d4f; }
+    .report-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1rem 0 0; }
+    .report-actions .btn { font-family: var(--sans); font-size: 0.92rem; padding: 0.55rem 1.1rem; }
     .reports-page .feature-card-body p { margin: 0.65rem 0 0; }
     .reports-page .feature-card-body h3 { margin: 0.25rem 0 0; }
-    .reports-page .feature-card { margin-bottom: 2.2rem; }
+    .reports-page .feature-card { margin-bottom: 1.5rem; }
+    .gate-card { padding: 1.85rem 2rem; background: #0b1f3a; border-radius: 14px; margin: 0 0 2rem; box-shadow: 0 10px 30px rgba(11, 31, 58, 0.18); }
+    .gate-card .eyebrow { color: #c9a961; letter-spacing: .14em; font-weight: 600; font-size: .78rem; margin: 0 0 .35rem; text-transform: uppercase; }
+    .gate-card h2 { color: #fbf7ef; margin: 0 0 .35em; font-family: var(--serif); font-size: 1.45rem; line-height: 1.25; }
+    .gate-card p { color: rgba(251,247,239,0.86); margin: 0 0 1rem; font-size: .98rem; line-height: 1.55; }
+    .gate-form { display: grid; grid-template-columns: 1fr auto; gap: .6rem; margin: 1rem 0 .25rem; }
+    .gate-form input[type="email"] { padding: .75rem 1rem; border-radius: 999px; border: 1px solid rgba(255,255,255,0.32); background: rgba(255,255,255,0.95); color: var(--ink); font: 500 1rem var(--sans); outline: none; }
+    .gate-form input[type="email"]:focus { border-color: #c9a961; box-shadow: 0 0 0 3px rgba(201,169,97,0.30); }
+    .gate-form button { background: #c9a961; color: #0b1f3a; border: 1px solid #c9a961; cursor: pointer; font-family: var(--sans); font-weight: 600; padding: .75rem 1.3rem; border-radius: 999px; }
+    .gate-form button:hover { background: #d8b974; border-color: #d8b974; }
+    .gate-fineprint { font-size: .8rem; color: rgba(251,247,239,0.72); margin: .35rem 0 0; }
+    .gate-fineprint a { color: #c9a961; text-decoration-color: rgba(201,169,97,0.5); }
+    .gate-fineprint a:hover { color: #fbf7ef; text-decoration-color: #fbf7ef; }
+    .gate-thanks { display: none; }
+    .gate-thanks.show { display: block; }
+    .gate-thanks .download-row { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; margin-top: .5rem; }
+    .gate-thanks .download-row .btn { background: #c9a961; color: #0b1f3a; border-color: #c9a961; font-weight: 600; }
+    .gate-thanks .download-row .btn:hover { background: #d8b974; border-color: #d8b974; }
+    .gate-thanks .meta { color: rgba(251,247,239,0.72); font-size: .85rem; margin: .5rem 0 0; }
+    .gate-error { display: none; margin-top: .6rem; padding: .6rem .85rem; background: rgba(255,255,255,0.12); border-radius: 8px; color: #fbf7ef; font-size: .9rem; }
+    .gate-error.show { display: block; }
+    .gate-consent { display: flex; gap: .55rem; align-items: flex-start; margin: .35rem 0 .15rem; color: rgba(251,247,239,0.92); font-size: .88rem; line-height: 1.45; cursor: pointer; user-select: none; }
+    .gate-consent input[type="checkbox"] { margin-top: .25rem; }
+    .slide-toc { margin: 1rem 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: .35rem .9rem; font-family: var(--sans); font-size: .86rem; }
+    .slide-toc li { color: rgba(251,247,239,0.78); padding: .12rem 0; }
+    .slide-toc li.locked::before { content: "\01F512  "; opacity: .8; }
+    .slide-toc li.open::before { content: "\2713  "; color: #c9a961; opacity: .9; }
+    .slide-toc li.open { color: rgba(251,247,239,0.95); }
+    @media (max-width: 640px) {
+      .gate-form { grid-template-columns: 1fr; }
+      .slide-toc { grid-template-columns: 1fr; }
+    }
   </style>
 
   <!-- Cloudflare Web Analytics -->
@@ -94,23 +90,18 @@
       </p>
     </header>
 
-    <!-- ====== FEATURED REPORT — MU INITIATION ====== -->
+    <!-- ====== FEATURED REPORT - MU INITIATION ====== -->
     <article aria-labelledby="rep-mu-init">
-      <a class="feature-card" href="assets/reports/mu-er-initiation-2026-05.pdf" target="_blank" rel="noopener">
+      <a class="feature-card" href="assets/reports/mu-er-initiation-2026-05-preview.pdf" target="_blank" rel="noopener">
         <div class="feature-card-art" aria-hidden="true">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
             <rect width="200" height="200" fill="#0b1f3a" rx="10"/>
-            <!-- HBM stack motif: three horizontal "die" bars climbing -->
-            <rect x="40"  y="138" width="120" height="14" rx="2" fill="#c9a961" opacity="0.55"/>
-            <rect x="40"  y="118" width="120" height="14" rx="2" fill="#c9a961" opacity="0.72"/>
-            <rect x="40"  y="98"  width="120" height="14" rx="2" fill="#c9a961" opacity="0.88"/>
-            <rect x="40"  y="78"  width="120" height="14" rx="2" fill="#c9a961"/>
-            <!-- Spiking line above the stack: AI demand inflection -->
-            <polyline points="30,68 60,62 90,52 120,38 160,22"
-                      stroke="#fbf7ef" stroke-width="3" fill="none"
-                      stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="40" y="138" width="120" height="14" rx="2" fill="#c9a961" opacity="0.55"/>
+            <rect x="40" y="118" width="120" height="14" rx="2" fill="#c9a961" opacity="0.72"/>
+            <rect x="40" y="98"  width="120" height="14" rx="2" fill="#c9a961" opacity="0.88"/>
+            <rect x="40" y="78"  width="120" height="14" rx="2" fill="#c9a961"/>
+            <polyline points="30,68 60,62 90,52 120,38 160,22" stroke="#fbf7ef" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="160" cy="22" r="5" fill="#fbf7ef"/>
-            <!-- Subtle rule -->
             <line x1="40" y1="166" x2="160" y2="166" stroke="#c9a961" stroke-width="1" opacity="0.4"/>
           </svg>
         </div>
@@ -118,7 +109,7 @@
           <p class="eyebrow">Equity research initiation &middot; May 2026</p>
           <h3 id="rep-mu-init">Micron Technology (MU) &mdash; Riding the AI Memory Supercycle</h3>
           <p>
-            14-slide initiation deck on Micron with a Buy rating and a $895 12-month
+            14-slide initiation on Micron with a Buy rating and a $895 12-month
             price target (+34% upside). Thesis: HBM4 volume ramp into NVIDIA Vera Rubin,
             CY26 capacity sold out under multi-year LTAs (including Micron's first-ever
             five-year customer agreement), structural DRAM tightness, and an earnings
@@ -129,15 +120,65 @@
             <span class="pill buy">BUY</span>
             <span><strong>PT $895</strong> (+34%)</span>
             <span>FY27E EPS $74.50 &middot; 12.0&times;</span>
-            <span>14 slides &middot; 449&nbsp;KB</span>
+            <span>14 slides &middot; 5 free, 9 gated</span>
           </div>
-          <p class="feature-card-cta" style="margin-top:1rem;">Open the PDF &rarr;</p>
+          <p class="feature-card-cta" style="margin-top:1rem;">Open the 5-slide preview &rarr;</p>
         </div>
       </a>
-      <div class="report-actions">
-        <a class="btn btn-primary" href="assets/reports/mu-er-initiation-2026-05.pdf" download>Download PDF</a>
+
+      <div class="report-actions" style="margin-bottom:1.5rem;">
+        <a class="btn btn-primary" href="assets/reports/mu-er-initiation-2026-05-preview.pdf" target="_blank" rel="noopener">Open preview (5 slides, 328&nbsp;KB)</a>
         <a class="btn btn-ghost" href="mu-note-2026-05-05.html">Read the May&nbsp;5 short note &rarr;</a>
       </div>
+
+      <!-- ====== EMAIL GATE - UNLOCK FULL 14-SLIDE DECK ====== -->
+      <section class="gate-card" aria-labelledby="gate-mu-h">
+        <p class="eyebrow">Full report</p>
+        <h2 id="gate-mu-h">Get the remaining 9 slides &mdash; valuation, scenarios, catalysts &amp; risks.</h2>
+        <p>The preview covers the thesis, company, and AI-memory backdrop. The locked half is where the work lives: competitive positioning, the FQ2&apos;26 print and forward financial model, the football-field valuation bridging to $895, Bull/Base/Bear scenarios, the catalyst timeline, and the risk grid. Drop your email and the full PDF unlocks below. No follow-up unless you opt in.</p>
+
+        <form class="gate-form" id="gate-form-mu" action="https://formspree.io/f/xdayqzkj" method="POST" novalidate>
+          <input type="email" name="email" id="gate-email-mu" required autocomplete="email" placeholder="you@firm.com" aria-label="Email address" />
+          <button type="submit" id="gate-submit-mu">Unlock full report &rarr;</button>
+          <input type="hidden" name="tier" value="mu-pitchbook" />
+          <input type="hidden" name="_subject" value="MU pitchbook unlock request" />
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+        </form>
+        <label class="gate-consent">
+          <input type="checkbox" name="subscribe" value="yes" form="gate-form-mu" id="gate-subscribe-mu" />
+          <span>Also send me Brandon's newsletter when there's a new report (occasional, no spam).</span>
+        </label>
+        <p class="gate-fineprint">Just the file by default. <a href="disclaimer.html">Disclaimer</a>.</p>
+        <div class="gate-error" id="gate-error-mu" role="alert"></div>
+
+        <div class="gate-thanks" id="gate-thanks-mu" aria-live="polite">
+          <p style="margin:0 0 .25rem;font-family:var(--serif);font-size:1.15rem;color:#fbf7ef;">Thanks &mdash; here's the full deck.</p>
+          <div class="download-row">
+            <a class="btn" id="gate-download-mu" href="assets/reports/mu-er-initiation-2026-05-full-r4f7x9k2.pdf" download>Download full report (14 slides, 449&nbsp;KB)</a>
+            <span class="meta">Initiation Edition &middot; May 2026 &middot; .pdf</span>
+          </div>
+          <p class="gate-fineprint" style="margin-top:.85rem;">
+            If the download doesn't start, <a href="assets/reports/mu-er-initiation-2026-05-full-r4f7x9k2.pdf" download id="gate-download-fallback-mu">click here</a>.
+          </p>
+        </div>
+
+        <ul class="slide-toc" aria-label="What's in the deck">
+          <li class="open">1. Cover &amp; recommendation</li>
+          <li class="locked">8. FQ2&apos;26 financial performance</li>
+          <li class="open">2. Investment thesis snapshot</li>
+          <li class="locked">9. Forward projections (FY26&ndash;28E)</li>
+          <li class="open">3. Four-pillar thesis</li>
+          <li class="locked">10. Valuation football field</li>
+          <li class="open">4. Company overview</li>
+          <li class="locked">11. Bull / Base / Bear</li>
+          <li class="open">5. AI memory supercycle</li>
+          <li class="locked">12. Catalyst timeline</li>
+          <li class="locked">6. HBM competitive landscape</li>
+          <li class="locked">13. Key risks &amp; mitigants</li>
+          <li class="locked">7. HBM4 breakthrough</li>
+          <li class="locked">14. Conclusion &amp; takeaways</li>
+        </ul>
+      </section>
     </article>
 
     <p class="muted small" style="margin-top:2.5rem;">
@@ -165,5 +206,72 @@
   </footer>
 
   <script src="script.js?v=20" defer></script>
+
+  <!-- MU pitchbook email-gate handler (mirrors dcf-template pattern) -->
+  <script>
+    (function () {
+      var form    = document.getElementById('gate-form-mu');
+      var thanks  = document.getElementById('gate-thanks-mu');
+      var errBox  = document.getElementById('gate-error-mu');
+      var submit  = document.getElementById('gate-submit-mu');
+      var consent = document.querySelector('.gate-consent');
+      if (!form) return;
+
+      var STORAGE_KEY = 'bpleon-mu-pitchbook-unlocked';
+
+      function showThanks() {
+        form.style.display = 'none';
+        if (consent) consent.style.display = 'none';
+        thanks.classList.add('show');
+        var locked = document.querySelectorAll('.slide-toc li.locked');
+        locked.forEach(function (li) { li.classList.remove('locked'); li.classList.add('open'); });
+      }
+
+      function showError(msg) {
+        errBox.textContent = msg;
+        errBox.classList.add('show');
+      }
+
+      try {
+        if (localStorage.getItem(STORAGE_KEY) === '1') { showThanks(); }
+      } catch (e) { /* localStorage unavailable */ }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        errBox.classList.remove('show');
+
+        var email = (document.getElementById('gate-email-mu').value || '').trim();
+        if (!email || email.indexOf('@') === -1 || email.indexOf('.') === -1) {
+          showError('Please enter a valid email.');
+          return;
+        }
+        if (form._gotcha && form._gotcha.value) return;
+
+        submit.disabled = true;
+        submit.textContent = 'Sending...';
+
+        fetch(form.getAttribute('action'), {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        }).then(function (res) {
+          if (res.ok) {
+            try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+            showThanks();
+          } else {
+            return res.json().then(function (data) {
+              var msg = (data && data.errors && data.errors[0] && data.errors[0].message)
+                || 'Something went wrong. Try again, or email brandon@bpleon.com.';
+              throw new Error(msg);
+            });
+          }
+        }).catch(function (err) {
+          submit.disabled = false;
+          submit.textContent = 'Unlock full report →';
+          showError(err.message || 'Network error. Try again.');
+        });
+      });
+    })();
+  </script>
 </body>
 </html>

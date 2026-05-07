@@ -550,4 +550,11 @@
         fetch(form.getAttribute('action'), { method:'POST',
               headers:{'Accept':'application/json'}, body: new FormData(form) })
           .then(function (res) {
-            if (res.ok) showThanks()                      
+            if (res.ok) showThanks()                      ; else return res.json().then(function(d){var m=(d&&d.errors&&d.errors[0]&&d.errors[0].message)||"Something went wrong. Try again, or email brandon@bpleon.com.";throw new Error(m);});
+          })
+          .catch(function(err){ submit.disabled=false; submit.textContent="Request access \xe2\x86\x92"; showError(err.message||"Network error. Try again."); });
+      });
+    })();
+  </script>
+</body>
+</html>
