@@ -783,6 +783,20 @@
         if (timestamps && timestamps.length === values.length) {
           attachSparkHover(sparkEl, values, timestamps, sparkOpts);
         }
+        // Sync the percentage label to the selected range so it matches the chart.
+        // Previously this always showed Yahoo's regularMarketChangePercent + 'today',
+        // which mis-labels the value when the user clicks 1W/1M/3M/1Y/5Y.
+        var changeEl = document.getElementById('lp-change');
+        if (changeEl) {
+          var firstV = values[0], lastV = values[values.length - 1];
+          if (isFinite(firstV) && isFinite(lastV) && firstV !== 0) {
+            var periodPct = ((lastV - firstV) / firstV) * 100;
+            var rangeLabels = { '1d': 'today', '5d': '1w', '1mo': '1mo', '3mo': '3mo', '1y': '1y', '5y': '5y' };
+            var suffix = rangeLabels[currentSparkRange] || currentSparkRange;
+            changeEl.textContent = (periodPct >= 0 ? '+' : '') + periodPct.toFixed(2) + '% ' + suffix;
+            changeEl.className = 'lp-change ' + (periodPct >= 0 ? 'up' : 'down');
+          }
+        }
       })
       .catch(function () { /* leave placeholder */ });
   }
