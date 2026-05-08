@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Research &mdash; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="Free public-data stack for cyclicals research — semis, energy, shipping/trade, and macro demand. Source list, recommended widgets, MVP API stack, and cycle-score blueprint." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/research.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bpleon.com/research.html" />
+  <meta property="og:title" content="Research — Brandon Leon" />
+  <meta property="og:description" content="A free public-data stack for cyclicals research: semis, energy, shipping/trade, macro. Source list, MVP APIs, and cycle-score blueprint." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=28" />
+
+  <style>
+    /* ============== Research page local styles ==============
+       Scoped to .research-page so nothing else on the site shifts. The
+       palette uses the global tokens (--accent terracotta, --accent-2
+       sage) plus #0b1f3a navy and #c9a961 gold from existing dark cards. */
+
+    .research-page .page-head { margin-bottom: 1.75rem; }
+    .research-page .toc {
+      margin: 1.25rem 0 0;
+      padding: 1rem 1.25rem;
+      background: var(--bg-soft);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      font-family: var(--sans);
+      font-size: 0.92rem;
+    }
+    .research-page .toc-title {
+      margin: 0 0 .35rem;
+      font-family: var(--sans);
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .research-page .toc ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .25rem .9rem;
+    }
+    .research-page .toc li::before { content: "\2022  "; color: var(--accent); }
+    .research-page .toc a { color: var(--ink-soft); text-decoration-color: var(--rule); }
+    .research-page .toc a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+    @media (max-width: 640px) { .research-page .toc ul { grid-template-columns: 1fr; } }
+
+    .research-page .vertical-section { margin-top: 2.75rem; }
+    .research-page .vertical-section h2 {
+      margin: 0 0 .35rem;
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      line-height: 1.2;
+    }
+    .research-page .vertical-section .vertical-sub {
+      margin: 0 0 1rem;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    /* Source tables. Editorial, not spreadsheet-y. */
+    .research-page .source-table-wrap { overflow-x: auto; }
+    .research-page table.source-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--sans);
+      font-size: .92rem;
+      margin: .5rem 0 0;
+    }
+    .research-page table.source-table thead th {
+      text-align: left;
+      font-weight: 600;
+      font-size: .76rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: .45rem .65rem .55rem;
+      border-bottom: 1px solid var(--rule);
+      background: var(--bg-soft);
+    }
+    .research-page table.source-table tbody td {
+      padding: .7rem .65rem;
+      border-bottom: 1px solid var(--rule);
+      vertical-align: top;
+      color: var(--ink-soft);
+    }
+    .research-page table.source-table tbody tr:hover td { background: rgba(181,106,63,0.04); }
+    .research-page table.source-table .src-name { color: var(--ink); font-weight: 500; }
+    .research-page table.source-table .src-name a { text-decoration-color: var(--rule); }
+    .research-page table.source-table .src-name a:hover { color: var(--accent); }
+
+    /* Method pill (API / CSV / Web / PDF) */
+    .research-page .pill-method {
+      display: inline-block;
+      padding: .12rem .55rem;
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      background: var(--bg-soft);
+      color: var(--ink-soft);
+      border: 1px solid var(--rule);
+      white-space: nowrap;
+    }
+    .research-page .pill-method.api { background: rgba(91,127,107,0.14); color: #3f5d4f; border-color: rgba(91,127,107,0.30); }
+    .research-page .pill-method.csv { background: rgba(181,106,63,0.12); color: #8b4d2c; border-color: rgba(181,106,63,0.30); }
+    .research-page .pill-method.web { background: rgba(11,31,58,0.08); color: #0b1f3a; border-color: rgba(11,31,58,0.22); }
+    .research-page .pill-method.pdf { background: rgba(201,169,97,0.18); color: #7a6332; border-color: rgba(201,169,97,0.40); }
+
+    /* MVP stack callout */
+    .research-page .mvp-callout {
+      margin: 1.25rem 0 0;
+      padding: 1.5rem 1.65rem;
+      background: #0b1f3a;
+      color: #fbf7ef;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(11,31,58,0.18);
+    }
+    .research-page .mvp-callout .eyebrow { color: #c9a961; letter-spacing: .14em; font-weight: 600; font-size: .76rem; text-transform: uppercase; margin: 0 0 .35rem; }
+    .research-page .mvp-callout h3 { color: #fbf7ef; margin: 0 0 .35em; font-family: var(--serif); font-size: 1.4rem; line-height: 1.25; }
+    .research-page .mvp-callout p { color: rgba(251,247,239,0.86); margin: 0 0 .85rem; font-size: .96rem; line-height: 1.55; }
+    .research-page .mvp-callout ol { color: rgba(251,247,239,0.92); padding-left: 1.2rem; margin: .25rem 0 .25rem; font-family: var(--sans); }
+    .research-page .mvp-callout ol li { margin: .25rem 0; line-height: 1.5; }
+    .research-page .mvp-callout ol li strong { color: #c9a961; font-weight: 600; }
+
+    /* Site-structure routes */
+    .research-page .routes {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .75rem;
+      font-family: var(--sans);
+    }
+    @media (max-width: 700px) { .research-page .routes { grid-template-columns: 1fr; } }
+    .research-page .routes li {
+      padding: .85rem 1rem;
+      background: var(--bg-soft);
+      border: 1px solid var(--rule);
+      border-radius: 10px;
+    }
+    .research-page .routes code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .9rem;
+      color: var(--accent);
+      background: rgba(181,106,63,0.08);
+      padding: .08rem .4rem;
+      border-radius: 5px;
+    }
+    .research-page .routes p { margin: .35rem 0 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.45; }
+
+    /* Cycle-score cards */
+    .research-page .score-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      margin: 1.25rem 0 0;
+    }
+    @media (max-width: 900px) { .research-page .score-row { grid-template-columns: 1fr; } }
+    .research-page .score-card {
+      padding: 1.25rem 1.35rem;
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+      background: var(--bg);
+    }
+    .research-page .score-card .score-tag {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: .15rem .55rem;
+      border-radius: 999px;
+      margin-bottom: .5rem;
+    }
+    .research-page .score-card.semi   .score-tag { background: rgba(91,127,107,0.18); color: #3f5d4f; }
+    .research-page .score-card.energy .score-tag { background: rgba(181,106,63,0.15); color: #8b4d2c; }
+    .research-page .score-card.ship   .score-tag { background: rgba(11,31,58,0.10); color: #0b1f3a; }
+    .research-page .score-card h3 { margin: .1rem 0 .5rem; font-family: var(--serif); font-size: 1.15rem; line-height: 1.25; }
+    .research-page .score-card ul { margin: .5rem 0 0; padding: 0 0 0 1.1rem; font-size: .9rem; color: var(--ink-soft); }
+    .research-page .score-card ul li { margin: .25rem 0; line-height: 1.45; }
+
+    /* Widgets list */
+    .research-page .widgets {
+      margin: 1rem 0 0;
+      padding-left: 1.2rem;
+    }
+    .research-page .widgets li { margin: .45rem 0; line-height: 1.5; color: var(--ink-soft); }
+    .research-page .widgets li strong { color: var(--ink); font-weight: 600; }
+
+    /* Inline code in body copy */
+    .research-page main code, .research-page .prose code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .9em;
+      background: var(--bg-soft);
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      padding: 0 .35em;
+      color: var(--ink);
+    }
+  </style>
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="research.html" aria-current="page">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide research-page">
+    <header class="page-head">
+      <p class="eyebrow">Research</p>
+      <h1>Free data stack for a cyclicals research site.</h1>
+      <p class="lede">
+        The blueprint behind the dashboards on this site. Four verticals
+        &mdash; <strong>semis, energy, shipping &amp; trade, macro
+        demand</strong> &mdash; built entirely on free, automatable
+        public data. APIs, CSVs, Excel drops, stable HTML pages &mdash;
+        no Bloomberg, no FactSet, no Daloopa, no paid shipping feeds.
+        This page documents every source, the widget it feeds, the MVP
+        API stack to start with, and the cycle-score formulas on top.
+      </p>
+      <nav class="toc" aria-label="On this page">
+        <p class="toc-title">On this page</p>
+        <ul>
+          <li><a href="#oil">Oil &amp; energy sources</a></li>
+          <li><a href="#semis">Semiconductor sources</a></li>
+          <li><a href="#shipping">Shipping &amp; trade sources</a></li>
+          <li><a href="#macro">Macro / demand sources</a></li>
+          <li><a href="#widgets">Widgets to build</a></li>
+          <li><a href="#mvp">MVP source stack</a></li>
+          <li><a href="#site-structure">Site structure</a></li>
+          <li><a href="#cycle-scores">Cycle scores (highest-value feature)</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- ============== OIL ============== -->
+    <section class="vertical-section" id="oil">
+      <h2>Oil &amp; energy</h2>
+      <p class="vertical-sub">Prices, U.S. inventory data, refining throughput, global supply/demand, and speculative positioning. The energy cycle dashboard is the cleanest to fully automate.</p>
+      <div class="source-table-wrap">
+        <table class="source-table">
+          <thead>
+            <tr>
+              <th style="width:18%">Source</th>
+              <th style="width:13%">Method</th>
+              <th style="width:34%">What to track</th>
+              <th>Site use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="src-name"><a href="https://www.eia.gov/opendata/" target="_blank" rel="noopener">EIA API</a></td>
+              <td><span class="pill-method api">API &middot; free key</span></td>
+              <td>WTI/Brent, crude inventories, gasoline/distillate stocks, refinery utilization, product supplied, imports/exports</td>
+              <td>Energy cycle dashboard, weekly oil surprise tracker</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.eia.gov/petroleum/supply/weekly/" target="_blank" rel="noopener">EIA Weekly Petroleum Status Report</a></td>
+              <td><span class="pill-method web">Web / API</span></td>
+              <td>Weekly U.S. crude, gasoline, distillate, refinery, demand data</td>
+              <td>&ldquo;This week in oil&rdquo; module</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://fred.stlouisfed.org/series/DCOILWTICO" target="_blank" rel="noopener">FRED &mdash; WTI / Brent series</a></td>
+              <td><span class="pill-method api">API &middot; free key</span></td>
+              <td>WTI, Brent, macro/industrial series</td>
+              <td>Easy price charts and macro overlays</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm" target="_blank" rel="noopener">CFTC Commitments of Traders</a></td>
+              <td><span class="pill-method api">API / CSV</span></td>
+              <td>Managed-money crude positioning, net longs/shorts</td>
+              <td>Crowding / contrarian oil signal</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.jodidata.org/oil/" target="_blank" rel="noopener">JODI Oil Database</a></td>
+              <td><span class="pill-method csv">CSV downloads</span></td>
+              <td>Country-level oil production, demand, stocks</td>
+              <td>Global supply / demand map</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.opec.org/opec_web/en/publications/202.htm" target="_blank" rel="noopener">OPEC MOMR</a></td>
+              <td><span class="pill-method pdf">PDF / manual</span></td>
+              <td>OPEC supply, demand forecasts, inventory commentary</td>
+              <td>Monthly oil narrative tracker</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== SEMIS ============== -->
+    <section class="vertical-section" id="semis">
+      <h2>Semiconductors</h2>
+      <p class="vertical-sub">Global billings, memory pricing, equipment capex, fundamentals, and HBM commentary. The bedrock of the MU view and the cross-read into NVDA/AMD/AVGO.</p>
+      <div class="source-table-wrap">
+        <table class="source-table">
+          <thead>
+            <tr>
+              <th style="width:18%">Source</th>
+              <th style="width:13%">Method</th>
+              <th style="width:34%">What to track</th>
+              <th>Site use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="src-name"><a href="https://www.wsts.org/76/Recent-News-Release" target="_blank" rel="noopener">WSTS Historical Billings Report</a></td>
+              <td><span class="pill-method csv">Excel / PDF</span></td>
+              <td>Monthly semiconductor billings by region, 3-month moving averages</td>
+              <td>Global semi cycle dashboard</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.semiconductors.org/global-semiconductor-sales-units-shipped/" target="_blank" rel="noopener">SIA market data</a></td>
+              <td><span class="pill-method web">Web / press</span></td>
+              <td>WSTS-based monthly sales, units, ASPs by product/region where available</td>
+              <td>Semi demand tracker</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.trendforce.com/price/" target="_blank" rel="noopener">TrendForce DRAM spot prices</a></td>
+              <td><span class="pill-method web">Public page</span></td>
+              <td>DRAM spot pricing direction</td>
+              <td>MU memory-price tracker</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.semi.org/en/products-services/market-data/equipment" target="_blank" rel="noopener">SEMI equipment billings</a></td>
+              <td><span class="pill-method pdf">Press releases</span></td>
+              <td>Semiconductor equipment billings, capex cycle</td>
+              <td>Supply expansion / capex tracker</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.sec.gov/edgar/sec-api-documentation" target="_blank" rel="noopener">SEC EDGAR APIs</a></td>
+              <td><span class="pill-method api">JSON &middot; no key</span></td>
+              <td>10-Q/10-K facts, filing history, XBRL facts, companyfacts bulk ZIP</td>
+              <td>MU / XOM fundamentals and filing alerts</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.sec.gov/files/company_tickers.json" target="_blank" rel="noopener">SEC company tickers</a></td>
+              <td><span class="pill-method api">JSON</span></td>
+              <td>Ticker to CIK mapping</td>
+              <td>Automated company lookup</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== SHIPPING ============== -->
+    <section class="vertical-section" id="shipping">
+      <h2>Shipping &amp; trade</h2>
+      <p class="vertical-sub">Container freight indices, U.S. port throughput, and HS-code-level trade flows. Where supply-chain stress shows up before headline macro.</p>
+      <div class="source-table-wrap">
+        <table class="source-table">
+          <thead>
+            <tr>
+              <th style="width:18%">Source</th>
+              <th style="width:13%">Method</th>
+              <th style="width:34%">What to track</th>
+              <th>Site use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="src-name"><a href="https://fbx.freightos.com/" target="_blank" rel="noopener">Freightos Baltic Index (FBX)</a></td>
+              <td><span class="pill-method web">Public / limited free</span></td>
+              <td>40-foot container rates by major lane</td>
+              <td>Container freight stress tracker</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.drewry.co.uk/supply-chain-advisors/supply-chain-expertise/world-container-index-assessed-by-drewry" target="_blank" rel="noopener">Drewry World Container Index</a></td>
+              <td><span class="pill-method web">Public weekly page</span></td>
+              <td>Weekly container freight benchmark</td>
+              <td>Global shipping cost widget</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://en.sse.net.cn/indices/scfinew.jsp" target="_blank" rel="noopener">Shanghai Containerized Freight Index (SCFI)</a></td>
+              <td><span class="pill-method web">Public page</span></td>
+              <td>China / export container freight</td>
+              <td>Asia export pressure tracker</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://data.bts.gov/" target="_blank" rel="noopener">BTS Monthly TEU Data</a></td>
+              <td><span class="pill-method api">Socrata API</span></td>
+              <td>U.S. port TEU volumes</td>
+              <td>Port throughput dashboard</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.census.gov/foreign-trade/reference/guides/Guidev2020.pdf" target="_blank" rel="noopener">Census International Trade API</a></td>
+              <td><span class="pill-method api">API</span></td>
+              <td>Imports / exports by HS code, port, country, end-use</td>
+              <td>Semiconductor / electronics / oil trade tracker</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://comtradeplus.un.org/" target="_blank" rel="noopener">UN Comtrade</a></td>
+              <td><span class="pill-method api">API &middot; free tier</span></td>
+              <td>Global trade flows by commodity / country</td>
+              <td>Global chip and energy trade map</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== MACRO ============== -->
+    <section class="vertical-section" id="macro">
+      <h2>Macro &amp; demand</h2>
+      <p class="vertical-sub">The backdrop layer: supply-chain pressure, industrial production, and PMI breadth that sit underneath every other vertical.</p>
+      <div class="source-table-wrap">
+        <table class="source-table">
+          <thead>
+            <tr>
+              <th style="width:18%">Source</th>
+              <th style="width:13%">Method</th>
+              <th style="width:34%">What to track</th>
+              <th>Site use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="src-name"><a href="https://www.newyorkfed.org/research/policy/gscpi" target="_blank" rel="noopener">NY Fed Global Supply Chain Pressure Index</a></td>
+              <td><span class="pill-method web">Public data / page</span></td>
+              <td>Global supply-chain stress</td>
+              <td>Macro backdrop widget</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://fred.stlouisfed.org/series/IPG3344S" target="_blank" rel="noopener">FRED &mdash; semiconductor industrial production</a></td>
+              <td><span class="pill-method api">API &middot; free key</span></td>
+              <td>U.S. semiconductor / electronic-component production</td>
+              <td>Semi production proxy</td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.ismworld.org/supply-management-news-and-reports/reports/ism-report-on-business/" target="_blank" rel="noopener">ISM PMI reports</a></td>
+              <td><span class="pill-method web">Public release</span></td>
+              <td>Manufacturing PMI, new orders, inventories, supplier deliveries</td>
+              <td>Demand-cycle dashboard</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== WIDGETS ============== -->
+    <section class="vertical-section" id="widgets">
+      <h2>Widgets to actually build</h2>
+      <p class="vertical-sub">The output layer &mdash; what each source above gets turned into on the page.</p>
+
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Semiconductor page</h3>
+      <ul class="widgets">
+        <li><strong>Memory pricing tracker.</strong> DRAM spot price trend, NAND spot trend if available, 4-week change, 13-week change, and an &ldquo;up/down streak&rdquo; counter.</li>
+        <li><strong>Global semi sales tracker.</strong> WSTS billings by region, 3-month moving average, YoY change, and cycle percentile.</li>
+        <li><strong>Equipment / capex tracker.</strong> SEMI billings, ASML / AMAT / LRCX commentary if you later add transcript parsing, and memory capex commentary.</li>
+        <li><strong>MU fundamentals tracker.</strong> Revenue, gross margin, inventory, days inventory, capex, operating cash flow, free cash flow, and management language from SEC filings and Micron IR.</li>
+        <li><strong>HBM tracker.</strong> Pull MU earnings transcripts/presentations and tag mentions of HBM, pricing, customer commitments, capacity, supply tightness, and margins.</li>
+      </ul>
+
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Energy page</h3>
+      <ul class="widgets">
+        <li><strong>Oil dashboard.</strong> WTI, Brent, WTI&ndash;Brent spread, 1M / 3M / 12M change, moving averages, and percentile.</li>
+        <li><strong>Inventory surprise dashboard.</strong> EIA crude, gasoline, distillate stocks, refinery utilization, imports, exports, product supplied.</li>
+        <li><strong>Refining margin proxy.</strong> Use EIA / FRED gasoline, diesel, and crude series to calculate simple 3-2-1 crack-spread style proxies.</li>
+        <li><strong>Positioning dashboard.</strong> CFTC crude managed-money net length, week-over-week change, and percentile.</li>
+        <li><strong>XOM driver bridge.</strong> Oil price, gas price, refining utilization, product supplied, capex, buybacks, production, and free cash flow.</li>
+      </ul>
+
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Shipping &amp; trade page</h3>
+      <ul class="widgets">
+        <li><strong>Container freight tracker.</strong> Freightos, Drewry WCI, SCFI, and lane-specific China-to-U.S. indicators.</li>
+        <li><strong>Port throughput tracker.</strong> Monthly TEUs from BTS / LA / LB and YoY change.</li>
+        <li><strong>Trade flow tracker.</strong> Census imports/exports by HS code for semiconductors, electronics, crude oil, petroleum products, and energy equipment.</li>
+        <li><strong>Supply-chain stress dashboard.</strong> NY Fed GSCPI, container rates, port TEUs, supplier-delivery indexes, and freight changes.</li>
+      </ul>
+    </section>
+
+    <!-- ============== MVP STACK ============== -->
+    <section class="vertical-section" id="mvp">
+      <h2>MVP source stack</h2>
+      <p class="vertical-sub">Start here. Cleanest to automate, widest coverage, no key-management headaches. Everything else is a nice-to-have layered on top.</p>
+      <div class="mvp-callout">
+        <p class="eyebrow">One-stop public research terminal</p>
+        <h3>Eight sources to ship the v1.</h3>
+        <p>This is the smallest set that produces a credible cycle dashboard for semis, energy, and shipping in a weekend &mdash; no Bloomberg, no FactSet, no Daloopa, no paid shipping feeds.</p>
+        <ol>
+          <li><strong>EIA API</strong> &mdash; oil prices, inventories, refinery utilization, product demand.</li>
+          <li><strong>FRED API</strong> &mdash; WTI / Brent, macro indicators, industrial production, easy chartable history.</li>
+          <li><strong>SEC EDGAR API</strong> &mdash; MU / XOM financials, filings, filing alerts.</li>
+          <li><strong>WSTS Historical Billings Report</strong> &mdash; monthly semi cycle data.</li>
+          <li><strong>Census Trade API</strong> &mdash; import/export flows by HS code.</li>
+          <li><strong>BTS Socrata API</strong> &mdash; port TEU data.</li>
+          <li><strong>CFTC COT</strong> &mdash; crude positioning.</li>
+          <li><strong>TrendForce DRAM page</strong> &mdash; memory price direction.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============== SITE STRUCTURE ============== -->
+    <section class="vertical-section" id="site-structure">
+      <h2>Site structure</h2>
+      <p class="vertical-sub">A simple route map for the cycle dashboard. Each route maps to a set of widgets above.</p>
+      <ul class="routes">
+        <li><code>/dashboard</code><p>Cross-sector cycle heatmap.</p></li>
+        <li><code>/semis</code><p>WSTS, DRAM/NAND, MU metrics, semi production, equipment billings.</p></li>
+        <li><code>/energy</code><p>Oil prices, EIA weekly data, refining, CFTC, XOM metrics.</p></li>
+        <li><code>/shipping</code><p>Freight rates, port TEUs, Census trade, supply-chain pressure.</p></li>
+        <li><code>/calendar</code><p>EIA release, CFTC release, WSTS / SIA updates, ISM, MU / XOM earnings.</p></li>
+        <li><code>/alerts</code><p>&ldquo;DRAM prices up 4 weeks,&rdquo; &ldquo;crude inventories below seasonal norm,&rdquo; &ldquo;container rates spiking,&rdquo; &ldquo;CFTC positioning crowded,&rdquo; &ldquo;MU inventory days rolling over.&rdquo;</p></li>
+      </ul>
+    </section>
+
+    <!-- ============== CYCLE SCORES ============== -->
+    <section class="vertical-section" id="cycle-scores">
+      <h2>Cycle scores &mdash; the highest-value feature</h2>
+      <p class="vertical-sub">One composite read per sector, refreshed from the sources above. Where the rest of the site supplies inputs, this is the synthesis.</p>
+      <div class="score-row">
+        <div class="score-card semi">
+          <span class="score-tag">Memory cycle</span>
+          <h3>MU / Memory Cycle Score</h3>
+          <ul>
+            <li>DRAM price trend</li>
+            <li>WSTS memory / semi sales</li>
+            <li>MU gross margin</li>
+            <li>MU inventory days</li>
+            <li>SEMI equipment billings</li>
+            <li>HBM commentary tagging</li>
+          </ul>
+        </div>
+        <div class="score-card energy">
+          <span class="score-tag">Energy cycle</span>
+          <h3>XOM / Energy Cycle Score</h3>
+          <ul>
+            <li>WTI / Brent trend</li>
+            <li>EIA inventories</li>
+            <li>Product supplied</li>
+            <li>Refinery utilization</li>
+            <li>Rig count</li>
+            <li>CFTC positioning</li>
+          </ul>
+        </div>
+        <div class="score-card ship">
+          <span class="score-tag">Supply-chain</span>
+          <h3>Shipping Stress Score</h3>
+          <ul>
+            <li>Freightos / Drewry / SCFI</li>
+            <li>BTS TEUs</li>
+            <li>Census import volumes</li>
+            <li>NY Fed GSCPI</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <p class="muted small" style="margin-top:3rem;">All sources above are public and free at the tier described. Some &mdash; Freightos, Drewry, OPEC MOMR &mdash; gate the deepest-history series behind paid plans; the public surface still gives a usable signal. Nothing on this page is investment advice. See <a href="disclaimer.html">disclaimer</a>.</p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=28" defer></script>
+</body>
+</html>
