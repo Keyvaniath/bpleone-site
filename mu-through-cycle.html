@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=36" />
+  <link rel="stylesheet" href="style.css?v=37" />
 
   <!-- Page-scoped styles (draft banner, pitch sections, scenario table, kill list) -->
   <style>
@@ -107,8 +107,23 @@
       border-top: 1px solid var(--rule);
     }
     .pitch-section:first-of-type { border-top: 0; padding-top: 0; }
-    .pitch-section h2 { margin-top: 0; font-size: 1.55rem; }
-    .pitch-section h3 { font-size: 1.15rem; margin-top: 1.6em; }
+    .pitch-section h2 {
+      margin: 0 0 .9rem;
+      font-size: 1.85rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: .4rem;
+      line-height: 1.2;
+    }
+    .pitch-section h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-top: 2em;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
 
 
     /* Inline charts - SVG-based, navy/gold palette consistent with site */
@@ -369,6 +384,38 @@
       <p>FY27E revenue lands at $115 billion. Peak EBIT margin is around 51% (vs. FY18&rsquo;s 50%). Diluted EPS comes in near $48. Free cash flow is ~$28 billion &mdash; still robust, but well below the $36B figure that comes out of the more aggressive 71% GM scenario.</p>
       <p>The DCF (10% WACC, 2.5% terminal growth, 8&times; exit EBITDA) prices the equity at $640 per share. A 13&times; multiple on FY27E EPS gives $625. Sum-of-parts (HBM 13&times; / DRAM 8&times; / NAND 5&times;) lands at $580.</p>
       <p>Three methodologies, three anchors, all converging in the $580&ndash;$640 range. That&rsquo;s the honest base case. Current $668 sits roughly at the high end of fair value &mdash; not over-valued, not under-valued, just fully priced.</p>
+      <figure class="article-chart">
+        <p class="chart-title">Chart 4 &mdash; Three methodologies converging</p>
+        <p class="chart-headline">DCF, P/E and sum-of-parts all anchor to a $580&ndash;$640 fair value range</p>
+        <svg class="chart-svg" viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" aria-label="Three valuation methodologies bar chart">
+          <line x1="120" y1="240" x2="680" y2="240" stroke="#1A1F2E" stroke-width="1"/>
+          <text x="120" y="260" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">$400</text>
+          <text x="213" y="260" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">$450</text>
+          <text x="307" y="260" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">$500</text>
+          <text x="400" y="260" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">$550</text>
+          <text x="493" y="260" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">$600</text>
+          <text x="587" y="260" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">$650</text>
+          <text x="680" y="260" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">$700</text>
+          <text x="115" y="55" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#0B1F3A" text-anchor="end">DCF</text>
+          <rect x="120" y="40" width="448" height="32" fill="#5b7f6b" opacity="0.85"/>
+          <text x="572" y="60" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#0B1F3A">$640</text>
+          <text x="115" y="73" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end" font-style="italic">10% WACC, 8&times; exit EBITDA</text>
+          <text x="115" y="115" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#0B1F3A" text-anchor="end">13&times; EPS</text>
+          <rect x="120" y="100" width="420" height="32" fill="#C9A961" opacity="0.9"/>
+          <text x="544" y="120" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#0B1F3A">$625</text>
+          <text x="115" y="133" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end" font-style="italic">FY27E EPS $48</text>
+          <text x="115" y="175" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#0B1F3A" text-anchor="end">Sum-of-parts</text>
+          <rect x="120" y="160" width="336" height="32" fill="#b56a3f" opacity="0.85"/>
+          <text x="460" y="180" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#0B1F3A">$580</text>
+          <text x="115" y="193" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end" font-style="italic">HBM 13&times; / DRAM 8&times; / NAND 5&times;</text>
+          <rect x="456" y="32" width="112" height="180" fill="#C9A961" opacity="0.10" stroke="#9E8240" stroke-width="0.8" stroke-dasharray="3,3"/>
+          <text x="512" y="225" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#9E8240" text-anchor="middle">FAIR VALUE BAND</text>
+          <line x1="620" y1="20" x2="620" y2="240" stroke="#0B1F3A" stroke-width="1.8" stroke-dasharray="4,3"/>
+          <text x="620" y="15" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A" text-anchor="middle">CURRENT $668</text>
+        </svg>
+        <p class="chart-caption">Three valuation paths, three anchors, all landing in the same $580&ndash;$640 zone. Current $668 sits roughly $30 above the high end of the band &mdash; fully priced, not over-valued. Source: author DCF model and peer-comp inputs.</p>
+      </figure>
+
       <p>Which is exactly where Wall Street consensus has the stock (avg PT $581). The market is paying a small premium to consensus, which makes sense given AI optionality and the strategic-asset US-fab story, neither of which DCFs capture cleanly. But the margin of safety on the long is small. This is a Hold at $668, not a high-conviction Buy &mdash; unless you can defend the structural HBM bull case (next section).</p>
       <h3>Key assumptions</h3>
       <p>Five inputs do most of the work in the base case.</p>
@@ -378,6 +425,46 @@
       <p>Capex at 18&ndash;20% of sales mid-cycle, 24&ndash;26% at peak as the Idaho fab pulls in. I do not underwrite a permanent 25%+ capex regime; if that becomes the steady state, supply discipline has broken down.</p>
       <p>Working capital at 12&ndash;14% of sales. Memory carries inventory cyclically. HBM is built-to-order so the swing dampens modestly.</p>
       <p>The single biggest sensitivity is peak gross margin. A 4-point swing (61% vs. 65% vs. 69%) moves the implied PT by roughly $60-80 in either direction. Get this number wrong and the whole valuation moves with it. That&rsquo;s why so much of the next two sections is about whether the structural HBM uplift is +6 points (base) or +12+ points (bull).</p>
+      <figure class="article-chart">
+        <p class="chart-title">Chart 5 &mdash; PT sensitivity to peak gross margin</p>
+        <p class="chart-headline">Every 4 points of peak GM moves the implied PT by ~$60&ndash;80</p>
+        <svg class="chart-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" aria-label="Peak gross margin sensitivity curve">
+          <line x1="80" y1="280" x2="700" y2="280" stroke="#1A1F2E" stroke-width="1"/>
+          <line x1="80" y1="40" x2="80" y2="280" stroke="#1A1F2E" stroke-width="1"/>
+          <text x="72" y="284" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">$0</text>
+          <text x="72" y="240" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">$200</text>
+          <text x="72" y="197" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">$400</text>
+          <text x="72" y="153" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">$600</text>
+          <text x="72" y="110" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">$800</text>
+          <text x="72" y="66" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">$1,000</text>
+          <line x1="80" y1="240" x2="700" y2="240" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="80" y1="197" x2="700" y2="197" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="80" y1="153" x2="700" y2="153" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="80" y1="110" x2="700" y2="110" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="80" y1="66" x2="700" y2="66" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <text x="130" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">56%</text>
+          <text x="245" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">60%</text>
+          <text x="360" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">64%</text>
+          <text x="475" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">68%</text>
+          <text x="590" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">72%</text>
+          <text x="390" y="316" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="middle">PEAK FY27E GROSS MARGIN</text>
+          <path d="M 187 204 Q 280 175 389 144 T 561 62" fill="none" stroke="#0B1F3A" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="187" cy="204" r="6" fill="#A12B2B"/>
+          <text x="187" y="225" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#A12B2B" text-anchor="middle">Bear $350</text>
+          <text x="187" y="194" font-family="Inter,sans-serif" font-size="9" fill="#A12B2B" text-anchor="middle">58% GM</text>
+          <circle cx="389" cy="144" r="7" fill="#C9A961" stroke="#9E8240" stroke-width="2"/>
+          <text x="389" y="135" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#9E8240" text-anchor="middle">Base $625</text>
+          <text x="389" y="125" font-family="Inter,sans-serif" font-size="9" fill="#9E8240" text-anchor="middle">65% GM</text>
+          <circle cx="446" cy="134" r="6" fill="#0B1F3A"/>
+          <text x="446" y="120" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#0B1F3A" text-anchor="middle">Mkt $668</text>
+          <text x="446" y="108" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="middle">67% implied</text>
+          <circle cx="561" cy="62" r="7" fill="#1D7A4F" stroke="#FFF" stroke-width="2"/>
+          <text x="561" y="52" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#1D7A4F" text-anchor="middle">Bull $1,000+</text>
+          <text x="561" y="42" font-family="Inter,sans-serif" font-size="9" fill="#1D7A4F" text-anchor="middle">71% GM</text>
+        </svg>
+        <p class="chart-caption">Peak gross margin is the single most important input. The curve is convex &mdash; each additional point of GM is worth more on the way up. The market is implicitly pricing 67% GM, two points above my base case. Source: author DCF model.</p>
+      </figure>
+
     </section>
 
     <!-- ============== 3. SCENARIOS + REVERSE-DCF ============== -->
@@ -433,6 +520,52 @@
 
       <p>Probability-weighted PT: ~$650. Reward-to-risk ratio of 1.2:1 vs. the bear case. That&rsquo;s honestly thin for a high-conviction long. The trade is closer to &ldquo;I&rsquo;d hold MU at $625 but I wouldn&rsquo;t add at $668&rdquo; than to a screaming Buy.</p>
       <p><strong>The reverse-DCF.</strong> Hold WACC, terminal growth, and exit multiple constant. Solve backwards: what does today&rsquo;s $668 require the market to believe about peak gross margin? The answer is approximately <strong>67%</strong>. That&rsquo;s above my 65% base case but below the 71% structural-HBM case. The market is implicitly pricing in modest structural uplift &mdash; somewhere between &ldquo;HBM is a real business&rdquo; (my base) and &ldquo;HBM permanently rerates the company&rdquo; (the bull case). That&rsquo;s actually a coherent position to hold.</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 6 &mdash; Reverse-DCF: what the market is pricing in</p>
+        <p class="chart-headline">$668 implies the market expects ~67% peak GM &mdash; between my base and bull cases</p>
+        <svg class="chart-svg" viewBox="0 0 720 240" xmlns="http://www.w3.org/2000/svg" aria-label="Reverse-DCF gauge">
+          <rect x="80" y="100" width="136" height="50" fill="#A12B2B" opacity="0.18"/>
+          <rect x="216" y="100" width="205" height="50" fill="#C9A961" opacity="0.22"/>
+          <rect x="421" y="100" width="239" height="50" fill="#1D7A4F" opacity="0.18"/>
+          <line x1="80" y1="125" x2="660" y2="125" stroke="#1A1F2E" stroke-width="0.5"/>
+          <line x1="80" y1="100" x2="80" y2="160" stroke="#1A1F2E" stroke-width="1"/>
+          <text x="80" y="178" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">56%</text>
+          <line x1="216" y1="100" x2="216" y2="160" stroke="#1A1F2E" stroke-width="1"/>
+          <text x="216" y="178" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">60%</text>
+          <line x1="353" y1="100" x2="353" y2="160" stroke="#1A1F2E" stroke-width="1"/>
+          <text x="353" y="178" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">64%</text>
+          <line x1="490" y1="100" x2="490" y2="160" stroke="#1A1F2E" stroke-width="1"/>
+          <text x="490" y="178" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">68%</text>
+          <line x1="627" y1="100" x2="627" y2="160" stroke="#1A1F2E" stroke-width="1"/>
+          <text x="627" y="178" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">72%</text>
+          <text x="370" y="200" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="middle">PEAK FY27E GROSS MARGIN</text>
+          <text x="148" y="130" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#A12B2B" text-anchor="middle">BEAR ZONE</text>
+          <text x="148" y="143" font-family="Inter,sans-serif" font-size="9" fill="#A12B2B" text-anchor="middle" font-style="italic">cycle reverts</text>
+          <text x="318" y="130" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#9E8240" text-anchor="middle">BASE ZONE</text>
+          <text x="318" y="143" font-family="Inter,sans-serif" font-size="9" fill="#9E8240" text-anchor="middle" font-style="italic">+6pts HBM mix</text>
+          <text x="540" y="130" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#1D7A4F" text-anchor="middle">BULL ZONE</text>
+          <text x="540" y="143" font-family="Inter,sans-serif" font-size="9" fill="#1D7A4F" text-anchor="middle" font-style="italic">structural HBM</text>
+          <line x1="148" y1="80" x2="148" y2="100" stroke="#A12B2B" stroke-width="2"/>
+          <circle cx="148" cy="80" r="5" fill="#A12B2B"/>
+          <text x="148" y="70" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#A12B2B" text-anchor="middle">FY18 peak 58%</text>
+          <text x="148" y="58" font-family="Inter,sans-serif" font-size="9" fill="#A12B2B" text-anchor="middle">$350</text>
+          <line x1="387" y1="80" x2="387" y2="100" stroke="#9E8240" stroke-width="2"/>
+          <circle cx="387" cy="80" r="6" fill="#C9A961" stroke="#9E8240" stroke-width="2"/>
+          <text x="387" y="70" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#9E8240" text-anchor="middle">My base 65%</text>
+          <text x="387" y="58" font-family="Inter,sans-serif" font-size="9" fill="#9E8240" text-anchor="middle">$625</text>
+          <line x1="455" y1="40" x2="455" y2="100" stroke="#0B1F3A" stroke-width="2.5"/>
+          <circle cx="455" cy="40" r="7" fill="#0B1F3A" stroke="#FFF" stroke-width="2"/>
+          <text x="455" y="30" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A" text-anchor="middle">MARKET 67%</text>
+          <text x="455" y="18" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#0B1F3A" text-anchor="middle">$668 today</text>
+          <line x1="592" y1="80" x2="592" y2="100" stroke="#1D7A4F" stroke-width="2"/>
+          <circle cx="592" cy="80" r="5" fill="#1D7A4F"/>
+          <text x="592" y="70" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#1D7A4F" text-anchor="middle">Bull 71%</text>
+          <text x="592" y="58" font-family="Inter,sans-serif" font-size="9" fill="#1D7A4F" text-anchor="middle">$1,000+</text>
+        </svg>
+        <p class="chart-caption">Solving the DCF backwards: what does today&rsquo;s $668 require? About 67% peak GM &mdash; not crazy, but above my 65% base. The market is paying for partial structural-HBM credit. The next four prints will tell you whether that pricing is right. Source: reverse-DCF, author estimates.</p>
+      </figure>
+
       <p>The interesting question becomes: what observable in the next 4-6 quarters tips the market between those two views? The answer is in the next section.</p>
     </section>
 
@@ -467,6 +600,61 @@
           <strong>Hyperscaler 2H'26 capex guides down by &gt;10% YoY.</strong> The four largest hyperscalers (Microsoft, Google, Meta, Amazon) account for an estimated 45% of FY27E HBM end-demand. The 5-year LTAs lock in 2026 and most of 2027 volume contractually, but the renewal economics in 2028+ depend on hyperscaler willingness to keep capex flat or growing. If 2H'26 capex guides plot a >10% YoY cut on any of those four, it means AI capex digestion is real and the next round of HBM contracts gets renegotiated lower. The LTAs don't break; the next-cycle pricing does.
         </li>
       </ol>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 7 &mdash; Three trip-wires that flip the thesis</p>
+        <p class="chart-headline">What I&rsquo;m watching, where the line is, and which way the asymmetry breaks</p>
+        <svg class="chart-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" aria-label="Kill-shots dashboard">
+          <text x="20" y="40" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A">1. HBM REVENUE MIX</text>
+          <text x="20" y="55" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" font-style="italic">Climbing FQ2&rsquo;26 12% &rarr; FQ4&rsquo;27 30%; flat for 2Q breaks the thesis</text>
+          <line x1="280" y1="80" x2="700" y2="80" stroke="#D9D2C2" stroke-width="1"/>
+          <line x1="280" y1="50" x2="700" y2="50" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,2"/>
+          <text x="270" y="84" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="end">12%</text>
+          <text x="270" y="54" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="end">30%</text>
+          <polyline points="290,76 360,68 430,60 500,54 570,50 640,48" fill="none" stroke="#1D7A4F" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="640" cy="48" r="3" fill="#1D7A4F"/>
+          <text x="640" y="100" font-family="Inter,sans-serif" font-size="9" fill="#1D7A4F" text-anchor="middle">Base path</text>
+          <polyline points="290,76 360,76 430,76" fill="none" stroke="#A12B2B" stroke-width="2" stroke-dasharray="3,3" stroke-linecap="round"/>
+          <text x="360" y="100" font-family="Inter,sans-serif" font-size="9" fill="#A12B2B" text-anchor="middle">2Q flat = bear</text>
+          <text x="20" y="140" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A">2. CXMT HBM CAPABILITY</text>
+          <text x="20" y="155" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" font-style="italic">Today HBM2-class; HBM3 sample with hyperscaler before mid-2027 = moat erodes</text>
+          <line x1="280" y1="190" x2="700" y2="190" stroke="#D9D2C2" stroke-width="1"/>
+          <text x="270" y="194" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="end">HBM2</text>
+          <text x="290" y="210" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">2026</text>
+          <text x="360" y="210" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">2027</text>
+          <text x="430" y="210" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">2028</text>
+          <text x="500" y="210" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">2029</text>
+          <text x="570" y="210" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">2030</text>
+          <rect x="290" y="180" width="138" height="10" fill="#9E8240" opacity="0.7"/>
+          <text x="358" y="175" font-family="Inter,sans-serif" font-size="9" fill="#9E8240" text-anchor="middle">HBM2</text>
+          <rect x="430" y="180" width="138" height="10" fill="#C9A961" opacity="0.85"/>
+          <text x="498" y="175" font-family="Inter,sans-serif" font-size="9" fill="#9E8240" text-anchor="middle">HBM3 (base)</text>
+          <rect x="568" y="180" width="135" height="10" fill="#1D7A4F" opacity="0.7"/>
+          <text x="635" y="175" font-family="Inter,sans-serif" font-size="9" fill="#1D7A4F" text-anchor="middle">HBM4 (base)</text>
+          <line x1="395" y1="170" x2="395" y2="200" stroke="#A12B2B" stroke-width="2" stroke-dasharray="3,2"/>
+          <text x="395" y="225" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#A12B2B" text-anchor="middle">&larr; Trip-wire: HBM3 sample mid-2027</text>
+          <text x="20" y="245" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A">3. HYPERSCALER CAPEX (2H&rsquo;26)</text>
+          <text x="20" y="260" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" font-style="italic">MSFT/GOOG/META/AMZN = ~45% of FY27E HBM end-demand; &gt;10% YoY cut breaks LTAs</text>
+          <line x1="280" y1="295" x2="700" y2="295" stroke="#1A1F2E" stroke-width="1"/>
+          <text x="280" y="310" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">-15%</text>
+          <text x="350" y="310" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">-5%</text>
+          <text x="420" y="310" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">flat</text>
+          <text x="490" y="310" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">+5%</text>
+          <text x="560" y="310" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">+15%</text>
+          <text x="630" y="310" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">+25%</text>
+          <rect x="280" y="270" width="50" height="20" fill="#A12B2B" opacity="0.25"/>
+          <text x="305" y="284" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#A12B2B" text-anchor="middle">BEAR</text>
+          <rect x="330" y="270" width="200" height="20" fill="#C9A961" opacity="0.22"/>
+          <text x="430" y="284" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#9E8240" text-anchor="middle">BASE / hold</text>
+          <rect x="530" y="270" width="170" height="20" fill="#1D7A4F" opacity="0.22"/>
+          <text x="615" y="284" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#1D7A4F" text-anchor="middle">BULL / structural</text>
+          <line x1="535" y1="265" x2="535" y2="295" stroke="#0B1F3A" stroke-width="2"/>
+          <circle cx="535" cy="265" r="4" fill="#0B1F3A"/>
+          <text x="535" y="258" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="middle">consensus today</text>
+          <line x1="330" y1="265" x2="330" y2="295" stroke="#A12B2B" stroke-width="2" stroke-dasharray="3,2"/>
+        </svg>
+        <p class="chart-caption">Three independent trip-wires; each one resets the rating. None has fired yet, but the asymmetry compresses every quarter without a clear directional signal. Source: author tracking framework.</p>
+      </figure>
     </section>
 
     <!-- ============== 5. COMP SET + PEER MATH ============== -->
@@ -479,6 +667,51 @@
       <p><strong>Lam Research and Applied Materials</strong> are equipment names. They give the second-derivative read-through on memory capex discipline &mdash; if Big Three capex stays robust, supply discipline is intact. They trade at a premium (FY27E P/E 16&ndash;17&times;) because they&rsquo;re not memory cyclicals; they&rsquo;re capex cyclicals on a different rhythm.</p>
       <p>Drop the equipment names from the median calculation (different cycles, different multiples) and the memory-only peer median lands at roughly 6.5&times; FY27E P/E. Micron at 7&times; trades at a 1-turn premium to that median. A 12&times; target multiple represents a 5.5-turn expansion to fair value.</p>
       <p>That&rsquo;s the whole valuation argument compressed into one sentence: anyone making the case that Micron is over-valued at 12&times; FY27E EPS has to explain why the memory company with the highest HBM mix in the comp set should trade at a discount to a NAND-only pure play.</p>
+      <figure class="article-chart">
+        <p class="chart-title">Chart 8 &mdash; Comp set on FY27E P/E</p>
+        <p class="chart-headline">Memory-only median is 6.5&times;; equipment names trade twice that on different cycles</p>
+        <svg class="chart-svg" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" aria-label="Peer comparison FY27E P/E multiples">
+          <line x1="220" y1="40" x2="220" y2="320" stroke="#1A1F2E" stroke-width="1"/>
+          <line x1="220" y1="320" x2="700" y2="320" stroke="#1A1F2E" stroke-width="1"/>
+          <line x1="340" y1="40" x2="340" y2="320" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="460" y1="40" x2="460" y2="320" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="580" y1="40" x2="580" y2="320" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <text x="220" y="338" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">0&times;</text>
+          <text x="340" y="338" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">5&times;</text>
+          <text x="460" y="338" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">10&times;</text>
+          <text x="580" y="338" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">15&times;</text>
+          <text x="700" y="338" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">20&times;</text>
+          <text x="460" y="354" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="middle">FY27E P/E MULTIPLE</text>
+          <rect x="220" y="50" width="120" height="22" fill="#5b7f6b" opacity="0.7"/>
+          <text x="215" y="65" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="end">WDC / SanDisk</text>
+          <text x="350" y="65" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A">5.0&times;</text>
+          <rect x="220" y="78" width="132" height="22" fill="#5b7f6b" opacity="0.85"/>
+          <text x="215" y="93" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="end">SK hynix</text>
+          <text x="362" y="93" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A">5.5&times;</text>
+          <rect x="220" y="106" width="144" height="22" fill="#5b7f6b" opacity="0.85"/>
+          <text x="215" y="121" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="end">Samsung memory</text>
+          <text x="374" y="121" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A">6.0&times;</text>
+          <rect x="220" y="134" width="168" height="22" fill="#C9A961" opacity="0.95"/>
+          <text x="215" y="149" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#9E8240" text-anchor="end">MU (today, 7&times;)</text>
+          <text x="398" y="149" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#9E8240">7.0&times;</text>
+          <line x1="376" y1="40" x2="376" y2="170" stroke="#0B1F3A" stroke-width="1.8" stroke-dasharray="5,3"/>
+          <text x="376" y="34" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#0B1F3A" text-anchor="middle">memory peer median 6.5&times;</text>
+          <rect x="220" y="170" width="288" height="22" fill="#1D7A4F" opacity="0.85"/>
+          <text x="215" y="185" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#1D7A4F" text-anchor="end">MU target (12&times;)</text>
+          <text x="518" y="185" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#1D7A4F">12&times;</text>
+          <text x="513" y="200" font-family="Inter,sans-serif" font-size="9" fill="#1D7A4F" text-anchor="middle" font-style="italic">5.5-turn rerate to fair</text>
+          <line x1="220" y1="220" x2="700" y2="220" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <text x="460" y="216" font-family="Inter,sans-serif" font-size="9" font-style="italic" fill="#6B7280" text-anchor="middle">equipment peers (excluded from median &mdash; different cycle)</text>
+          <rect x="220" y="226" width="384" height="22" fill="#0b1f3a" opacity="0.45"/>
+          <text x="215" y="241" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="end">Lam Research</text>
+          <text x="614" y="241" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A">16.0&times;</text>
+          <rect x="220" y="254" width="408" height="22" fill="#0b1f3a" opacity="0.45"/>
+          <text x="215" y="269" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="end">Applied Materials</text>
+          <text x="638" y="269" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A">17.0&times;</text>
+        </svg>
+        <p class="chart-caption">Memory peers cluster at 5&ndash;6&times; FY27E P/E, MU at 7&times; (1-turn premium for highest HBM mix). The 12&times; target represents a 5.5-turn rerate. Equipment names are shown for context only &mdash; different cycle, different multiples, intentionally excluded from the median. Source: author estimates, FY27E EPS.</p>
+      </figure>
+
       <h3>Why these peers and not others</h3>
       <p>Quick defense of the inclusions and exclusions, because the rigor of the comp set is half the argument.</p>
       <p>Intel is out. They sold their memory business to SK in 2020 and today they&rsquo;re a logic/fabs company &mdash; different cycle, different multiples. Including them inflates the median in a way that isn&rsquo;t honest.</p>
@@ -497,7 +730,47 @@
       <p><strong>FQ3&rsquo;26 print (June 2026).</strong> Cleanest read on whether the FQ2 number was a one-quarter peak or the start of something durable. Watch HBM revenue mix as a percentage of DRAM &mdash; base case has it climbing from ~12% to ~25% by year-end CY26. FQ3 at 18%+ keeps the structural story on track; flat at FQ2 levels and the bull case gets harder to underwrite. Equally important: the FQ4 guide. Revenue near $35B with gross margin sustained close to 80% says the LTAs are doing what we think they&rsquo;re doing.</p>
       <p><strong>FQ4&rsquo;26 print (September 2026).</strong> Two things matter. First, the FY27 capex guide &mdash; anything below $24B suggests management is exercising discipline; north of $28B is a yellow flag that the cycle peak gets pulled forward by their own hand. Second, the first explicit commentary on hyperscaler renewal terms for FY28+. The 5-year LTAs cover most of FY27; whether they extend or renegotiate lower is the structural question that determines if the bull case is alive.</p>
       <p><strong>Outside the earnings calendar.</strong> Three things I&rsquo;m watching that aren&rsquo;t from Micron itself. Samsung&rsquo;s HBM4 qualification at NVIDIA &mdash; every quarter they&rsquo;re delayed is a quarter Micron holds the Vera Rubin position at premium pricing. Hyperscaler 2H&rsquo;26 capex revisions &mdash; any of the big four guiding down &gt;10% YoY makes the AI digestion narrative real. CXMT product announcements &mdash; anything at HBM3-class with a credible customer pulls the China risk forward by twelve to eighteen months.</p>
-      <p><strong>The trade going forward.</strong> Hold doesn&rsquo;t mean ignore. It means price-disciplined. I&rsquo;d add on a 7&ndash;10% pullback toward $605&ndash;620, where the base case offers genuine upside without leaning on the structural HBM call. Above $720, I&rsquo;d trim toward the bull-case PT &mdash; at that level you&rsquo;re paying for optionality the market hasn&rsquo;t yet earned. Today&rsquo;s risk-reward is roughly symmetric, but it can change in a single quarter: HBM mix above 25% with stable ASPs and the structural case becomes the base case. Mix going flat and the bear case starts pricing in. Keep your finger on the disclosure trigger.</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 9 &mdash; Catalyst calendar through CY26</p>
+        <p class="chart-headline">Two prints + three external watch-points decide whether base, bull, or bear wins</p>
+        <svg class="chart-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" aria-label="Forward outlook catalyst timeline">
+          <line x1="60" y1="170" x2="690" y2="170" stroke="#0B1F3A" stroke-width="2"/>
+          <polygon points="685,164 700,170 685,176" fill="#0B1F3A"/>
+          <circle cx="80" cy="170" r="6" fill="#0B1F3A"/>
+          <text x="80" y="195" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#0B1F3A" text-anchor="middle">NOW</text>
+          <text x="80" y="208" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">May &rsquo;26</text>
+          <circle cx="240" cy="170" r="9" fill="#C9A961" stroke="#9E8240" stroke-width="2"/>
+          <text x="240" y="195" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#9E8240" text-anchor="middle">FQ3&rsquo;26 print</text>
+          <text x="240" y="208" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Jun &rsquo;26</text>
+          <line x1="240" y1="160" x2="240" y2="80" stroke="#9E8240" stroke-width="0.8" stroke-dasharray="2,2"/>
+          <rect x="160" y="40" width="160" height="50" fill="#fff" stroke="#9E8240" stroke-width="1" rx="3"/>
+          <text x="240" y="56" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#9E8240" text-anchor="middle">HBM mix watch</text>
+          <text x="240" y="71" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="middle">18%+ keeps base alive</text>
+          <text x="240" y="83" font-family="Inter,sans-serif" font-size="9" fill="#A12B2B" text-anchor="middle" font-style="italic">flat = bear pricing in</text>
+          <circle cx="450" cy="170" r="9" fill="#C9A961" stroke="#9E8240" stroke-width="2"/>
+          <text x="450" y="195" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#9E8240" text-anchor="middle">FQ4&rsquo;26 print</text>
+          <text x="450" y="208" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Sep &rsquo;26</text>
+          <line x1="450" y1="160" x2="450" y2="80" stroke="#9E8240" stroke-width="0.8" stroke-dasharray="2,2"/>
+          <rect x="370" y="40" width="160" height="50" fill="#fff" stroke="#9E8240" stroke-width="1" rx="3"/>
+          <text x="450" y="56" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#9E8240" text-anchor="middle">FY27 capex guide</text>
+          <text x="450" y="71" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="middle">&lt;$24B = discipline</text>
+          <text x="450" y="83" font-family="Inter,sans-serif" font-size="9" fill="#A12B2B" text-anchor="middle" font-style="italic">&gt;$28B = peak pulled in</text>
+          <circle cx="630" cy="170" r="6" fill="#1D7A4F"/>
+          <text x="630" y="195" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#1D7A4F" text-anchor="middle">LTA renewal</text>
+          <text x="630" y="208" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">FY28+ talk</text>
+          <text x="60" y="245" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A">Outside the earnings calendar &mdash; ongoing watch</text>
+          <circle cx="78" cy="265" r="4" fill="#A12B2B"/>
+          <text x="92" y="269" font-family="Inter,sans-serif" font-size="10" fill="#0B1F3A">Samsung HBM4 NVIDIA qualification &mdash; every quarter delayed = MU holds Vera Rubin pricing</text>
+          <circle cx="78" cy="285" r="4" fill="#A12B2B"/>
+          <text x="92" y="289" font-family="Inter,sans-serif" font-size="10" fill="#0B1F3A">Hyperscaler 2H&rsquo;26 capex revisions &mdash; any of MSFT/GOOG/META/AMZN guiding &gt;-10% YoY</text>
+          <circle cx="78" cy="305" r="4" fill="#A12B2B"/>
+          <text x="92" y="309" font-family="Inter,sans-serif" font-size="10" fill="#0B1F3A">CXMT product announcements &mdash; HBM3-class with credible customer pulls China risk forward</text>
+        </svg>
+        <p class="chart-caption">Two earnings prints carry the heaviest signal weight; three external watch-points provide the cross-checks. Hold doesn&rsquo;t mean ignore &mdash; it means price-disciplined while the data lands. Source: author tracking framework, Micron earnings cadence.</p>
+      </figure>
+
+            <p><strong>The trade going forward.</strong> Hold doesn&rsquo;t mean ignore. It means price-disciplined. I&rsquo;d add on a 7&ndash;10% pullback toward $605&ndash;620, where the base case offers genuine upside without leaning on the structural HBM call. Above $720, I&rsquo;d trim toward the bull-case PT &mdash; at that level you&rsquo;re paying for optionality the market hasn&rsquo;t yet earned. Today&rsquo;s risk-reward is roughly symmetric, but it can change in a single quarter: HBM mix above 25% with stable ASPs and the structural case becomes the base case. Mix going flat and the bear case starts pricing in. Keep your finger on the disclosure trigger.</p>
     </section>
 
     <!-- ============== 7. CLOSING ============== -->
@@ -543,6 +816,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=36" defer></script>
+  <script src="script.js?v=37" defer></script>
 </body>
 </html>
