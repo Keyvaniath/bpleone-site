@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=42" />
+  <link rel="stylesheet" href="style.css?v=43" />
 
   <!-- Page-scoped article styles, matching the weekly-outlook-2026-05-04 piece. -->
   <style>
@@ -149,6 +149,47 @@
       padding-top: 2rem;
       border-top: 1px solid var(--rule);
     }
+  
+    /* Inline charts - SVG-based, navy/gold palette consistent with site */
+    .article-chart {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+    }
+    .article-chart .chart-title {
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 0.4rem;
+    }
+    .article-chart .chart-headline {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin: 0 0 1.2rem;
+      line-height: 1.4;
+    }
+    .article-chart .chart-svg {
+      width: 100%;
+      height: auto;
+      max-width: 720px;
+      display: block;
+      margin: 0 auto;
+    }
+    .article-chart .chart-caption {
+      font-family: var(--sans);
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      margin: 1rem 0 0;
+      line-height: 1.5;
+      font-style: italic;
+    }
   </style>
 
   <!-- Cloudflare Web Analytics -->
@@ -193,8 +234,76 @@
         </div>
       </header>
 
+      <figure class="article-chart">
+        <p class="chart-title">Chart 1 &mdash; The cooling-under-semis divergence</p>
+        <p class="chart-headline">S&amp;P 500 grinding higher while macro composite cools &mdash; the gap is the AI / earnings trade</p>
+        <svg class="chart-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" aria-label="S&amp;P 500 vs macro composite divergence">
+          <line x1="80" y1="280" x2="700" y2="280" stroke="#1A1F2E" stroke-width="1"/>
+          <line x1="80" y1="40" x2="80" y2="280" stroke="#1A1F2E" stroke-width="1"/>
+          <text x="72" y="60" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">+12%</text>
+          <text x="72" y="120" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">+6%</text>
+          <text x="72" y="180" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">flat</text>
+          <text x="72" y="240" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">&minus;6%</text>
+          <line x1="80" y1="180" x2="700" y2="180" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="80" y1="120" x2="700" y2="120" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="80" y1="240" x2="700" y2="240" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <text x="120" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">Jan</text>
+          <text x="220" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">Feb</text>
+          <text x="320" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">Mar</text>
+          <text x="420" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">Apr</text>
+          <text x="520" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">May</text>
+          <text x="390" y="316" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="middle">2026 YTD INDEXED PERFORMANCE</text>
+          <!-- S&P 500 line: rising, terracotta -->
+          <polyline points="120,200 170,195 220,180 270,170 320,155 370,140 420,135 470,125 520,110 570,100 620,90 670,80" fill="none" stroke="#b56a3f" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="670" cy="80" r="5" fill="#b56a3f"/>
+          <text x="685" y="83" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#b56a3f">+11%</text>
+          <text x="685" y="68" font-family="Inter,sans-serif" font-size="9" fill="#b56a3f">S&amp;P 500</text>
+          <!-- Macro composite line: flattening / drifting down, navy -->
+          <polyline points="120,180 170,178 220,182 270,188 320,195 370,200 420,205 470,210 520,215 570,222 620,225 670,228" fill="none" stroke="#0B1F3A" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="0"/>
+          <circle cx="670" cy="228" r="5" fill="#0B1F3A"/>
+          <text x="685" y="231" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A">&minus;5%</text>
+          <text x="685" y="216" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A">Macro</text>
+          <!-- Gap shading -->
+          <text x="595" y="155" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#9E8240" text-anchor="middle">~16pp gap</text>
+          <text x="595" y="167" font-family="Inter,sans-serif" font-size="9" fill="#9E8240" text-anchor="middle" font-style="italic">AI / earnings premium</text>
+        </svg>
+        <p class="chart-caption">S&amp;P 500 indexed up ~11% YTD; the macro-composite (ISM new orders, payrolls 3-mo avg, retail sales, JOLTS hires &mdash; equal-weighted, indexed) drifting down ~5%. The gap is what the AI capex cycle and concentrated earnings beats have paid for. Source: BLS, ISM, Census, Yahoo Finance; author indexing.</p>
+      </figure>
+
       <section class="pitch-section" id="not-broad-reasons">
         <h2>The market is strong, but not for broad reasons</h2>
+
+        <figure class="article-chart">
+          <p class="chart-title">Chart 2 &mdash; Semis vs Hyperscalers YTD</p>
+          <p class="chart-headline">Semis +24% vs Hyperscalers +5% &mdash; 19-point spread says spending flows down the supply chain</p>
+          <svg class="chart-svg" viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" aria-label="Semis vs hyperscalers YTD performance">
+            <line x1="120" y1="220" x2="700" y2="220" stroke="#1A1F2E" stroke-width="1"/>
+            <text x="120" y="240" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">0%</text>
+            <text x="265" y="240" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">+10%</text>
+            <text x="410" y="240" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">+20%</text>
+            <text x="555" y="240" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">+30%</text>
+            <text x="700" y="240" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">+40%</text>
+            <line x1="265" y1="50" x2="265" y2="220" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <line x1="410" y1="50" x2="410" y2="220" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <line x1="555" y1="50" x2="555" y2="220" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <!-- Semis bar: 24% -->
+            <rect x="120" y="70" width="348" height="42" fill="#C9A961" opacity="0.92"/>
+            <text x="115" y="95" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#9E8240" text-anchor="end">SEMIS (SOX)</text>
+            <text x="478" y="95" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#0B1F3A">+24% YTD</text>
+            <!-- Hyperscalers bar: ~5% -->
+            <rect x="120" y="140" width="73" height="42" fill="#0B1F3A" opacity="0.55"/>
+            <text x="115" y="165" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="end">HYPERSCALERS</text>
+            <text x="203" y="165" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#0B1F3A">+5% YTD</text>
+            <text x="115" y="180" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="end" font-style="italic">MSFT/GOOG/META/AMZN avg</text>
+            <!-- 19pp spread bracket -->
+            <line x1="195" y1="195" x2="468" y2="195" stroke="#A12B2B" stroke-width="1.2"/>
+            <line x1="195" y1="190" x2="195" y2="200" stroke="#A12B2B" stroke-width="1.2"/>
+            <line x1="468" y1="190" x2="468" y2="200" stroke="#A12B2B" stroke-width="1.2"/>
+            <text x="332" y="210" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#A12B2B" text-anchor="middle">19 percentage-point spread</text>
+          </svg>
+          <p class="chart-caption">Semiconductor EPS has grown faster than hyperscaler EPS in 2026 because AI spending is paid up the supply chain &mdash; chips, memory, networking, custom silicon &mdash; before it shows up in cloud revenue. Investors are buying the suppliers, not the spenders. Source: J.P. Morgan Asset Management, 1Q26 Earnings Bulletin.</p>
+        </figure>
+
         <p>The most important question this week is not simply whether the market is going up. It is why the market is going up. That answer is more nuanced than the index chart suggests.</p>
         <p>If someone only looked at the major indices, they could reasonably conclude that investors are still trading a soft landing. Earnings are better than feared, the labor market has not rolled over, and the AI capex cycle remains one of the cleanest growth stories available. That is all true. But the market underneath is telling a more selective story. Semiconductors have become the release valve for investors who still want growth exposure but do not want to own everything tied to the old economic cycle.</p>
         <p>J.P. Morgan notes that semiconductors are up 24% year to date and have outperformed hyperscalers by 19 percentage points, while semiconductor EPS has grown far faster than hyperscaler EPS as AI spending flows down the supply chain.<sup class="fn-ref"><a href="#fn1" id="fnref1b">1</a></sup> That does not make the rally fake. It makes the rally specific. Investors are not buying every cyclical business because they think the economy is reaccelerating. They are buying the parts of the market where demand is still being driven by a structural investment cycle rather than by the next consumer spending print.</p>
@@ -204,6 +313,43 @@
 
       <section class="pitch-section" id="macro-cooling">
         <h2>The macro data are cooling, not collapsing</h2>
+
+        <figure class="article-chart">
+          <p class="chart-title">Chart 3 &mdash; April ISM Services breakdown</p>
+          <p class="chart-headline">Headline still in expansion; new orders rolled hard; prices stuck at multi-year high</p>
+          <svg class="chart-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" aria-label="ISM Services PMI April 2026 sub-indices">
+            <line x1="80" y1="270" x2="700" y2="270" stroke="#1A1F2E" stroke-width="1"/>
+            <line x1="80" y1="60" x2="80" y2="270" stroke="#1A1F2E" stroke-width="1"/>
+            <line x1="80" y1="186" x2="700" y2="186" stroke="#0B1F3A" stroke-width="1.5" stroke-dasharray="4,3"/>
+            <text x="700" y="183" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#0B1F3A" text-anchor="end">50 = expansion / contraction line</text>
+            <text x="72" y="64" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">80</text>
+            <text x="72" y="106" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">70</text>
+            <text x="72" y="148" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">60</text>
+            <text x="72" y="190" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">50</text>
+            <text x="72" y="232" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">40</text>
+            <line x1="80" y1="106" x2="700" y2="106" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <line x1="80" y1="148" x2="700" y2="148" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <line x1="80" y1="232" x2="700" y2="232" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <!-- Bar 1: Headline 53.6 (was 54.9 in March) -->
+            <rect x="140" y="135" width="120" height="135" fill="#5b7f6b" opacity="0.85"/>
+            <text x="200" y="125" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#0B1F3A" text-anchor="middle">53.6</text>
+            <text x="200" y="289" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="middle">HEADLINE</text>
+            <text x="200" y="303" font-family="Inter,sans-serif" font-size="9" fill="#3f5d4f" text-anchor="middle" font-style="italic">22 mo. expansion</text>
+            <!-- Bar 2: New Orders 53.5 (was 60.6) -->
+            <rect x="300" y="137" width="120" height="133" fill="#C9A961" opacity="0.92"/>
+            <text x="360" y="125" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#0B1F3A" text-anchor="middle">53.5</text>
+            <text x="360" y="113" font-family="Inter,sans-serif" font-size="9" fill="#A12B2B" text-anchor="middle" font-style="italic">&darr; from 60.6</text>
+            <text x="360" y="289" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#9E8240" text-anchor="middle">NEW ORDERS</text>
+            <text x="360" y="303" font-family="Inter,sans-serif" font-size="9" fill="#9E8240" text-anchor="middle" font-style="italic">pulled-forward March</text>
+            <!-- Bar 3: Prices 70.7 (highest since Oct 2022) -->
+            <rect x="460" y="65" width="120" height="205" fill="#A12B2B" opacity="0.85"/>
+            <text x="520" y="55" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#A12B2B" text-anchor="middle">70.7</text>
+            <text x="520" y="289" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#A12B2B" text-anchor="middle">PRICES</text>
+            <text x="520" y="303" font-family="Inter,sans-serif" font-size="9" fill="#A12B2B" text-anchor="middle" font-style="italic">highest since Oct &rsquo;22</text>
+          </svg>
+          <p class="chart-caption">All three readings are above 50 (still expansion), but the diagnosis is uncomfortable: the slowdown is real (new orders rolled 7 points), and disinflation is not cooperating (prices stuck at 70.7). That&rsquo;s the wrong combination for the Fed &mdash; growth slows but services inflation doesn&rsquo;t. Source: Institute for Supply Management, April 2026 release.</p>
+        </figure>
+
         <p>This week's data were not bad. They were just not clean enough to let investors relax.</p>
         <p>The ISM Services PMI came in at 53.6 for April, down slightly from March but still in expansion for the 22nd consecutive month.<sup class="fn-ref"><a href="#fn4" id="fnref4a">4</a></sup> Business activity rose to 55.9, which says the service economy is still moving, but new orders fell to 53.5 from 60.6, suggesting some of March's strength may have been pulled forward ahead of higher prices.<sup class="fn-ref"><a href="#fn4" id="fnref4b">4</a></sup></p>
         <p>The price line was the uncomfortable part. The ISM Services Prices Index held at 70.7, matching March and remaining at its highest level since October 2022, with diesel, gasoline, oil, and related costs among the most frequently cited sources of price pressure.<sup class="fn-ref"><a href="#fn4" id="fnref4c">4</a></sup> That is not the combination the Fed wants. Growth is slowing, but input costs are not giving policymakers a clean disinflation signal.</p>
@@ -214,6 +360,51 @@
 
       <section class="pitch-section" id="jobs-report">
         <h2>What we are looking for in Friday's jobs report</h2>
+
+        <figure class="article-chart">
+          <p class="chart-title">Chart 4 &mdash; Monthly nonfarm payrolls trajectory</p>
+          <p class="chart-headline">From a Feb 2026 contraction to March recovery to consensus 55k for April &mdash; the cooling trend is clear</p>
+          <svg class="chart-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" aria-label="Monthly nonfarm payrolls Jan-Apr 2026">
+            <line x1="80" y1="200" x2="700" y2="200" stroke="#1A1F2E" stroke-width="1"/>
+            <line x1="80" y1="40" x2="80" y2="280" stroke="#1A1F2E" stroke-width="1"/>
+            <text x="72" y="44" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">+200k</text>
+            <text x="72" y="84" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">+150k</text>
+            <text x="72" y="124" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">+100k</text>
+            <text x="72" y="164" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">+50k</text>
+            <text x="72" y="204" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">0</text>
+            <text x="72" y="244" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">&minus;50k</text>
+            <text x="72" y="284" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">&minus;100k</text>
+            <line x1="80" y1="84" x2="700" y2="84" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <line x1="80" y1="124" x2="700" y2="124" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <line x1="80" y1="164" x2="700" y2="164" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <line x1="80" y1="244" x2="700" y2="244" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <!-- Jan 2026: roughly +143k (placeholder) -->
+            <rect x="120" y="86" width="100" height="114" fill="#5b7f6b" opacity="0.7"/>
+            <text x="170" y="74" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">+143k</text>
+            <text x="170" y="298" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="middle">JAN</text>
+            <!-- Feb 2026: -133k (revised lower) -->
+            <rect x="240" y="200" width="100" height="106" fill="#A12B2B" opacity="0.85"/>
+            <text x="290" y="320" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#A12B2B" text-anchor="middle">-133k</text>
+            <text x="290" y="298" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="middle">FEB</text>
+            <text x="290" y="190" font-family="Inter,sans-serif" font-size="9" fill="#A12B2B" text-anchor="middle" font-style="italic">revised lower</text>
+            <!-- March 2026: +178k -->
+            <rect x="360" y="58" width="100" height="142" fill="#C9A961" opacity="0.92"/>
+            <text x="410" y="48" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">+178k</text>
+            <text x="410" y="298" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#9E8240" text-anchor="middle">MAR</text>
+            <!-- April 2026 estimate: +55k -->
+            <rect x="480" y="156" width="100" height="44" fill="#b56a3f" opacity="0.92" stroke="#b56a3f" stroke-width="2" stroke-dasharray="3,2"/>
+            <text x="530" y="146" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#b56a3f" text-anchor="middle">+55k est.</text>
+            <text x="530" y="298" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#b56a3f" text-anchor="middle">APR</text>
+            <text x="530" y="313" font-family="Inter,sans-serif" font-size="9" fill="#b56a3f" text-anchor="middle" font-style="italic">Friday print</text>
+            <!-- The cooling trend arrow -->
+            <text x="630" y="100" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A" text-anchor="middle">cooling</text>
+            <text x="630" y="113" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A" text-anchor="middle">trend</text>
+            <path d="M 600 130 Q 630 145 650 175" fill="none" stroke="#0B1F3A" stroke-width="2"/>
+            <polygon points="645,170 655,180 655,168" fill="#0B1F3A"/>
+          </svg>
+          <p class="chart-caption">Goldilocks for Friday is a print at or near +55k with stable 4.3% unemployment and clean revisions. Above +100k pressures yields and complicates Fed easing; below +20k or a negative print starts pricing in earnings recession risk. The market wants &ldquo;boring,&rdquo; not heroic. Source: BLS Establishment Survey, Investopedia consensus estimate.</p>
+        </figure>
+
         <p>The market wants Goldilocks, but Goldilocks has a narrower definition now.</p>
         <p>The ideal payroll report would show job growth close to consensus, unemployment steady at 4.3%, wage growth cooling but not collapsing, participation stable, and revisions that do not quietly rewrite the last two months lower. In plain English, the market wants evidence that employers are slowing hiring because they are cautious, not because demand is falling apart.</p>
         <p>The headline payroll number matters, but the revisions may matter more. March payrolls rose 178,000 after February was revised to a 133,000 loss, while January and February combined were revised 7,000 lower in the last report.<sup class="fn-ref"><a href="#fn3" id="fnref3b">3</a></sup> If April lands near consensus but prior months are revised sharply lower, the market may treat the report as weaker than the headline suggests.</p>
@@ -224,6 +415,53 @@
 
       <section class="pitch-section" id="off-consensus">
         <h2>What Wall Street might not be thinking about yet</h2>
+
+        <figure class="article-chart">
+          <p class="chart-title">Chart 5 &mdash; 2026 hyperscaler AI capex estimates</p>
+          <p class="chart-headline">From $527B (Goldman) to $700B (Fortune, 4 hyperscalers) &mdash; the bar keeps moving up</p>
+          <svg class="chart-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" aria-label="2026 hyperscaler AI capex estimates">
+            <line x1="80" y1="240" x2="700" y2="240" stroke="#1A1F2E" stroke-width="1"/>
+            <line x1="80" y1="40" x2="80" y2="240" stroke="#1A1F2E" stroke-width="1"/>
+            <text x="72" y="244" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">$0</text>
+            <text x="72" y="194" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">$200B</text>
+            <text x="72" y="144" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">$400B</text>
+            <text x="72" y="94" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">$600B</text>
+            <text x="72" y="44" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">$800B</text>
+            <line x1="80" y1="194" x2="700" y2="194" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <line x1="80" y1="144" x2="700" y2="144" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <line x1="80" y1="94" x2="700" y2="94" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+            <!-- 2024 actual ~ $230B -->
+            <rect x="130" y="183" width="80" height="57" fill="#5b7f6b" opacity="0.7"/>
+            <text x="170" y="178" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">~$230B</text>
+            <text x="170" y="258" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#0B1F3A" text-anchor="middle">2024A</text>
+            <!-- 2025 actual ~ $400B -->
+            <rect x="240" y="140" width="80" height="100" fill="#5b7f6b" opacity="0.85"/>
+            <text x="280" y="135" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">~$400B</text>
+            <text x="280" y="258" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#0B1F3A" text-anchor="middle">2025A</text>
+            <!-- 2026 Goldman est. $527B -->
+            <rect x="350" y="108" width="80" height="132" fill="#C9A961" opacity="0.92"/>
+            <text x="390" y="103" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">$527B</text>
+            <text x="390" y="258" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#9E8240" text-anchor="middle">2026E</text>
+            <text x="390" y="271" font-family="Inter,sans-serif" font-size="9" fill="#9E8240" text-anchor="middle" font-style="italic">Goldman</text>
+            <!-- 2026 Fortune est. $700B for 4 hyperscalers -->
+            <rect x="460" y="65" width="80" height="175" fill="#b56a3f" opacity="0.92"/>
+            <text x="500" y="60" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#b56a3f" text-anchor="middle">$700B</text>
+            <text x="500" y="258" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#b56a3f" text-anchor="middle">2026E</text>
+            <text x="500" y="271" font-family="Inter,sans-serif" font-size="9" fill="#b56a3f" text-anchor="middle" font-style="italic">Fortune (top 4)</text>
+            <!-- Data center capacity callout -->
+            <rect x="570" y="65" width="125" height="175" fill="#0B1F3A" opacity="0.95" rx="6"/>
+            <text x="632" y="92" font-family="Inter,sans-serif" font-size="9" fill="#c9a961" text-anchor="middle" font-weight="600" letter-spacing="0.05em">RELATED</text>
+            <text x="632" y="115" font-family="Inter,sans-serif" font-size="11" fill="#fbf7ef" text-anchor="middle" font-weight="700">Data center</text>
+            <text x="632" y="130" font-family="Inter,sans-serif" font-size="11" fill="#fbf7ef" text-anchor="middle" font-weight="700">capacity</text>
+            <text x="632" y="160" font-family="Inter,sans-serif" font-size="13" fill="#c9a961" text-anchor="middle" font-weight="700">24 GW</text>
+            <text x="632" y="175" font-family="Inter,sans-serif" font-size="9" fill="#fbf7ef" text-anchor="middle">2026</text>
+            <text x="632" y="192" font-family="Inter,sans-serif" font-size="14" fill="#c9a961" text-anchor="middle" font-weight="700">&rarr;</text>
+            <text x="632" y="215" font-family="Inter,sans-serif" font-size="13" fill="#c9a961" text-anchor="middle" font-weight="700">110 GW</text>
+            <text x="632" y="230" font-family="Inter,sans-serif" font-size="9" fill="#fbf7ef" text-anchor="middle">by 2030</text>
+          </svg>
+          <p class="chart-caption">Two estimates because they measure different things: Goldman&rsquo;s $527B is total AI infrastructure investment globally; Fortune&rsquo;s $700B is the four largest US hyperscalers (MSFT, GOOG, META, AMZN) combined. Both numbers up materially YoY. The data-center electrical-equipment market goes from $20B to $65B by 2030 (Wood Mackenzie). The AI trade is moving from chips into power, grid, and physical infrastructure. Source: Goldman Sachs, Fortune, Wood Mackenzie.</p>
+        </figure>
+
         <p>The consensus debate is still too focused on whether Friday's number is good or bad. The better question is what kind of good or bad the market can actually absorb.</p>
         <p><strong>Issue one: a soft print is not automatically bullish.</strong> A modest miss with stable unemployment, cooler wages, and clean revisions probably helps the soft-landing narrative. A weak print with rising unemployment, lower hours, and ugly revisions becomes an earnings risk before it becomes a Fed-cut story.</p>
         <p><strong>Issue two: semiconductors are carrying more than just the tech trade.</strong> They are carrying the market's belief that a structural AI cycle can overpower cyclical cooling. That belief is reasonable, but it is not risk-free. Goldman Sachs estimates that consensus 2026 hyperscaler capex has moved up to 527 billion dollars, while Fortune reports that Alphabet, Amazon, Meta, and Microsoft are projected to surpass 700 billion dollars of combined 2026 capex.<sup class="fn-ref"><a href="#fn8" id="fnref8a">8</a></sup><sup class="fn-ref"><a href="#fn9" id="fnref9a">9</a></sup> Those numbers support the thesis, but they also raise the bar. Once the market prices in a durable boom, &ldquo;still spending&rdquo; may not be enough. Investors will eventually ask who earns the return on that spending.</p>
@@ -233,6 +471,61 @@
 
       <section class="pitch-section" id="investment-thesis">
         <h2>Investment thesis</h2>
+
+        <figure class="article-chart">
+          <p class="chart-title">Chart 6 &mdash; Where to be positioned</p>
+          <p class="chart-headline">Three lenses for sector picks: AI exposure, earnings durability, balance-sheet strength</p>
+          <svg class="chart-svg" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" aria-label="Sector positioning matrix">
+            <text x="50" y="34" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#1D7A4F" letter-spacing="0.06em">OVERWEIGHT</text>
+            <line x1="50" y1="42" x2="350" y2="42" stroke="#1D7A4F" stroke-width="1.5"/>
+            <!-- OW: Semis / AI -->
+            <rect x="50" y="55" width="300" height="32" fill="#C9A961" opacity="0.92"/>
+            <text x="60" y="76" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A">Semis / AI infrastructure</text>
+            <text x="340" y="76" font-family="Inter,sans-serif" font-size="10" fill="#9E8240" text-anchor="end" font-style="italic">MU, NVDA, AMD, AVGO</text>
+            <!-- OW: Power & electrical -->
+            <rect x="50" y="92" width="280" height="32" fill="#C9A961" opacity="0.85"/>
+            <text x="60" y="113" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A">Power &amp; electrical equipment</text>
+            <text x="320" y="113" font-family="Inter,sans-serif" font-size="10" fill="#9E8240" text-anchor="end" font-style="italic">grid, transformers, cooling</text>
+            <!-- OW: Cybersecurity -->
+            <rect x="50" y="129" width="240" height="32" fill="#C9A961" opacity="0.78"/>
+            <text x="60" y="150" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A">Cybersecurity</text>
+            <text x="280" y="150" font-family="Inter,sans-serif" font-size="10" fill="#9E8240" text-anchor="end" font-style="italic">durable demand, sticky</text>
+            <!-- OW: Defense -->
+            <rect x="50" y="166" width="220" height="32" fill="#C9A961" opacity="0.72"/>
+            <text x="60" y="187" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A">Defense</text>
+            <text x="260" y="187" font-family="Inter,sans-serif" font-size="10" fill="#9E8240" text-anchor="end" font-style="italic">geopolitical premium</text>
+            <!-- OW: Quality healthcare -->
+            <rect x="50" y="203" width="200" height="32" fill="#C9A961" opacity="0.65"/>
+            <text x="60" y="224" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A">Quality healthcare</text>
+            <text x="240" y="224" font-family="Inter,sans-serif" font-size="10" fill="#9E8240" text-anchor="end" font-style="italic">defensive growth</text>
+            <text x="50" y="262" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#A12B2B" letter-spacing="0.06em">UNDERWEIGHT</text>
+            <line x1="50" y1="270" x2="350" y2="270" stroke="#A12B2B" stroke-width="1.5"/>
+            <!-- UW: Broad cyclicals -->
+            <rect x="50" y="283" width="220" height="32" fill="#A12B2B" opacity="0.45"/>
+            <text x="60" y="304" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#A12B2B">Broad cyclicals</text>
+            <text x="260" y="304" font-family="Inter,sans-serif" font-size="10" fill="#A12B2B" text-anchor="end" font-style="italic">consumer-led, GDP-tied</text>
+            <!-- UW: Rate-sensitive growth -->
+            <rect x="50" y="320" width="180" height="32" fill="#A12B2B" opacity="0.38"/>
+            <text x="60" y="341" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#A12B2B">Rate-sensitive growth</text>
+            <text x="220" y="341" font-family="Inter,sans-serif" font-size="10" fill="#A12B2B" text-anchor="end" font-style="italic">unprofitable, high-beta</text>
+            <!-- Right column: framework -->
+            <rect x="400" y="55" width="290" height="296" fill="#0B1F3A" opacity="0.95" rx="6"/>
+            <text x="545" y="84" font-family="Inter,sans-serif" font-size="10" fill="#c9a961" text-anchor="middle" font-weight="600" letter-spacing="0.1em">THREE-FILTER FRAMEWORK</text>
+            <text x="420" y="118" font-family="Inter,sans-serif" font-size="13" fill="#fbf7ef" font-weight="700">1. Durable earnings</text>
+            <text x="420" y="138" font-family="Inter,sans-serif" font-size="11" fill="rgba(251,247,239,0.78)">Doesn&rsquo;t require a perfect macro backdrop</text>
+            <text x="420" y="170" font-family="Inter,sans-serif" font-size="13" fill="#fbf7ef" font-weight="700">2. Balance-sheet flexibility</text>
+            <text x="420" y="190" font-family="Inter,sans-serif" font-size="11" fill="rgba(251,247,239,0.78)">Higher-for-longer punishes need-cheap-capital</text>
+            <text x="420" y="222" font-family="Inter,sans-serif" font-size="13" fill="#fbf7ef" font-weight="700">3. Structural demand drivers</text>
+            <text x="420" y="242" font-family="Inter,sans-serif" font-size="11" fill="rgba(251,247,239,0.78)">Not dependent on next quarter&rsquo;s GDP print</text>
+            <line x1="420" y1="270" x2="670" y2="270" stroke="rgba(201,169,97,0.4)" stroke-width="1"/>
+            <text x="420" y="295" font-family="Inter,sans-serif" font-size="12" fill="#c9a961" font-weight="700">If 3-of-3:</text>
+            <text x="420" y="313" font-family="Inter,sans-serif" font-size="11" fill="#fbf7ef">overweight</text>
+            <text x="420" y="333" font-family="Inter,sans-serif" font-size="12" fill="#c9a961" font-weight="700">If 0-of-3:</text>
+            <text x="420" y="351" font-family="Inter,sans-serif" font-size="11" fill="#fbf7ef">avoid</text>
+          </svg>
+          <p class="chart-caption">The framework is selectivity, not avoidance. Bar length reflects conviction within the overweight (and underweight) buckets. Semis and AI infrastructure remain the cleanest expression of the three filters; broad cyclicals fail two of three at this point in the cycle. Source: author framework, J.P. Morgan house view, Wood Mackenzie data center research.</p>
+        </figure>
+
         <p>The investment thesis is that this is still a constructive market, but it is no longer an easy market. The index can grind higher if the labor market cools in an orderly way and earnings estimates remain intact. But the leadership profile argues for selectivity rather than broad risk-taking.</p>
         <p>Our view is that broad market beta is less compelling than exposure to companies with three traits. First, <strong>durable earnings</strong> that do not require a perfect macro backdrop. Second, <strong>balance-sheet flexibility</strong>, because higher-for-longer rates punish businesses that need cheap capital to defend growth. Third, <strong>structural demand drivers</strong> that are not fully dependent on the next quarter of GDP.</p>
         <p>AI infrastructure still fits that framework, especially semiconductors, memory, networking, custom silicon, and power-related beneficiaries. MU remains one of the cleaner ways to express the memory and HBM part of the AI trade. NVDA remains the compute anchor. AMD remains the earnings-sensitive challenger. AVGO remains important because custom silicon and connectivity are becoming more central as hyperscalers try to improve cost and performance across the stack.</p>
@@ -301,6 +594,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=42" defer></script>
+  <script src="script.js?v=43" defer></script>
 </body>
 </html>
