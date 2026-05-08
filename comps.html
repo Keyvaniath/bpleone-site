@@ -77,9 +77,47 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
 .howworks p { color: var(--text); margin-bottom: 12px; max-width: 800px; }
 .howworks p strong { color: var(--accent); }
 .disclaimer { margin-top: 30px; font-size: 13px; color: var(--text-faint); font-style: italic; }
+
+.comps-topbar {
+  max-width: 1080px;
+  margin: 0 auto 28px;
+  padding: 0 0 18px;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  border-bottom: 1px solid var(--rule);
+  font-family: 'Inter', sans-serif;
+  flex-wrap: wrap;
+}
+.comps-back {
+  display: inline-flex; align-items: center; gap: .5rem;
+  text-decoration: none; color: var(--text);
+  font-weight: 600; font-size: 14px; letter-spacing: .02em;
+}
+.comps-back-arrow { color: var(--accent); font-size: 18px; transition: transform .15s ease; }
+.comps-back:hover { color: var(--accent); }
+.comps-back:hover .comps-back-arrow { transform: translateX(-3px); }
+.comps-nav { display: flex; flex-wrap: wrap; gap: .25rem 1.4rem; font-size: 14px; }
+.comps-nav a { text-decoration: none; color: var(--text-muted); }
+.comps-nav a:hover { color: var(--accent); }
+@media (max-width: 640px) {
+  .comps-topbar { gap: 12px; }
+  .comps-nav { gap: .25rem 1rem; font-size: 13px; }
+}
 </style>
 </head>
-<body>
+<body spellcheck="false">
+<header class="comps-topbar">
+  <a class="comps-back" href="index.html" aria-label="Back to Brandon Leon home">
+    <span class="comps-back-arrow">&larr;</span>
+    <span class="comps-back-text">Brandon Leon</span>
+  </a>
+  <nav class="comps-nav" aria-label="Primary">
+    <a href="index.html">Home</a>
+    <a href="toolkit.html">Toolkit</a>
+    <a href="reports.html">Reports</a>
+    <a href="research.html">Research</a>
+    <a href="writing.html">Writing</a>
+  </nav>
+</header>
 <div class="container">
   <div class="kicker">TOOLKIT · TRADING COMPS</div>
   <h1>Trading Comps Calculator</h1>
@@ -91,20 +129,20 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
       <h2>Inputs</h2>
 
       <div class="subgroup-title" style="margin-top:0;">Target</div>
-      <div class="row"><div class="lbl">Ticker</div><input type="text" id="ticker" value="MU"></div>
-      <div class="row"><div class="lbl">Current price ($)</div><input type="number" id="price" value="110.00" step="0.01"></div>
-      <div class="row"><div class="lbl">Diluted shares (mm)</div><input type="number" id="shares" value="1126"></div>
-      <div class="row"><div class="lbl">Net debt ($mm)</div><input type="number" id="netDebt" value="-6600"></div>
+      <div class="row"><div class="lbl">Ticker</div><input type="text" id="ticker" value="MU" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+      <div class="row"><div class="lbl">Current price ($)</div><input type="number" id="price" value="110.00" step="0.01" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+      <div class="row"><div class="lbl">Diluted shares (mm)</div><input type="number" id="shares" value="1126" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+      <div class="row"><div class="lbl">Net debt ($mm)</div><input type="number" id="netDebt" value="-6600" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
 
       <div class="subgroup">
         <div class="subgroup-title">Target metrics ($mm except EPS)</div>
-        <div class="row"><div class="lbl">LTM Revenue</div><input type="number" id="revLTM" value="58000"></div>
-        <div class="row"><div class="lbl">FY1E Revenue</div><input type="number" id="revFY1" value="95000"></div>
-        <div class="row"><div class="lbl">LTM EBITDA</div><input type="number" id="ebitdaLTM" value="18740"></div>
-        <div class="row"><div class="lbl">FY1E EBITDA</div><input type="number" id="ebitdaFY1" value="32500"></div>
-        <div class="row"><div class="lbl">LTM EPS ($)</div><input type="number" id="epsLTM" value="19.81" step="0.01"></div>
-        <div class="row"><div class="lbl">FY1E EPS ($)</div><input type="number" id="epsFY1" value="56.00" step="0.01"></div>
-        <div class="row"><div class="lbl">Book value / share ($)</div><input type="number" id="bvps" value="32" step="0.01"></div>
+        <div class="row"><div class="lbl">LTM Revenue</div><input type="number" id="revLTM" value="58000" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+        <div class="row"><div class="lbl">FY1E Revenue</div><input type="number" id="revFY1" value="95000" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+        <div class="row"><div class="lbl">LTM EBITDA</div><input type="number" id="ebitdaLTM" value="18740" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+        <div class="row"><div class="lbl">FY1E EBITDA</div><input type="number" id="ebitdaFY1" value="32500" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+        <div class="row"><div class="lbl">LTM EPS ($)</div><input type="number" id="epsLTM" value="19.81" step="0.01" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+        <div class="row"><div class="lbl">FY1E EPS ($)</div><input type="number" id="epsFY1" value="56.00" step="0.01" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+        <div class="row"><div class="lbl">Book value / share ($)</div><input type="number" id="bvps" value="32" step="0.01" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
       </div>
 
       <div class="subgroup">
@@ -115,12 +153,12 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
           <div class="lbl-sm">Median</div>
           <div class="lbl-sm">75th</div>
         </div>
-        <div class="row three"><div class="lbl">EV / Revenue LTM</div><input type="number" id="evRev_lo" value="4.4" step="0.1"><input type="number" id="evRev_med" value="9.4" step="0.1"><input type="number" id="evRev_hi" value="12.6" step="0.1"></div>
-        <div class="row three"><div class="lbl">EV / EBITDA LTM</div><input type="number" id="evEbitda_lo" value="14.5" step="0.1"><input type="number" id="evEbitda_med" value="22.5" step="0.1"><input type="number" id="evEbitda_hi" value="27.6" step="0.1"></div>
-        <div class="row three"><div class="lbl">EV / EBITDA FY1E</div><input type="number" id="evEbitdaF_lo" value="12.7" step="0.1"><input type="number" id="evEbitdaF_med" value="15.2" step="0.1"><input type="number" id="evEbitdaF_hi" value="22.0" step="0.1"></div>
-        <div class="row three"><div class="lbl">P / E LTM</div><input type="number" id="peLTM_lo" value="18.9" step="0.1"><input type="number" id="peLTM_med" value="28.4" step="0.1"><input type="number" id="peLTM_hi" value="47.5" step="0.1"></div>
-        <div class="row three"><div class="lbl">P / E FY1E</div><input type="number" id="peFY1_lo" value="18.7" step="0.1"><input type="number" id="peFY1_med" value="24.2" step="0.1"><input type="number" id="peFY1_hi" value="36.9" step="0.1"></div>
-        <div class="row three"><div class="lbl">P / Book</div><input type="number" id="pb_lo" value="3.6" step="0.1"><input type="number" id="pb_med" value="6.1" step="0.1"><input type="number" id="pb_hi" value="20.0" step="0.1"></div>
+        <div class="row three"><div class="lbl">EV / Revenue LTM</div><input type="number" id="evRev_lo" value="4.4" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"><input type="number" id="evRev_med" value="9.4" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"><input type="number" id="evRev_hi" value="12.6" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+        <div class="row three"><div class="lbl">EV / EBITDA LTM</div><input type="number" id="evEbitda_lo" value="14.5" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"><input type="number" id="evEbitda_med" value="22.5" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"><input type="number" id="evEbitda_hi" value="27.6" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+        <div class="row three"><div class="lbl">EV / EBITDA FY1E</div><input type="number" id="evEbitdaF_lo" value="12.7" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"><input type="number" id="evEbitdaF_med" value="15.2" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"><input type="number" id="evEbitdaF_hi" value="22.0" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+        <div class="row three"><div class="lbl">P / E LTM</div><input type="number" id="peLTM_lo" value="18.9" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"><input type="number" id="peLTM_med" value="28.4" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"><input type="number" id="peLTM_hi" value="47.5" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+        <div class="row three"><div class="lbl">P / E FY1E</div><input type="number" id="peFY1_lo" value="18.7" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"><input type="number" id="peFY1_med" value="24.2" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"><input type="number" id="peFY1_hi" value="36.9" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
+        <div class="row three"><div class="lbl">P / Book</div><input type="number" id="pb_lo" value="3.6" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"><input type="number" id="pb_med" value="6.1" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"><input type="number" id="pb_hi" value="20.0" step="0.1" spellcheck="false" autocomplete="off" autocapitalize="off"></div>
       </div>
     </div>
 
