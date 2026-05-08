@@ -500,6 +500,7 @@
     loadHeadlinesForFirstPick();
     loadSnapshotForFirstPick();
     loadLeadPickSpark();
+    loadLeadPickPreviousClose();
   }
 
   // -----------------------------------------------------------------------
@@ -836,6 +837,43 @@
         refreshLeadPickChange(values);
       })
       .catch(function () { /* leave placeholder */ });
+  }
+
+  // Derive yesterday's close (previousClose) for the lead pick by fetching
+  // a 5-day spark. The Cloudflare Worker currently does not pass Yahoo's
+  // regularMarketPreviousClose field through, so we walk backward through
+  // the timestamped 5-day intraday data to find the last bar that's NOT
+  // from today — that's the most recent prior-session close. Sets
+  // latestLeadPickQuote.previousClose and triggers a label refresh.
+  function loadLeadPickPreviousClose() {
+    if (!WATCHLIST.length) return;
+    var sym = WATCHLIST[0].sym;
+    fetch(WORKER_URL + '?spark=' + encodeURIComponent(sym) + '&range=5d&withDates=1')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        var entry = data && data[sym];
+        if (!entry || !entry.values || !entry.timestamps) return;
+        var values = entry.values;
+        var timestamps = entry.timestamps;
+        if (values.length !== timestamps.length || values.length < 2) return;
+        var todayDate = new Date().toDateString();
+        var prevClose = null;
+        for (var i = values.length - 1; i >= 0; i--) {
+          var v = values[i];
+          var ts = timestamps[i];
+          if (!isFinite(v) || !ts) continue;
+          var d = new Date(ts * 1000);
+          if (d.toDateString() !== todayDate) {
+            prevClose = v;
+            break;
+          }
+        }
+        if (!isFinite(prevClose)) return;
+        if (!latestLeadPickQuote) latestLeadPickQuote = { price: NaN, previousClose: prevClose };
+        else latestLeadPickQuote.previousClose = prevClose;
+        refreshLeadPickChange();
+      })
+      .catch(function () { /* keep prior state */ });
   }
 
   // Hover overlay markup: a vertical crosshair line, a dot marker, and a
