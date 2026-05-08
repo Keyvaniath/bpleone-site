@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=44" />
+  <link rel="stylesheet" href="style.css?v=45" />
 
   <style>
     /* ============== Research page local styles ==============
@@ -346,24 +346,24 @@
       <h1>Free data stack for a cyclicals research site.</h1>
       <p class="lede">
         The blueprint behind the dashboards on this site. Seven
-        verticals &mdash; <strong>semis, energy, shipping &amp; trade,
-        macro demand, economic calendar / policy, rates / FX / credit,
-        and valuation reference</strong> &mdash; built entirely on free,
-        automatable public data. APIs, CSVs, Excel drops, stable HTML
-        pages &mdash; no Bloomberg, no FactSet, no Daloopa, no paid
-        shipping feeds. This page documents every source, the widget it
-        feeds, the MVP API stack to start with, and the cycle-score
-        formulas on top.
+        verticals laid out top-down &mdash; <strong>rates / FX / credit,
+        economic calendar / policy, semis, oil &amp; energy, shipping
+        &amp; trade, macro demand, and valuation reference</strong>
+        &mdash; built entirely on free, automatable public data. APIs,
+        CSVs, Excel drops, stable HTML pages &mdash; no Bloomberg, no
+        FactSet, no Daloopa, no paid shipping feeds. This page documents
+        every source, the widget it feeds, the MVP API stack to start
+        with, and the cycle-score formulas on top.
       </p>
       <nav class="toc" aria-label="On this page">
         <p class="toc-title">On this page</p>
         <ul>
-          <li><a href="#oil">Oil &amp; energy sources</a></li>
+          <li><a href="#rates">Rates, FX &amp; credit</a></li>
+          <li><a href="#calendar">Economic calendar &amp; policy</a></li>
           <li><a href="#semis">Semiconductor sources</a></li>
+          <li><a href="#oil">Oil &amp; energy sources</a></li>
           <li><a href="#shipping">Shipping &amp; trade sources</a></li>
           <li><a href="#macro">Macro / demand sources</a></li>
-          <li><a href="#calendar">Economic calendar &amp; policy</a></li>
-          <li><a href="#rates">Rates, FX &amp; credit</a></li>
           <li><a href="#valuation">Valuation reference (Damodaran)</a></li>
           <li><a href="#widgets">Widget blueprint</a></li>
           <li><a href="#mvp">MVP source stack</a></li>
@@ -372,10 +372,61 @@
       </nav>
     </header>
 
-    <!-- ============== OIL ============== -->
-    <section class="vertical-section" id="oil">
-      <h2>Oil &amp; energy</h2>
-      <p class="vertical-sub">Prices, U.S. inventory data, refining throughput, global supply/demand, and speculative positioning. The energy cycle dashboard is the cleanest to fully automate.</p>
+    <!-- ============== RATES, FX & CREDIT ============== -->
+    <section class="vertical-section" id="rates">
+      <h2>Rates, FX &amp; credit</h2>
+      <p class="vertical-sub">The cross-asset backdrop. Treasury yield curve, key FX pairs, credit spreads, and inflation-linked yields &mdash; the cost-of-capital and risk-appetite layer that prices every cyclical equity story underneath.</p>
+
+      <!-- Live rates & FX strip — pulled via the bpleon-quotes worker -->
+      <div class="rates-strip" id="rates-live-strip" aria-label="Live rates and FX snapshot">
+        <p class="strip-title">
+          <span>Live snapshot &mdash; Yahoo data via worker</span>
+          <span class="strip-meta">Auto-pulls on load &middot; ~1y daily history</span>
+        </p>
+        <div class="strip-grid">
+          <div class="rates-card">
+            <div class="rc-label"><span>10-yr Treasury</span><span class="rc-sym">^TNX</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="^TNX" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>30-yr Treasury</span><span class="rc-sym">^TYX</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="^TYX" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>13-wk T-bill</span><span class="rc-sym">^IRX</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="^IRX" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>Dollar Index</span><span class="rc-sym">DX-Y.NYB</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="DX-Y.NYB" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>EUR / USD</span><span class="rc-sym">EURUSD=X</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="EURUSD=X" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>USD / JPY</span><span class="rc-sym">USDJPY=X</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="USDJPY=X" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>VIX</span><span class="rc-sym">^VIX</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="^VIX" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>HY credit (HYG)</span><span class="rc-sym">HYG</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="HYG" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+        </div>
+      </div>
+
       <div class="source-table-wrap">
         <table class="source-table">
           <thead>
@@ -388,58 +439,120 @@
           </thead>
           <tbody>
             <tr>
-              <td class="src-name"><a href="https://www.eia.gov/opendata/" target="_blank" rel="noopener">EIA API</a></td>
+              <td class="src-name"><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026" target="_blank" rel="noopener">U.S. Treasury Daily Yield Curve</a></td>
+              <td><span class="pill-method web">Public page / CSV</span></td>
+              <td>Daily 1M / 3M / 6M / 1Y / 2Y / 3Y / 5Y / 7Y / 10Y / 20Y / 30Y constant-maturity yields</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-yield-curve">Yield curve tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://fred.stlouisfed.org/categories/22" target="_blank" rel="noopener">FRED &mdash; Interest Rates</a></td>
               <td><span class="pill-method api">API &middot; free key</span></td>
-              <td>WTI/Brent, crude inventories, gasoline/distillate stocks, refinery utilization, product supplied, imports/exports</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-oil-dashboard">Oil dashboard</a>, <a href="#w-inventory-surprise">Inventory surprise dashboard</a>, <a href="#w-refining-margin">Refining margin proxy</a>, <a href="#w-xom-driver">XOM driver bridge</a></td>
+              <td>DGS10, DGS2, DFF (Fed funds), T10Y2Y / T10Y3M (curve spreads), SOFR, IORB</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-yield-curve">Yield curve tracker</a>, <a href="#w-curve-spreads">Curve spread tracker</a></td>
             </tr>
             <tr>
-              <td class="src-name"><a href="https://www.eia.gov/petroleum/supply/weekly/" target="_blank" rel="noopener">EIA Weekly Petroleum Status Report</a></td>
-              <td><span class="pill-method web">Web / API</span></td>
-              <td>Weekly U.S. crude, gasoline, distillate, refinery, demand data</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-inventory-surprise">Inventory surprise dashboard</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://fred.stlouisfed.org/series/DCOILWTICO" target="_blank" rel="noopener">FRED &mdash; WTI / Brent series</a></td>
+              <td class="src-name"><a href="https://fred.stlouisfed.org/series/T10YIE" target="_blank" rel="noopener">FRED &mdash; TIPS breakevens (T10YIE, T5YIFR)</a></td>
               <td><span class="pill-method api">API &middot; free key</span></td>
-              <td>WTI, Brent, macro/industrial series</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-oil-dashboard">Oil dashboard</a>, <a href="#w-refining-margin">Refining margin proxy</a></td>
+              <td>10-yr breakeven inflation, 5y5y forward inflation, real yields</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-breakevens">TIPS / breakevens tracker</a></td>
             </tr>
             <tr>
-              <td class="src-name"><a href="https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm" target="_blank" rel="noopener">CFTC Commitments of Traders</a></td>
-              <td><span class="pill-method api">API / CSV</span></td>
-              <td>Managed-money crude positioning, net longs/shorts</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-positioning">Positioning dashboard</a></td>
+              <td class="src-name"><a href="https://fred.stlouisfed.org/series/BAMLH0A0HYM2" target="_blank" rel="noopener">ICE BofA HY OAS &amp; IG OAS via FRED</a></td>
+              <td><span class="pill-method api">API &middot; free key</span></td>
+              <td>BAMLH0A0HYM2 (HY OAS), BAMLC0A0CM (IG OAS) &mdash; the cleanest free read on credit conditions</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-credit-spreads">Credit spreads tracker</a></td>
             </tr>
             <tr>
-              <td class="src-name"><a href="https://www.jodidata.org/oil/" target="_blank" rel="noopener">JODI Oil Database</a></td>
-              <td><span class="pill-method csv">CSV downloads</span></td>
-              <td>Country-level oil production, demand, stocks</td>
-              <td class="site-use"><span class="context">Context layer &mdash; global supply/demand cross-check, no dedicated widget</span></td>
+              <td class="src-name"><a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener">ECB Euro Reference Exchange Rates</a></td>
+              <td><span class="pill-method csv">CSV / API</span></td>
+              <td>Daily EUR cross-rates against ~30 currencies, full history</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fx">FX tracker</a></td>
             </tr>
             <tr>
-              <td class="src-name"><a href="https://www.opec.org/opec_web/en/publications/202.htm" target="_blank" rel="noopener">OPEC MOMR</a></td>
-              <td><span class="pill-method pdf">PDF / manual</span></td>
-              <td>OPEC supply, demand forecasts, inventory commentary</td>
-              <td class="site-use"><span class="context">Context layer &mdash; monthly narrative input, no dedicated widget</span></td>
+              <td class="src-name"><a href="https://www.federalreserve.gov/releases/h10/" target="_blank" rel="noopener">Federal Reserve H.10 FX Rates</a></td>
+              <td><span class="pill-method csv">CSV / web</span></td>
+              <td>Daily / weekly / monthly USD vs. major and broad indexes; foreign-exchange rates by country</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fx">FX tracker</a></td>
             </tr>
             <tr>
-              <td class="src-name"><a href="https://bakerhughesrigcount.gcs-web.com/rig-count-overview" target="_blank" rel="noopener">Baker Hughes Rig Count</a></td>
-              <td><span class="pill-method web">Public weekly page</span></td>
-              <td>U.S. and international weekly rig count by basin and oil/gas split &mdash; the cleanest free supply-side leading indicator</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-rig-count">Rig count tracker</a>, <a href="#w-xom-driver">XOM driver bridge</a></td>
+              <td class="src-name"><a href="https://data.bis.org/topics/EER" target="_blank" rel="noopener">BIS Effective Exchange Rates</a></td>
+              <td><span class="pill-method csv">CSV / API</span></td>
+              <td>Nominal and real effective exchange rates (NEER / REER) for ~60 economies</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fx">FX tracker</a></td>
             </tr>
             <tr>
-              <td class="src-name"><a href="https://www.eia.gov/outlooks/steo/" target="_blank" rel="noopener">EIA Short-Term Energy Outlook (STEO)</a></td>
-              <td><span class="pill-method csv">Excel / PDF / web</span></td>
-              <td>Monthly EIA forecasts: U.S. and global oil supply, demand, prices, inventories, refining margins</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-steo">STEO forecast tracker</a></td>
+              <td class="src-name"><a href="https://www.newyorkfed.org/markets/reference-rates/sofr" target="_blank" rel="noopener">NY Fed SOFR &amp; reference rates</a></td>
+              <td><span class="pill-method web">Public page / API</span></td>
+              <td>Daily SOFR, SOFR averages (30/90/180-day), Term SOFR context, OBFR, EFFR</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-yield-curve">Yield curve tracker</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== ECONOMIC CALENDAR & POLICY ============== -->
+    <section class="vertical-section" id="calendar">
+      <h2>Economic calendar &amp; policy reports</h2>
+      <p class="vertical-sub">When data prints, what central banks said, and what the multilateral institutions are forecasting. The schedule layer that anchors every other vertical &mdash; FOMC, CME FedWatch, BLS releases, ECB, IMF, World Bank.</p>
+      <div class="source-table-wrap">
+        <table class="source-table">
+          <thead>
+            <tr>
+              <th style="width:18%">Source</th>
+              <th style="width:13%">Method</th>
+              <th style="width:34%">What to track</th>
+              <th>Site use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="src-name"><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noopener">FOMC Calendar &amp; Statements</a></td>
+              <td><span class="pill-method web">Public page / PDF</span></td>
+              <td>FOMC meeting dates, statements, minutes (3-week lag), SEP / dot plot, press conference transcripts</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fomc">FOMC tracker</a></td>
             </tr>
             <tr>
-              <td class="src-name"><a href="https://www.iea.org/reports/oil-market-report-april-2026" target="_blank" rel="noopener">IEA Oil Market Report</a></td>
+              <td class="src-name"><a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html" target="_blank" rel="noopener">CME FedWatch Tool</a></td>
+              <td><span class="pill-method web">Public dashboard</span></td>
+              <td>Implied probability of FOMC moves at each upcoming meeting from Fed funds futures pricing</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fomc">FOMC tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.bls.gov/schedule/news_release/" target="_blank" rel="noopener">BLS Release Schedule</a></td>
+              <td><span class="pill-method web">Public calendar</span></td>
+              <td>Forward calendar of CPI, PPI, NFP, JOLTS, ECI, productivity, real earnings</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-data-calendar">Data release calendar</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html" target="_blank" rel="noopener">ECB Monetary Policy Calendar</a></td>
+              <td><span class="pill-method web">Public page</span></td>
+              <td>Governing Council meeting dates, statements, press conferences, SMA</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-cb-calendar">Global central bank calendar</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.treasurydirect.gov/auctions/auction-query/" target="_blank" rel="noopener">Treasury Auction Schedule</a></td>
+              <td><span class="pill-method web">Public page / API</span></td>
+              <td>Upcoming bill, note, bond, TIPS, FRN auction calendar with sizes; results post-auction</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-data-calendar">Data release calendar</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.imf.org/en/Publications/WEO" target="_blank" rel="noopener">IMF World Economic Outlook (WEO)</a></td>
+              <td><span class="pill-method csv">PDF / database</span></td>
+              <td>Twice-yearly global GDP, inflation, current-account, fiscal forecasts; full WEO database export</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-multilateral">Multilateral outlook tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.worldbank.org/en/publication/global-economic-prospects" target="_blank" rel="noopener">World Bank Global Economic Prospects</a></td>
               <td><span class="pill-method pdf">PDF / web</span></td>
-              <td>Monthly global oil balances, OECD inventories, demand forecasts (executive summary public)</td>
-              <td class="site-use"><span class="context">Context layer &mdash; cross-check vs. EIA STEO and OPEC MOMR</span></td>
+              <td>Twice-yearly global growth forecasts, EM/DM split, commodity outlook, downside-risk scenarios</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-multilateral">Multilateral outlook tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.bea.gov/news/schedule" target="_blank" rel="noopener">BEA Release Schedule</a></td>
+              <td><span class="pill-method web">Public calendar</span></td>
+              <td>Forward calendar of GDP advance/second/third, PCE, personal income, trade balance</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-data-calendar">Data release calendar</a></td>
             </tr>
           </tbody>
         </table>
@@ -514,6 +627,80 @@
               <td><span class="pill-method web">Public press</span></td>
               <td>Free smartphone / handset / memory / foundry market share press releases</td>
               <td class="site-use"><span class="context">Context layer &mdash; share / unit-volume cross-checks</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== OIL ============== -->
+    <section class="vertical-section" id="oil">
+      <h2>Oil &amp; energy</h2>
+      <p class="vertical-sub">Prices, U.S. inventory data, refining throughput, global supply/demand, and speculative positioning. The energy cycle dashboard is the cleanest to fully automate.</p>
+      <div class="source-table-wrap">
+        <table class="source-table">
+          <thead>
+            <tr>
+              <th style="width:18%">Source</th>
+              <th style="width:13%">Method</th>
+              <th style="width:34%">What to track</th>
+              <th>Site use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="src-name"><a href="https://www.eia.gov/opendata/" target="_blank" rel="noopener">EIA API</a></td>
+              <td><span class="pill-method api">API &middot; free key</span></td>
+              <td>WTI/Brent, crude inventories, gasoline/distillate stocks, refinery utilization, product supplied, imports/exports</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-oil-dashboard">Oil dashboard</a>, <a href="#w-inventory-surprise">Inventory surprise dashboard</a>, <a href="#w-refining-margin">Refining margin proxy</a>, <a href="#w-xom-driver">XOM driver bridge</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.eia.gov/petroleum/supply/weekly/" target="_blank" rel="noopener">EIA Weekly Petroleum Status Report</a></td>
+              <td><span class="pill-method web">Web / API</span></td>
+              <td>Weekly U.S. crude, gasoline, distillate, refinery, demand data</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-inventory-surprise">Inventory surprise dashboard</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://fred.stlouisfed.org/series/DCOILWTICO" target="_blank" rel="noopener">FRED &mdash; WTI / Brent series</a></td>
+              <td><span class="pill-method api">API &middot; free key</span></td>
+              <td>WTI, Brent, macro/industrial series</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-oil-dashboard">Oil dashboard</a>, <a href="#w-refining-margin">Refining margin proxy</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm" target="_blank" rel="noopener">CFTC Commitments of Traders</a></td>
+              <td><span class="pill-method api">API / CSV</span></td>
+              <td>Managed-money crude positioning, net longs/shorts</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-positioning">Positioning dashboard</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.jodidata.org/oil/" target="_blank" rel="noopener">JODI Oil Database</a></td>
+              <td><span class="pill-method csv">CSV downloads</span></td>
+              <td>Country-level oil production, demand, stocks</td>
+              <td class="site-use"><span class="context">Context layer &mdash; global supply/demand cross-check, no dedicated widget</span></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.opec.org/opec_web/en/publications/202.htm" target="_blank" rel="noopener">OPEC MOMR</a></td>
+              <td><span class="pill-method pdf">PDF / manual</span></td>
+              <td>OPEC supply, demand forecasts, inventory commentary</td>
+              <td class="site-use"><span class="context">Context layer &mdash; monthly narrative input, no dedicated widget</span></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://bakerhughesrigcount.gcs-web.com/rig-count-overview" target="_blank" rel="noopener">Baker Hughes Rig Count</a></td>
+              <td><span class="pill-method web">Public weekly page</span></td>
+              <td>U.S. and international weekly rig count by basin and oil/gas split &mdash; the cleanest free supply-side leading indicator</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-rig-count">Rig count tracker</a>, <a href="#w-xom-driver">XOM driver bridge</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.eia.gov/outlooks/steo/" target="_blank" rel="noopener">EIA Short-Term Energy Outlook (STEO)</a></td>
+              <td><span class="pill-method csv">Excel / PDF / web</span></td>
+              <td>Monthly EIA forecasts: U.S. and global oil supply, demand, prices, inventories, refining margins</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-steo">STEO forecast tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.iea.org/reports/oil-market-report-april-2026" target="_blank" rel="noopener">IEA Oil Market Report</a></td>
+              <td><span class="pill-method pdf">PDF / web</span></td>
+              <td>Monthly global oil balances, OECD inventories, demand forecasts (executive summary public)</td>
+              <td class="site-use"><span class="context">Context layer &mdash; cross-check vs. EIA STEO and OPEC MOMR</span></td>
             </tr>
           </tbody>
         </table>
@@ -668,193 +855,6 @@
       </div>
     </section>
 
-    <!-- ============== ECONOMIC CALENDAR & POLICY ============== -->
-    <section class="vertical-section" id="calendar">
-      <h2>Economic calendar &amp; policy reports</h2>
-      <p class="vertical-sub">When data prints, what central banks said, and what the multilateral institutions are forecasting. The schedule layer that anchors every other vertical &mdash; FOMC, CME FedWatch, BLS releases, ECB, IMF, World Bank.</p>
-      <div class="source-table-wrap">
-        <table class="source-table">
-          <thead>
-            <tr>
-              <th style="width:18%">Source</th>
-              <th style="width:13%">Method</th>
-              <th style="width:34%">What to track</th>
-              <th>Site use</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="src-name"><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noopener">FOMC Calendar &amp; Statements</a></td>
-              <td><span class="pill-method web">Public page / PDF</span></td>
-              <td>FOMC meeting dates, statements, minutes (3-week lag), SEP / dot plot, press conference transcripts</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fomc">FOMC tracker</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html" target="_blank" rel="noopener">CME FedWatch Tool</a></td>
-              <td><span class="pill-method web">Public dashboard</span></td>
-              <td>Implied probability of FOMC moves at each upcoming meeting from Fed funds futures pricing</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fomc">FOMC tracker</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://www.bls.gov/schedule/news_release/" target="_blank" rel="noopener">BLS Release Schedule</a></td>
-              <td><span class="pill-method web">Public calendar</span></td>
-              <td>Forward calendar of CPI, PPI, NFP, JOLTS, ECI, productivity, real earnings</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-data-calendar">Data release calendar</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html" target="_blank" rel="noopener">ECB Monetary Policy Calendar</a></td>
-              <td><span class="pill-method web">Public page</span></td>
-              <td>Governing Council meeting dates, statements, press conferences, SMA</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-cb-calendar">Global central bank calendar</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://www.treasurydirect.gov/auctions/auction-query/" target="_blank" rel="noopener">Treasury Auction Schedule</a></td>
-              <td><span class="pill-method web">Public page / API</span></td>
-              <td>Upcoming bill, note, bond, TIPS, FRN auction calendar with sizes; results post-auction</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-data-calendar">Data release calendar</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://www.imf.org/en/Publications/WEO" target="_blank" rel="noopener">IMF World Economic Outlook (WEO)</a></td>
-              <td><span class="pill-method csv">PDF / database</span></td>
-              <td>Twice-yearly global GDP, inflation, current-account, fiscal forecasts; full WEO database export</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-multilateral">Multilateral outlook tracker</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://www.worldbank.org/en/publication/global-economic-prospects" target="_blank" rel="noopener">World Bank Global Economic Prospects</a></td>
-              <td><span class="pill-method pdf">PDF / web</span></td>
-              <td>Twice-yearly global growth forecasts, EM/DM split, commodity outlook, downside-risk scenarios</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-multilateral">Multilateral outlook tracker</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://www.bea.gov/news/schedule" target="_blank" rel="noopener">BEA Release Schedule</a></td>
-              <td><span class="pill-method web">Public calendar</span></td>
-              <td>Forward calendar of GDP advance/second/third, PCE, personal income, trade balance</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-data-calendar">Data release calendar</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- ============== RATES, FX & CREDIT ============== -->
-    <section class="vertical-section" id="rates">
-      <h2>Rates, FX &amp; credit</h2>
-      <p class="vertical-sub">The cross-asset backdrop. Treasury yield curve, key FX pairs, credit spreads, and inflation-linked yields &mdash; the cost-of-capital and risk-appetite layer that prices every cyclical equity story underneath.</p>
-
-      <!-- Live rates & FX strip — pulled via the bpleon-quotes worker -->
-      <div class="rates-strip" id="rates-live-strip" aria-label="Live rates and FX snapshot">
-        <p class="strip-title">
-          <span>Live snapshot &mdash; Yahoo data via worker</span>
-          <span class="strip-meta">Auto-pulls on load &middot; ~1y daily history</span>
-        </p>
-        <div class="strip-grid">
-          <div class="rates-card">
-            <div class="rc-label"><span>10-yr Treasury</span><span class="rc-sym">^TNX</span></div>
-            <div class="rc-spark watch-spark loading" data-sym="^TNX" data-rates-card="1"></div>
-            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
-          </div>
-          <div class="rates-card">
-            <div class="rc-label"><span>30-yr Treasury</span><span class="rc-sym">^TYX</span></div>
-            <div class="rc-spark watch-spark loading" data-sym="^TYX" data-rates-card="1"></div>
-            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
-          </div>
-          <div class="rates-card">
-            <div class="rc-label"><span>13-wk T-bill</span><span class="rc-sym">^IRX</span></div>
-            <div class="rc-spark watch-spark loading" data-sym="^IRX" data-rates-card="1"></div>
-            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
-          </div>
-          <div class="rates-card">
-            <div class="rc-label"><span>Dollar Index</span><span class="rc-sym">DX-Y.NYB</span></div>
-            <div class="rc-spark watch-spark loading" data-sym="DX-Y.NYB" data-rates-card="1"></div>
-            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
-          </div>
-          <div class="rates-card">
-            <div class="rc-label"><span>EUR / USD</span><span class="rc-sym">EURUSD=X</span></div>
-            <div class="rc-spark watch-spark loading" data-sym="EURUSD=X" data-rates-card="1"></div>
-            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
-          </div>
-          <div class="rates-card">
-            <div class="rc-label"><span>USD / JPY</span><span class="rc-sym">USDJPY=X</span></div>
-            <div class="rc-spark watch-spark loading" data-sym="USDJPY=X" data-rates-card="1"></div>
-            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
-          </div>
-          <div class="rates-card">
-            <div class="rc-label"><span>VIX</span><span class="rc-sym">^VIX</span></div>
-            <div class="rc-spark watch-spark loading" data-sym="^VIX" data-rates-card="1"></div>
-            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
-          </div>
-          <div class="rates-card">
-            <div class="rc-label"><span>HY credit (HYG)</span><span class="rc-sym">HYG</span></div>
-            <div class="rc-spark watch-spark loading" data-sym="HYG" data-rates-card="1"></div>
-            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="source-table-wrap">
-        <table class="source-table">
-          <thead>
-            <tr>
-              <th style="width:18%">Source</th>
-              <th style="width:13%">Method</th>
-              <th style="width:34%">What to track</th>
-              <th>Site use</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="src-name"><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026" target="_blank" rel="noopener">U.S. Treasury Daily Yield Curve</a></td>
-              <td><span class="pill-method web">Public page / CSV</span></td>
-              <td>Daily 1M / 3M / 6M / 1Y / 2Y / 3Y / 5Y / 7Y / 10Y / 20Y / 30Y constant-maturity yields</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-yield-curve">Yield curve tracker</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://fred.stlouisfed.org/categories/22" target="_blank" rel="noopener">FRED &mdash; Interest Rates</a></td>
-              <td><span class="pill-method api">API &middot; free key</span></td>
-              <td>DGS10, DGS2, DFF (Fed funds), T10Y2Y / T10Y3M (curve spreads), SOFR, IORB</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-yield-curve">Yield curve tracker</a>, <a href="#w-curve-spreads">Curve spread tracker</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://fred.stlouisfed.org/series/T10YIE" target="_blank" rel="noopener">FRED &mdash; TIPS breakevens (T10YIE, T5YIFR)</a></td>
-              <td><span class="pill-method api">API &middot; free key</span></td>
-              <td>10-yr breakeven inflation, 5y5y forward inflation, real yields</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-breakevens">TIPS / breakevens tracker</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://fred.stlouisfed.org/series/BAMLH0A0HYM2" target="_blank" rel="noopener">ICE BofA HY OAS &amp; IG OAS via FRED</a></td>
-              <td><span class="pill-method api">API &middot; free key</span></td>
-              <td>BAMLH0A0HYM2 (HY OAS), BAMLC0A0CM (IG OAS) &mdash; the cleanest free read on credit conditions</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-credit-spreads">Credit spreads tracker</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener">ECB Euro Reference Exchange Rates</a></td>
-              <td><span class="pill-method csv">CSV / API</span></td>
-              <td>Daily EUR cross-rates against ~30 currencies, full history</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fx">FX tracker</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://www.federalreserve.gov/releases/h10/" target="_blank" rel="noopener">Federal Reserve H.10 FX Rates</a></td>
-              <td><span class="pill-method csv">CSV / web</span></td>
-              <td>Daily / weekly / monthly USD vs. major and broad indexes; foreign-exchange rates by country</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fx">FX tracker</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://data.bis.org/topics/EER" target="_blank" rel="noopener">BIS Effective Exchange Rates</a></td>
-              <td><span class="pill-method csv">CSV / API</span></td>
-              <td>Nominal and real effective exchange rates (NEER / REER) for ~60 economies</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fx">FX tracker</a></td>
-            </tr>
-            <tr>
-              <td class="src-name"><a href="https://www.newyorkfed.org/markets/reference-rates/sofr" target="_blank" rel="noopener">NY Fed SOFR &amp; reference rates</a></td>
-              <td><span class="pill-method web">Public page / API</span></td>
-              <td>Daily SOFR, SOFR averages (30/90/180-day), Term SOFR context, OBFR, EFFR</td>
-              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-yield-curve">Yield curve tracker</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
     <!-- ============== VALUATION REFERENCE (DAMODARAN) ============== -->
     <section class="vertical-section" id="valuation">
       <h2>Valuation reference (Damodaran)</h2>
@@ -922,15 +922,21 @@
       <h2>Widget blueprint</h2>
       <p class="vertical-sub">If the source tables above are the inputs, this is the outputs &mdash; the specific dashboards, trackers, and metrics each vertical's data becomes once it's wired up. The &ldquo;Site use&rdquo; column in each table links straight to the matching widget below.</p>
 
-      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Oil &amp; energy</h3>
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Rates, FX &amp; credit</h3>
       <ul class="widgets">
-        <li id="w-oil-dashboard"><strong>Oil dashboard.</strong> WTI, Brent, WTI&ndash;Brent spread, 1M / 3M / 12M change, moving averages, and percentile.</li>
-        <li id="w-inventory-surprise"><strong>Inventory surprise dashboard.</strong> EIA crude, gasoline, distillate stocks, refinery utilization, imports, exports, product supplied.</li>
-        <li id="w-refining-margin"><strong>Refining margin proxy.</strong> Use EIA / FRED gasoline, diesel, and crude series to calculate simple 3-2-1 crack-spread style proxies.</li>
-        <li id="w-positioning"><strong>Positioning dashboard.</strong> CFTC crude managed-money net length, week-over-week change, and percentile.</li>
-        <li id="w-rig-count"><strong>Rig count tracker.</strong> Baker Hughes weekly U.S. rig count, oil vs. gas split, by basin (Permian, Eagle Ford, Bakken), 4-week change, and 52-week percentile &mdash; the cleanest free read on supply response.</li>
-        <li id="w-steo"><strong>STEO forecast tracker.</strong> EIA Short-Term Energy Outlook monthly forecast revisions for U.S. and global supply, demand, prices &mdash; track the &ldquo;forecast change&rdquo; alone, since the level matters less than the direction of revision.</li>
-        <li id="w-xom-driver"><strong>XOM driver bridge.</strong> Oil price, gas price, refining utilization, product supplied, capex, buybacks, production, and free cash flow.</li>
+        <li id="w-yield-curve"><strong>Yield curve tracker.</strong> Daily 3M / 2Y / 5Y / 10Y / 30Y constant-maturity yields from Treasury / FRED, plus SOFR and EFFR &mdash; with a curve-shape snapshot (steep / flat / inverted) and the live sparkline strip at the top of this section.</li>
+        <li id="w-curve-spreads"><strong>Curve spread tracker.</strong> 10Y&ndash;2Y, 10Y&ndash;3M, and 5Y&ndash;30Y spreads with percentile and recession-signal context &mdash; the recession-watch layer.</li>
+        <li id="w-breakevens"><strong>TIPS / breakevens tracker.</strong> 10Y breakeven inflation, 5y5y forward inflation, and real 10Y yield from FRED &mdash; the market-implied inflation expectation cross-check vs. CPI.</li>
+        <li id="w-credit-spreads"><strong>Credit spreads tracker.</strong> ICE BofA HY OAS and IG OAS via FRED, with percentile and 13-week change &mdash; the cleanest free read on credit conditions and risk appetite.</li>
+        <li id="w-fx"><strong>FX tracker.</strong> DXY, EUR/USD, USD/JPY, USD/CNY, plus BIS NEER/REER for the broad real-effective view &mdash; the FX overlay for any USD-denominated cyclical thesis.</li>
+      </ul>
+
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Economic calendar &amp; policy</h3>
+      <ul class="widgets">
+        <li id="w-fomc"><strong>FOMC tracker.</strong> Next meeting date and countdown, current Fed funds target range, latest dot plot, CME FedWatch implied probabilities for the next 3&ndash;4 meetings, and a side-by-side of the last two statement texts to highlight changes.</li>
+        <li id="w-data-calendar"><strong>Data release calendar.</strong> Forward-looking calendar of CPI, PPI, NFP, JOLTS, GDP, PCE, retail sales, durable goods, and Treasury auctions &mdash; with consensus where available and a 7-day / 30-day rolling view.</li>
+        <li id="w-cb-calendar"><strong>Global central bank calendar.</strong> Upcoming FOMC, ECB, BOE, BOJ, BOC meetings on a single timeline &mdash; the cross-rate context that matters for any USD-denominated cyclical.</li>
+        <li id="w-multilateral"><strong>Multilateral outlook tracker.</strong> Side-by-side IMF WEO and World Bank GEP global GDP / inflation forecasts, current vs. previous release, with revisions highlighted &mdash; the slowest-moving but highest-credibility forecast layer.</li>
       </ul>
 
       <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Semiconductors</h3>
@@ -941,6 +947,17 @@
         <li id="w-foundry"><strong>Foundry leadership tracker.</strong> TSMC monthly revenue (NTD), YoY %, MoM %, trailing-3M average, and the gap vs. consensus full-year revenue path &mdash; the cleanest single read on AI / HPC / smartphone bookings.</li>
         <li id="w-mu-fundamentals"><strong>MU fundamentals tracker.</strong> Revenue, gross margin, inventory, days inventory, capex, operating cash flow, free cash flow, and management language from SEC filings and Micron IR.</li>
         <li id="w-hbm"><strong>HBM tracker.</strong> Pull MU earnings transcripts/presentations and tag mentions of HBM, pricing, customer commitments, capacity, supply tightness, and margins.</li>
+      </ul>
+
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Oil &amp; energy</h3>
+      <ul class="widgets">
+        <li id="w-oil-dashboard"><strong>Oil dashboard.</strong> WTI, Brent, WTI&ndash;Brent spread, 1M / 3M / 12M change, moving averages, and percentile.</li>
+        <li id="w-inventory-surprise"><strong>Inventory surprise dashboard.</strong> EIA crude, gasoline, distillate stocks, refinery utilization, imports, exports, product supplied.</li>
+        <li id="w-refining-margin"><strong>Refining margin proxy.</strong> Use EIA / FRED gasoline, diesel, and crude series to calculate simple 3-2-1 crack-spread style proxies.</li>
+        <li id="w-positioning"><strong>Positioning dashboard.</strong> CFTC crude managed-money net length, week-over-week change, and percentile.</li>
+        <li id="w-rig-count"><strong>Rig count tracker.</strong> Baker Hughes weekly U.S. rig count, oil vs. gas split, by basin (Permian, Eagle Ford, Bakken), 4-week change, and 52-week percentile &mdash; the cleanest free read on supply response.</li>
+        <li id="w-steo"><strong>STEO forecast tracker.</strong> EIA Short-Term Energy Outlook monthly forecast revisions for U.S. and global supply, demand, prices &mdash; track the &ldquo;forecast change&rdquo; alone, since the level matters less than the direction of revision.</li>
+        <li id="w-xom-driver"><strong>XOM driver bridge.</strong> Oil price, gas price, refining utilization, product supplied, capex, buybacks, production, and free cash flow.</li>
       </ul>
 
       <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Shipping &amp; trade</h3>
@@ -962,23 +979,6 @@
         <li id="w-consumer"><strong>Consumer demand tracker.</strong> Census retail sales (control group), Census durable goods orders, BEA real PCE, and University of Michigan consumer sentiment &mdash; one page for the consumer side of the cycle.</li>
         <li id="w-nowcast"><strong>GDP nowcast tracker.</strong> Atlanta Fed GDPNow latest reading and history, alongside NY Fed Nowcast, with sub-component contributions &mdash; a real-time alternative to waiting on advance GDP.</li>
         <li id="w-beige"><strong>Beige Book sentiment tracker.</strong> Tag mentions across the eight annual Beige Books for keywords (&ldquo;modest,&rdquo; &ldquo;moderate,&rdquo; &ldquo;flat,&rdquo; &ldquo;contracting,&rdquo; pricing-power language) by district &mdash; a qualitative overlay on the quantitative macro stack.</li>
-      </ul>
-
-      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Economic calendar &amp; policy</h3>
-      <ul class="widgets">
-        <li id="w-fomc"><strong>FOMC tracker.</strong> Next meeting date and countdown, current Fed funds target range, latest dot plot, CME FedWatch implied probabilities for the next 3&ndash;4 meetings, and a side-by-side of the last two statement texts to highlight changes.</li>
-        <li id="w-data-calendar"><strong>Data release calendar.</strong> Forward-looking calendar of CPI, PPI, NFP, JOLTS, GDP, PCE, retail sales, durable goods, and Treasury auctions &mdash; with consensus where available and a 7-day / 30-day rolling view.</li>
-        <li id="w-cb-calendar"><strong>Global central bank calendar.</strong> Upcoming FOMC, ECB, BOE, BOJ, BOC meetings on a single timeline &mdash; the cross-rate context that matters for any USD-denominated cyclical.</li>
-        <li id="w-multilateral"><strong>Multilateral outlook tracker.</strong> Side-by-side IMF WEO and World Bank GEP global GDP / inflation forecasts, current vs. previous release, with revisions highlighted &mdash; the slowest-moving but highest-credibility forecast layer.</li>
-      </ul>
-
-      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Rates, FX &amp; credit</h3>
-      <ul class="widgets">
-        <li id="w-yield-curve"><strong>Yield curve tracker.</strong> Daily 3M / 2Y / 5Y / 10Y / 30Y constant-maturity yields from Treasury / FRED, plus SOFR and EFFR &mdash; with a curve-shape snapshot (steep / flat / inverted) and the live sparkline strip at the top of this section.</li>
-        <li id="w-curve-spreads"><strong>Curve spread tracker.</strong> 10Y&ndash;2Y, 10Y&ndash;3M, and 5Y&ndash;30Y spreads with percentile and recession-signal context &mdash; the recession-watch layer.</li>
-        <li id="w-breakevens"><strong>TIPS / breakevens tracker.</strong> 10Y breakeven inflation, 5y5y forward inflation, and real 10Y yield from FRED &mdash; the market-implied inflation expectation cross-check vs. CPI.</li>
-        <li id="w-credit-spreads"><strong>Credit spreads tracker.</strong> ICE BofA HY OAS and IG OAS via FRED, with percentile and 13-week change &mdash; the cleanest free read on credit conditions and risk appetite.</li>
-        <li id="w-fx"><strong>FX tracker.</strong> DXY, EUR/USD, USD/JPY, USD/CNY, plus BIS NEER/REER for the broad real-effective view &mdash; the FX overlay for any USD-denominated cyclical thesis.</li>
       </ul>
 
       <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Valuation reference (Damodaran)</h3>
@@ -1081,6 +1081,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=44" defer></script>
+  <script src="script.js?v=45" defer></script>
 </body>
 </html>
