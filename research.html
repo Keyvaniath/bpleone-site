@@ -208,8 +208,23 @@
       margin: 1rem 0 0;
       padding-left: 1.2rem;
     }
-    .research-page .widgets li { margin: .45rem 0; line-height: 1.5; color: var(--ink-soft); }
+    .research-page .widgets li { margin: .45rem 0; line-height: 1.5; color: var(--ink-soft); scroll-margin-top: 5rem; }
     .research-page .widgets li strong { color: var(--ink); font-weight: 600; }
+    /* Brief flash to confirm the jump landed in the right place. */
+    .research-page .widgets li:target { background: rgba(201,169,97,0.18); border-radius: 6px; padding: .25rem .5rem; margin-left: -.5rem; }
+    .research-page .widgets li:target strong { color: var(--ink); }
+
+    /* Site-use cell — link list pointing to widget bullets below */
+    .research-page table.source-table .site-use { font-size: .9rem; line-height: 1.45; }
+    .research-page table.source-table .site-use a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-decoration-color: rgba(181,106,63,0.35);
+      text-underline-offset: .22em;
+    }
+    .research-page table.source-table .site-use a:hover { text-decoration-color: var(--accent); }
+    .research-page table.source-table .site-use .arrow { color: var(--muted); margin-right: .15rem; }
+    .research-page table.source-table .site-use .context { color: var(--muted); font-style: italic; }
 
     /* Inline code in body copy */
     .research-page main code, .research-page .prose code {
@@ -287,37 +302,37 @@
               <td class="src-name"><a href="https://www.eia.gov/opendata/" target="_blank" rel="noopener">EIA API</a></td>
               <td><span class="pill-method api">API &middot; free key</span></td>
               <td>WTI/Brent, crude inventories, gasoline/distillate stocks, refinery utilization, product supplied, imports/exports</td>
-              <td>Energy cycle dashboard, weekly oil surprise tracker</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-oil-dashboard">Oil dashboard</a>, <a href="#w-inventory-surprise">Inventory surprise dashboard</a>, <a href="#w-refining-margin">Refining margin proxy</a>, <a href="#w-xom-driver">XOM driver bridge</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://www.eia.gov/petroleum/supply/weekly/" target="_blank" rel="noopener">EIA Weekly Petroleum Status Report</a></td>
               <td><span class="pill-method web">Web / API</span></td>
               <td>Weekly U.S. crude, gasoline, distillate, refinery, demand data</td>
-              <td>&ldquo;This week in oil&rdquo; module</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-inventory-surprise">Inventory surprise dashboard</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://fred.stlouisfed.org/series/DCOILWTICO" target="_blank" rel="noopener">FRED &mdash; WTI / Brent series</a></td>
               <td><span class="pill-method api">API &middot; free key</span></td>
               <td>WTI, Brent, macro/industrial series</td>
-              <td>Easy price charts and macro overlays</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-oil-dashboard">Oil dashboard</a>, <a href="#w-refining-margin">Refining margin proxy</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://www.cftc.gov/MarketReports/CommitmentsofTraders/index.htm" target="_blank" rel="noopener">CFTC Commitments of Traders</a></td>
               <td><span class="pill-method api">API / CSV</span></td>
               <td>Managed-money crude positioning, net longs/shorts</td>
-              <td>Crowding / contrarian oil signal</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-positioning">Positioning dashboard</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://www.jodidata.org/oil/" target="_blank" rel="noopener">JODI Oil Database</a></td>
               <td><span class="pill-method csv">CSV downloads</span></td>
               <td>Country-level oil production, demand, stocks</td>
-              <td>Global supply / demand map</td>
+              <td class="site-use"><span class="context">Context layer &mdash; global supply/demand cross-check, no dedicated widget</span></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://www.opec.org/opec_web/en/publications/202.htm" target="_blank" rel="noopener">OPEC MOMR</a></td>
               <td><span class="pill-method pdf">PDF / manual</span></td>
               <td>OPEC supply, demand forecasts, inventory commentary</td>
-              <td>Monthly oil narrative tracker</td>
+              <td class="site-use"><span class="context">Context layer &mdash; monthly narrative input, no dedicated widget</span></td>
             </tr>
           </tbody>
         </table>
@@ -343,37 +358,37 @@
               <td class="src-name"><a href="https://www.wsts.org/76/Recent-News-Release" target="_blank" rel="noopener">WSTS Historical Billings Report</a></td>
               <td><span class="pill-method csv">Excel / PDF</span></td>
               <td>Monthly semiconductor billings by region, 3-month moving averages</td>
-              <td>Global semi cycle dashboard</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-semi-sales">Global semi sales tracker</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://www.semiconductors.org/global-semiconductor-sales-units-shipped/" target="_blank" rel="noopener">SIA market data</a></td>
               <td><span class="pill-method web">Web / press</span></td>
               <td>WSTS-based monthly sales, units, ASPs by product/region where available</td>
-              <td>Semi demand tracker</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-semi-sales">Global semi sales tracker</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://www.trendforce.com/price/" target="_blank" rel="noopener">TrendForce DRAM spot prices</a></td>
               <td><span class="pill-method web">Public page</span></td>
               <td>DRAM spot pricing direction</td>
-              <td>MU memory-price tracker</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-memory-pricing">Memory pricing tracker</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://www.semi.org/en/products-services/market-data/equipment" target="_blank" rel="noopener">SEMI equipment billings</a></td>
               <td><span class="pill-method pdf">Press releases</span></td>
               <td>Semiconductor equipment billings, capex cycle</td>
-              <td>Supply expansion / capex tracker</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-equipment-capex">Equipment / capex tracker</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://www.sec.gov/edgar/sec-api-documentation" target="_blank" rel="noopener">SEC EDGAR APIs</a></td>
               <td><span class="pill-method api">JSON &middot; no key</span></td>
               <td>10-Q/10-K facts, filing history, XBRL facts, companyfacts bulk ZIP</td>
-              <td>MU / XOM fundamentals and filing alerts</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-mu-fundamentals">MU fundamentals tracker</a>, <a href="#w-hbm">HBM tracker</a>, <a href="#w-xom-driver">XOM driver bridge</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://www.sec.gov/files/company_tickers.json" target="_blank" rel="noopener">SEC company tickers</a></td>
               <td><span class="pill-method api">JSON</span></td>
               <td>Ticker to CIK mapping</td>
-              <td>Automated company lookup</td>
+              <td class="site-use"><span class="context">Foundation &mdash; ticker&rarr;CIK resolution for every SEC EDGAR pull</span></td>
             </tr>
           </tbody>
         </table>
@@ -399,37 +414,37 @@
               <td class="src-name"><a href="https://fbx.freightos.com/" target="_blank" rel="noopener">Freightos Baltic Index (FBX)</a></td>
               <td><span class="pill-method web">Public / limited free</span></td>
               <td>40-foot container rates by major lane</td>
-              <td>Container freight stress tracker</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-container-freight">Container freight tracker</a>, <a href="#w-supply-chain-stress">Supply-chain stress dashboard</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://www.drewry.co.uk/supply-chain-advisors/supply-chain-expertise/world-container-index-assessed-by-drewry" target="_blank" rel="noopener">Drewry World Container Index</a></td>
               <td><span class="pill-method web">Public weekly page</span></td>
               <td>Weekly container freight benchmark</td>
-              <td>Global shipping cost widget</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-container-freight">Container freight tracker</a>, <a href="#w-supply-chain-stress">Supply-chain stress dashboard</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://en.sse.net.cn/indices/scfinew.jsp" target="_blank" rel="noopener">Shanghai Containerized Freight Index (SCFI)</a></td>
               <td><span class="pill-method web">Public page</span></td>
               <td>China / export container freight</td>
-              <td>Asia export pressure tracker</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-container-freight">Container freight tracker</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://data.bts.gov/" target="_blank" rel="noopener">BTS Monthly TEU Data</a></td>
               <td><span class="pill-method api">Socrata API</span></td>
               <td>U.S. port TEU volumes</td>
-              <td>Port throughput dashboard</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-port-throughput">Port throughput tracker</a>, <a href="#w-supply-chain-stress">Supply-chain stress dashboard</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://www.census.gov/foreign-trade/reference/guides/Guidev2020.pdf" target="_blank" rel="noopener">Census International Trade API</a></td>
               <td><span class="pill-method api">API</span></td>
               <td>Imports / exports by HS code, port, country, end-use</td>
-              <td>Semiconductor / electronics / oil trade tracker</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-trade-flow">Trade flow tracker</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://comtradeplus.un.org/" target="_blank" rel="noopener">UN Comtrade</a></td>
               <td><span class="pill-method api">API &middot; free tier</span></td>
               <td>Global trade flows by commodity / country</td>
-              <td>Global chip and energy trade map</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-trade-flow">Trade flow tracker</a></td>
             </tr>
           </tbody>
         </table>
@@ -455,19 +470,19 @@
               <td class="src-name"><a href="https://www.newyorkfed.org/research/policy/gscpi" target="_blank" rel="noopener">NY Fed Global Supply Chain Pressure Index</a></td>
               <td><span class="pill-method web">Public data / page</span></td>
               <td>Global supply-chain stress</td>
-              <td>Macro backdrop widget</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-supply-chain-pressure">Supply-chain pressure tracker</a>, <a href="#w-supply-chain-stress">Supply-chain stress dashboard</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://fred.stlouisfed.org/series/IPG3344S" target="_blank" rel="noopener">FRED &mdash; semiconductor industrial production</a></td>
               <td><span class="pill-method api">API &middot; free key</span></td>
               <td>U.S. semiconductor / electronic-component production</td>
-              <td>Semi production proxy</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-ip-overlay">Industrial production overlay</a></td>
             </tr>
             <tr>
               <td class="src-name"><a href="https://www.ismworld.org/supply-management-news-and-reports/reports/ism-report-on-business/" target="_blank" rel="noopener">ISM PMI reports</a></td>
               <td><span class="pill-method web">Public release</span></td>
               <td>Manufacturing PMI, new orders, inventories, supplier deliveries</td>
-              <td>Demand-cycle dashboard</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-pmi-breadth">PMI breadth dashboard</a></td>
             </tr>
           </tbody>
         </table>
@@ -477,39 +492,39 @@
     <!-- ============== WIDGETS ============== -->
     <section class="vertical-section" id="widgets">
       <h2>Widget blueprint</h2>
-      <p class="vertical-sub">If the source tables above are the inputs, this is the outputs &mdash; the specific dashboards, trackers, and metrics each vertical's data becomes once it's wired up. Same order as above.</p>
+      <p class="vertical-sub">If the source tables above are the inputs, this is the outputs &mdash; the specific dashboards, trackers, and metrics each vertical's data becomes once it's wired up. The &ldquo;Site use&rdquo; column in each table links straight to the matching widget below.</p>
 
       <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Oil &amp; energy</h3>
       <ul class="widgets">
-        <li><strong>Oil dashboard.</strong> WTI, Brent, WTI&ndash;Brent spread, 1M / 3M / 12M change, moving averages, and percentile.</li>
-        <li><strong>Inventory surprise dashboard.</strong> EIA crude, gasoline, distillate stocks, refinery utilization, imports, exports, product supplied.</li>
-        <li><strong>Refining margin proxy.</strong> Use EIA / FRED gasoline, diesel, and crude series to calculate simple 3-2-1 crack-spread style proxies.</li>
-        <li><strong>Positioning dashboard.</strong> CFTC crude managed-money net length, week-over-week change, and percentile.</li>
-        <li><strong>XOM driver bridge.</strong> Oil price, gas price, refining utilization, product supplied, capex, buybacks, production, and free cash flow.</li>
+        <li id="w-oil-dashboard"><strong>Oil dashboard.</strong> WTI, Brent, WTI&ndash;Brent spread, 1M / 3M / 12M change, moving averages, and percentile.</li>
+        <li id="w-inventory-surprise"><strong>Inventory surprise dashboard.</strong> EIA crude, gasoline, distillate stocks, refinery utilization, imports, exports, product supplied.</li>
+        <li id="w-refining-margin"><strong>Refining margin proxy.</strong> Use EIA / FRED gasoline, diesel, and crude series to calculate simple 3-2-1 crack-spread style proxies.</li>
+        <li id="w-positioning"><strong>Positioning dashboard.</strong> CFTC crude managed-money net length, week-over-week change, and percentile.</li>
+        <li id="w-xom-driver"><strong>XOM driver bridge.</strong> Oil price, gas price, refining utilization, product supplied, capex, buybacks, production, and free cash flow.</li>
       </ul>
 
       <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Semiconductors</h3>
       <ul class="widgets">
-        <li><strong>Memory pricing tracker.</strong> DRAM spot price trend, NAND spot trend if available, 4-week change, 13-week change, and an &ldquo;up/down streak&rdquo; counter.</li>
-        <li><strong>Global semi sales tracker.</strong> WSTS billings by region, 3-month moving average, YoY change, and cycle percentile.</li>
-        <li><strong>Equipment / capex tracker.</strong> SEMI billings, ASML / AMAT / LRCX commentary if you later add transcript parsing, and memory capex commentary.</li>
-        <li><strong>MU fundamentals tracker.</strong> Revenue, gross margin, inventory, days inventory, capex, operating cash flow, free cash flow, and management language from SEC filings and Micron IR.</li>
-        <li><strong>HBM tracker.</strong> Pull MU earnings transcripts/presentations and tag mentions of HBM, pricing, customer commitments, capacity, supply tightness, and margins.</li>
+        <li id="w-memory-pricing"><strong>Memory pricing tracker.</strong> DRAM spot price trend, NAND spot trend if available, 4-week change, 13-week change, and an &ldquo;up/down streak&rdquo; counter.</li>
+        <li id="w-semi-sales"><strong>Global semi sales tracker.</strong> WSTS billings by region, 3-month moving average, YoY change, and cycle percentile.</li>
+        <li id="w-equipment-capex"><strong>Equipment / capex tracker.</strong> SEMI billings, ASML / AMAT / LRCX commentary if you later add transcript parsing, and memory capex commentary.</li>
+        <li id="w-mu-fundamentals"><strong>MU fundamentals tracker.</strong> Revenue, gross margin, inventory, days inventory, capex, operating cash flow, free cash flow, and management language from SEC filings and Micron IR.</li>
+        <li id="w-hbm"><strong>HBM tracker.</strong> Pull MU earnings transcripts/presentations and tag mentions of HBM, pricing, customer commitments, capacity, supply tightness, and margins.</li>
       </ul>
 
       <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Shipping &amp; trade</h3>
       <ul class="widgets">
-        <li><strong>Container freight tracker.</strong> Freightos, Drewry WCI, SCFI, and lane-specific China-to-U.S. indicators.</li>
-        <li><strong>Port throughput tracker.</strong> Monthly TEUs from BTS / LA / LB and YoY change.</li>
-        <li><strong>Trade flow tracker.</strong> Census imports/exports by HS code for semiconductors, electronics, crude oil, petroleum products, and energy equipment.</li>
-        <li><strong>Supply-chain stress dashboard.</strong> NY Fed GSCPI, container rates, port TEUs, supplier-delivery indexes, and freight changes.</li>
+        <li id="w-container-freight"><strong>Container freight tracker.</strong> Freightos, Drewry WCI, SCFI, and lane-specific China-to-U.S. indicators.</li>
+        <li id="w-port-throughput"><strong>Port throughput tracker.</strong> Monthly TEUs from BTS / LA / LB and YoY change.</li>
+        <li id="w-trade-flow"><strong>Trade flow tracker.</strong> Census imports/exports by HS code for semiconductors, electronics, crude oil, petroleum products, and energy equipment.</li>
+        <li id="w-supply-chain-stress"><strong>Supply-chain stress dashboard.</strong> NY Fed GSCPI, container rates, port TEUs, supplier-delivery indexes, and freight changes.</li>
       </ul>
 
       <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Macro &amp; demand</h3>
       <ul class="widgets">
-        <li><strong>Supply-chain pressure tracker.</strong> NY Fed GSCPI level, percentile, and 3-month change &mdash; the cleanest single read on whether the global supply chain is loose or tight.</li>
-        <li><strong>Industrial production overlay.</strong> FRED semiconductor industrial production indexed against WSTS billings &mdash; cross-check whether U.S. domestic production confirms or diverges from global cycle.</li>
-        <li><strong>PMI breadth dashboard.</strong> ISM manufacturing PMI plus its sub-indices (new orders, inventories, supplier deliveries) &mdash; the demand-side leading indicator that sits underneath every other vertical.</li>
+        <li id="w-supply-chain-pressure"><strong>Supply-chain pressure tracker.</strong> NY Fed GSCPI level, percentile, and 3-month change &mdash; the cleanest single read on whether the global supply chain is loose or tight.</li>
+        <li id="w-ip-overlay"><strong>Industrial production overlay.</strong> FRED semiconductor industrial production indexed against WSTS billings &mdash; cross-check whether U.S. domestic production confirms or diverges from global cycle.</li>
+        <li id="w-pmi-breadth"><strong>PMI breadth dashboard.</strong> ISM manufacturing PMI plus its sub-indices (new orders, inventories, supplier deliveries) &mdash; the demand-side leading indicator that sits underneath every other vertical.</li>
       </ul>
     </section>
 
