@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=38" />
+  <link rel="stylesheet" href="style.css?v=39" />
 
   <!-- Page-scoped styles (draft banner, pitch sections, scenario table, kill list) -->
   <style>
@@ -239,7 +239,11 @@
         <span><strong>Ticker</strong> NASDAQ: MU</span>
         <span><strong>Sector</strong> Memory / semiconductors</span>
         <span><strong>Posted</strong> 2026-05-07</span>
+        <span><strong>Price anchor</strong> $668 (close, 2026-05-07)</span>
         <span><strong>Author</strong> Brandon Leon</span>
+      </p>
+      <p style="margin:.5rem 0 1.25rem; padding:.6rem .85rem; background:rgba(181,106,63,0.08); border-left:3px solid var(--accent); border-radius:5px; font-family:var(--sans); font-size:.86rem; color:var(--ink-soft); line-height:1.5;">
+        <strong style="color:var(--accent);">As-of:</strong> All percentages, premiums, and the Hold rating are anchored to the May 7, 2026 close of $668. The stock has moved since publication; live quote and chart on the <a href="index.html">homepage watchlist</a>. The analysis below is a point-in-time call &mdash; v1.1 with updated price will follow next material event.
       </p>
 
       <div class="pitch-thesis">
@@ -308,7 +312,7 @@
       <p>One important framing point: when Micron prints 75% gross margin in FQ2&rsquo;26, that is a <em>cycle peak</em>, not a new structural baseline. HBM mix is contributing meaningfully to that number, but so is acutely tight conventional DRAM pricing &mdash; and conventional DRAM doesn&rsquo;t stay tight forever. The right way to read FQ2 is &ldquo;HBM ramping into a tight pricing window;&rdquo; the wrong way is &ldquo;Micron is now a 75%-gross-margin company.&rdquo;</p>
       <h3>Why memory is a through-cycle game, not a quarterly one</h3>
       <p>Memory has run four full peak-to-peak cycles since 2010. Pick any single quarter and you&rsquo;ll get a wildly different read on the business depending on where you&rsquo;re standing. The 2018 peak said memory was a printing press; the 2023 trough said it was hopeless; the truth was always somewhere in the middle. The only honest way to value memory is on through-cycle earnings &mdash; the average over a full peak-to-peak window, not whichever endpoint flatters your priors.</p>
-      <p>Here&rsquo;s the actual data. Micron&rsquo;s FY18 cycle peak was a 58.6% gross margin and a ~50% operating margin. That was the historical high-water mark, set during the strongest DRAM cycle of the last decade. The trough on the other side (FY23) bottomed near &minus;9% gross margin. Through-cycle GM averaged in the low-30s during FY11&ndash;FY24.</p>
+      <p>Here&rsquo;s the actual data. Micron&rsquo;s FY18 cycle peak was a 58.6% gross margin and a ~50% operating margin. That was the historical high-water mark, set during the strongest DRAM cycle of the last decade. The trough on the other side (FY23) bottomed near &minus;9% gross margin. Through-cycle GM averaged in the low-30s during FY11&ndash;FY25.</p>
 
       <figure class="article-chart">
         <p class="chart-title">Chart 2 &mdash; Gross Margin Cycle History</p>
@@ -419,7 +423,7 @@
       <p>Which is exactly where Wall Street consensus has the stock (avg PT $581). The market is paying a small premium to consensus, which makes sense given AI optionality and the strategic-asset US-fab story, neither of which DCFs capture cleanly. But the margin of safety on the long is small. This is a Hold at $668, not a high-conviction Buy &mdash; unless you can defend the structural HBM bull case (next section).</p>
       <h3>Key assumptions</h3>
       <p>Five inputs do most of the work in the base case.</p>
-      <p>Mid-cycle DRAM ASP at $0.07 per gigabit &mdash; the midpoint of the FY11&ndash;FY24 cycle range. The most-conservative way to frame it: the next decade looks like the last one in conventional DRAM despite the LTA structural shift in HBM.</p>
+      <p>Mid-cycle DRAM ASP at $0.07 per gigabit &mdash; the midpoint of the FY11&ndash;FY25 cycle range. The most-conservative way to frame it: the next decade looks like the last one in conventional DRAM despite the LTA structural shift in HBM.</p>
       <p>Peak FY27E gross margin at 65%. That&rsquo;s 6.4 points above the FY18 peak of 58.6%. The 6.4 points comes from HBM mix shift &mdash; specifically, HBM growing from 6% to ~28% of revenue at a ~12-pt gross margin premium over conventional DRAM. Through-cycle GM averages closer to 38% once you blend in trough years.</p>
       <p>HBM mix at 25&ndash;30% through the cycle. Even at peak, HBM doesn&rsquo;t cannibalize conventional DRAM &mdash; both grow.</p>
       <p>Capex at 18&ndash;20% of sales mid-cycle, 24&ndash;26% at peak as the Idaho fab pulls in. I do not underwrite a permanent 25%+ capex regime; if that becomes the steady state, supply discipline has broken down.</p>
@@ -471,7 +475,7 @@
     <section class="pitch-section" id="scenarios-reverse-dcf">
       <h2>3. Scenarios and reverse-DCF</h2>
       <p>The honest scenario table.</p>
-      <p><strong>Bear (25% probability, $350 PT, &minus;48%).</strong> The cycle reverts to the FY11&ndash;FY24 historical pattern with no structural HBM uplift. CXMT closes the gap faster than expected, Samsung qualifies HBM4 and takes Vera Rubin volume, conventional DRAM ASPs roll over in 2H&rsquo;26. Peak FY27E GM lands at 58% (matching FY18), EPS at $32, apply an 11&times; cyclical-trough multiple.</p>
+      <p><strong>Bear (25% probability, $350 PT, &minus;48%).</strong> The cycle reverts to the FY11&ndash;FY25 historical pattern with no structural HBM uplift. CXMT closes the gap faster than expected, Samsung qualifies HBM4 and takes Vera Rubin volume, conventional DRAM ASPs roll over in 2H&rsquo;26. Peak FY27E GM lands at 58% (matching FY18), EPS at $32, apply an 11&times; cyclical-trough multiple.</p>
       <p><strong>Base (50% probability, $625 PT, &minus;6%).</strong> HBM4 ships to plan, Calendar 2026 capacity sells through, conventional DRAM stays tight through FY27. Peak FY27E GM at 65% (six points above FY18 from HBM mix). FY27E EPS $48, 13&times; multiple. Note: this is a Hold from $668, not a Buy.</p>
       <p><strong>Bull / structural HBM (25% probability, $1,000+ PT, +50%).</strong> See the next section &mdash; this is the case where HBM genuinely changes the margin profile durably, the LTAs extend to 2028+, Samsung HBM4 qualification slips, and Micron earns an investment-grade upgrade that compresses WACC. Peak FY27E GM hits 71% and stays there for 3-5 years instead of one. FY27E EPS $74, 14&times; multiple.</p>
 
@@ -816,6 +820,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=38" defer></script>
+  <script src="script.js?v=39" defer></script>
 </body>
 </html>
