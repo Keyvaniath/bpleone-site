@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=32" />
+  <link rel="stylesheet" href="style.css?v=33" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
 
@@ -100,6 +100,11 @@
       font-size: .85rem;
     }
     .dcf-sessions-hidden { display: none; }
+  
+    .breadcrumb-wrap { max-width: var(--maxw-wide); margin: 0 auto; padding: 1rem var(--gutter) 0; }
+    .breadcrumb { font-family: var(--sans); font-size: .82rem; color: var(--muted); letter-spacing: .02em; }
+    .breadcrumb a { color: var(--muted); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--accent); }
   </style>
 </head>
 <body style="background:#fbf7ef;color:#1c1a16;">
@@ -119,6 +124,7 @@
   </header>
 
   <main class="prose wide">
+    <div class="breadcrumb-wrap"><div class="breadcrumb"><a href="./index.html">Home</a> &nbsp;·&nbsp; <a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Valuation calculators</div></div>
     <header class="page-head">
       <p class="eyebrow">Toolkit &middot; Interactive</p>
       <h1>DCF Calculator.</h1>
@@ -298,7 +304,7 @@
     </div>
   </footer>
 
-  <script src="script.js?v=32" defer></script>
+  <script src="script.js?v=33" defer></script>
   <script>
   // =========================================================================
   // Inline DCF calculator. Vanilla JS, no dependencies.
