@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=35" />
+  <link rel="stylesheet" href="style.css?v=36" />
   <style>
     .report-meta { display:flex; flex-wrap:wrap; align-items:baseline; gap:0.6rem 1.2rem; margin:0.85rem 0 0; font-family:var(--sans); font-size:0.82rem; color:var(--muted); }
     .report-meta strong { color:var(--ink-soft); font-weight:600; }
@@ -83,7 +83,32 @@
       <p class="lede">Finished, written-up pieces &mdash; deep-dives on companies, sectors, and themes. PDF for easy reading and saving. New ones get noted in the <a href="writing.html">writing</a> feed.</p>
     </header>
 
-    <article aria-labelledby="rep-mu-init">
+    <article aria-labelledby="rep-mu-tc">
+      <a class="feature-card" href="mu-through-cycle.html">
+        <div class="feature-card-art" aria-hidden="true">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <rect width="200" height="200" fill="#5b7f6b" rx="10"/>
+            <!-- Through-cycle: U-curve trough then climb -->
+            <path d="M 30 80 Q 60 160 100 130 T 175 50" fill="none" stroke="#fbf7ef" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="175" cy="50" r="5" fill="#fbf7ef"/>
+            <line x1="22" y1="170" x2="178" y2="170" stroke="#fbf7ef" stroke-width="1" opacity="0.45"/>
+          </svg>
+        </div>
+        <div class="feature-card-body">
+          <p class="eyebrow">Single-name pitch &middot; May 2026</p>
+          <h3 id="rep-mu-tc">MU &mdash; Through-cycle long</h3>
+          <p>Mid-cycle Micron at $750&ndash;$850; the market is pricing peak earnings at trough multiples. Reverse-DCF decomposition, HBM mix-shift contribution to the next cycle peak, mid-cycle EBIT margin normalisation, and the three observable kill-shots that would make me wrong.</p>
+          <div class="report-meta">
+            <span class="pill buy" style="background:rgba(91,127,107,0.18);color:#3f5d4f;">LONG</span>
+            <span><strong>PT $750&ndash;$850</strong></span>
+            <span>HBM mix-shift &middot; reverse-DCF</span>
+            <span>HTML &middot; free</span>
+          </div>
+          <p class="feature-card-cta" style="margin-top:1rem;">Read the pitch &rarr;</p>
+        </div>
+      </a>
+    </article>
+    <article aria-labelledby="rep-mu-init" style="margin-top:2rem;">
       <a class="feature-card" href="assets/reports/mu-er-initiation-2026-05-preview.pdf" target="_blank" rel="noopener">
         <div class="feature-card-art" aria-hidden="true">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
@@ -163,32 +188,6 @@
       </section>
     </article>
 
-    <article aria-labelledby="rep-mu-tc" style="margin-top:2rem;">
-      <a class="feature-card" href="mu-through-cycle.html">
-        <div class="feature-card-art" aria-hidden="true">
-          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <rect width="200" height="200" fill="#5b7f6b" rx="10"/>
-            <!-- Through-cycle: U-curve trough then climb -->
-            <path d="M 30 80 Q 60 160 100 130 T 175 50" fill="none" stroke="#fbf7ef" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="175" cy="50" r="5" fill="#fbf7ef"/>
-            <line x1="22" y1="170" x2="178" y2="170" stroke="#fbf7ef" stroke-width="1" opacity="0.45"/>
-          </svg>
-        </div>
-        <div class="feature-card-body">
-          <p class="eyebrow">Single-name pitch &middot; May 2026</p>
-          <h3 id="rep-mu-tc">MU &mdash; Through-cycle long</h3>
-          <p>Mid-cycle Micron at $750&ndash;$850; the market is pricing peak earnings at trough multiples. Reverse-DCF decomposition, HBM mix-shift contribution to the next cycle peak, mid-cycle EBIT margin normalisation, and the three observable kill-shots that would make me wrong.</p>
-          <div class="report-meta">
-            <span class="pill buy" style="background:rgba(91,127,107,0.18);color:#3f5d4f;">LONG</span>
-            <span><strong>PT $750&ndash;$850</strong></span>
-            <span>HBM mix-shift &middot; reverse-DCF</span>
-            <span>HTML &middot; free</span>
-          </div>
-          <p class="feature-card-cta" style="margin-top:1rem;">Read the pitch &rarr;</p>
-        </div>
-      </a>
-    </article>
-
     <p class="muted small" style="margin-top:2.5rem;">Templates that produce these reports live on the <a href="toolkit.html">toolkit</a> page.</p>
     <p class="muted small" style="margin-top:1rem;"><em>Nothing on this page is investment advice.</em> See <a href="disclaimer.html">disclaimer</a>.</p>
   </main>
@@ -205,7 +204,7 @@
     </div>
   </footer>
 
-  <script src="script.js?v=35" defer></script>
+  <script src="script.js?v=36" defer></script>
   <script>
     (function () {
       var form    = document.getElementById('gate-form-mu');
