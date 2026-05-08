@@ -175,7 +175,7 @@
     /* Cycle-score cards */
     .research-page .score-row {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       gap: 1rem;
       margin: 1.25rem 0 0;
     }
@@ -199,6 +199,7 @@
     .research-page .score-card.semi   .score-tag { background: rgba(91,127,107,0.18); color: #3f5d4f; }
     .research-page .score-card.energy .score-tag { background: rgba(181,106,63,0.15); color: #8b4d2c; }
     .research-page .score-card.ship   .score-tag { background: rgba(11,31,58,0.10); color: #0b1f3a; }
+    .research-page .score-card.macro  .score-tag { background: rgba(201,169,97,0.22); color: #7a6332; }
     .research-page .score-card h3 { margin: .1rem 0 .5rem; font-family: var(--serif); font-size: 1.15rem; line-height: 1.25; }
     .research-page .score-card ul { margin: .5rem 0 0; padding: 0 0 0 1.1rem; font-size: .9rem; color: var(--ink-soft); }
     .research-page .score-card ul li { margin: .25rem 0; line-height: 1.45; }
@@ -261,13 +262,14 @@
       <p class="eyebrow">Research</p>
       <h1>Free data stack for a cyclicals research site.</h1>
       <p class="lede">
-        The blueprint behind the dashboards on this site. Four verticals
+        The blueprint behind the dashboards on this site. Five verticals
         &mdash; <strong>semis, energy, shipping &amp; trade, macro
-        demand</strong> &mdash; built entirely on free, automatable
-        public data. APIs, CSVs, Excel drops, stable HTML pages &mdash;
-        no Bloomberg, no FactSet, no Daloopa, no paid shipping feeds.
-        This page documents every source, the widget it feeds, the MVP
-        API stack to start with, and the cycle-score formulas on top.
+        demand, and economic calendar / policy reports</strong> &mdash;
+        built entirely on free, automatable public data. APIs, CSVs,
+        Excel drops, stable HTML pages &mdash; no Bloomberg, no FactSet,
+        no Daloopa, no paid shipping feeds. This page documents every
+        source, the widget it feeds, the MVP API stack to start with,
+        and the cycle-score formulas on top.
       </p>
       <nav class="toc" aria-label="On this page">
         <p class="toc-title">On this page</p>
@@ -276,6 +278,7 @@
           <li><a href="#semis">Semiconductor sources</a></li>
           <li><a href="#shipping">Shipping &amp; trade sources</a></li>
           <li><a href="#macro">Macro / demand sources</a></li>
+          <li><a href="#calendar">Economic calendar &amp; policy</a></li>
           <li><a href="#widgets">Widget blueprint</a></li>
           <li><a href="#mvp">MVP source stack</a></li>
           <li><a href="#cycle-scores">Cycle scores</a></li>
@@ -334,6 +337,24 @@
               <td>OPEC supply, demand forecasts, inventory commentary</td>
               <td class="site-use"><span class="context">Context layer &mdash; monthly narrative input, no dedicated widget</span></td>
             </tr>
+            <tr>
+              <td class="src-name"><a href="https://bakerhughesrigcount.gcs-web.com/rig-count-overview" target="_blank" rel="noopener">Baker Hughes Rig Count</a></td>
+              <td><span class="pill-method web">Public weekly page</span></td>
+              <td>U.S. and international weekly rig count by basin and oil/gas split &mdash; the cleanest free supply-side leading indicator</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-rig-count">Rig count tracker</a>, <a href="#w-xom-driver">XOM driver bridge</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.eia.gov/outlooks/steo/" target="_blank" rel="noopener">EIA Short-Term Energy Outlook (STEO)</a></td>
+              <td><span class="pill-method csv">Excel / PDF / web</span></td>
+              <td>Monthly EIA forecasts: U.S. and global oil supply, demand, prices, inventories, refining margins</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-steo">STEO forecast tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.iea.org/reports/oil-market-report-april-2026" target="_blank" rel="noopener">IEA Oil Market Report</a></td>
+              <td><span class="pill-method pdf">PDF / web</span></td>
+              <td>Monthly global oil balances, OECD inventories, demand forecasts (executive summary public)</td>
+              <td class="site-use"><span class="context">Context layer &mdash; cross-check vs. EIA STEO and OPEC MOMR</span></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -389,6 +410,24 @@
               <td><span class="pill-method api">JSON</span></td>
               <td>Ticker to CIK mapping</td>
               <td class="site-use"><span class="context">Foundation &mdash; ticker&rarr;CIK resolution for every SEC EDGAR pull</span></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://investor.tsmc.com/english/monthly-revenue" target="_blank" rel="noopener">TSMC Monthly Revenue</a></td>
+              <td><span class="pill-method web">Public IR page</span></td>
+              <td>Monthly TSMC revenue (NTD), YoY and MoM &mdash; foundry leadership read on AI/HPC/smartphone demand</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-foundry">Foundry leadership tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.digitimes.com/news/" target="_blank" rel="noopener">DigiTimes Asia (free section)</a></td>
+              <td><span class="pill-method web">Public articles</span></td>
+              <td>Asia supply-chain reporting on foundry utilization, memory, AI accelerators, equipment</td>
+              <td class="site-use"><span class="context">Context layer &mdash; supply-chain narrative, no dedicated widget</span></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.counterpointresearch.com/insights/" target="_blank" rel="noopener">Counterpoint Research insights</a></td>
+              <td><span class="pill-method web">Public press</span></td>
+              <td>Free smartphone / handset / memory / foundry market share press releases</td>
+              <td class="site-use"><span class="context">Context layer &mdash; share / unit-volume cross-checks</span></td>
             </tr>
           </tbody>
         </table>
@@ -446,6 +485,24 @@
               <td>Global trade flows by commodity / country</td>
               <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-trade-flow">Trade flow tracker</a></td>
             </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.cassinfo.com/freight-audit-payment/cass-transportation-indexes/cass-freight-index" target="_blank" rel="noopener">Cass Freight Index</a></td>
+              <td><span class="pill-method web">Monthly press / PDF</span></td>
+              <td>U.S. domestic freight shipments and expenditures (truck, rail, intermodal)</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-truck-tonnage">Domestic freight tracker</a>, <a href="#w-supply-chain-stress">Supply-chain stress dashboard</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://signal.portoflosangeles.org/" target="_blank" rel="noopener">Port of LA Signal</a></td>
+              <td><span class="pill-method web">Public dashboard</span></td>
+              <td>Real-time and forward-look TEU forecasts at the largest U.S. container port</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-port-throughput">Port throughput tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.trucking.org/news-insights/ata-truck-tonnage-index" target="_blank" rel="noopener">ATA Truck Tonnage Index</a></td>
+              <td><span class="pill-method web">Monthly press release</span></td>
+              <td>U.S. for-hire truck tonnage, SA / NSA, MoM and YoY</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-truck-tonnage">Domestic freight tracker</a></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -484,6 +541,110 @@
               <td>Manufacturing PMI, new orders, inventories, supplier deliveries</td>
               <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-pmi-breadth">PMI breadth dashboard</a></td>
             </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.bls.gov/developers/" target="_blank" rel="noopener">BLS API</a></td>
+              <td><span class="pill-method api">API &middot; free key</span></td>
+              <td>CPI, PPI, nonfarm payrolls, unemployment, JOLTS, average hourly earnings, employment cost index</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-inflation">Inflation tracker</a>, <a href="#w-labor">Labor market tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://apps.bea.gov/api/signup/" target="_blank" rel="noopener">BEA API</a></td>
+              <td><span class="pill-method api">API &middot; free key</span></td>
+              <td>GDP, PCE, PCE inflation, personal income, corporate profits, trade balance</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-inflation">Inflation tracker</a>, <a href="#w-consumer">Consumer demand tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.federalreserve.gov/monetarypolicy/beigebook202604.htm" target="_blank" rel="noopener">Federal Reserve Beige Book</a></td>
+              <td><span class="pill-method web">Public PDF / web</span></td>
+              <td>Eight-times-yearly anecdotal read of economic activity across 12 Fed districts</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-beige">Beige Book sentiment tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="http://www.sca.isr.umich.edu/" target="_blank" rel="noopener">University of Michigan Consumer Sentiment</a></td>
+              <td><span class="pill-method web">Monthly release</span></td>
+              <td>Consumer sentiment index, expectations, current conditions, 1-yr / 5-yr inflation expectations</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-consumer">Consumer demand tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.atlantafed.org/cqer/research/gdpnow" target="_blank" rel="noopener">Atlanta Fed GDPNow</a></td>
+              <td><span class="pill-method web">Public dashboard / CSV</span></td>
+              <td>Real-time GDP nowcast, sub-component contributions, model history</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-nowcast">GDP nowcast tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.census.gov/retail/" target="_blank" rel="noopener">Census Retail Sales / Durable Goods</a></td>
+              <td><span class="pill-method api">API &middot; free</span></td>
+              <td>Monthly retail trade, advance retail sales, durable goods orders, factory orders</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-consumer">Consumer demand tracker</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== ECONOMIC CALENDAR & POLICY ============== -->
+    <section class="vertical-section" id="calendar">
+      <h2>Economic calendar &amp; policy reports</h2>
+      <p class="vertical-sub">When data prints, what central banks said, and what the multilateral institutions are forecasting. The schedule layer that anchors every other vertical &mdash; FOMC, CME FedWatch, BLS releases, ECB, IMF, World Bank.</p>
+      <div class="source-table-wrap">
+        <table class="source-table">
+          <thead>
+            <tr>
+              <th style="width:18%">Source</th>
+              <th style="width:13%">Method</th>
+              <th style="width:34%">What to track</th>
+              <th>Site use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="src-name"><a href="https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm" target="_blank" rel="noopener">FOMC Calendar &amp; Statements</a></td>
+              <td><span class="pill-method web">Public page / PDF</span></td>
+              <td>FOMC meeting dates, statements, minutes (3-week lag), SEP / dot plot, press conference transcripts</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fomc">FOMC tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html" target="_blank" rel="noopener">CME FedWatch Tool</a></td>
+              <td><span class="pill-method web">Public dashboard</span></td>
+              <td>Implied probability of FOMC moves at each upcoming meeting from Fed funds futures pricing</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fomc">FOMC tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.bls.gov/schedule/news_release/" target="_blank" rel="noopener">BLS Release Schedule</a></td>
+              <td><span class="pill-method web">Public calendar</span></td>
+              <td>Forward calendar of CPI, PPI, NFP, JOLTS, ECI, productivity, real earnings</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-data-calendar">Data release calendar</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.ecb.europa.eu/press/calendars/mgcgc/html/index.en.html" target="_blank" rel="noopener">ECB Monetary Policy Calendar</a></td>
+              <td><span class="pill-method web">Public page</span></td>
+              <td>Governing Council meeting dates, statements, press conferences, SMA</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-cb-calendar">Global central bank calendar</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.treasurydirect.gov/auctions/auction-query/" target="_blank" rel="noopener">Treasury Auction Schedule</a></td>
+              <td><span class="pill-method web">Public page / API</span></td>
+              <td>Upcoming bill, note, bond, TIPS, FRN auction calendar with sizes; results post-auction</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-data-calendar">Data release calendar</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.imf.org/en/Publications/WEO" target="_blank" rel="noopener">IMF World Economic Outlook (WEO)</a></td>
+              <td><span class="pill-method csv">PDF / database</span></td>
+              <td>Twice-yearly global GDP, inflation, current-account, fiscal forecasts; full WEO database export</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-multilateral">Multilateral outlook tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.worldbank.org/en/publication/global-economic-prospects" target="_blank" rel="noopener">World Bank Global Economic Prospects</a></td>
+              <td><span class="pill-method pdf">PDF / web</span></td>
+              <td>Twice-yearly global growth forecasts, EM/DM split, commodity outlook, downside-risk scenarios</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-multilateral">Multilateral outlook tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.bea.gov/news/schedule" target="_blank" rel="noopener">BEA Release Schedule</a></td>
+              <td><span class="pill-method web">Public calendar</span></td>
+              <td>Forward calendar of GDP advance/second/third, PCE, personal income, trade balance</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-data-calendar">Data release calendar</a></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -500,6 +661,8 @@
         <li id="w-inventory-surprise"><strong>Inventory surprise dashboard.</strong> EIA crude, gasoline, distillate stocks, refinery utilization, imports, exports, product supplied.</li>
         <li id="w-refining-margin"><strong>Refining margin proxy.</strong> Use EIA / FRED gasoline, diesel, and crude series to calculate simple 3-2-1 crack-spread style proxies.</li>
         <li id="w-positioning"><strong>Positioning dashboard.</strong> CFTC crude managed-money net length, week-over-week change, and percentile.</li>
+        <li id="w-rig-count"><strong>Rig count tracker.</strong> Baker Hughes weekly U.S. rig count, oil vs. gas split, by basin (Permian, Eagle Ford, Bakken), 4-week change, and 52-week percentile &mdash; the cleanest free read on supply response.</li>
+        <li id="w-steo"><strong>STEO forecast tracker.</strong> EIA Short-Term Energy Outlook monthly forecast revisions for U.S. and global supply, demand, prices &mdash; track the &ldquo;forecast change&rdquo; alone, since the level matters less than the direction of revision.</li>
         <li id="w-xom-driver"><strong>XOM driver bridge.</strong> Oil price, gas price, refining utilization, product supplied, capex, buybacks, production, and free cash flow.</li>
       </ul>
 
@@ -508,6 +671,7 @@
         <li id="w-memory-pricing"><strong>Memory pricing tracker.</strong> DRAM spot price trend, NAND spot trend if available, 4-week change, 13-week change, and an &ldquo;up/down streak&rdquo; counter.</li>
         <li id="w-semi-sales"><strong>Global semi sales tracker.</strong> WSTS billings by region, 3-month moving average, YoY change, and cycle percentile.</li>
         <li id="w-equipment-capex"><strong>Equipment / capex tracker.</strong> SEMI billings, ASML / AMAT / LRCX commentary if you later add transcript parsing, and memory capex commentary.</li>
+        <li id="w-foundry"><strong>Foundry leadership tracker.</strong> TSMC monthly revenue (NTD), YoY %, MoM %, trailing-3M average, and the gap vs. consensus full-year revenue path &mdash; the cleanest single read on AI / HPC / smartphone bookings.</li>
         <li id="w-mu-fundamentals"><strong>MU fundamentals tracker.</strong> Revenue, gross margin, inventory, days inventory, capex, operating cash flow, free cash flow, and management language from SEC filings and Micron IR.</li>
         <li id="w-hbm"><strong>HBM tracker.</strong> Pull MU earnings transcripts/presentations and tag mentions of HBM, pricing, customer commitments, capacity, supply tightness, and margins.</li>
       </ul>
@@ -515,8 +679,9 @@
       <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Shipping &amp; trade</h3>
       <ul class="widgets">
         <li id="w-container-freight"><strong>Container freight tracker.</strong> Freightos, Drewry WCI, SCFI, and lane-specific China-to-U.S. indicators.</li>
-        <li id="w-port-throughput"><strong>Port throughput tracker.</strong> Monthly TEUs from BTS / LA / LB and YoY change.</li>
+        <li id="w-port-throughput"><strong>Port throughput tracker.</strong> Monthly TEUs from BTS / LA / LB, Port of LA Signal forward-look, and YoY change.</li>
         <li id="w-trade-flow"><strong>Trade flow tracker.</strong> Census imports/exports by HS code for semiconductors, electronics, crude oil, petroleum products, and energy equipment.</li>
+        <li id="w-truck-tonnage"><strong>Domestic freight tracker.</strong> Cass Freight Index (shipments + expenditures) and ATA Truck Tonnage Index, monthly, with YoY and MoM &mdash; the U.S.-specific demand cross-check vs. ocean freight.</li>
         <li id="w-supply-chain-stress"><strong>Supply-chain stress dashboard.</strong> NY Fed GSCPI, container rates, port TEUs, supplier-delivery indexes, and freight changes.</li>
       </ul>
 
@@ -525,6 +690,19 @@
         <li id="w-supply-chain-pressure"><strong>Supply-chain pressure tracker.</strong> NY Fed GSCPI level, percentile, and 3-month change &mdash; the cleanest single read on whether the global supply chain is loose or tight.</li>
         <li id="w-ip-overlay"><strong>Industrial production overlay.</strong> FRED semiconductor industrial production indexed against WSTS billings &mdash; cross-check whether U.S. domestic production confirms or diverges from global cycle.</li>
         <li id="w-pmi-breadth"><strong>PMI breadth dashboard.</strong> ISM manufacturing PMI plus its sub-indices (new orders, inventories, supplier deliveries) &mdash; the demand-side leading indicator that sits underneath every other vertical.</li>
+        <li id="w-inflation"><strong>Inflation tracker.</strong> Headline + core CPI, PPI, PCE and core PCE from BLS / BEA, with MoM annualized, YoY, 3M / 6M annualized, and Michigan 1-yr / 5-yr inflation expectations layered on top.</li>
+        <li id="w-labor"><strong>Labor market tracker.</strong> NFP, unemployment rate, AHE, JOLTS openings / quits / hires, ECI &mdash; the labor side of the dual mandate, plus a simple &ldquo;is the labor market loosening or tightening?&rdquo; composite.</li>
+        <li id="w-consumer"><strong>Consumer demand tracker.</strong> Census retail sales (control group), Census durable goods orders, BEA real PCE, and University of Michigan consumer sentiment &mdash; one page for the consumer side of the cycle.</li>
+        <li id="w-nowcast"><strong>GDP nowcast tracker.</strong> Atlanta Fed GDPNow latest reading and history, alongside NY Fed Nowcast, with sub-component contributions &mdash; a real-time alternative to waiting on advance GDP.</li>
+        <li id="w-beige"><strong>Beige Book sentiment tracker.</strong> Tag mentions across the eight annual Beige Books for keywords (&ldquo;modest,&rdquo; &ldquo;moderate,&rdquo; &ldquo;flat,&rdquo; &ldquo;contracting,&rdquo; pricing-power language) by district &mdash; a qualitative overlay on the quantitative macro stack.</li>
+      </ul>
+
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Economic calendar &amp; policy</h3>
+      <ul class="widgets">
+        <li id="w-fomc"><strong>FOMC tracker.</strong> Next meeting date and countdown, current Fed funds target range, latest dot plot, CME FedWatch implied probabilities for the next 3&ndash;4 meetings, and a side-by-side of the last two statement texts to highlight changes.</li>
+        <li id="w-data-calendar"><strong>Data release calendar.</strong> Forward-looking calendar of CPI, PPI, NFP, JOLTS, GDP, PCE, retail sales, durable goods, and Treasury auctions &mdash; with consensus where available and a 7-day / 30-day rolling view.</li>
+        <li id="w-cb-calendar"><strong>Global central bank calendar.</strong> Upcoming FOMC, ECB, BOE, BOJ, BOC meetings on a single timeline &mdash; the cross-rate context that matters for any USD-denominated cyclical.</li>
+        <li id="w-multilateral"><strong>Multilateral outlook tracker.</strong> Side-by-side IMF WEO and World Bank GEP global GDP / inflation forecasts, current vs. previous release, with revisions highlighted &mdash; the slowest-moving but highest-credibility forecast layer.</li>
       </ul>
     </section>
 
@@ -534,8 +712,8 @@
       <p class="vertical-sub">Start here. Cleanest to automate, widest coverage, no key-management headaches. Everything else is a nice-to-have layered on top.</p>
       <div class="mvp-callout">
         <p class="eyebrow">One-stop public research terminal</p>
-        <h3>Eight sources to ship the v1.</h3>
-        <p>This is the smallest set that produces a credible cycle dashboard for semis, energy, and shipping in a weekend &mdash; no Bloomberg, no FactSet, no Daloopa, no paid shipping feeds.</p>
+        <h3>Ten sources to ship the v1.</h3>
+        <p>This is the smallest set that produces a credible cycle dashboard for semis, energy, shipping, and the macro / policy layer in a weekend &mdash; no Bloomberg, no FactSet, no Daloopa, no paid shipping feeds.</p>
         <ol>
           <li><strong>EIA API</strong> &mdash; oil prices, inventories, refinery utilization, product demand.</li>
           <li><strong>FRED API</strong> &mdash; WTI / Brent, macro indicators, industrial production, easy chartable history.</li>
@@ -545,6 +723,8 @@
           <li><strong>BTS Socrata API</strong> &mdash; port TEU data.</li>
           <li><strong>CFTC COT</strong> &mdash; crude positioning.</li>
           <li><strong>TrendForce DRAM page</strong> &mdash; memory price direction.</li>
+          <li><strong>BLS API</strong> &mdash; CPI, PPI, NFP, JOLTS &mdash; the inflation and labor backdrop everything cyclical sits on.</li>
+          <li><strong>FOMC calendar + CME FedWatch</strong> &mdash; meeting dates, statements, and the futures-implied path the market is pricing.</li>
         </ol>
       </div>
     </section>
@@ -586,6 +766,19 @@
             <li>BTS TEUs</li>
             <li>Census import volumes</li>
             <li>NY Fed GSCPI</li>
+            <li>Cass / ATA truck tonnage</li>
+          </ul>
+        </div>
+        <div class="score-card macro">
+          <span class="score-tag">Macro / policy</span>
+          <h3>Macro Cycle Score</h3>
+          <ul>
+            <li>Core CPI / PCE trend</li>
+            <li>NFP + JOLTS</li>
+            <li>ISM PMI breadth</li>
+            <li>Atlanta Fed GDPNow</li>
+            <li>FedWatch implied path</li>
+            <li>Michigan inflation expectations</li>
           </ul>
         </div>
       </div>
