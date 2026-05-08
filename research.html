@@ -227,6 +227,89 @@
     .research-page table.source-table .site-use .arrow { color: var(--muted); margin-right: .15rem; }
     .research-page table.source-table .site-use .context { color: var(--muted); font-style: italic; }
 
+    /* Live rates / FX strip — sparklines hooked up to the bpleon-quotes worker */
+    .research-page .rates-strip {
+      margin: 1rem 0 1.5rem;
+      padding: 1rem 1.15rem 1.1rem;
+      background: var(--bg-soft);
+      border: 1px solid var(--rule);
+      border-radius: 12px;
+    }
+    .research-page .rates-strip .strip-title {
+      font-family: var(--sans);
+      font-size: .72rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      margin: 0 0 .65rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .research-page .rates-strip .strip-title .strip-meta {
+      font-size: .68rem;
+      letter-spacing: .06em;
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: none;
+    }
+    .research-page .rates-strip .strip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: .85rem 1.1rem;
+    }
+    .research-page .rates-strip .rates-card {
+      padding: .55rem .15rem .35rem;
+      border-top: 1px solid var(--rule);
+    }
+    .research-page .rates-strip .rates-card .rc-label {
+      font-family: var(--sans);
+      font-size: .76rem;
+      font-weight: 600;
+      color: var(--ink);
+      letter-spacing: .02em;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .research-page .rates-strip .rates-card .rc-sym {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .68rem;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+    .research-page .rates-strip .rates-card .rc-spark {
+      height: 32px;
+      margin: .2rem 0 .15rem;
+    }
+    .research-page .rates-strip .rates-card .rc-spark.loading {
+      background: linear-gradient(90deg, transparent, rgba(11,31,58,0.05), transparent);
+      background-size: 200% 100%;
+      animation: rc-shimmer 1.4s linear infinite;
+      border-radius: 4px;
+    }
+    @keyframes rc-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+    .research-page .rates-strip .rates-card .rc-foot {
+      font-family: var(--sans);
+      font-size: .72rem;
+      color: var(--muted);
+      letter-spacing: .02em;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .research-page .rates-strip .rates-card .rc-last {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .research-page .rates-strip .rates-card .rc-chg.up   { color: #1a6e3f; font-weight: 600; }
+    .research-page .rates-strip .rates-card .rc-chg.down { color: #b03a2e; font-weight: 600; }
+    .research-page .rates-strip .rates-card .rc-chg.flat { color: var(--muted); }
+
     /* Inline code in body copy */
     .research-page main code, .research-page .prose code {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -262,14 +345,15 @@
       <p class="eyebrow">Research</p>
       <h1>Free data stack for a cyclicals research site.</h1>
       <p class="lede">
-        The blueprint behind the dashboards on this site. Five verticals
-        &mdash; <strong>semis, energy, shipping &amp; trade, macro
-        demand, and economic calendar / policy reports</strong> &mdash;
-        built entirely on free, automatable public data. APIs, CSVs,
-        Excel drops, stable HTML pages &mdash; no Bloomberg, no FactSet,
-        no Daloopa, no paid shipping feeds. This page documents every
-        source, the widget it feeds, the MVP API stack to start with,
-        and the cycle-score formulas on top.
+        The blueprint behind the dashboards on this site. Seven
+        verticals &mdash; <strong>semis, energy, shipping &amp; trade,
+        macro demand, economic calendar / policy, rates / FX / credit,
+        and valuation reference</strong> &mdash; built entirely on free,
+        automatable public data. APIs, CSVs, Excel drops, stable HTML
+        pages &mdash; no Bloomberg, no FactSet, no Daloopa, no paid
+        shipping feeds. This page documents every source, the widget it
+        feeds, the MVP API stack to start with, and the cycle-score
+        formulas on top.
       </p>
       <nav class="toc" aria-label="On this page">
         <p class="toc-title">On this page</p>
@@ -279,6 +363,8 @@
           <li><a href="#shipping">Shipping &amp; trade sources</a></li>
           <li><a href="#macro">Macro / demand sources</a></li>
           <li><a href="#calendar">Economic calendar &amp; policy</a></li>
+          <li><a href="#rates">Rates, FX &amp; credit</a></li>
+          <li><a href="#valuation">Valuation reference (Damodaran)</a></li>
           <li><a href="#widgets">Widget blueprint</a></li>
           <li><a href="#mvp">MVP source stack</a></li>
           <li><a href="#cycle-scores">Cycle scores</a></li>
@@ -644,6 +730,187 @@
               <td><span class="pill-method web">Public calendar</span></td>
               <td>Forward calendar of GDP advance/second/third, PCE, personal income, trade balance</td>
               <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-data-calendar">Data release calendar</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== RATES, FX & CREDIT ============== -->
+    <section class="vertical-section" id="rates">
+      <h2>Rates, FX &amp; credit</h2>
+      <p class="vertical-sub">The cross-asset backdrop. Treasury yield curve, key FX pairs, credit spreads, and inflation-linked yields &mdash; the cost-of-capital and risk-appetite layer that prices every cyclical equity story underneath.</p>
+
+      <!-- Live rates & FX strip — pulled via the bpleon-quotes worker -->
+      <div class="rates-strip" id="rates-live-strip" aria-label="Live rates and FX snapshot">
+        <p class="strip-title">
+          <span>Live snapshot &mdash; Yahoo data via worker</span>
+          <span class="strip-meta">Auto-pulls on load &middot; ~1y daily history</span>
+        </p>
+        <div class="strip-grid">
+          <div class="rates-card">
+            <div class="rc-label"><span>10-yr Treasury</span><span class="rc-sym">^TNX</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="^TNX" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>30-yr Treasury</span><span class="rc-sym">^TYX</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="^TYX" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>13-wk T-bill</span><span class="rc-sym">^IRX</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="^IRX" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>Dollar Index</span><span class="rc-sym">DX-Y.NYB</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="DX-Y.NYB" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>EUR / USD</span><span class="rc-sym">EURUSD=X</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="EURUSD=X" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>USD / JPY</span><span class="rc-sym">USDJPY=X</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="USDJPY=X" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>VIX</span><span class="rc-sym">^VIX</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="^VIX" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+          <div class="rates-card">
+            <div class="rc-label"><span>HY credit (HYG)</span><span class="rc-sym">HYG</span></div>
+            <div class="rc-spark watch-spark loading" data-sym="HYG" data-rates-card="1"></div>
+            <div class="rc-foot"><span class="rc-last" data-rates-last>&mdash;</span><span class="rc-chg" data-rates-chg></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="source-table-wrap">
+        <table class="source-table">
+          <thead>
+            <tr>
+              <th style="width:18%">Source</th>
+              <th style="width:13%">Method</th>
+              <th style="width:34%">What to track</th>
+              <th>Site use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="src-name"><a href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value=2026" target="_blank" rel="noopener">U.S. Treasury Daily Yield Curve</a></td>
+              <td><span class="pill-method web">Public page / CSV</span></td>
+              <td>Daily 1M / 3M / 6M / 1Y / 2Y / 3Y / 5Y / 7Y / 10Y / 20Y / 30Y constant-maturity yields</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-yield-curve">Yield curve tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://fred.stlouisfed.org/categories/22" target="_blank" rel="noopener">FRED &mdash; Interest Rates</a></td>
+              <td><span class="pill-method api">API &middot; free key</span></td>
+              <td>DGS10, DGS2, DFF (Fed funds), T10Y2Y / T10Y3M (curve spreads), SOFR, IORB</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-yield-curve">Yield curve tracker</a>, <a href="#w-curve-spreads">Curve spread tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://fred.stlouisfed.org/series/T10YIE" target="_blank" rel="noopener">FRED &mdash; TIPS breakevens (T10YIE, T5YIFR)</a></td>
+              <td><span class="pill-method api">API &middot; free key</span></td>
+              <td>10-yr breakeven inflation, 5y5y forward inflation, real yields</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-breakevens">TIPS / breakevens tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://fred.stlouisfed.org/series/BAMLH0A0HYM2" target="_blank" rel="noopener">ICE BofA HY OAS &amp; IG OAS via FRED</a></td>
+              <td><span class="pill-method api">API &middot; free key</span></td>
+              <td>BAMLH0A0HYM2 (HY OAS), BAMLC0A0CM (IG OAS) &mdash; the cleanest free read on credit conditions</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-credit-spreads">Credit spreads tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html" target="_blank" rel="noopener">ECB Euro Reference Exchange Rates</a></td>
+              <td><span class="pill-method csv">CSV / API</span></td>
+              <td>Daily EUR cross-rates against ~30 currencies, full history</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fx">FX tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.federalreserve.gov/releases/h10/" target="_blank" rel="noopener">Federal Reserve H.10 FX Rates</a></td>
+              <td><span class="pill-method csv">CSV / web</span></td>
+              <td>Daily / weekly / monthly USD vs. major and broad indexes; foreign-exchange rates by country</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fx">FX tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://data.bis.org/topics/EER" target="_blank" rel="noopener">BIS Effective Exchange Rates</a></td>
+              <td><span class="pill-method csv">CSV / API</span></td>
+              <td>Nominal and real effective exchange rates (NEER / REER) for ~60 economies</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-fx">FX tracker</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://www.newyorkfed.org/markets/reference-rates/sofr" target="_blank" rel="noopener">NY Fed SOFR &amp; reference rates</a></td>
+              <td><span class="pill-method web">Public page / API</span></td>
+              <td>Daily SOFR, SOFR averages (30/90/180-day), Term SOFR context, OBFR, EFFR</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-yield-curve">Yield curve tracker</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============== VALUATION REFERENCE (DAMODARAN) ============== -->
+    <section class="vertical-section" id="valuation">
+      <h2>Valuation reference (Damodaran)</h2>
+      <p class="vertical-sub">Aswath Damodaran &mdash; NYU Stern, the &ldquo;Dean of Valuation&rdquo; &mdash; updates the most-used free valuation datasets on the internet. Cost of capital by industry, country risk premiums, betas, multiples, margins. Free Excel downloads, refreshed annually (some quarterly). The reference layer behind every DCF on this site.</p>
+      <div class="source-table-wrap">
+        <table class="source-table">
+          <thead>
+            <tr>
+              <th style="width:18%">Source</th>
+              <th style="width:13%">Method</th>
+              <th style="width:34%">What to track</th>
+              <th>Site use</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="src-name"><a href="https://pages.stern.nyu.edu/~adamodar/" target="_blank" rel="noopener">Damodaran Online (data archive)</a></td>
+              <td><span class="pill-method web">Public page</span></td>
+              <td>Top-level navigation to every dataset, paper, spreadsheet, and lecture &mdash; the entry point</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-damodaran">Cost-of-capital reference</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/wacc.htm" target="_blank" rel="noopener">Cost of Capital by Industry</a></td>
+              <td><span class="pill-method csv">Excel</span></td>
+              <td>WACC, cost of equity, cost of debt, capital structure for ~95 industries (US, Global, Europe, Japan, EM, India, China)</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-damodaran">Cost-of-capital reference</a>, used in <a href="dcf.html">DCF tool</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ctryprem.html" target="_blank" rel="noopener">Country Risk Premiums &amp; ERP</a></td>
+              <td><span class="pill-method csv">Excel / web</span></td>
+              <td>Implied ERP (US monthly), country risk premiums (~180 countries), sovereign default spreads</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-damodaran">Cost-of-capital reference</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/Betas.html" target="_blank" rel="noopener">Industry Betas &amp; Unlevered Betas</a></td>
+              <td><span class="pill-method csv">Excel</span></td>
+              <td>Levered / unlevered betas, debt-to-equity, cash-adjusted betas by industry &mdash; for cross-checking comps</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-damodaran">Cost-of-capital reference</a>, used in <a href="wacc.html">WACC tool</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/pedata.html" target="_blank" rel="noopener">Industry Multiples (P/E, EV/EBITDA, EV/Sales)</a></td>
+              <td><span class="pill-method csv">Excel</span></td>
+              <td>Trailing and forward multiples by industry, price-to-book, EV/Invested Capital, EV/Sales by sector</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-multiples">Industry multiples reference</a>, used in <a href="comps.html">comps tool</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/margin.html" target="_blank" rel="noopener">Industry Margins &amp; Operating Stats</a></td>
+              <td><span class="pill-method csv">Excel</span></td>
+              <td>Gross / operating / net margins, ROIC, ROE, capex/sales, sales/capital by industry</td>
+              <td class="site-use"><span class="arrow">&rarr;</span> <a href="#w-multiples">Industry multiples reference</a></td>
+            </tr>
+            <tr>
+              <td class="src-name"><a href="https://aswathdamodaran.blogspot.com/" target="_blank" rel="noopener">Musings on Markets (blog)</a></td>
+              <td><span class="pill-method web">Blog / public</span></td>
+              <td>Damodaran's running commentary on valuation, ERP, sector views, individual-name DCFs &mdash; canonical reading</td>
+              <td class="site-use"><span class="context">Context layer &mdash; methodology cross-check</span></td>
             </tr>
           </tbody>
         </table>
