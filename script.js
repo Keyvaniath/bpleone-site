@@ -453,30 +453,15 @@
         if (!q || !isFinite(q.regularMarketPrice)) return;
 
         var price = q.regularMarketPrice;
-        // Compute today's day-over-day change directly from price + previousClose.
-        // We previously trusted q.regularMarketChangePercent, but the Yahoo proxy
-        // intermittently returns a multi-day or period value here (e.g. ~25% on a
-        // calm session) which then mis-renders as "+25.03% today". Computing it
-        // from the two reliable price fields avoids that class of bug entirely.
-        var pct;
-        if (isFinite(price) && isFinite(q.regularMarketPreviousClose) && q.regularMarketPreviousClose !== 0) {
-          pct = ((price - q.regularMarketPreviousClose) / q.regularMarketPreviousClose) * 100;
-        } else if (isFinite(q.regularMarketChangePercent)) {
-          pct = q.regularMarketChangePercent;
-        }
         var priceEl = document.getElementById('lp-price');
-        var changeEl = document.getElementById('lp-change');
         var ttEl = document.getElementById('lp-totarget');
 
         if (priceEl) priceEl.textContent = '$' + price.toFixed(2);
-        // Headline change always reads today's day-over-day (matches Yahoo / Bloomberg
-        // convention). The sparkline-period toggles below the chart only redraw the
-        // chart; they do not rewrite this label. Single source of truth, no race
-        // with loadLeadPickSpark().
-        if (changeEl && isFinite(pct)) {
-          changeEl.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '% today';
-          changeEl.className = 'lp-change ' + (pct >= 0 ? 'up' : 'down');
-        }
+        // NOTE: do NOT write the change percent here. The change label is owned
+        // exclusively by loadLeadPickSpark() so it stays in sync with whichever
+        // sparkline range is active (1D -> "today", 1M -> "1m", etc). Writing
+        // it here too would race with the spark fetch on initial load and
+        // intermittently leave stale "today" labels next to period values.
         if (ttEl) {
           // Only render a "to target" % when a numeric target is set; while
           // the PT is under review, show an em-dash rather than a misleading
@@ -797,11 +782,25 @@
         if (timestamps && timestamps.length === values.length) {
           attachSparkHover(sparkEl, values, timestamps, sparkOpts);
         }
-        // NOTE: deliberately do NOT update #lp-change here. The headline change
-        // is owned by the symbols-fetch path above and always reads today's
-        // day-over-day move. Period toggles only redraw the chart — matching
-        // Yahoo / Bloomberg convention and removing the prior race condition
-        // where the period change was sometimes mis-labeled as "today".
+        // Drive the change label off the spark data so the value AND the
+        // suffix always reflect the active period. firstV is the period
+        // start (e.g. 1mo ago for range='1mo', yesterday's close for '1d');
+        // lastV is the latest price. This is the single writer of #lp-change
+        // — the symbols-fetch above intentionally leaves it alone.
+        var changeEl = document.getElementById('lp-change');
+        if (changeEl) {
+          var firstV = values[0], lastV = values[values.length - 1];
+          if (isFinite(firstV) && isFinite(lastV) && firstV !== 0) {
+            var periodPct = ((lastV - firstV) / firstV) * 100;
+            var rangeLabels = {
+              '1d': 'today', '5d': '1w', '1mo': '1m',
+              '3mo': '3m',   '1y': '1y',  '5y': '5y'
+            };
+            var suffix = rangeLabels[currentSparkRange] || currentSparkRange;
+            changeEl.textContent = (periodPct >= 0 ? '+' : '') + periodPct.toFixed(2) + '% ' + suffix;
+            changeEl.className = 'lp-change ' + (periodPct >= 0 ? 'up' : 'down');
+          }
+        }
       })
       .catch(function () { /* leave placeholder */ });
   }
