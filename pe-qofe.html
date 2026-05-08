@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QofE Quick-Check — Brandon Leon</title>
+<meta name="description" content="Quality-of-earnings adjustments framework. Walk reported EBITDA to a defensible run-rate adjusted EBITDA via one-times, normalizations, owner adjustments, and pro-forma synergies. With aggressiveness flags.">
+<link rel="canonical" href="https://bpleon.com/pe-qofe.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #F5EFE0; --card: #FAF6E8; --card-border: #E0D5BA;
+    --text: #1F1B14; --text-muted: #6B6453; --text-faint: #9C9684;
+    --accent: #C46A2C; --accent-light: #E5A572; --accent-bg: #F5E4CE;
+    --rule: #D8CDB0; --input-bg: #FFFEF7; --input-border: #C9BD9F;
+    --table-stripe: #F2EBD6; --green: #4F7A3F; --red: #B0432A; --yellow: #B89B2C;
+    --sage: #5b7f6b; --sage-bg: #E5EFE6; --navy: #0B3D91;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 17px; line-height: 1.6; padding: 60px 40px 100px; min-height: 100vh; }
+.container { max-width: 1100px; margin: 0 auto; }
+.headline { font-size: 42px; font-weight: 600; line-height: 1.15; margin-bottom: 16px; letter-spacing: -0.01em; }
+.subhead { color: var(--text-muted); font-size: 18px; font-style: italic; margin-bottom: 32px; max-width: 800px; }
+.breadcrumb { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+
+.grid-main { display: grid; grid-template-columns: 1fr 1.1fr; gap: 28px; margin-bottom: 40px; }
+@media (max-width: 900px) { .grid-main { grid-template-columns: 1fr; } body { padding: 40px 20px 80px; } .headline { font-size: 32px; } }
+
+.card { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 28px 30px; }
+.card-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.subgroup-title { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin: 18px 0 8px; }
+.subgroup-flag { font-family: 'Inter', sans-serif; font-size: 11px; padding: 2px 8px; border-radius: 999px; font-weight: 600; margin-left: 8px; }
+.subgroup-flag.green { background: var(--sage-bg); color: var(--sage); }
+.subgroup-flag.yellow { background: #FFF1C4; color: var(--yellow); }
+.subgroup-flag.red { background: #F8D8CD; color: var(--red); }
+
+.spec-row { display: grid; grid-template-columns: 1fr 130px; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--rule); align-items: center; }
+.spec-row:last-child { border-bottom: none; }
+.spec-row .label { font-size: 14px; color: var(--text); }
+.spec-row .label small { color: var(--text-muted); font-size: 11px; font-style: italic; display: block; line-height: 1.3; margin-top: 1px;}
+input[type="number"], input[type="text"] { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 3px; padding: 7px 10px; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text); text-align: right; width: 100%; }
+input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-light); }
+
+.implied-headline { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.implied-price { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+.implied-meta { font-size: 14px; color: var(--text-muted); font-family: 'Inter', sans-serif; margin-bottom: 18px; }
+
+.summary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 18px; }
+.sum-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+.sum-value { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; }
+
+.qof-flag-card { padding: 18px 22px; border-radius: 6px; margin: 16px 0; }
+.qof-flag-card.green { background: #ECF3EE; border-left: 3px solid var(--sage); }
+.qof-flag-card.yellow { background: #FCF6E1; border-left: 3px solid var(--yellow); }
+.qof-flag-card.red { background: #F9E5DD; border-left: 3px solid var(--red); }
+.qof-flag-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; margin-bottom: 6px; }
+.qof-flag-card p { font-size: 14px; color: var(--text-muted); margin: 0; }
+
+.bridge-svg { width: 100%; height: 320px; }
+
+.howworks { margin-top: 50px; padding-top: 28px; border-top: 1px solid var(--rule); }
+.howworks h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+.howworks p { color: var(--text); margin-bottom: 12px; max-width: 800px; }
+.howworks strong { color: var(--text); }
+
+.detail-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; margin-top: 8px; }
+.detail-table th { padding: 8px 10px; border-bottom: 1px solid var(--rule); color: var(--text-muted); text-align: left; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+.detail-table th.num { text-align: right; }
+.detail-table td { padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+.detail-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.detail-table tr:nth-child(even) td { background: var(--table-stripe); }
+.detail-table .total td { background: var(--accent-bg) !important; font-weight: 600; }
+.detail-table .total td:first-child { color: var(--accent); }
+.detail-table .add { color: var(--green); }
+.detail-table .sub { color: var(--red); }
+
+.cta { margin-top: 40px; padding: 24px 28px; background: var(--accent-bg); border: 1px solid var(--accent-light); border-radius: 4px; }
+.cta-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+.cta-body { color: var(--text-muted); margin-bottom: 12px; }
+.cta a { color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--accent); }
+
+.disclaimer { margin-top: 30px; font-size: 13px; color: var(--text-faint); font-style: italic; }
+.disclaimer a { color: var(--text-muted); }
+
+.share-btn { position: fixed; top: 24px; right: 24px; background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 90; transition: background 0.15s; }
+.share-btn:hover { background: #A85A22; }
+.share-toast { position: fixed; top: 70px; right: 24px; background: var(--text); color: white; padding: 12px 18px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; z-index: 91; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.share-toast.show { opacity: 1; }
+@media (max-width: 700px) { .share-btn { top: 12px; right: 12px; padding: 8px 12px; font-size: 11px; } }
+</style>
+</head>
+<body>
+
+<button class="share-btn" id="shareBtn" title="Copy a shareable link with your inputs">📋 SHARE THIS</button>
+<div class="share-toast" id="shareToast">Link copied — paste it anywhere</div>
+
+<div class="container">
+    <div class="breadcrumb"><a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Buy-side tools</div>
+    <h1 class="headline">QofE Quick-Check</h1>
+    <p class="subhead">Walk reported EBITDA to a defensible run-rate adjusted EBITDA the way a Big Four QofE provider would. One-time items, run-rate normalizations, owner adjustments, pro-forma synergies — each line with the haircut a real underwriter would apply. Output: adjusted EBITDA, the value of the adjustments as a % of reported, and a quality flag based on how aggressive the bridge is.</p>
+
+    <div class="grid-main">
+        <!-- LEFT: ADJUSTMENTS -->
+        <div class="card">
+            <div class="card-title">Adjustments</div>
+
+            <div class="subgroup-title">Reported (LTM)</div>
+            <div class="spec-row"><div class="label">Reported EBITDA <small>($M)</small></div><input type="number" id="i-rep" value="50" step="1"></div>
+            <div class="spec-row"><div class="label">LTM revenue <small>($M, optional)</small></div><input type="number" id="i-rev" value="400" step="10"></div>
+
+            <div class="subgroup-title">(–) One-time costs <span class="subgroup-flag green">low risk</span></div>
+            <div class="spec-row"><div class="label">Restructuring charges <small>severance, plant closures</small></div><input type="number" id="i-restr" value="3" step="0.5"></div>
+            <div class="spec-row"><div class="label">M&amp;A / advisory costs <small>banker, legal, DD fees</small></div><input type="number" id="i-ma" value="2" step="0.5"></div>
+            <div class="spec-row"><div class="label">Litigation settlements <small>net of insurance</small></div><input type="number" id="i-lit" value="0" step="0.5"></div>
+            <div class="spec-row"><div class="label">Goodwill / asset impairments <small>non-cash, but added back too liberally</small></div><input type="number" id="i-imp" value="0" step="0.5"></div>
+
+            <div class="subgroup-title">(–) Owner / management adjustments <span class="subgroup-flag yellow">scrutiny required</span></div>
+            <div class="spec-row"><div class="label">Above-market owner comp <small>excess vs replacement CEO</small></div><input type="number" id="i-owner" value="2" step="0.5"></div>
+            <div class="spec-row"><div class="label">Related-party expenses <small>family, leased property at non-arm's length</small></div><input type="number" id="i-rp" value="0" step="0.5"></div>
+            <div class="spec-row"><div class="label">Personal expenses <small>non-business travel, hobby ranches</small></div><input type="number" id="i-pers" value="0" step="0.5"></div>
+
+            <div class="subgroup-title">(+) Run-rate normalizations <span class="subgroup-flag yellow">scrutiny required</span></div>
+            <div class="spec-row"><div class="label">Annualize new contracts <small>partial-year revenue × full-year EBITDA mgn</small></div><input type="number" id="i-runrate" value="1.5" step="0.5"></div>
+            <div class="spec-row"><div class="label">Acquired EBITDA <small>full-year of mid-period acquisitions</small></div><input type="number" id="i-acq" value="0" step="0.5"></div>
+            <div class="spec-row"><div class="label">Lost customer hit <small>(–) full-year impact of lost contract</small></div><input type="number" id="i-lost" value="0" step="0.5"></div>
+
+            <div class="subgroup-title">(+) Pro-forma synergies <span class="subgroup-flag red">high risk — discount these</span></div>
+            <div class="spec-row"><div class="label">Identified cost synergies <small>headcount, vendor consolidation</small></div><input type="number" id="i-syn" value="2" step="0.5"></div>
+            <div class="spec-row"><div class="label">Synergy haircut <small>%, applied to above</small></div><input type="number" id="i-syn-hc" value="50" step="5"></div>
+
+            <div class="subgroup-title">(+/−) Other</div>
+            <div class="spec-row"><div class="label">Stock-based comp add-back <small>SBC; many PE includes, some don't — see notes</small></div><input type="number" id="i-sbc" value="0" step="0.5"></div>
+            <div class="spec-row"><div class="label">Other adjustments <small>+ adds, − subtracts; describe in notes</small></div><input type="number" id="i-other" value="0" step="0.5"></div>
+        </div>
+
+        <!-- RIGHT: OUTPUT -->
+        <div class="card">
+            <div class="implied-headline">Adjusted EBITDA</div>
+            <div class="implied-price" id="o-adj">—</div>
+            <div class="implied-meta">
+                vs reported <strong id="o-rep">—</strong> &nbsp;·&nbsp; <strong id="o-uplift">—</strong> uplift
+                <span id="o-margin-block" style="display:none;">&nbsp;·&nbsp; <strong id="o-margin">—</strong> margin</span>
+            </div>
+
+            <div class="summary-row">
+                <div><div class="sum-label">Total adj $</div><div class="sum-value" id="o-adj-amt">—</div></div>
+                <div><div class="sum-label">Adj as % reported</div><div class="sum-value" id="o-adj-pct">—</div></div>
+            </div>
+
+            <div id="qof-flag" class="qof-flag-card green">
+                <h4 id="flag-title">Quality flag</h4>
+                <p id="flag-text">Computing&hellip;</p>
+            </div>
+
+            <div class="card-title" style="margin-top:8px;">Adjustment bridge</div>
+            <table class="detail-table" id="bridge-table"></table>
+        </div>
+    </div>
+
+    <!-- BRIDGE CHART -->
+    <div class="card" style="margin-bottom:28px;">
+        <div class="card-title">EBITDA bridge — reported to adjusted</div>
+        <p style="font-family:'Inter',sans-serif; font-size:13px; color:var(--text-muted); margin-bottom:14px;">
+            Each segment is a discrete adjustment line. Green = reported / floor; orange = uplift you're adding; red = haircut applied to pro-forma synergies; sage = adjusted total.
+        </p>
+        <svg class="bridge-svg" id="bridge-svg" viewBox="0 0 800 320" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div class="howworks">
+        <h3>How this works</h3>
+        <p><strong>What QofE is for.</strong> A real Big Four QofE walks two parties from "what does the income statement say happened" to "what's the right run-rate cash earnings power of this business going forward." The buyer needs that number to bid. The seller wants it as high as possible. The QofE provider sits in the middle and writes a 60-page report defending each adjustment line.</p>
+        <p><strong>The four buckets.</strong> Adjustments fall into four risk tiers. <strong>One-time costs</strong> (restructuring, M&amp;A advisory, litigation) — usually defensible, low scrutiny. <strong>Owner adjustments</strong> (above-market salary, personal expenses) — scrutinized; backed up by replacement-cost analysis. <strong>Run-rate normalizations</strong> (annualizing partial-period contracts) — scrutinized; backed by signed contracts and ramp curves. <strong>Pro-forma synergies</strong> — heavily haircut; the buyer's own diligence team often refuses to underwrite these without their own work.</p>
+        <p><strong>The aggressiveness flag.</strong> A clean QofE typically runs ≤10% adjustments to reported EBITDA. 10–25% gets scrutiny. 25–40% is "this is a roll-up and the seller is selling you the dream." Above 40%, it's not a QofE, it's a story. Modeled here as an automatic flag based on adjusted-vs-reported uplift.</p>
+        <p><strong>The SBC question.</strong> Stock-based compensation is the cleanest battle line in modern QofE. Public-company GAAP treats SBC as a real cost (because it's dilutive). Private-equity tradition adds SBC back to EBITDA (because it's non-cash). Both are wrong on their own. The honest answer: subtract dilution-equivalent cash cost (option-pricing model), not the GAAP grant-date expense. Most LBO models cheat and use GAAP-or-zero. Set this line to zero unless you've explicitly diligenced.</p>
+        <p><strong>What's NOT in this calc.</strong> Working capital normalization (need three years of monthly data to do properly), maintenance vs growth capex split (judgment-heavy; depends on asset class), revenue recognition adjustments (ASC 606 surprise hits), customer concentration analysis. Those need a real QofE — typically $200K–$500K and 6–10 weeks. This page is for first-pass triage. See the <a href="./disclaimer.html">disclaimer</a>.</p>
+    </div>
+
+    <div class="cta">
+        <div class="cta-title">First-pass triage. Then call a real QofE.</div>
+        <p class="cta-body">For a real deal, this page does not substitute for QofE diligence. It's intended as a thinking tool — to triangulate whether a seller's "Adjusted EBITDA" claim is defensible before you spend $300K finding out.</p>
+        <a href="mailto:brandon@bpleon.com">→ Email brandon@bpleon.com if you want to walk through a specific case</a>
+    </div>
+
+    <p class="disclaimer">Nothing on this page is investment, tax, or accounting advice. Educational tool for triage. See the <a href="./disclaimer.html">full disclaimer</a>.</p>
+</div>
+
+<script>
+(function () {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const IDS = ['rep','rev','restr','ma','lit','imp','owner','rp','pers','runrate','acq','lost','syn','syn-hc','sbc','other'];
+
+    function fmtMoney(v) {
+        if (!isFinite(v)) return '—';
+        const sign = v < 0 ? '-' : ''; v = Math.abs(v);
+        if (v >= 1000) return sign + '$' + (v / 1000).toFixed(2) + 'B';
+        return sign + '$' + v.toFixed(1) + 'M';
+    }
+    const fmtPct = v => isFinite(v) ? (v * 100).toFixed(1) + '%' : '—';
+    const fmtPctSig = v => (v >= 0 ? '+' : '') + (v * 100).toFixed(1) + '%';
+
+    function render() {
+        const v = {};
+        IDS.forEach(id => v[id] = parseFloat($('i-' + id).value) || 0);
+        const rep = v.rep;
+        const rev = v.rev;
+
+        const synergyDiscounted = v.syn * (1 - v['syn-hc'] / 100);
+
+        // Lines: (sign, label, amount, bucket, color)
+        const lines = [
+            { lbl: 'Reported EBITDA', amt: rep, bucket: 'base', color: 'var(--sage)' },
+            { lbl: 'Restructuring charges', amt: v.restr, bucket: 'one-time', color: 'var(--accent)' },
+            { lbl: 'M&A / advisory costs', amt: v.ma, bucket: 'one-time', color: 'var(--accent)' },
+            { lbl: 'Litigation settlements', amt: v.lit, bucket: 'one-time', color: 'var(--accent)' },
+            { lbl: 'Goodwill / impairments', amt: v.imp, bucket: 'one-time', color: 'var(--accent)' },
+            { lbl: 'Above-market owner comp', amt: v.owner, bucket: 'owner', color: 'var(--accent-light)' },
+            { lbl: 'Related-party expenses', amt: v.rp, bucket: 'owner', color: 'var(--accent-light)' },
+            { lbl: 'Personal expenses', amt: v.pers, bucket: 'owner', color: 'var(--accent-light)' },
+            { lbl: 'Annualize new contracts', amt: v.runrate, bucket: 'runrate', color: '#D89456' },
+            { lbl: 'Acquired EBITDA (full year)', amt: v.acq, bucket: 'runrate', color: '#D89456' },
+            { lbl: 'Lost customer (full year)', amt: -Math.abs(v.lost), bucket: 'runrate', color: 'var(--red)' },
+            { lbl: 'Pro-forma synergies (gross)', amt: v.syn, bucket: 'synergies', color: '#A4B8C4' },
+            { lbl: 'Synergy haircut (' + v['syn-hc'] + '%)', amt: -(v.syn - synergyDiscounted), bucket: 'synergies', color: 'var(--red)' },
+            { lbl: 'SBC add-back', amt: v.sbc, bucket: 'other', color: '#A4B8C4' },
+            { lbl: 'Other', amt: v.other, bucket: 'other', color: '#A4B8C4' },
+        ];
+
+        const adjustmentsOnly = lines.slice(1);  // exclude reported
+        const totalAdj = adjustmentsOnly.reduce((a, l) => a + l.amt, 0);
+        const adj = rep + totalAdj;
+        const uplift = rep > 0 ? totalAdj / rep : NaN;
+        const margin = rev > 0 ? adj / rev : NaN;
+
+        $('o-adj').textContent = fmtMoney(adj);
+        $('o-rep').textContent = fmtMoney(rep);
+        $('o-uplift').textContent = fmtPctSig(uplift);
+        $('o-adj-amt').textContent = fmtMoney(totalAdj);
+        $('o-adj-pct').textContent = fmtPctSig(uplift);
+
+        if (rev > 0) {
+            $('o-margin-block').style.display = 'inline';
+            $('o-margin').textContent = fmtPct(margin);
+        } else {
+            $('o-margin-block').style.display = 'none';
+        }
+
+        // Quality flag
+        const upliftPct = isFinite(uplift) ? uplift : 0;
+        let flag, flagTitle, flagText;
+        if (upliftPct < 0.10) {
+            flag = 'green';
+            flagTitle = '🟢 Clean — adjustments under 10% of reported';
+            flagText = 'A defensible bridge. Most adjustments here would clear normal QofE scrutiny without much pushback.';
+        } else if (upliftPct < 0.25) {
+            flag = 'yellow';
+            flagTitle = '🟡 Scrutiny — adjustments 10-25% of reported';
+            flagText = 'Lender and investor scrutiny territory. Each adjustment will need a one-page defense memo. Owner-comp and run-rate items will get hit hardest.';
+        } else if (upliftPct < 0.40) {
+            flag = 'red';
+            flagTitle = '🔴 High risk — adjustments 25-40% of reported';
+            flagText = "Major add-backs. The seller is asking you to underwrite a story, not LTM cash earnings. Lenders will haircut their advance rate. Plan for a real Big Four QofE before you close.";
+        } else {
+            flag = 'red';
+            flagTitle = '🔴 This is not a QofE, this is a forecast';
+            flagText = "Adjustments above 40% of reported aren't normalized historicals — they're a projected business. Treat them as you would any forecast: heavy haircut, scenario analysis, and earn-out structure rather than purchase price.";
+        }
+        const fc = $('qof-flag');
+        fc.className = 'qof-flag-card ' + flag;
+        $('flag-title').textContent = flagTitle;
+        $('flag-text').textContent = flagText;
+
+        // Bridge table
+        let bt = `<thead><tr><th>Line</th><th class="num">Amount</th><th class="num">Running</th></tr></thead><tbody>`;
+        let running = 0;
+        lines.forEach((l, i) => {
+            running += l.amt;
+            const cls = i === 0 ? '' : (l.amt > 0 ? 'add' : 'sub');
+            const sign = l.amt > 0 && i > 0 ? '+' : '';
+            bt += `<tr><td>${l.lbl}</td><td class="num ${cls}">${sign}${fmtMoney(l.amt)}</td><td class="num">${fmtMoney(running)}</td></tr>`;
+        });
+        bt += `<tr class="total"><td>Adjusted EBITDA</td><td class="num">${fmtMoney(totalAdj)} adj</td><td class="num">${fmtMoney(adj)}</td></tr>`;
+        bt += `</tbody>`;
+        $('bridge-table').innerHTML = bt;
+
+        // Bridge SVG: cumulative bars
+        renderBridgeSVG(lines);
+    }
+
+    function renderBridgeSVG(lines) {
+        const W = 800, H = 320, pad = { l: 50, r: 30, t: 30, b: 70 };
+        const usefulLines = lines.filter((l, i) => i === 0 || Math.abs(l.amt) > 0.05);
+        usefulLines.push({ lbl: 'Adjusted', amt: 0, bucket: 'final', color: 'var(--sage)' });
+
+        let running = 0;
+        const bars = [];
+        usefulLines.forEach((l, i) => {
+            if (l.bucket === 'base') {
+                bars.push({ ...l, y0: 0, y1: l.amt, label: '$' + l.amt.toFixed(1) + 'M' });
+                running = l.amt;
+            } else if (l.bucket === 'final') {
+                bars.push({ lbl: 'Adjusted', amt: running, bucket: 'final', color: 'var(--sage)', y0: 0, y1: running, label: '$' + running.toFixed(1) + 'M' });
+            } else {
+                const next = running + l.amt;
+                bars.push({ ...l, y0: Math.min(running, next), y1: Math.max(running, next), delta: l.amt, label: (l.amt >= 0 ? '+' : '') + l.amt.toFixed(1) });
+                running = next;
+            }
+        });
+
+        const allValues = bars.flatMap(b => [b.y0, b.y1]);
+        const maxV = Math.max(...allValues, 0);
+        const yScale = v => H - pad.b - (v / maxV) * (H - pad.t - pad.b);
+        const colW = (W - pad.l - pad.r) / bars.length;
+        const barW = colW * 0.6;
+
+        let svg = '';
+        // Y axis grid
+        for (let i = 0; i <= 4; i++) {
+            const v = (maxV / 4) * i;
+            const y = yScale(v);
+            svg += `<line x1="${pad.l}" y1="${y}" x2="${W-pad.r}" y2="${y}" stroke="var(--rule)" stroke-dasharray="2 3" opacity="0.4"/>`;
+            svg += `<text x="${pad.l - 6}" y="${y + 4}" text-anchor="end" font-family="Inter" font-size="10" fill="var(--text-muted)">$${v.toFixed(0)}M</text>`;
+        }
+
+        bars.forEach((b, i) => {
+            const cx = pad.l + colW * i + colW / 2;
+            const x = cx - barW / 2;
+            const y = yScale(b.y1);
+            const h = yScale(b.y0) - y;
+            svg += `<rect x="${x}" y="${y}" width="${barW}" height="${Math.max(2, h)}" fill="${b.color}" opacity="0.92"/>`;
+            // Value label
+            svg += `<text x="${cx}" y="${y - 5}" text-anchor="middle" font-family="Inter" font-size="10" font-weight="600" fill="var(--text)">${b.label}</text>`;
+            // Line label (rotated for long names)
+            const truncated = b.lbl.length > 16 ? b.lbl.substring(0, 14) + '…' : b.lbl;
+            svg += `<text x="${cx}" y="${H - pad.b + 14}" text-anchor="middle" font-family="Inter" font-size="9" fill="var(--text-muted)" transform="rotate(-30 ${cx} ${H - pad.b + 14})">${truncated}</text>`;
+        });
+
+        svg += `<line x1="${pad.l}" y1="${H - pad.b}" x2="${W - pad.r}" y2="${H - pad.b}" stroke="var(--text-muted)" stroke-width="1.5"/>`;
+        $('bridge-svg').innerHTML = svg;
+    }
+
+    IDS.forEach(id => {
+        const el = $('i-' + id);
+        if (el) {
+            el.addEventListener('input', render);
+            el.addEventListener('change', render);
+        }
+    });
+    render();
+})();
+
+(function() {
+    function collectInputs() {
+        const data = {};
+        document.querySelectorAll('input[type="number"]').forEach(el => {
+            if (el.id) data[el.id] = el.value;
+        });
+        return data;
+    }
+    function applyInputs(data) {
+        Object.keys(data).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = data[id];
+        });
+        document.querySelectorAll('input').forEach(el => el.dispatchEvent(new Event('input', { bubbles: true })));
+    }
+    function encodeInputs(d) { try { return btoa(encodeURIComponent(JSON.stringify(d))); } catch(e) { return ''; } }
+    function decodeInputs(s) { try { return JSON.parse(decodeURIComponent(atob(s))); } catch(e) { return null; } }
+    function loadFromUrl() {
+        const enc = new URLSearchParams(window.location.search).get('s');
+        if (enc) { const d = decodeInputs(enc); if (d) applyInputs(d); }
+    }
+    function showToast(msg) {
+        const t = document.getElementById('shareToast');
+        t.textContent = msg; t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2200);
+    }
+    document.getElementById('shareBtn').addEventListener('click', () => {
+        const data = collectInputs();
+        const url = window.location.origin + window.location.pathname + '?s=' + encodeInputs(data);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(() => showToast('Link copied — paste it anywhere'));
+        } else {
+            const tmp = document.createElement('textarea');
+            tmp.value = url; document.body.appendChild(tmp); tmp.select();
+            try { document.execCommand('copy'); showToast('Link copied'); }
+            catch(e) { prompt('Copy this link:', url); }
+            document.body.removeChild(tmp);
+        }
+    });
+    loadFromUrl();
+})();
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</body>
+</html>

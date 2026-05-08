@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reverse-LBO in five minutes &mdash; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="description" content="A practical walkthrough of reverse-LBO: what it is, when to use it, the math, the typical mistakes, and where it breaks down. With a worked example on Micron and Western Digital." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/posts/reverse-lbo-in-five-minutes.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/posts/reverse-lbo-in-five-minutes.html" />
+  <meta property="og:title" content="Reverse-LBO in five minutes — Brandon Leon" />
+  <meta property="og:description" content="A practical walkthrough of reverse-LBO: what it is, when to use it, the math, the typical mistakes, and where it breaks down." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" type="image/svg+xml" href="../assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="../assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="../assets/brand/favicon-512.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css?v=26" />
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+
+  <style>
+    .post-meta { color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+    .post-meta time { font-variant-numeric: tabular-nums; }
+    .post-meta .dot { margin: 0 .55em; color: var(--rule); }
+    .pullquote { padding: 1.5rem 1.75rem; background: var(--bg-soft); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; margin: 1.75rem 0; font-family: var(--serif); font-style: italic; color: var(--ink); font-size: 1.1rem; line-height: 1.55; }
+    .post-toolbox { margin: 2rem 0; padding: 1.5rem 1.75rem; background: var(--bg-soft); border: 1px solid var(--rule); border-radius: 10px; }
+    .post-toolbox h3 { font-family: var(--serif); margin: 0 0 .5em; font-size: 1.15rem; }
+    .post-toolbox p { margin: 0 0 .65rem; color: var(--ink-soft); }
+    .post-toolbox a { color: var(--accent); font-weight: 600; }
+    .formula-box { padding: 1rem 1.25rem; background: var(--bg-soft); border-left: 3px solid var(--accent-2); border-radius: 0 6px 6px 0; margin: 1.25rem 0; font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: .92rem; color: var(--ink); line-height: 1.55; }
+    .post-foot { margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .9rem; }
+  </style>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="Brandon Leon — Home"><img src="../assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="../about.html">About</a>
+      <a href="../markets.html">Markets</a>
+      <a href="../toolkit.html">Toolkit</a>
+      <a href="../reports.html">Reports</a>
+      <a href="../projects.html">Projects</a>
+      <a href="../writing.html" aria-current="page">Writing</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose">
+    <header class="page-head">
+      <p class="eyebrow">Writing &middot; Methodology</p>
+      <h1>Reverse-LBO in five minutes.</h1>
+      <p class="post-meta">
+        <time datetime="2026-05-07">May 7, 2026</time>
+        <span class="dot">&middot;</span>
+        Brandon Leon
+        <span class="dot">&middot;</span>
+        <span>~5 min read</span>
+      </p>
+    </header>
+
+    <p class="lede">
+      A reverse-LBO answers a question regular LBO models don't: <em>at today's
+      price, what's a private buyer actually willing to pay, and what does that
+      tell us about the public valuation?</em> If you read it correctly, it's
+      one of the cleanest discipline tools on a public-equity desk. If you
+      read it badly, it produces nonsense numbers that look authoritative.
+      Five minutes to know which side you're on.
+    </p>
+
+    <h2>The setup</h2>
+    <p>
+      Forward LBO: pick an entry multiple, run the deal, see what IRR a
+      sponsor would generate. Reverse LBO: pick a target IRR (call it 20%),
+      hold the rest of the deal structure constant, and solve for the
+      <em>maximum</em> entry multiple at which the sponsor still hits that
+      hurdle. Everything else &mdash; exit multiple, leverage, hold period,
+      operating path &mdash; is fixed; the entry multiple is the unknown.
+    </p>
+    <p>
+      Why is that useful? Because the implied entry multiple is your floor.
+      Below that price, sponsors would underwrite the deal. Above it, public
+      markets are pricing optimism that no financial buyer would put their
+      LP money behind. That gap &mdash; or that overlap &mdash; is real
+      information about the public valuation.
+    </p>
+
+    <h2>The math, briefly</h2>
+
+    <div class="formula-box">
+      Forward:&nbsp; entry mult → run hold-period debt schedule → exit equity → IRR<br/>
+      Reverse:&nbsp; target IRR → bisect entry mult until forward IRR matches → max entry mult
+    </div>
+
+    <p>
+      Mechanically, you wrap the standard LBO engine in a bisection loop.
+      Pick a starting bracket for entry multiple (say 3× to 25×). Run the
+      forward LBO at the midpoint. If sponsor IRR &gt; target, the entry
+      can support a higher multiple, so move the lower bound up. If sponsor
+      IRR &lt; target, drop the upper bound. Iterate 50 times and you're
+      converged to within rounding. The
+      <a href="../pe-reverse-lbo.html">browser calculator on this site</a>
+      runs exactly this loop in JavaScript and gives you the answer in
+      milliseconds.
+    </p>
+    <p>
+      Once you have the max entry multiple, the public-equity translation is
+      mechanical: <code>Implied take-private $/share = (max entry mult ×
+      EBITDA &minus; net debt) / diluted shares</code>. That's a real
+      number you can compare to today's quote.
+    </p>
+
+    <h2>When to use it</h2>
+    <p>
+      Three contexts where reverse-LBO earns its keep, especially in
+      cyclicals.
+    </p>
+    <p>
+      <strong>1. Pricing a public company against a hypothetical buyer.</strong>
+      Imagine you're long a cyclical at $X. Bear case says the cycle
+      peaks and the multiple compresses. Bull case says secular tailwinds
+      put a floor under margins. Reverse-LBO at through-cycle EBITDA tells
+      you: at what price would a sponsor underwrite this name at 20% IRR
+      with 4.5× leverage? If the answer comes in <em>above</em> $X, the
+      public is paying less than patient capital would &mdash; that's a
+      real floor. If the answer comes in <em>below</em> $X, the public is
+      paying for the bull case to persist; sponsors won't bid until the
+      price falls or operating fundamentals improve.
+    </p>
+    <p>
+      <strong>2. Disciplining a bull thesis.</strong> Bull cases love
+      multiple expansion. "If the market re-rates this from 8× to 12× on the
+      transition story, the stock doubles." Fine. But would a sponsor ever
+      pay 12× to buy this company? If the answer is "no sponsor would underwrite
+      that even at 15% IRR," your bull case requires the public market to
+      pay a multiple no rational private buyer would. That's not necessarily
+      wrong &mdash; public markets pay re-rating premia all the time &mdash;
+      but you should know it.
+    </p>
+    <p>
+      <strong>3. Take-private cases.</strong> When sponsor activity is high
+      in a sector (energy circa 2020-2022, software through 2024), reverse-
+      LBO is the natural framing for "is this name takeable?" Premium math
+      directly off the implied entry multiple.
+    </p>
+
+    <h2>The five mistakes</h2>
+
+    <p>
+      <strong>Wrong leverage assumption.</strong> The single biggest source
+      of reverse-LBO error. Most buyers won't lever a memory cyclical at
+      6×; most won't lever a software business at 4×. The whole answer
+      shifts by 1.5x of multiple if you get this wrong. Use the leverage a
+      lender would actually fund, not the leverage that makes your model
+      work.
+    </p>
+
+    <p>
+      <strong>Forgetting the working capital and capex burn.</strong> In
+      cyclicals, capex eats half of EBITDA in good years. NWC absorption
+      grows with revenue. The reverse-LBO doesn't care about reported
+      numbers; it cares about <em>cash available to service debt</em>. If
+      your model treats capex as 5% of EBITDA on a memory name, you're
+      wrong by a factor of three.
+    </p>
+
+    <p>
+      <strong>Picking exit multiple = entry multiple by reflex.</strong>
+      The convention is fine for stable names, but for cyclicals it's a
+      tell. If you're modeling MU at peak EBITDA in 2026 and assuming a
+      flat 8× exit five years later, you've baked in that the cycle
+      doesn't matter. Either model exit at mid-cycle EBITDA × mid-cycle
+      multiple, or at peak EBITDA × compressed exit multiple. Don't double-
+      count the cycle.
+    </p>
+
+    <p>
+      <strong>Confusing the proxy with bisection.</strong> Quick reverse-
+      LBO formulas you see in pitches assume a flat debt-paydown schedule
+      and a closed-form IRR. Real bisection on a real debt schedule with
+      real cash sweep produces a different number, sometimes by 1-2 turns
+      of multiple. The closed-form is fine for a back-of-envelope on the
+      train. Don't bring it to an IC.
+    </p>
+
+    <p>
+      <strong>Reading too much into the $/share output.</strong> The
+      implied take-private price is a methodology output, not a target.
+      It's the price at which one specific sponsor with one specific
+      target IRR would underwrite the deal. Different LP base, different
+      cost of debt, different sector view &mdash; the answer changes.
+      Don't tell yourself "the stock is going to $X because reverse-LBO
+      says so." Tell yourself "below $X there's a credible floor; above
+      $Y the public is paying more than patient capital."
+    </p>
+
+    <h2>What the framework can't do</h2>
+
+    <p>
+      Reverse-LBO doesn't predict transactions. Sponsors face availability
+      of debt, regulatory friction, antitrust review, management cooperation,
+      anti-takeover provisions, fiduciary-out language, and a dozen other
+      constraints the math doesn't see. A name can clear reverse-LBO at
+      20% IRR and still never get a bid. Don't confuse "this is takeable"
+      with "this will be taken." See the <a href="../disclaimer.html">disclaimer</a>
+      for more.
+    </p>
+
+    <p>
+      It also doesn't tell you whether you should buy. The output is
+      diagnostic: it tells you what kind of bet the public market is
+      asking you to make. Is the public paying less than patient capital
+      (a defensive position with a floor)? Is it paying more (a re-rating
+      bet that depends on multiples expanding)? Either can be the right
+      thesis. The reverse-LBO just tells you which one you're underwriting.
+    </p>
+
+    <div class="pullquote">
+      The point of reverse-LBO isn't to predict take-privates. It's to put
+      capital-structure discipline on a public-market thesis &mdash; and
+      catch the moments when your bull case requires the public to pay a
+      multiple no sponsor ever would.
+    </div>
+
+    <h2>A worked example: MU</h2>
+    <p>
+      Run Micron through the
+      <a href="../pe-reverse-lbo.html">browser calculator</a> with the
+      through-cycle scorecard: $13.8B mid-cycle EBITDA, 6% growth, 55%
+      margin, 25% capex, 8× exit, 4.5× leverage, 20% target IRR, 5-year
+      hold. The implied take-private price comes out around $85 against
+      a current quote near $86 &mdash; essentially flat. The public is
+      pricing the name exactly where a 20%-IRR sponsor running through-
+      cycle would land.
+    </p>
+
+    <p>
+      Now flip to the AI-cycle scorecard: $18.2B EBITDA (peak-half method),
+      12% growth, 58% margin, 32% capex, 10× exit, 4.0× leverage, 20%
+      target IRR. Implied take-private now lands much higher, around
+      $146. The spread between the two scorecards &mdash; that delta
+      between $85 and $146 &mdash; is the option value of your
+      structural-vs-cyclical call on memory. If you believe HBM
+      structurally lifts the floor, you're in the AI-cycle world. If you
+      think margins revert when supply catches up, through-cycle is the
+      honest reading. That ~$60 of spread is your call to make.
+    </p>
+
+    <p>
+      The full workbook with both pulls and the audit trail is at the
+      <a href="../pe-reverse-lbo-template.html">Reverse-LBO Template</a>
+      page. The MU through-cycle long covering the same name from a
+      public-equity angle is at <a href="../mu-through-cycle.html">mu-through-cycle.html</a>;
+      the new "If a sponsor took this private" appendix on that page reads
+      directly off this framework.
+    </p>
+
+    <h2>The five-minute version, in one paragraph</h2>
+    <p>
+      Reverse-LBO solves an LBO model backwards: fix the target IRR, vary
+      the entry multiple, find the price a sponsor would underwrite. Convert
+      to dollars per share by netting net debt and dividing by diluted
+      shares. Compare to the current quote. If implied price is above
+      current, the public is paying less than private capital would &mdash;
+      a floor. If below, the public is paying for an exit multiple no
+      sponsor would underwrite. Use it to discipline bull theses and
+      ground public-market analysis in capital-structure reality. Don't
+      use it to predict take-privates &mdash; sponsors face frictions the
+      math doesn't see.
+    </p>
+
+    <div class="post-toolbox">
+      <h3>Run it yourself</h3>
+      <p>The browser calculator on this site does full bisection IRR with sector scorecards and worked examples for MU and WDC.</p>
+      <p><a href="../pe-reverse-lbo.html">→ Reverse-LBO Calculator</a></p>
+      <p>Prefer to work in Excel? The 8-tab workbook and the Python pipeline are free at <a href="../pe-reverse-lbo-template.html">the template page</a>. Two worked examples (MU through-cycle, WDC post-spin) ship together so you can see the framework reading two different cycles.</p>
+      <p><a href="../pe-reverse-lbo-template.html">→ Reverse-LBO Template (workbook + pipeline)</a></p>
+    </div>
+
+    <p class="post-foot">
+      Brandon Leon writes independent equity research focused on cyclicals.
+      The full disclaimer covers everything in detail at
+      <a href="../disclaimer.html">disclaimer</a>. Spotted an error or have a
+      better example? Email <a href="mailto:brandon@bpleon.com">brandon@bpleon.com</a>.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="../now.html">Now</a></li>
+        <li><a href="../disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../script.js?v=26" defer></script>
+</body>
+</html>

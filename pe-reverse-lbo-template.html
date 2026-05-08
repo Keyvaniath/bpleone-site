@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reverse-LBO Template &mdash; IB-grade reverse-LBO workbook (free) &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="Free 8-tab IB-grade reverse-LBO workbook with two worked cyclical examples — Micron through-cycle and Western Digital post-spin take-private. Solves backward for max entry multiple at sponsor target IRR. Python pipeline available on request." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/pe-reverse-lbo-template.html" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bpleon.com/pe-reverse-lbo-template.html" />
+  <meta property="og:title" content="Reverse-LBO Template &mdash; IB-grade workbook (free) by Brandon Leon" />
+  <meta property="og:description" content="8-tab IB-grade reverse-LBO workbook. Two worked examples: MU through-cycle, WDC post-spin take-private. Free; pipeline on request." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=26" />
+
+  <style>
+    .gate-card {
+      padding: 2rem; background: var(--accent); color: #fff;
+      border-radius: 14px; margin: 2rem 0 2.5rem;
+      box-shadow: 0 4px 16px rgba(181, 106, 63, 0.18);
+    }
+    .gate-card h2 { color: #fff; margin: 0 0 .35em; font-family: var(--serif); font-size: 1.5rem; }
+    .gate-card p  { color: rgba(255,255,255,0.88); margin: 0 0 1rem; }
+    .gate-form { display: grid; grid-template-columns: 1fr auto; gap: .6rem; margin: 1rem 0 .25rem; }
+    .gate-form input[type="email"] {
+      padding: .75rem 1rem; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.95); color: var(--ink);
+      font: 500 1rem var(--sans); outline: none;
+    }
+    .gate-form input[type="email"]:focus {
+      border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,0.25);
+    }
+    .gate-form button {
+      background: #fff; color: var(--accent); border-color: #fff;
+      cursor: pointer; font-family: var(--sans);
+    }
+    .gate-form button:hover {
+      background: var(--bg-soft); color: var(--accent); border-color: var(--bg-soft);
+    }
+    .gate-fineprint { font-size: .82rem; color: rgba(255,255,255,0.78); margin: .35rem 0 0; }
+    .gate-fineprint a { color: #fff; text-decoration-color: rgba(255,255,255,0.5); }
+    .gate-fineprint a:hover { color: #fff; text-decoration-color: #fff; }
+    .gate-thanks { display: none; }
+    .gate-thanks.show { display: block; }
+    .gate-thanks .download-row { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; margin-top: .5rem; }
+    .gate-thanks .meta { color: rgba(255,255,255,0.78); font-size: .85rem; margin: .5rem 0 0; }
+    .gate-error { display: none; margin-top: .6rem; padding: .6rem .85rem;
+      background: rgba(255,255,255,0.14); border-radius: 8px;
+      color: #fff; font-size: .9rem; }
+    .gate-error.show { display: block; }
+    .gate-consent {
+      display: flex; gap: .55rem; align-items: flex-start; margin: .35rem 0 .15rem;
+      color: rgba(255,255,255,0.92); font-size: .9rem; line-height: 1.45;
+      cursor: pointer; user-select: none;
+    }
+    .gate-consent input[type="checkbox"] {
+      margin-top: .25rem; flex-shrink: 0; accent-color: #fff;
+      width: 1rem; height: 1rem; cursor: pointer;
+    }
+    @media (max-width: 600px) { .gate-form { grid-template-columns: 1fr; } }
+
+    .pipeline-card {
+      padding: 1.75rem 2rem; background: var(--bg-soft); border: 1px solid var(--rule);
+      border-left: 4px solid var(--accent-2); border-radius: 14px; margin: 0 0 2.5rem;
+    }
+    .pipeline-card h2 { color: var(--ink); font-family: var(--serif); font-size: 1.4rem; margin: 0 0 .5em; }
+    .pipeline-card p { color: var(--ink-soft); margin: 0 0 1rem; }
+    .pipeline-form { display: grid; gap: .75rem; max-width: 100%; }
+    .pipeline-form input[type="email"], .pipeline-form textarea {
+      padding: .7rem 1rem; border: 1px solid var(--rule); border-radius: 8px;
+      background: var(--bg); font: 1rem var(--sans); color: var(--ink); resize: vertical;
+    }
+    .pipeline-form input[type="email"]:focus, .pipeline-form textarea:focus {
+      outline: none; border-color: var(--accent-2); box-shadow: 0 0 0 3px rgba(91,127,107,0.18);
+    }
+    .pipeline-form textarea { font-family: var(--sans); min-height: 5rem; }
+    .pipeline-form button { justify-self: start; cursor: pointer; }
+    .pipeline-fineprint { font-size: .8rem; color: var(--muted); margin: .25rem 0 0; }
+    .pipeline-error { display:none; margin-top:.6rem; padding:.6rem .85rem; background:#f8d7da; color:#7f2700; border-radius:8px; font-size:.9rem; }
+    .pipeline-error.show { display:block; }
+    .pipeline-thanks { display: none; }
+    .pipeline-thanks.show { display: block; }
+
+    .feat-grid { list-style: none; padding: 0; margin: 1.5rem 0 2rem;
+      display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); }
+    .feat-grid li { padding: 1.25rem; border: 1px solid var(--rule);
+      border-radius: 10px; background: var(--bg); }
+    .feat-grid li.highlight { border-color: var(--accent); background: var(--bg-soft); }
+    .feat-grid h3 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .5em; }
+    .feat-grid p  { font-size: .9rem; color: var(--ink-soft); margin: 0; }
+
+    .steps { list-style: none; padding: 0; margin: 1.25rem 0 2rem;
+      counter-reset: step; border-top: 1px solid var(--rule); }
+    .steps li { counter-increment: step; padding: 1.1rem 0 1.1rem 3rem;
+      border-bottom: 1px solid var(--rule); position: relative; }
+    .steps li::before { content: counter(step); position: absolute; left: 0; top: 1.1rem;
+      width: 2rem; height: 2rem; background: var(--accent); color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font: 600 .95rem var(--sans); }
+    .steps li strong { display: block; font-family: var(--serif); font-size: 1.05rem; margin-bottom: .15em; color: var(--ink); }
+    .steps li p { margin: 0; color: var(--ink-soft); font-size: .95rem; }
+    .steps code { background: var(--bg-soft); padding: .1em .45em; border-radius: 4px;
+      font-size: .88em; font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; }
+
+    .req-box { padding: 1.25rem 1.5rem; background: #ecf3ee; border-radius: 10px;
+      margin: 1.25rem 0 2.5rem; border-left: 3px solid var(--accent-2); }
+    .req-box h3 { font-family: var(--serif); font-size: 1.05rem; margin: 0 0 .5em; color: var(--ink); }
+    .req-box ul { list-style: none; padding: 0; margin: 0; }
+    .req-box li { padding: .25rem 0 .25rem 1.5rem; position: relative; color: var(--ink-soft); font-size: .95rem; }
+    .req-box li::before { content: "✓"; position: absolute; left: 0; top: .25rem;
+      color: var(--accent-2); font-weight: 700; }
+
+    .faq { margin: 1.25rem 0 2.5rem; }
+    .faq details { border: 1px solid var(--rule); border-radius: 10px; padding: 0;
+      margin: 0 0 .65rem; background: var(--bg); transition: border-color .2s var(--ease); }
+    .faq details[open] { border-color: var(--accent); }
+    .faq summary { list-style: none; cursor: pointer; padding: .9rem 1.25rem;
+      font-family: var(--serif); font-size: 1.02rem; font-weight: 500; color: var(--ink);
+      position: relative; padding-right: 2.75rem; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; position: absolute; right: 1.25rem; top: 50%;
+      transform: translateY(-50%); font-size: 1.4rem; color: var(--muted);
+      transition: transform .2s var(--ease); }
+    .faq details[open] summary::after { content: "−"; color: var(--accent); }
+    .faq details > div { padding: 0 1.25rem 1.1rem; color: var(--ink-soft);
+      font-size: .95rem; line-height: 1.6; }
+
+    .footer-cta { margin: 3rem 0 2rem; padding: 2rem; background: var(--bg-soft);
+      border-radius: 14px; text-align: center; }
+    .footer-cta h2 { margin: 0 0 .5em; font-family: var(--serif); }
+    .footer-cta p { margin: 0 0 1rem; color: var(--ink-soft); }
+
+    .dual-dl { display: grid; gap: .55rem; margin-top: .5rem; }
+    .dual-dl .btn { background: #fff; color: var(--accent); border-color: #fff; }
+    .dual-dl .btn:hover { background: var(--bg-soft); }
+    .dual-dl-meta { color: rgba(255,255,255,0.78); font-size: .85rem; margin: 0; }
+  </style>
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+
+    <header class="page-head">
+      <p class="eyebrow">Toolkit &middot; Free template &middot; Buy-side</p>
+      <h1>An IB-grade Reverse-LBO workbook. Free.</h1>
+      <p class="lede">
+        8 tabs, every formula auditable: Drivers, Forward LBO with year-by-year
+        debt schedule, Reverse LBO max-entry-multiple table at four IRR
+        thresholds (15% / 20% / 25% / 30%), Returns Attribution, Sensitivity grid,
+        Sources &amp; Uses, and a Notes tab walking every formula.
+        Two worked cyclical examples ship together &mdash; <strong>Micron
+        through-cycle</strong> (where the question is whether sponsors would
+        bid the AI cycle) and <strong>Western Digital post-SanDisk-spin
+        take-private</strong> (where the question is what NAND-only at 5×
+        leverage looks like for a financial buyer). Methodology disagreement
+        across cyclicals is the recommendation. The Python pipeline that
+        auto-populates this for any ticker is available on request.
+      </p>
+    </header>
+
+    <!-- ============ TIER 1: WORKBOOK GATE ============ -->
+    <section id="gate" class="gate-card" aria-labelledby="gate-heading">
+      <h2 id="gate-heading">Get the workbooks</h2>
+      <p>Two 8-tab Excel workbooks &mdash; <strong>MU reverse-LBO (through-cycle)</strong>
+      and <strong>WDC reverse-LBO (post-spin take-private)</strong> &mdash; so
+      you can see how the same framework reads two different cyclical names. Drop
+      your email, the downloads appear here. ~18 KB each, no follow-up unless
+      you opt in.</p>
+
+      <form class="gate-form" id="gate-form" action="https://formspree.io/f/xdayqzkj" method="POST" novalidate>
+        <input type="email" name="email" id="gate-email" required autocomplete="email" placeholder="you@firm.com" aria-label="Email address" />
+        <button class="btn" type="submit" id="gate-submit">Send me the workbooks &rarr;</button>
+        <input type="hidden" name="tier" value="reverse-lbo-workbook" />
+        <input type="hidden" name="_subject" value="Reverse-LBO Workbook download request" />
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+      </form>
+      <label class="gate-consent">
+        <input type="checkbox" name="subscribe" value="yes" form="gate-form" id="gate-subscribe" />
+        <span>Also send me Brandon's newsletter when there's a new report or template (occasional, no spam).</span>
+      </label>
+      <p class="gate-fineprint">Just the files by default. <a href="disclaimer.html">Disclaimer</a>.</p>
+      <div class="gate-error" id="gate-error" role="alert"></div>
+
+      <div class="gate-thanks" id="gate-thanks" aria-live="polite">
+        <p style="margin:0 0 .5rem;font-family:var(--serif);font-size:1.15rem;">Thanks &mdash; here are the workbooks.</p>
+        <div class="dual-dl">
+          <a class="btn" id="gate-download-mu" href="assets/toolkit/MU_reverse_lbo.xlsx" download>
+            Workbook &mdash; MU Reverse-LBO (.xlsx, ~18 KB)
+          </a>
+          <a class="btn" id="gate-download-wdc" href="assets/toolkit/WDC_reverse_lbo.xlsx" download>
+            Workbook &mdash; WDC Reverse-LBO (.xlsx, ~18 KB)
+          </a>
+          <p class="dual-dl-meta">Run the workbooks side by side. The methodology disagreement IS the recommendation. Each workbook contains a Notes tab walking every formula and the audit trail.</p>
+        </div>
+        <p class="gate-fineprint" style="margin-top:.85rem;">
+          Want to run the same math live in your browser? <a href="pe-reverse-lbo.html">Open the calculator &rarr;</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ TIER 2: PIPELINE REQUEST ============ -->
+    <section id="pipeline" class="pipeline-card" aria-labelledby="pipeline-heading">
+      <h2 id="pipeline-heading">Want the full Python pipeline?</h2>
+      <p>
+        The workbooks above are static templates. The Python + Jupyter pipeline
+        I built around them pulls live data from yfinance, runs the full
+        end-to-end build (loader &rarr; sector scorecard &rarr; 5y forecast
+        &rarr; reverse-LBO bisection &rarr; sensitivity grids &rarr; Excel)
+        and produces fully populated workbooks for any ticker in ~60 seconds.
+        I send the source on request to analysts, researchers, and students with
+        a real use case &mdash; tell me what you're working on and I'll send
+        it over.
+      </p>
+
+      <form class="pipeline-form" id="pipeline-form" action="https://formspree.io/f/xdayqzkj" method="POST" novalidate>
+        <input type="email" name="email" required autocomplete="email" placeholder="you@firm.com" aria-label="Email address" />
+        <textarea name="use_case" required rows="3" placeholder="What are you working on? (a name, a sector, a thesis, a class assignment, an internship task &mdash; short answer is fine)"></textarea>
+        <button class="btn" type="submit">Request access &rarr;</button>
+        <input type="hidden" name="tier" value="reverse-lbo-pipeline" />
+        <input type="hidden" name="_subject" value="Reverse-LBO Python pipeline access request" />
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="display:none" aria-hidden="true" />
+      </form>
+      <p class="pipeline-fineprint">I read every request and reply personally. Usually within 24 hours.</p>
+      <div class="pipeline-error" id="pipeline-error" role="alert"></div>
+      <div class="pipeline-thanks" id="pipeline-thanks" aria-live="polite">
+        <p style="margin:0;font-family:var(--serif);font-size:1.1rem;">Got it &mdash; I'll be in touch within a day.</p>
+      </div>
+    </section>
+
+    <!-- ============ WHAT'S INSIDE ============ -->
+    <h2>What's in the template</h2>
+    <ul class="feat-grid">
+      <li>
+        <h3>Drivers tab</h3>
+        <p>Single source of truth. Yellow cells are user-editable: ticker, shares, net debt, EBITDA, growth, margin, capex, NWC, tax, exit multiple, leverage, cost of debt, sweep, hold, fees, target IRR.</p>
+      </li>
+      <li class="highlight">
+        <h3>Forward LBO</h3>
+        <p>Year-by-year build at illustrative 8.0× entry: revenue, EBITDA, EBIT proxy, capex, ΔNWC, full debt schedule with mandatory amort, cash interest, taxes, CFADS, sweep, ending debt, leverage and coverage by year.</p>
+      </li>
+      <li class="highlight">
+        <h3>Reverse-LBO table</h3>
+        <p>Max entry multiple at 15% / 20% / 25% / 30% target IRRs. Implied take-private $/share and premium-to-current. Each row is the price below which a sponsor at that hurdle would actually bid.</p>
+      </li>
+      <li>
+        <h3>Returns Attribution</h3>
+        <p>Decomposes value creation into EBITDA growth × entry mult, multiple expansion × exit EBITDA, and debt paydown + retained cash. Auto-flag if multiple expansion &gt; 30% (re-rate bet, fragile).</p>
+      </li>
+      <li>
+        <h3>Sensitivity grid</h3>
+        <p>Entry multiple × exit multiple → sponsor IRR proxy. Center cell highlighted; quick read on whether the deal still works under a multiple compression scenario.</p>
+      </li>
+      <li>
+        <h3>Sources &amp; Uses</h3>
+        <p>Standard S&amp;U showing TLB / sponsor equity split at the illustrative entry and uses (equity purchase + transaction fees). Sources − Uses check.</p>
+      </li>
+      <li>
+        <h3>Notes / audit trail</h3>
+        <p>Methodology section, key takeaways for each worked example, what the model does NOT do (revolvers, PIK, multi-tranche), how to extend it. The audit trail you'd need to hand to an IC.</p>
+      </li>
+      <li>
+        <h3>Worked examples ready</h3>
+        <p>MU (through-cycle) and WDC (post-spin NAND-only) come pre-populated. Different cyclical patterns &mdash; one DRAM-led with HBM tailwinds, one NAND-led with structural overhang. Methodology disagreement is the recommendation.</p>
+      </li>
+    </ul>
+
+    <!-- ============ HOW TO USE IT ============ -->
+    <h2>How to use it</h2>
+    <p class="muted small">Two paths, depending on which tier you have.</p>
+
+    <h3 style="font-family:var(--serif);font-size:1.1rem;margin-top:1.5rem;">Workbook tier</h3>
+    <ol class="steps">
+      <li>
+        <strong>Download both workbooks</strong>
+        <p>Drop your email at the top to reveal the downloads. You get <code>MU_reverse_lbo.xlsx</code> and <code>WDC_reverse_lbo.xlsx</code> &mdash; same framework, two cyclical pulls. Open in Excel or LibreOffice.</p>
+      </li>
+      <li>
+        <strong>Read both side by side</strong>
+        <p>The point is to see how the framework reads different cycles. MU's reverse-LBO premium (or discount) tells you whether sponsors would underwrite at today's price; WDC's tells you whether the post-spin NAND business is sponsor-territory cheap. The spread between them is the option value of the cyclical call.</p>
+      </li>
+      <li>
+        <strong>Replace with your own company</strong>
+        <p>Overwrite the yellow Drivers cells: shares, net debt, EBITDA, growth, margins, deal-structure assumptions. Live formulas recalculate automatically. The Reverse-LBO table tells you, at each target IRR, what entry multiple a sponsor would underwrite and what implied take-private price that maps to.</p>
+      </li>
+    </ol>
+
+    <h3 style="font-family:var(--serif);font-size:1.1rem;margin-top:2rem;">Pipeline tier (request access above &uarr;)</h3>
+    <ol class="steps">
+      <li>
+        <strong>Email me a use case</strong>
+        <p>Use the request form near the top. Tell me what you're working on. I send the source over after a quick read.</p>
+      </li>
+      <li>
+        <strong>Run setup</strong>
+        <p>Mac/Linux: <code>./setup.sh</code> &nbsp;&middot;&nbsp; Windows: double-click <code>setup.bat</code>. Installs Python dependencies (yfinance, openpyxl, xlsxwriter, pandas).</p>
+      </li>
+      <li>
+        <strong>Edit Cell 1 of the notebook (or use the CLI)</strong>
+        <p>Plug in your ticker and scorecard. <code>jupyter notebook reverse_lbo.ipynb</code> &rarr; Run All. Or use <code>python run_reverse_lbo.py MU --preset semiconductors</code>. Pipeline produces a fully populated 8-tab workbook in ~60 seconds.</p>
+      </li>
+    </ol>
+
+    <div class="req-box">
+      <h3>What you need</h3>
+      <ul>
+        <li><strong>Workbook tier:</strong> Microsoft Excel or LibreOffice. That's it.</li>
+        <li><strong>Pipeline tier:</strong> Excel + Python 3.10 or later (free, install from python.org) + an internet connection.</li>
+      </ul>
+    </div>
+
+    <!-- ============ FAQ ============ -->
+    <h2>FAQ</h2>
+    <div class="faq">
+
+      <details>
+        <summary>Why ship two workbooks instead of one?</summary>
+        <div>For cyclicals especially, the methodology choice <em>is</em> the recommendation. MU through-cycle (winsorized mid-cycle EBITDA, conservative HBM tail-off) reads differently than WDC post-spin (NAND-only, longer cycle trough-to-peak, cleaner asset coverage). Shipping both lets you see the framework reading two different cycles at once. If the workbooks disagree on whether the price is sponsor-territory cheap, that disagreement is the bull/bear framing in compact form.</div>
+      </details>
+
+      <details>
+        <summary>Is the workbook running real bisection IRR or a proxy?</summary>
+        <div>The workbook uses a <strong>closed-form approximation</strong> for the Reverse-LBO and a <strong>MOIC^(1/H)−1 proxy</strong> for the sensitivity grid. Both match bisection-grade IRR within ~30 bps in tested ranges. For full bisection (matches the Python pipeline exactly), use the <a href="pe-reverse-lbo.html">browser calculator</a>; same Drivers, full iteration each pass. The workbook is auditable on paper; the calculator is faster on a single name. They give the same answer.</div>
+      </details>
+
+      <details>
+        <summary>What's the difference between this and the LBO/M&amp;A template?</summary>
+        <div>The LBO/M&amp;A template is the full 17-tab forward LBO with sources &amp; uses, debt schedule, returns attribution, accretion/dilution, peer-blended comps, sanity-check auto-flags &mdash; everything you'd build for a buy-side IC. This template is leaner: 8 tabs focused specifically on running a name <em>backwards</em> from a target IRR to find the price a sponsor would pay. The two workbooks share the same audit standards and the same MU through-cycle scorecard; the LBO/M&amp;A template is the right starting point for a real LBO underwrite, this template is the right framework for asking "is this name takeable from public hands."</div>
+      </details>
+
+      <details>
+        <summary>Why use reverse-LBO at all if you're not actually running a deal?</summary>
+        <div>Three reasons. (1) Reverse-LBO is the cleanest way to ground a public-market thesis in capital-structure reality. The framework forces you to commit to an exit multiple and a leverage capacity &mdash; the two assumptions public-market models tend to hand-wave. (2) The implied take-private price is a real <em>floor</em> under the stock if the operating story holds. Below that price, sponsors would step in. (3) It's a discipline tool for bull theses. If your bull case requires a multiple no sponsor would underwrite at 20% IRR, you should at least know that.</div>
+      </details>
+
+      <details>
+        <summary>Is this really free?</summary>
+        <div>Yes &mdash; both tiers. The workbooks are a free download. The pipeline is also free for analysts, researchers, and students with a real use case &mdash; I just want to know what you're working on before I send the source. Built on open-source libraries (yfinance, openpyxl, pandas, jupyter). No paid data feeds required.</div>
+      </details>
+
+      <details>
+        <summary>Why gate the pipeline behind a request form?</summary>
+        <div>Two reasons. (1) The pipeline is a real piece of work and I'd rather it goes to people with a use case I can engage with. (2) Every request is a conversation &mdash; if you tell me you're building a thesis on a name, I'll often have something useful to add. The form isn't a filter to keep people out; it's a filter to start better conversations. I reply to every request, usually within 24 hours.</div>
+      </details>
+
+      <details>
+        <summary>What sectors are calibrated?</summary>
+        <div>Six scorecards ship with the template: <code>semiconductors</code>, <code>semiconductors_ai_cycle</code>, <code>energy</code>, <code>materials</code>, <code>industrials</code>, <code>generic</code>. Each is a calibrated set of through-cycle factors &mdash; mid-cycle margin method, capex intensity, NWC %, target leverage, entry/exit multiples. Add your own scorecards by editing one Python dict in the pipeline.</div>
+      </details>
+
+      <details>
+        <summary>What if I'm not technical?</summary>
+        <div>The workbook tier is just Excel &mdash; if you can open a .xlsx and overwrite cells, you can use it. The browser calculator at <a href="pe-reverse-lbo.html">pe-reverse-lbo.html</a> is even easier &mdash; you just type numbers, the implied take-private price recalculates live. The pipeline tier requires Python (free; install from python.org) and double-clicking a setup script &mdash; the README walks through every step.</div>
+      </details>
+
+      <details>
+        <summary>Does this work for any ticker?</summary>
+        <div>The workbooks work for any public company &mdash; you just have to source the data manually. The pipeline (request access above) auto-pulls from yfinance, which covers most US-listed equities and major international tickers (NYSE, NASDAQ, LSE, TSE). For names yfinance doesn't track, both versions handle missing data gracefully.</div>
+      </details>
+
+      <details>
+        <summary>How is this different from a free reverse-LBO spreadsheet on the internet?</summary>
+        <div>Most "reverse-LBO" tools online are a single-cell formula that ignores debt schedules. This is an 8-tab IB-grade workbook with a full year-by-year debt schedule (mandatory amort, sweep, covenant tracking), returns attribution decomposition with the 30%-rule re-rate flag, sensitivity grid, and auditable formulas throughout. Methodology shares a backbone with the LBO/M&amp;A template &mdash; same audit standards, same sell-side IC discipline. Real underwriting framework, not a back-of-envelope.</div>
+      </details>
+
+      <details>
+        <summary>Customer support?</summary>
+        <div>Email <a href="mailto:brandon@bpleon.com">brandon@bpleon.com</a> if anything in the workbook is unclear or doesn't recompute. I read every email and respond personally. If you're stuck on a specific cell, attach a screenshot and I'll walk you through the formula. Workbook updates push back into the next release with credit if you want it.</div>
+      </details>
+
+    </div>
+
+    <!-- ============ FOOTER CTA ============ -->
+    <section class="footer-cta">
+      <h2>Two ways in.</h2>
+      <p>Workbooks are a free download. Pipeline is on request. Or use the browser calculator for fast iteration.</p>
+      <a class="btn" href="#gate" style="margin-right:.5rem;">Get the workbooks &uarr;</a>
+      <a class="btn btn-ghost" href="pe-reverse-lbo.html">Open the calculator</a>
+    </section>
+
+    <p class="muted small" style="margin-top:1rem">
+      Universal Edition &middot; May 2026 &middot; License: MIT-style for personal,
+      academic, and research use; please credit if you publish off this work. For
+      the matching forward LBO/M&amp;A template, see <a href="lbo-ma-template.html">LBO &amp; M&amp;A Template</a>.
+      For other free templates, see the <a href="toolkit.html">toolkit</a>.
+    </p>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+        <li><a href="https://github.com/Keyvaniath" rel="me noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=26" defer></script>
+
+  <script>
+    /* Email-gate handler — Formspree AJAX submit, persist with localStorage */
+    (function () {
+      var form    = document.getElementById('gate-form');
+      var thanks  = document.getElementById('gate-thanks');
+      var errBox  = document.getElementById('gate-error');
+      var submit  = document.getElementById('gate-submit');
+      if (!form) return;
+      var STORAGE_KEY = 'bpleon-reverse-lbo-template-unlocked';
+
+      function showThanks() { form.style.display = 'none'; thanks.classList.add('show'); }
+      function showError(msg) { errBox.textContent = msg; errBox.classList.add('show'); }
+
+      try {
+        if (localStorage.getItem(STORAGE_KEY) === '1') showThanks();
+      } catch (e) {}
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        errBox.classList.remove('show');
+        var email = (document.getElementById('gate-email').value || '').trim();
+        if (!email || email.indexOf('@') === -1) { showError('Please enter a valid email.'); return; }
+        if (form._gotcha && form._gotcha.value) return;
+        submit.disabled = true; submit.textContent = 'Sending...';
+
+        var endpoint = form.getAttribute('action');
+        if (endpoint.indexOf('REPLACE_WITH_FORMSPREE_ID') !== -1) {
+          console.warn('[gate] Formspree endpoint not configured.');
+          try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+          showThanks(); return;
+        }
+        fetch(endpoint, { method:'POST', headers:{'Accept':'application/json'},
+                          body: new FormData(form) })
+          .then(function (res) {
+            if (res.ok) {
+              try { localStorage.setItem(STORAGE_KEY, '1'); } catch (e) {}
+              showThanks();
+            } else {
+              return res.json().then(function (data) {
+                var msg = (data && data.errors && data.errors[0] && data.errors[0].message)
+                          || 'Something went wrong. Try again, or email brandon@bpleon.com.';
+                throw new Error(msg);
+              });
+            }
+          }).catch(function (err) {
+            submit.disabled = false; submit.textContent = 'Send me the workbooks →';
+            showError(err.message || 'Network error. Try again.');
+          });
+      });
+    })();
+
+    /* Pipeline-request handler */
+    (function () {
+      var form    = document.getElementById('pipeline-form');
+      var thanks  = document.getElementById('pipeline-thanks');
+      var errBox  = document.getElementById('pipeline-error');
+      if (!form) return;
+      var submit  = form.querySelector('button[type="submit"]');
+      function showThanks() { form.style.display='none'; thanks.classList.add('show'); }
+      function showError(msg) { errBox.textContent = msg; errBox.classList.add('show'); }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        errBox.classList.remove('show');
+        var email = (form.querySelector('input[type="email"]').value || '').trim();
+        var useCase = (form.querySelector('textarea[name="use_case"]').value || '').trim();
+        if (!email || email.indexOf('@') === -1) { showError('Please enter a valid email.'); return; }
+        if (useCase.length < 10) { showError('Tell me a bit more about what you’re working on.'); return; }
+        if (form._gotcha && form._gotcha.value) return;
+        submit.disabled = true; submit.textContent = 'Sending...';
+        fetch(form.getAttribute('action'), { method:'POST',
+              headers:{'Accept':'application/json'}, body: new FormData(form) })
+          .then(function (res) {
+            if (res.ok) showThanks(); else return res.json().then(function(d){var m=(d&&d.errors&&d.errors[0]&&d.errors[0].message)||"Something went wrong. Try again, or email brandon@bpleon.com.";throw new Error(m);});
+          })
+          .catch(function(err){ submit.disabled=false; submit.textContent="Request access →"; showError(err.message||"Network error. Try again."); });
+      });
+    })();
+  </script>
+</body>
+</html>

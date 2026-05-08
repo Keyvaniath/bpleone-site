@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reading list &mdash; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="description" content="What I read on the buy-side. Books, papers, LP letters, blogs, podcasts. Through-cycle valuation, capital allocation, sponsor returns, semis history." />
+  <link rel="canonical" href="https://bpleon.com/reading-list.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bpleon.com/reading-list.html" />
+  <meta property="og:title" content="Reading list — Brandon Leon" />
+  <meta property="og:description" content="What I read on the buy-side. Through-cycle valuation, capital allocation, sponsor returns, cyclical industries." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=26" />
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+
+  <style>
+    .reading-section { margin: 2.25rem 0 2rem; }
+    .reading-section h2 { font-family: var(--serif); font-size: 1.5rem; margin: 0 0 .25em; color: var(--ink); }
+    .reading-section .section-sub { color: var(--muted); font-size: .92rem; margin: 0 0 1.5rem; font-style: italic; }
+    .reading-grid { display: grid; gap: 1.25rem; grid-template-columns: 1fr; }
+    @media (min-width: 720px) { .reading-grid { grid-template-columns: 1fr 1fr; } }
+
+    .reading-item { padding: 1.25rem 1.5rem; border: 1px solid var(--rule); border-radius: 10px; background: var(--bg); display: flex; flex-direction: column; gap: .55rem; }
+    .reading-item h3 { font-family: var(--serif); font-size: 1.1rem; margin: 0; color: var(--ink); line-height: 1.35; }
+    .reading-item h3 a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); transition: border-color .15s; }
+    .reading-item h3 a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+    .reading-item .meta { font-family: var(--sans); font-size: .82rem; color: var(--muted); }
+    .reading-item .why { font-size: .92rem; color: var(--ink-soft); margin: 0; line-height: 1.55; }
+    .reading-item .tag { display: inline-block; padding: .15rem .5rem; background: var(--bg-soft); border-radius: 999px; font-family: var(--sans); font-size: .7rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-right: .35rem; margin-top: .35rem; }
+    .reading-item .tag.foundation { background: #f0e7d2; color: #8a6e1e; }
+    .reading-item .tag.sectoral { background: #ecf3ee; color: var(--accent-2); }
+    .reading-item .tag.method { background: #f8e5d8; color: var(--accent); }
+
+    .intro-box { padding: 1.5rem 1.75rem; background: var(--bg-soft); border-left: 3px solid var(--accent-2); border-radius: 0 10px 10px 0; margin: 1rem 0 2.5rem; }
+    .intro-box p { margin: 0; color: var(--ink-soft); font-size: .95rem; line-height: 1.6; }
+
+    .reading-footer { margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .9rem; }
+  </style>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose">
+    <header class="page-head">
+      <p class="eyebrow">Reading list</p>
+      <h1>What I read.</h1>
+      <p class="lede">
+        Books, papers, sponsor LP letters, blogs, podcasts. Filtered for
+        the through-cycle valuation, capital-allocation, and cyclicals
+        coverage I write about. The list is short on purpose &mdash; if
+        I haven't actually read or returned to it, it's not here.
+      </p>
+    </header>
+
+    <div class="intro-box">
+      <p>
+        Roughly organized by what gets pulled off the shelf the most.
+        Foundations is for the books that taught me how to think; Sector &amp;
+        cyclical is for the names that made the semis / energy / cyclical
+        coverage tractable; Capital allocation &amp; sponsor capital is for
+        understanding the buy-side seriously even from a sell-side seat;
+        Methodology is for the modeling discipline; LP letters &amp; long-form
+        is what I read every quarter to keep the patterns in front of me.
+      </p>
+    </div>
+
+    <!-- Foundations -->
+    <section class="reading-section">
+      <h2>Foundations</h2>
+      <p class="section-sub">The books that shaped how I read companies.</p>
+
+      <div class="reading-grid">
+        <div class="reading-item">
+          <h3>Margin of Safety &mdash; Seth Klarman</h3>
+          <p class="meta">1991 &middot; Out of print &middot; PDFs circulate</p>
+          <p class="why">The clearest articulation of value-investing discipline ever written. The chapters on financial-distress investing and corporate restructuring read prophetic in the post-2020 credit cycle. The only book on this list I think every analyst should re-read once a year.</p>
+          <div><span class="tag foundation">Foundation</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>The Most Important Thing &mdash; Howard Marks</h3>
+          <p class="meta">2011 &middot; Columbia Business School Press</p>
+          <p class="why">Cycle-aware investing as a discipline rather than a market call. The chapter on second-level thinking is what separates analysts who get past two rounds of interviews from those who don't. Pair with the Oaktree memos.</p>
+          <div><span class="tag foundation">Foundation</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>The Outsiders &mdash; William Thorndike</h3>
+          <p class="meta">2012 &middot; HBR Press</p>
+          <p class="why">Eight CEOs who delivered ridiculous shareholder returns by allocating capital well. The book that taught me to read 10-Ks as capital-allocation documents first, operating documents second. Henry Singleton chapter is the centerpiece.</p>
+          <div><span class="tag foundation">Foundation</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Investment Valuation &mdash; Aswath Damodaran</h3>
+          <p class="meta">2012 (3rd ed) &middot; Wiley</p>
+          <p class="why">The reference text on DCF, comps, and reverse-DCF. The reverse-DCF chapter is the cleanest treatment I've read; everything I do in the IB-grade DCF template traces back to this book. Damodaran's online valuation page is the practical companion.</p>
+          <div><span class="tag foundation">Foundation</span><span class="tag method">Methodology</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>You Can Be a Stock Market Genius &mdash; Joel Greenblatt</h3>
+          <p class="meta">1997 &middot; Touchstone</p>
+          <p class="why">Don't let the title scare you off. The chapters on spin-offs and risk arbitrage are the tightest practical treatment of these areas in print. The Western Digital / SanDisk separation case I work through draws directly on the spin-off framework here.</p>
+          <div><span class="tag foundation">Foundation</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Distress Investing &mdash; Marty Whitman</h3>
+          <p class="meta">2009 &middot; Wiley</p>
+          <p class="why">The right way to read a credit document. Whitman's framing on covenant analysis, fulcrum security identification, and recovery scenarios is exactly what the LBO/M&amp;A template's debt schedule is asking the model to do.</p>
+          <div><span class="tag foundation">Foundation</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sector / cyclical -->
+    <section class="reading-section">
+      <h2>Sector &amp; cyclical</h2>
+      <p class="section-sub">Domain depth. The books that made specific cycles legible.</p>
+
+      <div class="reading-grid">
+        <div class="reading-item">
+          <h3>Chip War &mdash; Chris Miller</h3>
+          <p class="meta">2022 &middot; Scribner</p>
+          <p class="why">The cleanest narrative of how the semiconductor stack became the most strategically valuable industry on the planet. Mandatory background reading for anyone valuing NVDA, AMD, Micron, or the AI infrastructure complex. Re-read after every memory cycle inflection.</p>
+          <div><span class="tag sectoral">Sectoral</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>The Prize &mdash; Daniel Yergin</h3>
+          <p class="meta">1990 (revised 2009) &middot; Free Press</p>
+          <p class="why">The history of oil, written by the dean of energy. Three reads: as narrative history, as a primer on commodity-cycle dynamics, and as a long argument about what state actors want from energy. The integrated-oils tier list I'm working on is downstream of this book.</p>
+          <div><span class="tag sectoral">Sectoral</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>The Great Game &mdash; John Steele Gordon</h3>
+          <p class="meta">1999 &middot; Touchstone</p>
+          <p class="why">A history of Wall Street and American capital markets. Most analysts read this for the Vanderbilt / Carnegie / Morgan stories; I read it for the chapter on the first take-privates of the late 19th century, which framed how I think about reverse-LBO as a public-market discipline tool today.</p>
+          <div><span class="tag sectoral">Sectoral</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>The Box &mdash; Marc Levinson</h3>
+          <p class="meta">2006 &middot; Princeton University Press</p>
+          <p class="why">How container shipping rewrote global trade. Reads like a case study in capital-intensive cyclical industries getting commoditized faster than incumbents expect. The lessons map cleanly onto NAND, hard drives, solar panels, and lithium &mdash; any industry where capacity outpaces demand on a long lag.</p>
+          <div><span class="tag sectoral">Sectoral</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>The Bond King &mdash; Mary Childs</h3>
+          <p class="meta">2022 &middot; Flatiron</p>
+          <p class="why">Bill Gross and PIMCO. The interest-rate / credit chapters are useful even for equity analysts &mdash; the framework for thinking about duration, convexity, and how credit cycles relate to LBO leverage capacity is exactly the lens that lets reverse-LBO output mean something.</p>
+          <div><span class="tag sectoral">Sectoral</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>The Power Law &mdash; Sebastian Mallaby</h3>
+          <p class="meta">2022 &middot; Penguin Press</p>
+          <p class="why">Venture capital as an asset class. The chapter on Sequoia's anti-pattern at the late-stage growth boundary is the cleanest framing of why growth-equity diligence demands different math than buyout, even though both are "private equity."</p>
+          <div><span class="tag sectoral">Sectoral</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Capital allocation / sponsor capital -->
+    <section class="reading-section">
+      <h2>Capital allocation &amp; sponsor capital</h2>
+      <p class="section-sub">For analysts who want to think like a buy-side seriously, even from a sell-side seat.</p>
+
+      <div class="reading-grid">
+        <div class="reading-item">
+          <h3>Capital Returns &mdash; Edward Chancellor (ed.)</h3>
+          <p class="meta">2015 &middot; Palgrave Macmillan</p>
+          <p class="why">Marathon Asset Management's "capital cycle" letters collected. The most underrated investing framework on this list. Industries become unattractive when capital flows in; attractive when it flows out. Two chapters &mdash; semis and energy &mdash; are the lens I use to read those sectors today.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>King of Capital &mdash; David Carey &amp; John Morris</h3>
+          <p class="meta">2010 &middot; Crown</p>
+          <p class="why">Blackstone's rise. The narrative chapters on Refinitiv (LSEG), Equity Office, and Hilton are the best case studies on take-private mechanics, capital structure pressure, and exit-multiple expansion in real life. Read alongside the reverse-LBO framework.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Barbarians at the Gate &mdash; Bryan Burrough &amp; John Helyar</h3>
+          <p class="meta">1989 &middot; Harper &amp; Row</p>
+          <p class="why">RJR Nabisco. The original. Still the most readable account of how take-private mechanics actually unfold in a contested situation. Read after Capital Returns to see the framework applied; everything in current LBO underwriting traces back through this deal.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>The New Tycoons &mdash; Jason Kelly</h3>
+          <p class="meta">2012 &middot; Wiley</p>
+          <p class="why">A clear, current view of the modern PE industry &mdash; carry, fund mechanics, mega-cap club deals, the LP backlash on fees. The ground-truth on what the carry-and-pref math actually looks like at the GP level. Pairs well with the distribution waterfall calculator.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Buyout (Quartararo)</h3>
+          <p class="meta">2018 &middot; Wiley Finance</p>
+          <p class="why">The LBO model textbook for people who actually have to build them. Walks through every line of the model with the same audit-grade precision the IB-grade LBO/M&amp;A template tries to maintain. The covenant-tracking treatment is the best in print.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>The PE Funds Series &mdash; Aswath Damodaran (online)</h3>
+          <p class="meta">Recurring blog posts</p>
+          <p class="why">Damodaran's recurring valuation posts on PE returns, J-curve mechanics, and the persistent gap between fund-level IRR and net IRR to LPs. Skeptical, rigorous, and exactly the lens to bring before reading a sponsor's quarterly letter.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LP letters / long-form -->
+    <section class="reading-section">
+      <h2>LP letters, blogs, podcasts</h2>
+      <p class="section-sub">Quarterly maintenance reading. What I'm tracking right now.</p>
+
+      <div class="reading-grid">
+        <div class="reading-item">
+          <h3>Oaktree Memos &mdash; Howard Marks</h3>
+          <p class="meta">Recurring &middot; <a href="https://www.oaktreecapital.com/insights" rel="noopener">oaktreecapital.com/insights</a></p>
+          <p class="why">Read every one. The 2008-09 vintage taught a generation of analysts how to think about credit cycles; the 2020-23 letters on where we are in the rate cycle are the most useful current-period reading on capital availability. Foundational.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Berkshire Annual Letters &mdash; Buffett</h3>
+          <p class="meta">Annual &middot; <a href="https://www.berkshirehathaway.com/letters/letters.html" rel="noopener">berkshirehathaway.com</a></p>
+          <p class="why">Less for the Berkshire investments themselves, more for the running commentary on capital allocation, share repurchase math, and what discipline looks like in 50+ years of practice. The 1989 letter on debt is still the cleanest single take on leverage.</p>
+          <div><span class="tag foundation">Foundation</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Apollo / Blackstone / KKR Q reports</h3>
+          <p class="meta">Quarterly</p>
+          <p class="why">For tracking sponsor capital deployment, the carry pipeline, and how PE GPs talk about their own performance. The investor-day decks in particular tend to leak useful framework on how the sponsors think about target sectors. Read quarterly even if you're not investing in the GPs.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Stratechery &mdash; Ben Thompson</h3>
+          <p class="meta">Subscription &middot; <a href="https://stratechery.com" rel="noopener">stratechery.com</a></p>
+          <p class="why">For the AI infrastructure / tech-platform read. Thompson's frameworks (aggregation theory, value-chain economics) are the right lens for thinking about the next-generation AI cycle. The TSMC / NVDA / hyperscaler architecture pieces are particularly strong.</p>
+          <div><span class="tag sectoral">Sectoral</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Doomberg &mdash; (energy / commodity Substack)</h3>
+          <p class="meta">Substack &middot; paid</p>
+          <p class="why">Energy and commodity macro from inside the industry. Sharp, current, mechanically rigorous. Important balance to consensus financial-sector takes on energy cycles. Read alongside Yergin to triangulate.</p>
+          <div><span class="tag sectoral">Sectoral</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Odd Lots &mdash; Bloomberg</h3>
+          <p class="meta">Podcast &middot; weekly</p>
+          <p class="why">Tracy Alloway and Joe Weisenthal interviewing macro / credit / commodity / crypto people. The episodes on Treasury market plumbing, the 2024 yen carry trade, and the recurring memory cycle ones are the ones to start with. Best macro podcast running.</p>
+          <div><span class="tag sectoral">Sectoral</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Acquired &mdash; Ben Gilbert &amp; David Rosenthal</h3>
+          <p class="meta">Podcast &middot; biweekly</p>
+          <p class="why">3-hour deep dives on companies and industries. The TSMC, NVIDIA, Meta, and Holdings (Berkshire) episodes are mandatory if you cover any of those names. The Charlie Munger memorial episode is the only one I've listened to twice.</p>
+          <div><span class="tag sectoral">Sectoral</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Capital Allocators &mdash; Ted Seides</h3>
+          <p class="meta">Podcast &middot; weekly</p>
+          <p class="why">Long-form interviews with allocators, GPs, and academics on how capital really gets put to work at scale. Especially useful for sell-side analysts who don't otherwise see how endowment and pension capital makes decisions.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Methodology / under-the-hood -->
+    <section class="reading-section">
+      <h2>Methodology / under-the-hood</h2>
+      <p class="section-sub">For when you want to read the original sources behind the modeling conventions.</p>
+
+      <div class="reading-grid">
+        <div class="reading-item">
+          <h3>Hamada (1972) &mdash; "The Effect of the Firm's Capital Structure on the Systematic Risk of Common Stocks"</h3>
+          <p class="meta">Journal of Finance</p>
+          <p class="why">The original derivation of the Hamada equation. The unlever-and-relever-beta math used in every IB-grade WACC calculation traces back to this paper. Worth reading once to understand <em>why</em> the formula has the form it does.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Modigliani &amp; Miller (1958) &mdash; "The Cost of Capital, Corporation Finance and the Theory of Investment"</h3>
+          <p class="meta">American Economic Review</p>
+          <p class="why">The original paper that everyone references and almost no one has read. Worth knowing the assumptions (no taxes, no agency, no distress costs) so you understand exactly which of those LBO models violate, and what each violation does to the math.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>Pratt's Stats / DealStats</h3>
+          <p class="meta">Subscription database</p>
+          <p class="why">The professional-tier database of private-company transactions. If you're doing serious private-comp work it's the right tool. Free alternatives (Mergr, parts of CapIQ) are usable for triangulation. The take-private precedents page on this site is the free equivalent for public-company take-privates.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+
+        <div class="reading-item">
+          <h3>SEC EDGAR &mdash; DEFM14A proxy filings</h3>
+          <p class="meta">Free &middot; <a href="https://www.sec.gov/cgi-bin/browse-edgar" rel="noopener">sec.gov</a></p>
+          <p class="why">Where take-private deals get fully disclosed. The "fairness opinion" sections of any DEFM14A include implied multiples, premiums, and the banker's mini-DCF and LBO &mdash; the most candid view you'll get of what bankers actually think. The take-private precedents v1 dataset on this site was sourced primarily here.</p>
+          <div><span class="tag method">Methodology</span></div>
+        </div>
+      </div>
+    </section>
+
+    <p class="reading-footer">
+      What's missing? If there's a foundational text I'm overlooking,
+      email <a href="mailto:brandon@bpleon.com">brandon@bpleon.com</a> with
+      a one-sentence pitch and I'll add it. The list updates every few
+      months. <a href="now.html">/now</a> tracks what's specifically open
+      this quarter.
+    </p>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=26" defer></script>
+</body>
+</html>

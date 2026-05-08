@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sponsor returns demystified &mdash; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="description" content="What sponsor IRR and MOIC actually decompose into — EBITDA growth, multiple expansion, debt paydown — and how to read a PE pitch when each line is fighting for its share of the credit." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/posts/sponsor-returns-demystified.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/posts/sponsor-returns-demystified.html" />
+  <meta property="og:title" content="Sponsor returns demystified — Brandon Leon" />
+  <meta property="og:description" content="What sponsor IRR actually decomposes into. EBITDA growth vs multiple expansion vs debt paydown — and how to read a PE pitch." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" type="image/svg+xml" href="../assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="../assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="../assets/brand/favicon-512.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css?v=26" />
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+
+  <style>
+    .post-meta { color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+    .post-meta time { font-variant-numeric: tabular-nums; }
+    .post-meta .dot { margin: 0 .55em; color: var(--rule); }
+    .pullquote { padding: 1.5rem 1.75rem; background: var(--bg-soft); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; margin: 1.75rem 0; font-family: var(--serif); font-style: italic; color: var(--ink); font-size: 1.1rem; line-height: 1.55; }
+    .post-toolbox { margin: 2rem 0; padding: 1.5rem 1.75rem; background: var(--bg-soft); border: 1px solid var(--rule); border-radius: 10px; }
+    .post-toolbox h3 { font-family: var(--serif); margin: 0 0 .5em; font-size: 1.15rem; }
+    .post-toolbox p { margin: 0 0 .65rem; color: var(--ink-soft); }
+    .post-toolbox a { color: var(--accent); font-weight: 600; }
+
+    .driver-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; margin: 1.5rem 0 2rem; }
+    @media (min-width: 720px) { .driver-grid { grid-template-columns: 1fr 1fr 1fr; } }
+    .driver-card { padding: 1.25rem 1.5rem; border-radius: 10px; }
+    .driver-card.growth { background: #ecf3ee; border-left: 4px solid var(--accent-2); }
+    .driver-card.mult { background: #f8e5d8; border-left: 4px solid var(--accent); }
+    .driver-card.debt { background: #f0eedf; border-left: 4px solid #b89b2c; }
+    .driver-card h3 { font-family: var(--serif); margin: 0 0 .5em; font-size: 1.1rem; color: var(--ink); }
+    .driver-card .driver-eyebrow { font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 .35em; }
+    .driver-card.growth .driver-eyebrow { color: var(--accent-2); }
+    .driver-card.mult .driver-eyebrow { color: var(--accent); }
+    .driver-card.debt .driver-eyebrow { color: #b89b2c; }
+    .driver-card p { margin: 0 0 .5em; color: var(--ink-soft); font-size: .92rem; line-height: 1.55; }
+    .driver-card .formula { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: .85rem; padding: .5rem .65rem; background: rgba(0,0,0,0.04); border-radius: 4px; margin: .5rem 0 0; display: block; }
+  </style>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="../index.html" aria-label="Brandon Leon — Home"><img src="../assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="../about.html">About</a>
+      <a href="../markets.html">Markets</a>
+      <a href="../toolkit.html">Toolkit</a>
+      <a href="../reports.html">Reports</a>
+      <a href="../projects.html">Projects</a>
+      <a href="../writing.html" aria-current="page">Writing</a>
+      <a href="../contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose">
+    <header class="page-head">
+      <p class="eyebrow">Writing &middot; Methodology</p>
+      <h1>Sponsor returns demystified.</h1>
+      <p class="post-meta">
+        <time datetime="2026-05-07">May 7, 2026</time>
+        <span class="dot">&middot;</span>
+        Brandon Leon
+        <span class="dot">&middot;</span>
+        ~6 min read
+      </p>
+    </header>
+
+    <p class="lede">
+      Two LBOs can both produce 25% sponsor IRR and tell completely
+      different stories about what actually happened. One is an operating
+      thesis that worked; the other is a re-rating bet that paid off; the
+      third is just leveraged exposure to the cycle. The decomposition is
+      the single most useful framing in sponsor underwriting &mdash; and
+      it's what fund managers want you not to think too hard about when
+      they pitch.
+    </p>
+
+    <h2>The three drivers</h2>
+
+    <p>
+      Sponsor exit equity equals entry equity plus three pieces of value
+      creation. The math is a simple identity:
+    </p>
+
+    <div class="driver-grid">
+      <div class="driver-card growth">
+        <p class="driver-eyebrow">Driver 1</p>
+        <h3>EBITDA growth</h3>
+        <p>What the operating story is worth at the price you bought.</p>
+        <code class="formula">(Exit EBITDA &minus; Entry EBITDA) &times; Entry Multiple</code>
+        <p style="margin-top:.65rem">If the company gets bigger over the hold and you bought at 8&times;, the business is worth (extra EBITDA &times; 8) more on day one of the hold. This is the operating return. Robust &mdash; if the operating thesis works, you get paid even if the multiple compresses at exit.</p>
+      </div>
+
+      <div class="driver-card mult">
+        <p class="driver-eyebrow">Driver 2</p>
+        <h3>Multiple expansion</h3>
+        <p>What re-rating contributes &mdash; the re-rating bet.</p>
+        <code class="formula">Exit EBITDA &times; (Exit Multiple &minus; Entry Multiple)</code>
+        <p style="margin-top:.65rem">If you bought at 8&times; and exit at 10&times; on the same EBITDA, the multiple did the work. This is leveraged exposure to the cycle and the comp set, not to your operating thesis. Fragile.</p>
+      </div>
+
+      <div class="driver-card debt">
+        <p class="driver-eyebrow">Driver 3</p>
+        <h3>Debt paydown + retained cash</h3>
+        <p>What financial engineering contributes.</p>
+        <code class="formula">(Debt at close &minus; Debt at exit) + Retained cash</code>
+        <p style="margin-top:.65rem">CFADS that pays down the term loans and any cash that piles up after capex / NWC / taxes / interest / mandatory amort. This is the "boring" part of the return &mdash; reliable but capped. You can't out-engineer a bad deal.</p>
+      </div>
+    </div>
+
+    <p>
+      The sum equals the value created during the hold (exit equity minus
+      entry equity, modulo recap timing). The decomposition tells you
+      what kind of bet the deal actually was. The
+      <a href="../pe-returns-waterfall.html">Returns Waterfall calculator</a>
+      runs this on any deal in milliseconds, with a returns-bridge SVG
+      that makes the proportions visual.
+    </p>
+
+    <h2>The 30% rule</h2>
+
+    <p>
+      Industry rule of thumb that survives every market cycle: <strong>if
+      multiple expansion is more than 30% of total value created, you're
+      underwriting a re-rating bet, not an operating thesis.</strong> This
+      isn't a hard line, but it's the threshold that gets sponsors
+      challenged in IC. Above 30%, your deal is leveraged exposure to where
+      comps trade at exit &mdash; not where the company actually goes.
+    </p>
+
+    <p>
+      Below 15%, you're in operating-thesis territory. The deal works if
+      the company executes. Comps can compress and you still get paid.
+      Between 15% and 30% is normal. It's where most healthy LBOs live.
+      Above 30% is the territory where a sponsor presentation needs to
+      defend specifically <em>why</em> the multiple should expand &mdash;
+      and credibly. "Software multiples just go up over time" is not a
+      defense. "We're moving from a Tier-3 services multiple to a Tier-1
+      software multiple as we shift the revenue mix" is &mdash; if it's
+      grounded in real analytics.
+    </p>
+
+    <div class="pullquote">
+      Healthy LBO returns are mostly EBITDA growth and debt paydown, with
+      a modest contribution from multiple expansion. Returns that lean
+      heavily on multiple expansion are leveraged exposure to the cycle,
+      dressed up as operating performance.
+    </div>
+
+    <h2>How to read a sponsor pitch</h2>
+
+    <p>
+      When a fund manager pitches you their track record, they almost
+      always lead with IRR. Sometimes MOIC. Rarely the decomposition.
+      That's by design &mdash; IRR and MOIC are headline numbers; the
+      decomposition tells you which piece of luck you're buying.
+    </p>
+
+    <p>
+      Three questions to ask any sponsor presenting their fund's
+      historical performance.
+    </p>
+
+    <p>
+      <strong>1. What was the average multiple expansion contribution
+      across the fund?</strong> If the answer is 30%+ on a 2017-2021
+      vintage, they got rich on the cycle. Software comps re-rated from
+      ~8&times; to ~15&times; over that window. Industrial multiples
+      compressed. Same deal team, same diligence, dramatically different
+      reads on what made the fund.
+    </p>
+
+    <p>
+      <strong>2. What's the EBITDA-growth contribution on the deals
+      that actually worked?</strong> The headline numbers blend the
+      winners and losers. If the EBITDA-growth contribution on the
+      winners is 60%+ of the gain, the underwriting was about operating
+      thesis. If it's 20% and the rest came from multiple expansion,
+      you're paying carry on a market call.
+    </p>
+
+    <p>
+      <strong>3. How much of MOIC came from dividend recaps?</strong> A
+      year-3 leverage refresh that pulls cash out and rebuilds debt back
+      to the original level boosts MOIC because cash returns get pulled
+      forward. It doesn't change the underlying operating story. Funds
+      that lean on recaps tend to be levered to credit availability
+      rather than operating skill. (The
+      <a href="../pe-returns-waterfall.html">Returns Waterfall calculator</a>
+      models this as a separate input; flip the recap on and watch IRR
+      rise without operating performance changing.)
+    </p>
+
+    <h2>The five common sleights of hand</h2>
+
+    <p>
+      <strong>"Same multiple in / out."</strong> When sponsors model deals
+      with entry multiple equal to exit multiple, they hide the fact that
+      they're either (a) implicitly assuming the cycle doesn't matter, or
+      (b) anchoring exit to current comps without challenging whether
+      those comps will hold. Always ask what an exit-multiple-down
+      scenario looks like.
+    </p>
+
+    <p>
+      <strong>Goal-seeking the leverage.</strong> Some pitches talk through
+      a deal's IRR at the leverage level that <em>makes the math work</em>
+      rather than the leverage that lenders would actually fund. If a
+      deal needs 6.5&times; on a cyclical to clear 20% IRR, and lenders
+      will fund 4.5&times;, the deal doesn't work &mdash; it's not that
+      "with right financing, IRR is 20%."
+    </p>
+
+    <p>
+      <strong>Aggressive run-rate normalizations.</strong> EBITDA at entry
+      is what determines the entry multiple. Run-rate adjustments that
+      annualize a single good quarter, or apply pro-forma synergies that
+      haven't materialized, mechanically inflate Driver 1. The
+      <a href="../pe-qofe.html">QofE Quick-Check tool</a> walks through
+      the standard normalizations with the haircut a Big Four QofE
+      provider would apply &mdash; without that discipline, the entry
+      EBITDA is just the seller's wishlist.
+    </p>
+
+    <p>
+      <strong>Dividend recap timing.</strong> Year-3 recaps boost reported
+      IRR by 200-400 bps in most LBOs because cash returns get pulled
+      forward. If your benchmark for "good fund" is 25% IRR, half of that
+      can be timing of distributions rather than economic gain.
+    </p>
+
+    <p>
+      <strong>Cherry-picked comparison sets.</strong> When a sponsor
+      claims "top-quartile performance," ask what universe they're being
+      compared to. Vintage matters. Strategy matters. Fund size matters.
+      A 2018 mid-market software fund being benchmarked against 2010-2014
+      energy funds is a marketing slide, not a real comparison.
+    </p>
+
+    <h2>What good looks like</h2>
+
+    <p>
+      A clean LBO &mdash; the kind a sponsor talks about quietly because
+      it looks unimpressive on a marketing deck &mdash; usually has the
+      following decomposition: EBITDA growth contributing 50-65% of value
+      created; debt paydown and retained cash 25-35%; multiple expansion
+      under 20%. Total IRR in the 18-25% range. MOIC of 2.0-2.5&times;.
+      Exit at the same or modestly higher multiple than entry. No recap.
+    </p>
+
+    <p>
+      It's the deal that doesn't make headlines because nothing went
+      wrong. The operating story worked. The capital structure handled the
+      cycle. The exit didn't require comps to be at a specific level.
+      That's the deal you want to underwrite, and the deal that compounds
+      reliably across vintages. Funds that string a decade of these
+      together build genuine track records &mdash; and they're rare
+      because most deal teams chase higher IRRs by leaning harder on
+      drivers 2 and 3.
+    </p>
+
+    <h2>The one-paragraph version</h2>
+
+    <p>
+      Sponsor returns decompose into three drivers: EBITDA growth (the
+      operating story), multiple expansion (the re-rating bet), and debt
+      paydown plus retained cash (financial engineering). Healthy LBO
+      math is mostly operating story and debt paydown, with multiple
+      expansion under 30% of total value creation. When you see a fund
+      pitch with a great IRR, the question to ask is which of the three
+      drivers did the work &mdash; and how much of that was a market
+      call rather than operating skill. Same answer for IC; same answer
+      for LP diligence; same answer for any analyst trying to figure out
+      whether sponsor returns are a reliable framework for thinking about
+      the next deal.
+    </p>
+
+    <div class="post-toolbox">
+      <h3>Run the decomposition yourself</h3>
+      <p>The Returns Waterfall calculator decomposes any LBO into the three drivers, with returns bridge SVG, attribution donut, and the 30%-rule re-rate flag.</p>
+      <p><a href="../pe-returns-waterfall.html">→ Returns Waterfall Calculator</a></p>
+
+      <h3>Pair with the distribution waterfall</h3>
+      <p>Once you know how returns are generated, the distribution waterfall splits them between LP and GP. Together they cover the full path from operating performance to GP's bonus check.</p>
+      <p><a href="../pe-distribution-waterfall.html">→ Distribution Waterfall Calculator</a></p>
+
+      <h3>QofE the inputs first</h3>
+      <p>Entry EBITDA is the input that determines the entry multiple. The QofE Quick-Check page applies the standard adjustments and haircuts so you're not pricing the deal off the seller's wishlist.</p>
+      <p><a href="../pe-qofe.html">→ QofE Quick-Check</a></p>
+
+      <h3>The framework in five minutes</h3>
+      <p>"Reverse-LBO in five minutes" is the natural companion read &mdash; how to use this same framework to ground a public-equity thesis.</p>
+      <p><a href="reverse-lbo-in-five-minutes.html">→ Read the post</a></p>
+    </div>
+
+    <p style="margin-top:3rem; padding-top:1.75rem; border-top:1px solid var(--rule); color:var(--muted); font-size:.9rem;">
+      Brandon Leon writes independent equity research focused on cyclicals.
+      Spotted an error or have a better example? Email
+      <a href="mailto:brandon@bpleon.com">brandon@bpleon.com</a>. The full
+      disclaimer covers everything in detail at
+      <a href="../disclaimer.html">disclaimer</a>.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="../now.html">Now</a></li>
+        <li><a href="../disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="../script.js?v=26" defer></script>
+</body>
+</html>

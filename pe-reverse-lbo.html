@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverse-LBO Calculator — Brandon Leon</title>
+<meta name="description" content="Browser-based reverse-LBO. Solve backward for the maximum entry multiple a sponsor would pay, then convert to an implied take-private price per share. Same engine as the 17-tab LBO/M&amp;A workbook.">
+<link rel="canonical" href="https://bpleon.com/pe-reverse-lbo.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #F5EFE0; --card: #FAF6E8; --card-border: #E0D5BA;
+    --text: #1F1B14; --text-muted: #6B6453; --text-faint: #9C9684;
+    --accent: #C46A2C; --accent-light: #E5A572; --accent-bg: #F5E4CE;
+    --rule: #D8CDB0; --input-bg: #FFFEF7; --input-border: #C9BD9F;
+    --table-stripe: #F2EBD6; --green: #4F7A3F; --red: #B0432A;
+    --sage: #5b7f6b; --sage-bg: #E5EFE6; --navy: #0B3D91;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 17px; line-height: 1.6; padding: 60px 40px 100px; min-height: 100vh; }
+.container { max-width: 1100px; margin: 0 auto; }
+.headline { font-size: 42px; font-weight: 600; line-height: 1.15; margin-bottom: 16px; letter-spacing: -0.01em; }
+.subhead { color: var(--text-muted); font-size: 18px; font-style: italic; margin-bottom: 32px; max-width: 800px; }
+.breadcrumb { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+
+.scorecard-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; align-items: center; }
+.scorecard-label { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-right: 4px; }
+.chip { font-family: 'Inter', sans-serif; font-size: 12px; padding: 6px 12px; border-radius: 999px; background: var(--card); border: 1px solid var(--card-border); color: var(--text); cursor: pointer; transition: all 0.15s; }
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+.chip.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+.grid-main { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; margin-bottom: 40px; }
+@media (max-width: 900px) { .grid-main { grid-template-columns: 1fr; } body { padding: 40px 20px 80px; } .headline { font-size: 32px; } }
+
+.card { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 28px 30px; }
+.card-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.subgroup-title { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin: 18px 0 8px; }
+
+.spec-row { display: grid; grid-template-columns: 1fr 130px; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--rule); align-items: center; }
+.spec-row:last-child { border-bottom: none; }
+.spec-row .label { font-size: 15px; color: var(--text); }
+.spec-row .label small { color: var(--text-muted); font-size: 12px; font-style: italic; }
+input[type="number"], input[type="text"] { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 3px; padding: 7px 10px; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text); text-align: right; width: 100%; }
+input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-light); }
+
+.implied-headline { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.implied-price { font-family: 'Cormorant Garamond', serif; font-size: 64px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+.implied-meta { font-size: 14px; color: var(--text-muted); font-family: 'Inter', sans-serif; margin-bottom: 18px; }
+
+.summary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 18px; }
+.sum-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+.sum-value { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; }
+
+.detail-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; margin-top: 8px; }
+.detail-table th { padding: 8px 10px; border-bottom: 1px solid var(--rule); color: var(--text-muted); text-align: left; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+.detail-table th.num { text-align: right; }
+.detail-table td { padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+.detail-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.detail-table tr:nth-child(even) td { background: var(--table-stripe); }
+.detail-table .highlight td { background: var(--accent-bg) !important; font-weight: 600; }
+.detail-table .highlight td:first-child { color: var(--accent); }
+
+.sens-grid { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 12px; font-variant-numeric: tabular-nums; margin-top: 8px; }
+.sens-grid th, .sens-grid td { padding: 6px 8px; text-align: center; border: 1px solid var(--rule); }
+.sens-grid th { background: var(--input-bg); font-weight: 600; font-size: 11px; color: var(--text-muted); }
+.sens-grid td.center-cell { background: var(--accent); color: white; font-weight: 600; }
+
+.full-row { margin-bottom: 28px; }
+
+.howworks { margin-top: 50px; padding-top: 28px; border-top: 1px solid var(--rule); }
+.howworks h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+.howworks p { color: var(--text); margin-bottom: 12px; max-width: 800px; }
+.howworks strong { color: var(--text); }
+
+.cta { margin-top: 40px; padding: 24px 28px; background: var(--accent-bg); border: 1px solid var(--accent-light); border-radius: 4px; }
+.cta-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+.cta-body { color: var(--text-muted); margin-bottom: 12px; }
+.cta a { color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--accent); }
+
+.cta-sage { margin-top: 20px; padding: 22px 28px; background: var(--sage-bg); border: 1px solid var(--sage); border-radius: 4px; }
+.cta-sage .cta-title { color: var(--sage); }
+.cta-sage a { color: var(--sage); border-bottom-color: var(--sage); }
+
+.disclaimer { margin-top: 30px; font-size: 13px; color: var(--text-faint); font-style: italic; }
+.disclaimer a { color: var(--text-muted); }
+
+.share-btn { position: fixed; top: 24px; right: 24px; background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 90; transition: background 0.15s; }
+.share-btn:hover { background: #A85A22; }
+.share-toast { position: fixed; top: 70px; right: 24px; background: var(--text); color: white; padding: 12px 18px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; z-index: 91; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.share-toast.show { opacity: 1; }
+@media (max-width: 700px) { .share-btn { top: 12px; right: 12px; padding: 8px 12px; font-size: 11px; } }
+
+.email-modal { position: fixed; bottom: 24px; right: 24px; max-width: 360px; background: var(--card); border: 1px solid var(--accent-light); border-radius: 6px; padding: 22px 24px; box-shadow: 0 8px 32px rgba(0,0,0,0.15); z-index: 100; transform: translateY(120%); opacity: 0; transition: transform 0.4s ease, opacity 0.4s ease; }
+.email-modal.show { transform: translateY(0); opacity: 1; }
+.email-modal-close { position: absolute; top: 8px; right: 12px; background: none; border: none; font-size: 22px; color: var(--text-muted); cursor: pointer; line-height: 1; }
+.email-modal-close:hover { color: var(--accent); }
+.email-modal h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; line-height: 1.2; }
+.email-modal p { font-size: 14px; color: var(--text-muted); font-style: italic; margin-bottom: 14px; line-height: 1.5; }
+.email-modal .footnote { font-size: 11px; color: var(--text-faint); margin-top: 10px; font-style: normal; }
+@media (max-width: 700px) { .email-modal { max-width: calc(100% - 24px); right: 12px; bottom: 12px; padding: 18px 20px; } }
+</style>
+</head>
+<body>
+
+<button class="share-btn" id="shareBtn" title="Copy a shareable link with your inputs">📋 SHARE THIS</button>
+<div class="share-toast" id="shareToast">Link copied — paste it anywhere</div>
+
+<div class="email-modal" id="emailModal">
+    <button class="email-modal-close" id="emailModalClose" aria-label="Close">×</button>
+    <h4>Get the LBO/M&amp;A workbook</h4>
+    <p>17-tab template, two worked Micron examples (through-cycle + AI-cycle), reverse-LBO and reverse-DCF baked in. Free.</p>
+    <iframe src="https://bpleon.substack.com/embed" width="100%" height="200" style="border:none; background:transparent;" frameborder="0" scrolling="no"></iframe>
+    <p class="footnote" style="margin-top:6px;">Substack handles signup — no spam, unsubscribe anytime.</p>
+</div>
+
+<div class="container">
+    <div class="breadcrumb"><a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Buy-side tools</div>
+    <h1 class="headline">Reverse-LBO Calculator</h1>
+    <p class="subhead">Solve the LBO backward. Start with the price the public market is asking and a target sponsor IRR. Out comes the maximum entry multiple a financial buyer would pay — and the implied take-private price per share. If the implied price sits above the current quote, private capital would step in. If it sits below, the public is paying more than patient capital.</p>
+
+    <div class="scorecard-row">
+        <span class="scorecard-label">Sector scorecard:</span>
+        <button class="chip active" data-preset="semiconductors">Semis (through-cycle)</button>
+        <button class="chip" data-preset="semiconductors_ai_cycle">Semis (AI cycle)</button>
+        <button class="chip" data-preset="energy">Energy</button>
+        <button class="chip" data-preset="materials">Materials</button>
+        <button class="chip" data-preset="industrials">Industrials</button>
+        <button class="chip" data-preset="generic">Generic</button>
+    </div>
+
+    <div class="grid-main">
+        <!-- LEFT: INPUTS -->
+        <div class="card">
+            <div class="card-title">Target Inputs</div>
+
+            <div class="subgroup-title">Public Market</div>
+            <div class="spec-row"><div class="label">Current share price <small>($)</small></div><input type="number" id="i-price" value="86.00" step="0.5"></div>
+            <div class="spec-row"><div class="label">Diluted shares <small>(M)</small></div><input type="number" id="i-shares" value="1120" step="10"></div>
+            <div class="spec-row"><div class="label">Net debt <small>($B)</small></div><input type="number" id="i-netdebt" value="3.0" step="0.5"></div>
+
+            <div class="subgroup-title">Operating</div>
+            <div class="spec-row"><div class="label">Entry EBITDA <small>($B)</small></div><input type="number" id="i-ebitda" value="13.8" step="0.1"></div>
+            <div class="spec-row"><div class="label">EBITDA growth p.a. <small>(%)</small></div><input type="number" id="i-growth" value="6" step="0.5"></div>
+            <div class="spec-row"><div class="label">EBITDA margin <small>(%)</small></div><input type="number" id="i-ebmgn" value="55" step="1"></div>
+            <div class="spec-row"><div class="label">Capex <small>(% revenue)</small></div><input type="number" id="i-capex" value="25" step="0.5"></div>
+            <div class="spec-row"><div class="label">NWC <small>(% Δ revenue)</small></div><input type="number" id="i-nwc" value="2" step="0.5"></div>
+            <div class="spec-row"><div class="label">Tax rate <small>(%)</small></div><input type="number" id="i-tax" value="15" step="0.5"></div>
+
+            <div class="subgroup-title">Deal Structure</div>
+            <div class="spec-row"><div class="label">Exit multiple <small>(EV / EBITDA)</small></div><input type="number" id="i-exit" value="8.0" step="0.25"></div>
+            <div class="spec-row"><div class="label">Debt / EBITDA <small>at close</small></div><input type="number" id="i-lev" value="4.5" step="0.25"></div>
+            <div class="spec-row"><div class="label">Cost of debt <small>(%)</small></div><input type="number" id="i-kd" value="8.5" step="0.25"></div>
+            <div class="spec-row"><div class="label">Cash sweep <small>(%)</small></div><input type="number" id="i-sweep" value="75" step="5"></div>
+            <div class="spec-row"><div class="label">Hold period <small>(yrs)</small></div><input type="number" id="i-hold" value="5" min="3" max="7" step="1"></div>
+            <div class="spec-row"><div class="label">Transaction fees <small>(% EV)</small></div><input type="number" id="i-fees" value="2" step="0.25"></div>
+            <div class="spec-row"><div class="label">Headline target IRR <small>(%)</small></div><input type="number" id="i-tgt" value="20" step="1"></div>
+        </div>
+
+        <!-- RIGHT: HEADLINE OUTPUT -->
+        <div class="card">
+            <div class="implied-headline">Implied take-private price (at <span id="o-tgt-label">20%</span> IRR)</div>
+            <div class="implied-price" id="o-implied-px">—</div>
+            <div class="implied-meta">vs current <strong id="o-current-px">—</strong> &nbsp;·&nbsp; <strong id="o-premium">—</strong> premium</div>
+
+            <div class="summary-row">
+                <div><div class="sum-label">Max Entry Mult</div><div class="sum-value" id="o-maxent">—</div></div>
+                <div><div class="sum-label">Implied Entry EV</div><div class="sum-value" id="o-entryev">—</div></div>
+            </div>
+            <div class="summary-row" style="margin-top: -18px;">
+                <div><div class="sum-label">Sponsor Equity</div><div class="sum-value" id="o-eq">—</div></div>
+                <div><div class="sum-label">Exit Equity</div><div class="sum-value" id="o-exiteq">—</div></div>
+            </div>
+
+            <div class="card-title" style="margin-top: 24px;">Reverse-LBO across IRR targets</div>
+            <table class="detail-table" id="rev-table"></table>
+            <p style="font-family:'Inter',sans-serif; font-size:12px; color:var(--text-muted); margin-top:10px;">
+                The highlighted row matches your headline target. Higher IRR thresholds require lower entry multiples — that's the trade-off between sponsor return and the price they'll pay.
+            </p>
+        </div>
+    </div>
+
+    <!-- SENSITIVITY: target IRR × EBITDA growth -->
+    <div class="card full-row">
+        <div class="card-title">Sensitivity — Implied take-private price ($ / share)</div>
+        <p style="font-family:'Inter',sans-serif; font-size:13px; color:var(--text-muted); margin-bottom:14px;">
+            Rows = target IRR. Columns = EBITDA growth assumption. Center cell uses your current inputs. Green = above current price (sponsor would pay up); red = below current (public is rich vs. sponsor); yellow = inside ±5%.
+        </p>
+        <table class="sens-grid" id="sens-table"></table>
+    </div>
+
+    <!-- WORKED EXAMPLES -->
+    <div class="card full-row">
+        <div class="card-title">Worked examples</div>
+        <p style="font-family:'Inter',sans-serif; font-size:13px; color:var(--text-muted); margin-bottom:14px;">
+            Pre-loaded scorecards on cyclicals where the methodology disagreement <em>is</em> the recommendation. Click to load; the calculator above re-runs.
+        </p>
+        <div class="scorecard-row" style="margin-bottom:0;">
+            <button class="chip" data-example="mu-tc">MU — through-cycle</button>
+            <button class="chip" data-example="mu-ai">MU — AI-cycle</button>
+            <button class="chip" data-example="wdc">WDC — post-spin take-private</button>
+        </div>
+    </div>
+
+    <div class="howworks">
+        <h3>How this works</h3>
+        <p><strong>The forward LBO.</strong> Pick an entry multiple. Entry EV = entry mult × EBITDA. New term debt = leverage × EBITDA. Sponsor equity plugs the gap (plus 2% transaction fees). Run a year-by-year debt schedule with cash sweep, capex, NWC, taxes. At year H, exit EV = exit mult × terminal EBITDA. Sponsor IRR is the rate that makes the present value of (−equity in, +exit equity) equal zero.</p>
+        <p><strong>The reverse direction.</strong> Fix the exit multiple, the leverage, the operating path, and the target IRR. Bisect on entry multiple until sponsor IRR hits the target. Convert the resulting entry EV into a per-share take-private price: <code>Implied price = (Entry EV − Net Debt) / Shares</code>. That's the headline output above.</p>
+        <p><strong>The interpretation.</strong> If implied take-private price &gt; current price, the public is paying <em>less</em> than a sponsor at your target IRR would &mdash; the kind of name a sponsor might bid for. If implied price &lt; current price, the public is paying <em>more</em> than patient capital would; sponsors won't bid until either price falls or the operating story improves. The premium column tells you how much above current the take-private math justifies.</p>
+        <p><strong>What this is useful for, even if no LBO is coming.</strong> Reverse-LBO is the cleanest way to ground a public-market thesis in capital-structure reality. It tells you "below price X, this name is takeable" — a real floor under the stock if the operating story holds. It also disciplines bull cases: if your bull thesis requires a multiple that no sponsor would underwrite at 20% IRR, you should at least know that.</p>
+        <p><strong>What it isn't.</strong> The output is illustrative. Sponsors face availability of debt, regulatory friction, management cooperation, and price discovery dynamics that the math here doesn't capture. The <a href="./disclaimer.html">disclaimer</a> covers this in detail.</p>
+    </div>
+
+    <div class="cta">
+        <div class="cta-title">Want this in a 17-tab IB-grade workbook?</div>
+        <p class="cta-body">The full LBO/M&amp;A template ships with two worked Micron examples (through-cycle + AI-cycle) so methodology disagreement is explicit, plus full sources &amp; uses, year-by-year debt schedule with covenant tracking, returns attribution, peer-blended comps, accretion/dilution. Free.</p>
+        <a href="./lbo-ma-template.html">→ Open the LBO &amp; M&amp;A template</a>
+    </div>
+
+    <div class="cta cta-sage">
+        <div class="cta-title">Read the explainer first</div>
+        <p class="cta-body">"Reverse-LBO in five minutes" walks through the intuition, the typical mistakes, and where the framework breaks down. Then come back here.</p>
+        <a href="./posts/reverse-lbo-in-five-minutes.html">→ Read the post</a>
+    </div>
+
+    <p class="disclaimer">Nothing on this page is investment advice or a take-private prediction. Built by Brandon Leon. See the <a href="./disclaimer.html">full disclaimer</a> &mdash; especially the section on screening tools and take-private analysis.</p>
+</div>
+
+<script>
+/* ============================================================
+   REVERSE-LBO ENGINE — pure JS
+   ============================================================ */
+(function () {
+    'use strict';
+
+    const PRESETS = {
+        semiconductors:           { exit: 8.0,  lev: 4.5, capex: 25, growth: 6,  ebmgn: 55, kd: 8.5, tax: 15 },
+        semiconductors_ai_cycle:  { exit: 10.0, lev: 4.0, capex: 32, growth: 12, ebmgn: 58, kd: 8.5, tax: 15 },
+        energy:                   { exit: 5.5,  lev: 3.5, capex: 18, growth: 3,  ebmgn: 45, kd: 9.0, tax: 22 },
+        materials:                { exit: 7.0,  lev: 4.0, capex: 10, growth: 4,  ebmgn: 50, kd: 8.5, tax: 24 },
+        industrials:              { exit: 9.0,  lev: 5.0, capex: 5,  growth: 4,  ebmgn: 55, kd: 8.0, tax: 23 },
+        generic:                  { exit: 10.0, lev: 5.5, capex: 5,  growth: 5,  ebmgn: 60, kd: 7.5, tax: 22 },
+    };
+
+    /* Worked examples — load full input set */
+    const EXAMPLES = {
+        'mu-tc': {  // Micron through-cycle
+            price: 86, shares: 1120, netdebt: 3.0, ebitda: 13.8, growth: 6, ebmgn: 55,
+            capex: 25, nwc: 2, tax: 15, exit: 8.0, lev: 4.5, kd: 8.5, sweep: 75, hold: 5,
+            fees: 2, tgt: 20, _scorecard: 'semiconductors'
+        },
+        'mu-ai': {  // Micron AI-cycle
+            price: 86, shares: 1120, netdebt: 3.0, ebitda: 18.2, growth: 12, ebmgn: 58,
+            capex: 32, nwc: 2, tax: 15, exit: 10.0, lev: 4.0, kd: 8.5, sweep: 75, hold: 5,
+            fees: 2, tgt: 20, _scorecard: 'semiconductors_ai_cycle'
+        },
+        'wdc': {  // Western Digital post-SanDisk-spin (NAND-only pure play, illustrative)
+            price: 56, shares: 345, netdebt: 6.0, ebitda: 3.4, growth: 5, ebmgn: 22,
+            capex: 9, nwc: 2, tax: 18, exit: 6.5, lev: 5.0, kd: 9.0, sweep: 75, hold: 5,
+            fees: 2, tgt: 22, _scorecard: 'semiconductors'
+        }
+    };
+
+    const $ = id => document.getElementById(id);
+    const I = ['price','shares','netdebt','ebitda','growth','ebmgn','capex','nwc','tax','exit','lev','kd','sweep','hold','fees','tgt']
+        .reduce((a,k) => { a[k] = $('i-' + k); return a; }, {});
+
+    function irr(cf) {
+        let lo = -0.99, hi = 5.0, mid = 0;
+        for (let i = 0; i < 100; i++) {
+            mid = (lo + hi) / 2;
+            let npv = 0;
+            for (let t = 0; t < cf.length; t++) npv += cf[t] / Math.pow(1 + mid, t);
+            if (Math.abs(npv) < 1e-7) return mid;
+            if (npv > 0) lo = mid; else hi = mid;
+        }
+        return mid;
+    }
+
+    /* Run forward LBO at a chosen entry multiple */
+    function runLBO(p, entryMult) {
+        const ebitdaPath = [], capexPath = [], nwcPath = [], ebitPath = [];
+        const rev0 = p.ebitda / (p.ebmgn / 100);
+        let prevRev = rev0;
+        for (let t = 0; t < p.hold; t++) {
+            const g = (p.growth / 100) * Math.pow(0.92, t);  // mild fade
+            const rev = prevRev * (1 + g);
+            const eb = rev * (p.ebmgn / 100);
+            ebitdaPath.push(eb);
+            ebitPath.push(eb * 0.7);
+            capexPath.push(rev * (p.capex / 100));
+            nwcPath.push((rev - prevRev) * (p.nwc / 100));
+            prevRev = rev;
+        }
+
+        const entryEV = p.ebitda * entryMult;
+        const fees = entryEV * (p.fees / 100);
+        let debtClose = p.ebitda * p.lev;
+        let equityIn = entryEV + fees - debtClose;
+        if (equityIn < 0) { debtClose = entryEV + fees; equityIn = 0; }
+
+        let curDebt = debtClose; let retainedCash = 0;
+        for (let i = 0; i < p.hold; i++) {
+            const beg = curDebt;
+            const mand = beg * 0.01;
+            const interest = beg * (p.kd / 100);
+            const ebitda = ebitdaPath[i];
+            const capex = capexPath[i];
+            const dnwc = nwcPath[i];
+            const ebit = ebitPath[i];
+            const taxes = Math.max(0, (ebit - interest) * (p.tax / 100));
+            const cfads = ebitda - interest - taxes - capex - dnwc;
+            let sweep = Math.max(0, cfads - mand) * (p.sweep / 100);
+            sweep = Math.min(sweep, Math.max(0, beg - mand));
+            const ending = beg - mand - sweep;
+            retainedCash += Math.max(0, cfads - mand - sweep);
+            curDebt = ending;
+        }
+
+        const exitEbitda = ebitdaPath[p.hold - 1];
+        const exitEV = exitEbitda * p.exit;
+        const exitEq = exitEV - curDebt + retainedCash;
+        const moic = equityIn > 0 ? exitEq / equityIn : NaN;
+
+        const cf = [-equityIn];
+        for (let j = 1; j < p.hold; j++) cf.push(0);
+        cf.push(exitEq);
+        const rate = irr(cf);
+
+        return { entryEV, debtClose, fees, equityIn, exitEbitda, exitEV, exitDebt: curDebt,
+                  retainedCash, exitEq, moic, irr: rate };
+    }
+
+    /* Bisect on entry multiple to hit target IRR */
+    function reverseLBO(p, targetIRR) {
+        let lo = 2.0, hi = 25.0, mid = 0;
+        for (let k = 0; k < 60; k++) {
+            mid = (lo + hi) / 2;
+            const r = runLBO(p, mid);
+            if (r.irr > targetIRR) lo = mid; else hi = mid;
+        }
+        const r = runLBO(p, mid);
+        return { maxEntry: mid, runs: r };
+    }
+
+    function impliedSharePrice(entryEV, netdebt, shares) {
+        // Entry EV is in $B, net debt in $B, shares in M
+        const equity = entryEV - netdebt;
+        if (shares <= 0) return NaN;
+        return (equity * 1000) / shares;  // ($B → $M) / M shares = $/share
+    }
+
+    function fmtMoney(v) {
+        if (!isFinite(v)) return '—';
+        const sign = v < 0 ? '-' : ''; v = Math.abs(v);
+        if (v >= 1000) return sign + '$' + (v / 1000).toFixed(2) + 'T';
+        if (v >= 1)    return sign + '$' + v.toFixed(2) + 'B';
+        return sign + '$' + (v * 1000).toFixed(0) + 'M';
+    }
+    function fmtPrice(v) {
+        if (!isFinite(v)) return '—';
+        const sign = v < 0 ? '-' : '';
+        return sign + '$' + Math.abs(v).toFixed(2);
+    }
+    const fmtPct = v => isFinite(v) ? (v * 100).toFixed(1) + '%' : '—';
+    const fmtMult = v => isFinite(v) ? v.toFixed(2) + 'x' : '—';
+
+    function render() {
+        const p = {};
+        for (const k in I) p[k] = parseFloat(I[k].value);
+        if (Object.values(p).some(isNaN)) return;
+
+        const tgtIRR = p.tgt / 100;
+        const headline = reverseLBO(p, tgtIRR);
+        const implied = impliedSharePrice(headline.runs.entryEV, p.netdebt, p.shares);
+        const premium = isFinite(implied) && p.price > 0 ? (implied / p.price - 1) : NaN;
+
+        $('o-tgt-label').textContent = (p.tgt).toFixed(0) + '%';
+        $('o-implied-px').textContent = fmtPrice(implied);
+        $('o-current-px').textContent = fmtPrice(p.price);
+
+        const premEl = $('o-premium');
+        if (isFinite(premium)) {
+            const sign = premium >= 0 ? '+' : '';
+            premEl.textContent = sign + (premium * 100).toFixed(1) + '%';
+            premEl.style.color = premium >= 0 ? 'var(--green)' : 'var(--red)';
+        } else {
+            premEl.textContent = '—';
+            premEl.style.color = '';
+        }
+
+        $('o-maxent').textContent  = fmtMult(headline.maxEntry);
+        $('o-entryev').textContent = fmtMoney(headline.runs.entryEV);
+        $('o-eq').textContent      = fmtMoney(headline.runs.equityIn);
+        $('o-exiteq').textContent  = fmtMoney(headline.runs.exitEq);
+
+        // Reverse-LBO across multiple IRR targets
+        const targets = [0.15, 0.20, 0.25, 0.30];
+        let rh = `<thead><tr><th>Target IRR</th><th class="num">Max Entry Mult</th><th class="num">Implied Take-Private</th><th class="num">Premium / (Discount)</th></tr></thead><tbody>`;
+        targets.forEach(t => {
+            const rev = reverseLBO(p, t);
+            const impl = impliedSharePrice(rev.runs.entryEV, p.netdebt, p.shares);
+            const prm = isFinite(impl) && p.price > 0 ? (impl / p.price - 1) : NaN;
+            const isHeadline = Math.abs(t - tgtIRR) < 0.001;
+            const cls = isHeadline ? ' class="highlight"' : '';
+            const sign = isFinite(prm) && prm >= 0 ? '+' : '';
+            const prmStr = isFinite(prm) ? sign + (prm * 100).toFixed(1) + '%' : '—';
+            const prmStyle = isFinite(prm) ? ` style="color:${prm >= 0 ? 'var(--green)' : 'var(--red)'}"` : '';
+            rh += `<tr${cls}><td>${(t*100).toFixed(0)}%</td><td class="num">${rev.maxEntry.toFixed(2)}x</td><td class="num">${fmtPrice(impl)}</td><td class="num"${prmStyle}>${prmStr}</td></tr>`;
+        });
+        rh += '</tbody>';
+        $('rev-table').innerHTML = rh;
+
+        // Sensitivity grid: rows = target IRR, cols = EBITDA growth
+        const irrTargets = [0.15, 0.18, p.tgt/100, 0.25, 0.30];
+        const growthLevels = [Math.max(0, p.growth - 4), Math.max(0, p.growth - 2), p.growth, p.growth + 2, p.growth + 4];
+        let sh = '<thead><tr><th>IRR \\ Growth</th>';
+        growthLevels.forEach(g => sh += `<th>${g.toFixed(1)}%</th>`);
+        sh += '</tr></thead><tbody>';
+        irrTargets.forEach((t, ti) => {
+            sh += `<tr><th>${(t*100).toFixed(0)}%</th>`;
+            growthLevels.forEach((g, gi) => {
+                const rev = reverseLBO(Object.assign({}, p, { growth: g }), t);
+                const impl = impliedSharePrice(rev.runs.entryEV, p.netdebt, p.shares);
+                const prm = isFinite(impl) && p.price > 0 ? (impl / p.price - 1) : NaN;
+                let bg = '#fff';
+                if (isFinite(prm)) {
+                    if (prm >= 0.10) bg = '#a9d18e';
+                    else if (prm >= 0.05) bg = '#c5e0b4';
+                    else if (prm >= -0.05) bg = '#fff2cc';
+                    else if (prm >= -0.15) bg = '#f4cccc';
+                    else bg = '#e06666';
+                }
+                const isCenter = (ti === 2 && gi === 2);
+                const cls = isCenter ? ' class="center-cell"' : '';
+                const style = isCenter ? '' : ` style="background:${bg};color:var(--text)"`;
+                sh += `<td${cls}${style}>${fmtPrice(impl)}</td>`;
+            });
+            sh += '</tr>';
+        });
+        sh += '</tbody>';
+        $('sens-table').innerHTML = sh;
+    }
+
+    Object.values(I).forEach(el => {
+        el.addEventListener('input', render);
+        el.addEventListener('change', render);
+    });
+
+    document.querySelectorAll('.chip[data-preset]').forEach(chip => {
+        chip.addEventListener('click', () => {
+            document.querySelectorAll('.chip[data-preset]').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            const p = PRESETS[chip.dataset.preset];
+            if (!p) return;
+            I.exit.value = p.exit; I.lev.value = p.lev;
+            I.capex.value = p.capex; I.growth.value = p.growth; I.ebmgn.value = p.ebmgn;
+            I.kd.value = p.kd; I.tax.value = p.tax;
+            render();
+        });
+    });
+
+    document.querySelectorAll('.chip[data-example]').forEach(chip => {
+        chip.addEventListener('click', () => {
+            const ex = EXAMPLES[chip.dataset.example];
+            if (!ex) return;
+            // Apply example values
+            Object.keys(ex).forEach(k => {
+                if (k === '_scorecard') {
+                    document.querySelectorAll('.chip[data-preset]').forEach(c => c.classList.remove('active'));
+                    const sc = document.querySelector(`.chip[data-preset="${ex[k]}"]`);
+                    if (sc) sc.classList.add('active');
+                    return;
+                }
+                if (I[k]) I[k].value = ex[k];
+            });
+            render();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    render();
+})();
+
+/* ============================================================
+   SHARE URL + EMAIL MODAL
+   ============================================================ */
+(function() {
+    function collectInputs() {
+        const data = {};
+        document.querySelectorAll('input[type="number"], input[type="text"]').forEach(el => {
+            if (el.id) data[el.id] = el.value;
+        });
+        const active = document.querySelector('.chip[data-preset].active');
+        if (active) data._scorecard = active.dataset.preset;
+        return data;
+    }
+    function applyInputs(data) {
+        Object.keys(data).forEach(id => {
+            if (id === '_scorecard') {
+                const c = document.querySelector(`.chip[data-preset="${data[id]}"]`);
+                if (c) {
+                    document.querySelectorAll('.chip[data-preset]').forEach(x => x.classList.remove('active'));
+                    c.classList.add('active');
+                }
+                return;
+            }
+            const el = document.getElementById(id);
+            if (el) el.value = data[id];
+        });
+        document.querySelectorAll('input').forEach(el => el.dispatchEvent(new Event('input', { bubbles: true })));
+    }
+    function encodeInputs(d) { try { return btoa(encodeURIComponent(JSON.stringify(d))); } catch(e) { return ''; } }
+    function decodeInputs(s) { try { return JSON.parse(decodeURIComponent(atob(s))); } catch(e) { return null; } }
+    function loadFromUrl() {
+        const enc = new URLSearchParams(window.location.search).get('s');
+        if (enc) { const d = decodeInputs(enc); if (d) applyInputs(d); }
+    }
+    function showToast(msg) {
+        const t = document.getElementById('shareToast');
+        t.textContent = msg; t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2200);
+    }
+    document.getElementById('shareBtn').addEventListener('click', () => {
+        const data = collectInputs();
+        const url = window.location.origin + window.location.pathname + '?s=' + encodeInputs(data);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(() => showToast('Link copied — paste it anywhere'));
+        } else {
+            const tmp = document.createElement('textarea');
+            tmp.value = url; document.body.appendChild(tmp); tmp.select();
+            try { document.execCommand('copy'); showToast('Link copied'); }
+            catch(e) { prompt('Copy this link:', url); }
+            document.body.removeChild(tmp);
+        }
+    });
+
+    const STORAGE_KEY = 'bp_pe_revlbo_modal_dismissed';
+    function showModal() {
+        if (sessionStorage.getItem(STORAGE_KEY) || localStorage.getItem(STORAGE_KEY)) return;
+        document.getElementById('emailModal').classList.add('show');
+    }
+    function dismissModal(perm) {
+        document.getElementById('emailModal').classList.remove('show');
+        if (perm) localStorage.setItem(STORAGE_KEY, '1');
+        else sessionStorage.setItem(STORAGE_KEY, '1');
+    }
+    document.getElementById('emailModalClose').addEventListener('click', () => dismissModal(true));
+    setTimeout(showModal, 60000);
+    loadFromUrl();
+})();
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</body>
+</html>

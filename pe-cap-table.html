@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cap Table &amp; Waterfall — Brandon Leon</title>
+<meta name="description" content="Pre/post-money cap table builder with options pool refresh, liquidation preferences (1x / 2x / participating), and an exit waterfall. Watch dilution work round-by-round and see who takes what at exit.">
+<link rel="canonical" href="https://bpleon.com/pe-cap-table.html">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #F5EFE0; --card: #FAF6E8; --card-border: #E0D5BA;
+    --text: #1F1B14; --text-muted: #6B6453; --text-faint: #9C9684;
+    --accent: #C46A2C; --accent-light: #E5A572; --accent-bg: #F5E4CE;
+    --rule: #D8CDB0; --input-bg: #FFFEF7; --input-border: #C9BD9F;
+    --table-stripe: #F2EBD6; --green: #4F7A3F; --red: #B0432A;
+    --sage: #5b7f6b; --sage-bg: #E5EFE6; --navy: #0B3D91;
+    --c-founders: #C46A2C; --c-options: #5b7f6b; --c-sera: #4a6fa5; --c-serb: #6b95c7; --c-serc: #8eb4d8;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 17px; line-height: 1.6; padding: 60px 40px 100px; min-height: 100vh; }
+.container { max-width: 1100px; margin: 0 auto; }
+.headline { font-size: 42px; font-weight: 600; line-height: 1.15; margin-bottom: 16px; letter-spacing: -0.01em; }
+.subhead { color: var(--text-muted); font-size: 18px; font-style: italic; margin-bottom: 32px; max-width: 800px; }
+.breadcrumb { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+
+.scorecard-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; align-items: center; }
+.scorecard-label { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-right: 4px; }
+.chip { font-family: 'Inter', sans-serif; font-size: 12px; padding: 6px 12px; border-radius: 999px; background: var(--card); border: 1px solid var(--card-border); color: var(--text); cursor: pointer; transition: all 0.15s; }
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+.chip.active { background: var(--accent); border-color: var(--accent); color: white; }
+
+.grid-main { display: grid; grid-template-columns: 1fr 1.2fr; gap: 28px; margin-bottom: 40px; }
+@media (max-width: 900px) { .grid-main { grid-template-columns: 1fr; } body { padding: 40px 20px 80px; } .headline { font-size: 32px; } }
+
+.card { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 28px 30px; }
+.card-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.subgroup-title { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin: 18px 0 8px; }
+
+.spec-row { display: grid; grid-template-columns: 1fr 130px; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--rule); align-items: center; }
+.spec-row:last-child { border-bottom: none; }
+.spec-row .label { font-size: 15px; color: var(--text); }
+.spec-row .label small { color: var(--text-muted); font-size: 12px; font-style: italic; }
+input[type="number"], input[type="text"] { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 3px; padding: 7px 10px; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text); text-align: right; width: 100%; }
+input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-light); }
+
+select { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 3px; padding: 6px 8px; font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text); width: 100%; }
+
+.implied-headline { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+.implied-price { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+.implied-meta { font-size: 14px; color: var(--text-muted); font-family: 'Inter', sans-serif; margin-bottom: 18px; }
+
+.summary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 18px; }
+.sum-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
+.sum-value { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; }
+
+.detail-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; margin-top: 8px; }
+.detail-table th { padding: 8px 10px; border-bottom: 1px solid var(--rule); color: var(--text-muted); text-align: left; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+.detail-table th.num { text-align: right; }
+.detail-table td { padding: 8px 10px; border-bottom: 1px solid var(--rule); }
+.detail-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.detail-table tr:nth-child(even) td { background: var(--table-stripe); }
+.detail-table .total td { background: var(--accent-bg) !important; font-weight: 600; }
+.detail-table .total td:first-child { color: var(--accent); }
+.detail-table .swatch { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+
+.split-bar { height: 36px; display: flex; border: 1px solid var(--rule); border-radius: 3px; overflow: hidden; margin: 12px 0 8px; background: var(--input-bg); }
+.split-bar div { display: flex; align-items: center; justify-content: center; color: white; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; transition: width 0.25s; min-width: 0; padding: 0 4px; }
+
+.dilution-svg { width: 100%; height: 320px; margin-top: 8px; }
+
+.sens-grid { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 12px; font-variant-numeric: tabular-nums; margin-top: 8px; }
+.sens-grid th, .sens-grid td { padding: 6px 8px; text-align: center; border: 1px solid var(--rule); }
+.sens-grid th { background: var(--input-bg); font-weight: 600; font-size: 11px; color: var(--text-muted); }
+.sens-grid td.center-cell { background: var(--accent); color: white; font-weight: 600; }
+
+.full-row { margin-bottom: 28px; }
+.howworks { margin-top: 50px; padding-top: 28px; border-top: 1px solid var(--rule); }
+.howworks h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+.howworks p { color: var(--text); margin-bottom: 12px; max-width: 800px; }
+.howworks strong { color: var(--text); }
+
+.cta { margin-top: 40px; padding: 24px 28px; background: var(--accent-bg); border: 1px solid var(--accent-light); border-radius: 4px; }
+.cta-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+.cta-body { color: var(--text-muted); margin-bottom: 12px; }
+.cta a { color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--accent); }
+.disclaimer { margin-top: 30px; font-size: 13px; color: var(--text-faint); font-style: italic; }
+.disclaimer a { color: var(--text-muted); }
+
+.share-btn { position: fixed; top: 24px; right: 24px; background: var(--accent); color: white; border: none; padding: 10px 16px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 90; transition: background 0.15s; }
+.share-btn:hover { background: #A85A22; }
+.share-toast { position: fixed; top: 70px; right: 24px; background: var(--text); color: white; padding: 12px 18px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; z-index: 91; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+.share-toast.show { opacity: 1; }
+@media (max-width: 700px) { .share-btn { top: 12px; right: 12px; padding: 8px 12px; font-size: 11px; } }
+
+.round-fieldset { padding: 14px 16px; background: var(--input-bg); border-radius: 6px; border: 1px solid var(--card-border); margin-bottom: 14px; }
+.round-fieldset .subgroup-title { margin-top: 0; }
+</style>
+</head>
+<body>
+
+<button class="share-btn" id="shareBtn" title="Copy a shareable link with your inputs">📋 SHARE THIS</button>
+<div class="share-toast" id="shareToast">Link copied — paste it anywhere</div>
+
+<div class="container">
+    <div class="breadcrumb"><a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Buy-side tools</div>
+    <h1 class="headline">Cap Table &amp; Waterfall</h1>
+    <p class="subhead">Build a cap table round by round. Watch founder ownership compress as preferred stock and options pool refreshes stack up. Then run an exit waterfall at any sale price to see who gets what — including the difference between 1× non-participating preferred and 2× participating preferred, the term that decides who actually wins on a soft exit.</p>
+
+    <div class="grid-main">
+        <!-- LEFT: INPUTS -->
+        <div class="card">
+            <div class="card-title">Founders + Rounds</div>
+
+            <div class="round-fieldset">
+                <div class="subgroup-title">Founders / At Inception</div>
+                <div class="spec-row"><div class="label">Founder shares <small>(M)</small></div><input type="number" id="i-founder" value="10" step="0.5"></div>
+            </div>
+
+            <div class="round-fieldset">
+                <div class="subgroup-title">Series A</div>
+                <div class="spec-row"><div class="label">Investment <small>($M)</small></div><input type="number" id="i-a-inv" value="5" step="0.5"></div>
+                <div class="spec-row"><div class="label">Pre-money <small>($M)</small></div><input type="number" id="i-a-pre" value="20" step="1"></div>
+                <div class="spec-row"><div class="label">New options pool <small>(% post)</small></div><input type="number" id="i-a-pool" value="10" step="1"></div>
+                <div class="spec-row"><div class="label">Liq pref <small>(× invested)</small></div><input type="number" id="i-a-lp" value="1" step="0.5"></div>
+                <div class="spec-row"><div class="label">Participating?</div>
+                    <select id="i-a-part"><option value="0">Non-participating</option><option value="1">Participating</option></select></div>
+            </div>
+
+            <div class="round-fieldset">
+                <div class="subgroup-title">Series B</div>
+                <div class="spec-row"><div class="label">Investment <small>($M)</small></div><input type="number" id="i-b-inv" value="15" step="1"></div>
+                <div class="spec-row"><div class="label">Pre-money <small>($M)</small></div><input type="number" id="i-b-pre" value="80" step="5"></div>
+                <div class="spec-row"><div class="label">New options pool <small>(% post)</small></div><input type="number" id="i-b-pool" value="5" step="1"></div>
+                <div class="spec-row"><div class="label">Liq pref <small>(× invested)</small></div><input type="number" id="i-b-lp" value="1" step="0.5"></div>
+                <div class="spec-row"><div class="label">Participating?</div>
+                    <select id="i-b-part"><option value="0">Non-participating</option><option value="1">Participating</option></select></div>
+            </div>
+
+            <div class="round-fieldset">
+                <div class="subgroup-title">Series C (optional &mdash; set $0 to skip)</div>
+                <div class="spec-row"><div class="label">Investment <small>($M)</small></div><input type="number" id="i-c-inv" value="30" step="1"></div>
+                <div class="spec-row"><div class="label">Pre-money <small>($M)</small></div><input type="number" id="i-c-pre" value="200" step="10"></div>
+                <div class="spec-row"><div class="label">New options pool <small>(% post)</small></div><input type="number" id="i-c-pool" value="0" step="1"></div>
+                <div class="spec-row"><div class="label">Liq pref <small>(× invested)</small></div><input type="number" id="i-c-lp" value="1" step="0.5"></div>
+                <div class="spec-row"><div class="label">Participating?</div>
+                    <select id="i-c-part"><option value="0">Non-participating</option><option value="1">Participating</option></select></div>
+            </div>
+
+            <div class="round-fieldset">
+                <div class="subgroup-title">Exit</div>
+                <div class="spec-row"><div class="label">Exit valuation <small>($M, equity)</small></div><input type="number" id="i-exit" value="500" step="10"></div>
+            </div>
+        </div>
+
+        <!-- RIGHT: HEADLINE OUTPUT -->
+        <div class="card">
+            <div class="implied-headline">Founders' take at exit</div>
+            <div class="implied-price" id="o-founder-take">—</div>
+            <div class="implied-meta">at <strong id="o-exit-val">—</strong> exit, founders own <strong id="o-founder-pct">—</strong> on a fully-diluted basis</div>
+
+            <div class="summary-row">
+                <div><div class="sum-label">Investor return</div><div class="sum-value" id="o-inv-take">—</div></div>
+                <div><div class="sum-label">Investor MOIC (blended)</div><div class="sum-value" id="o-inv-moic">—</div></div>
+            </div>
+
+            <div class="card-title" style="margin-top: 8px;">Who takes what at exit</div>
+            <div class="split-bar" id="exit-split"></div>
+            <table class="detail-table" id="exit-table"></table>
+        </div>
+    </div>
+
+    <!-- DILUTION CHART -->
+    <div class="card full-row">
+        <div class="card-title">Founder ownership through the rounds</div>
+        <p style="font-family:'Inter',sans-serif; font-size:13px; color:var(--text-muted); margin-bottom:14px;">
+            Each bar shows the cap table at one milestone: at inception, after Series A, after Series B, after Series C. Watch the founders' slice compress.
+        </p>
+        <svg class="dilution-svg" id="dilution-svg" viewBox="0 0 800 320" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <!-- CAP TABLE BY ROUND -->
+    <div class="card full-row">
+        <div class="card-title">Cap table by round</div>
+        <p style="font-family:'Inter',sans-serif; font-size:13px; color:var(--text-muted); margin-bottom:14px;">
+            Shares outstanding and ownership % after each round closes. Options pool refreshes are pre-money, so the pool dilutes the founders, not the new investor.
+        </p>
+        <table class="detail-table" id="captable"></table>
+    </div>
+
+    <!-- WATERFALL SENSITIVITY -->
+    <div class="card full-row">
+        <div class="card-title">Founders' take across exit values × liq pref structures</div>
+        <p style="font-family:'Inter',sans-serif; font-size:13px; color:var(--text-muted); margin-bottom:14px;">
+            Rows = exit valuation. Columns = preferred stock structure. Watch what happens to the founders on a soft exit when investors hold participating preferred &mdash; a single term flip can be the difference between a million-dollar founder paycheck and zero.
+        </p>
+        <table class="sens-grid" id="sens-table"></table>
+    </div>
+
+    <div class="howworks">
+        <h3>How this works</h3>
+        <p><strong>The cap table.</strong> Each round prices new shares off the pre-money valuation, so price-per-share = pre-money ÷ existing shares. New investor shares = investment ÷ price-per-share. Options pool refreshes are <em>pre-money</em> — meaning the pool is created from existing founder/employee shares, not from the new money — so pool refreshes always dilute the founders, never the incoming investor. This is one of the most-negotiated terms at every round.</p>
+        <p><strong>1× non-participating preferred (the modern default).</strong> At exit, preferred holders get the greater of: (a) their liquidation preference (typically 1× their investment, paid before common), or (b) what they'd get if they converted to common and took their pro-rata share. They can't have both. On any "good" exit (well above 1× invested), preferred always converts. On a "bad" exit (below their investment), preferred takes the preference and common gets nothing.</p>
+        <p><strong>Participating preferred ("double-dip").</strong> Preferred gets the liquidation preference <em>plus</em> their pro-rata share of remaining proceeds as common. The double-dip makes the math much worse for founders on soft exits. It's why founders fight participating preferred so hard — and why investors with leverage push for it. The sensitivity grid above lets you see the difference at any exit value.</p>
+        <p><strong>2× preference and beyond.</strong> Some down-round terms flip to 2× or 3× preferences. At a 2× preference, investors get back twice their money before common sees a dollar. At a stressed exit, this is decisive. If you've ever wondered why a "$300M exit" announced in TechCrunch yielded almost nothing for the founder, the answer is usually somewhere in this calculator.</p>
+        <p><strong>What's not modeled.</strong> Anti-dilution (broad-based weighted-average is the modern norm — protects investors only on price decreases, dilutes founders modestly), pay-to-play, drag-along, ESOP vesting and terminations, secondary stock sales, transaction expenses, escrows. This calc is the simplified mechanics — the four or five terms that actually move 90% of the math. See the <a href="./disclaimer.html">disclaimer</a>.</p>
+    </div>
+
+    <div class="cta">
+        <div class="cta-title">Negotiating real terms?</div>
+        <p class="cta-body">This calculator is built for understanding the structure, not for closing a round. Real term sheets carry a dozen interlocking provisions. If you're staring at a real one, run it past someone who has closed a few — or send me a redacted copy and I'll point at what to push back on.</p>
+        <a href="mailto:brandon@bpleon.com">→ Email brandon@bpleon.com</a>
+    </div>
+
+    <p class="disclaimer">Nothing on this page is investment, legal, or tax advice. Simplified mechanics for educational purposes. See the <a href="./disclaimer.html">full disclaimer</a>.</p>
+</div>
+
+<script>
+(function () {
+    'use strict';
+    const $ = id => document.getElementById(id);
+
+    function calcRound(prevTable, inv, pre, poolPct) {
+        // prevTable: array of { name, shares, cost, type, lpx, part }
+        // pool refresh is computed pre-money, so the pool is added BEFORE pricing
+        const prevShares = prevTable.reduce((a,r) => a + r.shares, 0);
+        // Determine post-money options pool
+        const postMoney = pre + inv;
+        const poolShares = poolPct > 0 ? (poolPct / (1 - poolPct)) * prevShares : 0;
+        // Add pool to founders/options as a single line item (we increment options bucket)
+        // Actually, pool refresh creates new options shares, expanding the share count pre-money
+        const sharesAfterPool = prevShares + poolShares;
+        const pricePerShare = pre / sharesAfterPool;
+        const newShares = inv / pricePerShare;
+        return { poolShares, pricePerShare, newShares, postMoney };
+    }
+
+    /* Build full cap table after all rounds */
+    function buildCapTable(p) {
+        // Start: founders only
+        let rows = [
+            { name: 'Founders / common', shares: p.founder, cost: 0, type: 'common', lpx: 0, part: 0 },
+            { name: 'Options pool', shares: 0, cost: 0, type: 'options', lpx: 0, part: 0 }
+        ];
+        const milestones = [];
+        milestones.push({ stage: 'Inception', rows: rows.map(r => ({...r})) });
+
+        // Series A
+        if (p.a_inv > 0) {
+            const r = calcRound(rows, p.a_inv, p.a_pre, p.a_pool / 100);
+            // Add pool to options bucket
+            rows.find(x => x.type === 'options').shares += r.poolShares;
+            // Add Series A
+            rows.push({ name: 'Series A', shares: r.newShares, cost: p.a_inv, type: 'preferred',
+                         lpx: p.a_lp, part: p.a_part, ppsAtIssue: r.pricePerShare });
+            milestones.push({ stage: 'Post-Series A', rows: rows.map(r => ({...r})), pps: r.pricePerShare });
+        }
+        // Series B
+        if (p.b_inv > 0) {
+            const r = calcRound(rows, p.b_inv, p.b_pre, p.b_pool / 100);
+            rows.find(x => x.type === 'options').shares += r.poolShares;
+            rows.push({ name: 'Series B', shares: r.newShares, cost: p.b_inv, type: 'preferred',
+                         lpx: p.b_lp, part: p.b_part, ppsAtIssue: r.pricePerShare });
+            milestones.push({ stage: 'Post-Series B', rows: rows.map(r => ({...r})), pps: r.pricePerShare });
+        }
+        // Series C
+        if (p.c_inv > 0) {
+            const r = calcRound(rows, p.c_inv, p.c_pre, p.c_pool / 100);
+            rows.find(x => x.type === 'options').shares += r.poolShares;
+            rows.push({ name: 'Series C', shares: r.newShares, cost: p.c_inv, type: 'preferred',
+                         lpx: p.c_lp, part: p.c_part, ppsAtIssue: r.pricePerShare });
+            milestones.push({ stage: 'Post-Series C', rows: rows.map(r => ({...r})), pps: r.pricePerShare });
+        }
+        return { rows, milestones };
+    }
+
+    /* Run exit waterfall with given liq pref structure */
+    function runWaterfall(rows, exitValue) {
+        // Reverse order: latest preferred first (Series C, B, A), then common
+        const preferredSeries = rows.filter(r => r.type === 'preferred').reverse(); // C, B, A
+        const commonRows = rows.filter(r => r.type !== 'preferred'); // Founders + options
+        const totalShares = rows.reduce((a, r) => a + r.shares, 0);
+
+        let pool = exitValue;
+        const proceeds = rows.map(r => ({ name: r.name, type: r.type, shares: r.shares,
+                                           cost: r.cost || 0, lp: 0, common: 0, total: 0, action: '' }));
+
+        // Step 1: For each preferred series in reverse order, decide convert vs take preference
+        // We compute "value if all preferred convert" and "value if this series takes pref"
+        // For simplicity, we iterate: each preferred series checks if pref + (other prefs convert + common pro-rata) gives more than full conversion
+        // The proper algorithm is the conversion threshold: if exit > threshold, all convert
+
+        // Simplification: For each preferred series independently, check if (LP + 0 if non-part, OR LP + pro-rata if participating) > conversion value
+        // This isn't perfectly accurate for chained preferences but is correct for typical 1x non-participating
+
+        // Pass 1: compute liquidation preferences for non-participating
+        // Run in reverse order (most senior preferred first)
+        let remainingPool = exitValue;
+        const decisions = [];
+        // For each preferred (most senior first), check convert vs take preference
+        for (const prefRow of preferredSeries) {
+            const proc = proceeds.find(p => p.name === prefRow.name);
+            const prefAmount = prefRow.cost * prefRow.lpx;
+            // Conversion value: would receive (shares / totalShares) * exitValue if everyone (including this) converts
+            // BUT to compute this properly, we need to assume all junior series make their decision first
+            // Simplified: convert if exit > (sum of all senior LPs / (1 - this and junior pref share))
+            // For most use cases (1x pref, modern terms), the rule of thumb is: convert if exit > LP + sum of junior LPs and dilution doesn't hurt
+            // We'll use the approximation: convert if pro-rata of post-conversion exit > LP
+            // Where post-conversion exit = exit - LPs of any series that took pref above this one
+            const ownershipFrac = prefRow.shares / totalShares;
+            const conversionValue = ownershipFrac * exitValue;
+            const participationBonus = prefRow.part === 1 ? ownershipFrac * (exitValue - prefAmount) : 0;
+            const takePrefValue = prefAmount + participationBonus;
+            const decision = (conversionValue > takePrefValue) ? 'convert' : 'take_pref';
+            decisions.push({ row: prefRow, decision, prefAmount, conversionValue, ownershipFrac });
+        }
+
+        // Step 2: Apply decisions
+        let convertedShares = 0;
+        let takenPrefAmount = 0;
+        for (const d of decisions) {
+            const proc = proceeds.find(p => p.name === d.row.name);
+            if (d.decision === 'take_pref') {
+                proc.lp = d.prefAmount;
+                proc.action = d.row.part === 1 ? 'Took ' + d.row.lpx.toFixed(1) + '× pref + participates' : 'Took ' + d.row.lpx.toFixed(1) + '× pref';
+                takenPrefAmount += d.prefAmount;
+            } else {
+                proc.action = 'Converted to common';
+                convertedShares += d.row.shares;
+            }
+        }
+
+        let remaining = Math.max(0, exitValue - takenPrefAmount);
+
+        // Step 3: Participating preferred (those who took pref AND participate) get a slice of remaining
+        let participatingShares = 0;
+        decisions.forEach(d => {
+            if (d.decision === 'take_pref' && d.row.part === 1) {
+                participatingShares += d.row.shares;
+            }
+        });
+        // Common gets a share of remaining
+        const commonShares = commonRows.reduce((a,r) => a + r.shares, 0);
+        const totalSharingShares = commonShares + convertedShares + participatingShares;
+        // Distribute remaining pro-rata
+        const perShare = totalSharingShares > 0 ? remaining / totalSharingShares : 0;
+
+        // Apply
+        for (const d of decisions) {
+            const proc = proceeds.find(p => p.name === d.row.name);
+            if (d.decision === 'convert') {
+                proc.common = d.row.shares * perShare;
+            } else if (d.row.part === 1) {
+                proc.common = d.row.shares * perShare;  // participating share
+            }
+        }
+        for (const cr of commonRows) {
+            const proc = proceeds.find(p => p.name === cr.name);
+            proc.common = cr.shares * perShare;
+        }
+
+        // Total
+        proceeds.forEach(p => p.total = p.lp + p.common);
+
+        return { proceeds, decisions };
+    }
+
+    function fmtMoney(v) {
+        if (!isFinite(v)) return '—';
+        const sign = v < 0 ? '-' : ''; v = Math.abs(v);
+        if (v >= 1000) return sign + '$' + (v / 1000).toFixed(2) + 'B';
+        return sign + '$' + v.toFixed(1) + 'M';
+    }
+    const fmtShares = v => v.toFixed(2) + 'M';
+    const fmtPct = v => isFinite(v) ? (v * 100).toFixed(1) + '%' : '—';
+    const fmtMult = v => isFinite(v) ? v.toFixed(2) + 'x' : '—';
+
+    const COLORS = { 'common': 'var(--c-founders)', 'options': 'var(--c-options)',
+                     'Series A': 'var(--c-sera)', 'Series B': 'var(--c-serb)', 'Series C': 'var(--c-serc)' };
+    function colorFor(row) {
+        if (row.type === 'common') return COLORS.common;
+        if (row.type === 'options') return COLORS.options;
+        return COLORS[row.name] || 'var(--text-muted)';
+    }
+
+    function render() {
+        const p = {
+            founder: parseFloat($('i-founder').value),
+            a_inv: parseFloat($('i-a-inv').value), a_pre: parseFloat($('i-a-pre').value),
+            a_pool: parseFloat($('i-a-pool').value), a_lp: parseFloat($('i-a-lp').value),
+            a_part: parseInt($('i-a-part').value),
+            b_inv: parseFloat($('i-b-inv').value), b_pre: parseFloat($('i-b-pre').value),
+            b_pool: parseFloat($('i-b-pool').value), b_lp: parseFloat($('i-b-lp').value),
+            b_part: parseInt($('i-b-part').value),
+            c_inv: parseFloat($('i-c-inv').value), c_pre: parseFloat($('i-c-pre').value),
+            c_pool: parseFloat($('i-c-pool').value), c_lp: parseFloat($('i-c-lp').value),
+            c_part: parseInt($('i-c-part').value),
+            exit: parseFloat($('i-exit').value)
+        };
+        if ([p.founder, p.exit].some(v => !isFinite(v))) return;
+
+        const { rows, milestones } = buildCapTable(p);
+        const totalShares = rows.reduce((a,r) => a + r.shares, 0);
+        const wf = runWaterfall(rows, p.exit);
+
+        const founders = rows.find(r => r.type === 'common');
+        const options = rows.find(r => r.type === 'options');
+        const founderProc = wf.proceeds.find(x => x.name === founders.name);
+        const optionsProc = wf.proceeds.find(x => x.name === options.name);
+        const founderPct = founders.shares / totalShares;
+        const investorTotal = wf.proceeds.filter(x => x.type === 'preferred').reduce((a,x) => a + x.total, 0);
+        const investorCost = wf.proceeds.filter(x => x.type === 'preferred').reduce((a,x) => a + x.cost, 0);
+        const investorMoic = investorCost > 0 ? investorTotal / investorCost : NaN;
+
+        $('o-founder-take').textContent = fmtMoney(founderProc.total);
+        $('o-exit-val').textContent = fmtMoney(p.exit);
+        $('o-founder-pct').textContent = fmtPct(founderPct);
+        $('o-inv-take').textContent = fmtMoney(investorTotal);
+        $('o-inv-moic').textContent = fmtMult(investorMoic);
+
+        // Exit split bar
+        const total = wf.proceeds.reduce((a,p) => a + p.total, 0) || 1;
+        let bar = '';
+        wf.proceeds.forEach(proc => {
+            const pct = (proc.total / total) * 100;
+            if (pct < 0.5) return;
+            const row = rows.find(r => r.name === proc.name);
+            const c = colorFor(row);
+            bar += `<div style="background:${c}; width:${pct}%">${pct >= 8 ? proc.name : ''}</div>`;
+        });
+        $('exit-split').innerHTML = bar;
+
+        // Exit table
+        let etHtml = `<thead><tr><th>Holder</th><th class="num">Shares</th><th class="num">Investment</th><th class="num">Liq pref</th><th class="num">As common</th><th class="num">Total</th><th class="num">MOIC</th><th>Action</th></tr></thead><tbody>`;
+        wf.proceeds.forEach(proc => {
+            const row = rows.find(r => r.name === proc.name);
+            const c = colorFor(row);
+            const moic = proc.cost > 0 ? proc.total / proc.cost : NaN;
+            etHtml += `<tr>
+                <td><span class="swatch" style="background:${c}"></span>${proc.name}</td>
+                <td class="num">${fmtShares(row.shares)}</td>
+                <td class="num">${proc.cost > 0 ? fmtMoney(proc.cost) : '—'}</td>
+                <td class="num">${proc.lp > 0 ? fmtMoney(proc.lp) : '—'}</td>
+                <td class="num">${fmtMoney(proc.common)}</td>
+                <td class="num">${fmtMoney(proc.total)}</td>
+                <td class="num">${isFinite(moic) ? fmtMult(moic) : '—'}</td>
+                <td>${proc.action || '—'}</td>
+            </tr>`;
+        });
+        etHtml += `<tr class="total"><td>Total</td><td class="num">${fmtShares(totalShares)}</td><td class="num">${fmtMoney(investorCost)}</td><td class="num">—</td><td class="num">—</td><td class="num">${fmtMoney(total)}</td><td class="num">—</td><td>—</td></tr>`;
+        etHtml += `</tbody>`;
+        $('exit-table').innerHTML = etHtml;
+
+        // Cap table by round
+        let ctHtml = '<thead><tr><th>Holder</th>';
+        milestones.forEach(m => ctHtml += `<th class="num">${m.stage}<br/><span style="font-weight:normal; color:var(--text-faint); font-size:9px;">% / shares</span></th>`);
+        ctHtml += '</tr></thead><tbody>';
+        // Get all unique holder names across milestones
+        const allNames = [];
+        milestones.forEach(m => m.rows.forEach(r => { if (!allNames.includes(r.name)) allNames.push(r.name); }));
+        allNames.forEach(name => {
+            const row = rows.find(r => r.name === name);
+            const c = colorFor(row || { type: 'common' });
+            ctHtml += `<tr><td><span class="swatch" style="background:${c}"></span>${name}</td>`;
+            milestones.forEach(m => {
+                const r = m.rows.find(x => x.name === name);
+                if (!r || r.shares === 0) {
+                    ctHtml += '<td class="num">—</td>';
+                } else {
+                    const tot = m.rows.reduce((a,x) => a + x.shares, 0);
+                    const pct = (r.shares / tot) * 100;
+                    ctHtml += `<td class="num">${pct.toFixed(1)}% <span style="color:var(--text-muted); font-size:11px;">(${r.shares.toFixed(1)}M)</span></td>`;
+                }
+            });
+            ctHtml += '</tr>';
+        });
+        ctHtml += '</tbody>';
+        $('captable').innerHTML = ctHtml;
+
+        // Dilution chart: stacked bar per milestone
+        renderDilutionChart(milestones, totalShares);
+
+        // Sensitivity grid: rows = exit values, cols = liq pref structures
+        const exitValues = [Math.max(50, p.exit*0.4), Math.max(75, p.exit*0.6), p.exit, p.exit*1.5, p.exit*2];
+        const structures = [
+            { label: '1× non-part', mod: { a_lp:1, a_part:0, b_lp:1, b_part:0, c_lp:1, c_part:0 } },
+            { label: '1× part', mod: { a_lp:1, a_part:1, b_lp:1, b_part:1, c_lp:1, c_part:1 } },
+            { label: '2× non-part', mod: { a_lp:2, a_part:0, b_lp:2, b_part:0, c_lp:2, c_part:0 } },
+            { label: '2× part', mod: { a_lp:2, a_part:1, b_lp:2, b_part:1, c_lp:2, c_part:1 } },
+            { label: 'Current', mod: {} }
+        ];
+        let sh = '<thead><tr><th>Exit \\ Structure</th>';
+        structures.forEach(s => sh += `<th>${s.label}</th>`);
+        sh += '</tr></thead><tbody>';
+        exitValues.forEach((ev, ei) => {
+            sh += `<tr><th>${fmtMoney(ev)}</th>`;
+            structures.forEach((s, si) => {
+                const pp = Object.assign({}, p, s.mod);
+                const ct = buildCapTable(pp);
+                const w = runWaterfall(ct.rows, ev);
+                const f = w.proceeds.find(x => x.type === 'common');
+                const isCenter = (ei === 2 && si === 4);
+                const cls = isCenter ? ' class="center-cell"' : '';
+                let bg = '#fff';
+                if (!isCenter) {
+                    const founderTake = f.total;
+                    if (founderTake > p.founder * 1.0) bg = '#a9d18e';        // strong takeaway
+                    else if (founderTake > 0.5) bg = '#c5e0b4';
+                    else if (founderTake > 0.1) bg = '#fff2cc';
+                    else if (founderTake > 0.01) bg = '#fce4d6';
+                    else bg = '#f4cccc';
+                }
+                const style = isCenter ? '' : ` style="background:${bg};color:var(--text)"`;
+                sh += `<td${cls}${style}>${fmtMoney(f.total)}</td>`;
+            });
+            sh += '</tr>';
+        });
+        sh += '</tbody>';
+        $('sens-table').innerHTML = sh;
+    }
+
+    function renderDilutionChart(milestones, latestTotal) {
+        const W = 800, H = 320, pad = { l: 30, r: 30, t: 30, b: 50 };
+        const numStages = milestones.length;
+        const colW = (W - pad.l - pad.r) / numStages;
+        const barW = colW * 0.55;
+        let svg = '';
+
+        // Y axis: 0 to 100%
+        for (let i = 0; i <= 5; i++) {
+            const y = pad.t + ((H - pad.t - pad.b) / 5) * i;
+            const labelPct = 100 - i * 20;
+            svg += `<line x1="${pad.l}" y1="${y}" x2="${W-pad.r}" y2="${y}" stroke="var(--rule)" stroke-width="1" stroke-dasharray="2 3" opacity="0.4"/>`;
+            svg += `<text x="${pad.l - 6}" y="${y+4}" text-anchor="end" font-family="Inter" font-size="10" fill="var(--text-muted)">${labelPct}%</text>`;
+        }
+
+        milestones.forEach((m, i) => {
+            const total = m.rows.reduce((a,r) => a + r.shares, 0);
+            const cx = pad.l + colW * i + colW / 2;
+            let yCum = pad.t;
+            m.rows.forEach(row => {
+                if (row.shares === 0) return;
+                const frac = row.shares / total;
+                const h = (H - pad.t - pad.b) * frac;
+                svg += `<rect x="${cx - barW/2}" y="${yCum}" width="${barW}" height="${h}" fill="${colorFor(row)}" opacity="0.92"/>`;
+                if (frac > 0.06) {
+                    svg += `<text x="${cx}" y="${yCum + h/2 + 4}" text-anchor="middle" font-family="Inter" font-size="11" font-weight="600" fill="white">${(frac*100).toFixed(0)}%</text>`;
+                }
+                yCum += h;
+            });
+            // Stage label
+            svg += `<text x="${cx}" y="${H - pad.b + 18}" text-anchor="middle" font-family="Inter" font-size="11" fill="var(--text)">${m.stage}</text>`;
+            svg += `<text x="${cx}" y="${H - pad.b + 32}" text-anchor="middle" font-family="Inter" font-size="10" fill="var(--text-muted)">${total.toFixed(1)}M shares</text>`;
+        });
+
+        // Legend
+        const allNames = [];
+        milestones[milestones.length - 1].rows.forEach(r => { if (r.shares > 0) allNames.push(r); });
+        const legendX = W - 140;
+        let legendY = 12;
+        allNames.forEach((r, i) => {
+            const lx = pad.l + 6 + i * 100;
+            svg += `<rect x="${lx}" y="${legendY}" width="10" height="10" fill="${colorFor(r)}"/>`;
+            svg += `<text x="${lx + 14}" y="${legendY + 9}" font-family="Inter" font-size="11" fill="var(--text)">${r.name}</text>`;
+        });
+
+        $('dilution-svg').innerHTML = svg;
+    }
+
+    document.querySelectorAll('input, select').forEach(el => {
+        el.addEventListener('input', render);
+        el.addEventListener('change', render);
+    });
+    render();
+})();
+
+(function() {
+    function collectInputs() {
+        const data = {};
+        document.querySelectorAll('input[type="number"]').forEach(el => { if (el.id) data[el.id] = el.value; });
+        document.querySelectorAll('select').forEach(el => { if (el.id) data[el.id] = el.value; });
+        return data;
+    }
+    function applyInputs(data) {
+        Object.keys(data).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = data[id];
+        });
+        document.querySelectorAll('input, select').forEach(el => el.dispatchEvent(new Event('input', { bubbles: true })));
+    }
+    function encodeInputs(d) { try { return btoa(encodeURIComponent(JSON.stringify(d))); } catch(e) { return ''; } }
+    function decodeInputs(s) { try { return JSON.parse(decodeURIComponent(atob(s))); } catch(e) { return null; } }
+    function loadFromUrl() {
+        const enc = new URLSearchParams(window.location.search).get('s');
+        if (enc) { const d = decodeInputs(enc); if (d) applyInputs(d); }
+    }
+    function showToast(msg) {
+        const t = document.getElementById('shareToast');
+        t.textContent = msg; t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2200);
+    }
+    document.getElementById('shareBtn').addEventListener('click', () => {
+        const data = collectInputs();
+        const url = window.location.origin + window.location.pathname + '?s=' + encodeInputs(data);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(() => showToast('Link copied — paste it anywhere'));
+        } else {
+            const tmp = document.createElement('textarea');
+            tmp.value = url; document.body.appendChild(tmp); tmp.select();
+            try { document.execCommand('copy'); showToast('Link copied'); }
+            catch(e) { prompt('Copy this link:', url); }
+            document.body.removeChild(tmp);
+        }
+    });
+    loadFromUrl();
+})();
+</script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</body>
+</html>

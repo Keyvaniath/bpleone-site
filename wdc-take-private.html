@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WDC &mdash; Post-spin take-private case &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="Reverse-LBO case study on Western Digital after the SanDisk spin. NAND-only pure play, 5x leverage, sponsor IRR math, what the cycle has to do for the deal to work." />
+  <link rel="canonical" href="https://bpleon.com/wdc-take-private.html" />
+  <meta property="article:published_time" content="2026-05-07" />
+  <meta property="article:author" content="Brandon Leon" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/wdc-take-private.html" />
+  <meta property="og:title" content="WDC — Post-spin take-private case — Brandon Leon" />
+  <meta property="og:description" content="Reverse-LBO on Western Digital post-SanDisk-spin. NAND-only at 5x leverage. The math, the cycle assumption, the friction." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=26" />
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+
+  <style>
+    .post-meta { color: var(--muted); font-size: .9rem; margin: 0 0 2rem; }
+    .post-meta time { font-variant-numeric: tabular-nums; }
+    .post-meta .dot { margin: 0 .55em; color: var(--rule); }
+
+    .case-thesis {
+      padding: 1.6rem 1.85rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 12px;
+      margin: 1.25rem 0 2.5rem;
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      line-height: 1.55;
+    }
+    .case-thesis-label {
+      font-family: var(--sans); font-size: .78rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--accent); margin: 0 0 .65em;
+    }
+
+    .deal-snapshot { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin: 1.5rem 0 2rem; padding: 1.25rem 1.5rem; background: var(--bg-soft); border-radius: 10px; }
+    .deal-snapshot div { padding: .25rem .5rem; }
+    .deal-snapshot .ds-label { font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 .15em; }
+    .deal-snapshot .ds-value { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+    .deal-snapshot .ds-meta { font-family: var(--sans); font-size: .8rem; color: var(--muted); margin: .15em 0 0; }
+
+    .returns-table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .92rem; margin: 1rem 0 2rem; }
+    .returns-table th { padding: .65rem .85rem; border-bottom: 2px solid var(--rule); color: var(--accent); text-align: left; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; }
+    .returns-table th.num { text-align: right; }
+    .returns-table td { padding: .55rem .85rem; border-bottom: 1px solid var(--rule); }
+    .returns-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    .returns-table tr.highlight td { background: var(--bg-soft); font-weight: 600; }
+
+    .pullquote { padding: 1.5rem 1.75rem; background: var(--bg-soft); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; margin: 1.75rem 0; font-family: var(--serif); font-style: italic; color: var(--ink); font-size: 1.1rem; line-height: 1.55; }
+
+    .friction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0 2rem; }
+    @media (max-width: 700px) { .friction-grid { grid-template-columns: 1fr; } }
+    .friction-card { padding: 1.25rem 1.5rem; border: 1px solid var(--rule); border-radius: 10px; background: var(--bg); }
+    .friction-card h4 { font-family: var(--serif); margin: 0 0 .35em; font-size: 1.05rem; color: var(--ink); }
+    .friction-card p { margin: 0; color: var(--ink-soft); font-size: .92rem; line-height: 1.5; }
+
+    .post-toolbox { margin: 2rem 0; padding: 1.5rem 1.75rem; background: var(--bg-soft); border: 1px solid var(--rule); border-radius: 10px; }
+    .post-toolbox h3 { font-family: var(--serif); margin: 0 0 .5em; font-size: 1.15rem; }
+    .post-toolbox p { margin: 0 0 .65rem; color: var(--ink-soft); }
+    .post-toolbox a { color: var(--accent); font-weight: 600; }
+
+    .post-foot { margin-top: 3rem; padding-top: 1.75rem; border-top: 1px solid var(--rule); color: var(--muted); font-size: .9rem; }
+  </style>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html" aria-current="page">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose">
+    <header class="page-head">
+      <p class="eyebrow">Writing &middot; Take-private case &middot; Buy-side framing</p>
+      <h1>WDC &mdash; Post-spin take-private case.</h1>
+      <p class="post-meta">
+        <time datetime="2026-05-07">May 7, 2026</time>
+        <span class="dot">&middot;</span>
+        Brandon Leon
+        <span class="dot">&middot;</span>
+        NAND / storage
+        <span class="dot">&middot;</span>
+        ~6 min read
+      </p>
+    </header>
+
+    <p class="lede">
+      Western Digital after the SanDisk spin is exactly the kind of name
+      reverse-LBO is built to read. Smaller TAM, cleaner story, more
+      cyclical, weaker secular tailwind than DRAM. Could a sponsor
+      underwrite this at 22% IRR with 5x leverage on the post-spin entity?
+      The math says no at today's price &mdash; the public market is
+      paying considerably more than a sponsor at that hurdle would bid.
+      Useful information about how rich the public is paying NAND-only.
+    </p>
+
+    <div class="case-thesis">
+      <p class="case-thesis-label">Case in one paragraph</p>
+      <p>
+        Post-spin WDC is a NAND-only pure play with cleaner asset coverage
+        and a more focused story than the bundled HDD+NAND. At ~$56
+        (current proxy), 6.5&times; exit, 5&times; leverage, and a 22%
+        target IRR (NAND requires a higher hurdle than DRAM-leveraged MU
+        because the NAND cycle is longer trough-to-peak), the implied
+        take-private price comes in around $45 &mdash; about a 20%
+        <em>discount</em> to current. The public market is paying for the
+        bull case (NAND tailwinds, multiple expansion); sponsors at
+        sponsor-grade IRRs would not bid here. Useful information for the
+        public-equity thesis: this name is priced richly enough that
+        private capital provides no support.
+      </p>
+    </div>
+
+    <h2>The deal at a glance</h2>
+
+    <div class="deal-snapshot">
+      <div>
+        <p class="ds-label">Current price</p>
+        <p class="ds-value">$56.00</p>
+        <p class="ds-meta">illustrative quote</p>
+      </div>
+      <div>
+        <p class="ds-label">Diluted shares</p>
+        <p class="ds-value">345M</p>
+        <p class="ds-meta">post-spin</p>
+      </div>
+      <div>
+        <p class="ds-label">Net debt</p>
+        <p class="ds-value">$6.0B</p>
+        <p class="ds-meta">post-restructure</p>
+      </div>
+      <div>
+        <p class="ds-label">EBITDA (mid-cycle)</p>
+        <p class="ds-value">$3.4B</p>
+        <p class="ds-meta">NAND-only run-rate</p>
+      </div>
+      <div>
+        <p class="ds-label">EBITDA margin</p>
+        <p class="ds-value">22%</p>
+        <p class="ds-meta">vs MU's 55%</p>
+      </div>
+      <div>
+        <p class="ds-label">Capex / revenue</p>
+        <p class="ds-value">9%</p>
+        <p class="ds-meta">lower-intensity than DRAM</p>
+      </div>
+    </div>
+
+    <h2>Why post-spin matters</h2>
+
+    <p>
+      The pre-spin WDC was a complicated story to underwrite. HDD is
+      structurally declining; NAND is cyclical and getting more so. The
+      bundled entity meant any LBO had to defend two thesis lines &mdash;
+      one defensive (HDD cash flow), one offensive (NAND share gains)
+      &mdash; with neither story really aligned to the same capital
+      structure. Lenders priced that mess in.
+    </p>
+
+    <p>
+      Post-spin is cleaner. NAND-only is a single thesis: structural enterprise
+      QLC adoption beats secular price erosion, and the NAND cycle has finally
+      reset enough to make through-cycle EBITDA margins look like 25-30%
+      rather than the &lt;15% trough numbers. The asset coverage also
+      improves, because the residual non-core HDD-related restructuring
+      charges aren't dragging cash conversion every quarter. That's the
+      kind of clean-up sponsors prefer to see before they bid.
+    </p>
+
+    <h2>Reverse-LBO at every IRR threshold</h2>
+
+    <table class="returns-table">
+      <thead>
+        <tr>
+          <th>Target IRR</th>
+          <th class="num">Max entry mult</th>
+          <th class="num">Implied take-private $/sh</th>
+          <th class="num">Premium vs $56</th>
+          <th>Read</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>15% (debt-floor)</td>
+          <td class="num">6.8&times;</td>
+          <td class="num">$50</td>
+          <td class="num">&minus;11%</td>
+          <td>Even at debt-floor IRR, public is rich</td>
+        </tr>
+        <tr>
+          <td>20% (sponsor underwriting standard)</td>
+          <td class="num">6.4&times;</td>
+          <td class="num">$46</td>
+          <td class="num">&minus;18%</td>
+          <td>DRAM-equivalent sponsor hurdle &mdash; no bid</td>
+        </tr>
+        <tr class="highlight">
+          <td>22% (NAND-adjusted hurdle)</td>
+          <td class="num">6.3&times;</td>
+          <td class="num">$45</td>
+          <td class="num">&minus;20%</td>
+          <td>Right NAND hurdle &mdash; sponsor needs ~$45 for 22% IRR</td>
+        </tr>
+        <tr>
+          <td>25% (top-quartile thesis)</td>
+          <td class="num">6.2&times;</td>
+          <td class="num">$43</td>
+          <td class="num">&minus;23%</td>
+          <td>Aggressive thesis &mdash; would need $43 to bid</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      The story here is the opposite of MU's. Across <em>every</em> sponsor
+      IRR threshold the implied take-private sits below the current price.
+      That's the math telling us something specific: at $56, the public
+      market is paying for the bull case &mdash; better NAND margins, exit
+      multiple expansion, or both &mdash; and a financial buyer at any
+      reasonable underwriting hurdle won't bid. The post-spin entity is
+      not sponsor-territory cheap at the current quote. It's only
+      sponsor-territory cheap below ~$50.
+    </p>
+
+    <h2>What would change the math</h2>
+
+    <p>
+      Three sensitivities matter most. None of them get the deal underwritable
+      at the current $56 quote, but they show what would have to break (or
+      improve) for the math to flip.
+    </p>
+
+    <p>
+      <strong>1. Through-cycle EBITDA margin.</strong> The base case uses
+      22% mid-cycle, defensible only if QLC enterprise adoption sticks.
+      Push margins to 26% (a structural-improvement scenario where NAND
+      becomes more like DRAM), implied take-private at 22% IRR climbs to
+      ~$60 &mdash; modest premium territory. Drop margins to 18% (NAND
+      remains fundamentally lower-quality than DRAM), implied falls to
+      ~$36. The operating thesis sits squarely on this single input.
+    </p>
+
+    <p>
+      <strong>2. Exit multiple.</strong> Push exit to 8&times; (a
+      structural re-rating of NAND-only) and implied take-private at 22%
+      moves to ~$58 &mdash; almost touching current. Drop exit to
+      5.5&times; (peer compression) and implied falls to ~$36. Multiple
+      compression is the kill shot, same lesson as the MU case but more
+      severe here because EBITDA is lower.
+    </p>
+
+    <p>
+      <strong>3. Leverage capacity.</strong> The 5&times; leverage assumed
+      here is generous for NAND-only in current credit markets. If
+      lenders only fund 4&times; (the realistic constraint), sponsor
+      equity check has to grow, and the IRR math gets worse &mdash;
+      implied take-private at 22% drops to ~$40. Leverage availability
+      is what actually moves a deal from financeable to not.
+    </p>
+
+    <div class="pullquote">
+      The current public price prices in either NAND structurally improving
+      or comp multiples expanding. Sponsors aren't paid to bet on either
+      with their LP money, which is why the reverse-LBO doesn't clear at
+      these inputs. That's not a sell signal; it's information about which
+      scenarios the public is paying you to underwrite.
+    </div>
+
+    <h2>The friction list</h2>
+
+    <p>
+      Reverse-LBO clears, but the path from "math works" to "deal closes"
+      runs through a half-dozen real frictions. Here's what would actually
+      stop this deal:
+    </p>
+
+    <div class="friction-grid">
+      <div class="friction-card">
+        <h4>Antitrust / national-security review</h4>
+        <p>NAND is strategic. CFIUS would scrutinize foreign GP capital. Even US-based sponsors face DOJ second-request risk given how concentrated NAND already is. Add 6-12 months to any timeline.</p>
+      </div>
+      <div class="friction-card">
+        <h4>Lender appetite for NAND-only at 5x</h4>
+        <p>Memory cyclicality scares credit. TLBs on cyclical names tend to come at 50-100bps over comparable non-cyclical leverage. The 8.5% cost of debt assumed here may be 9.5% in actual market &mdash; which moves the IRR math.</p>
+      </div>
+      <div class="friction-card">
+        <h4>Management cooperation</h4>
+        <p>WDC management just executed a separation; their incentive structure is freshly aligned to public-market value creation. A sponsor offer at 11% premium might not clear the friendly threshold.</p>
+      </div>
+      <div class="friction-card">
+        <h4>Strategic competition</h4>
+        <p>If a take-private is in motion, Samsung or SK Hynix could come in at a premium for capacity. Cross-bidding compresses sponsor IRR.</p>
+      </div>
+      <div class="friction-card">
+        <h4>Public-equity revaluation between announce and close</h4>
+        <p>NAND prices move 50% in either direction over six months. If the public equity rallies before close (because sponsors signal the bid), the math breaks. If NAND prices crash, sponsors walk and pay the break-up fee.</p>
+      </div>
+      <div class="friction-card">
+        <h4>SanDisk-spin tail risk</h4>
+        <p>Post-spin entities sometimes carry residual indemnities, contingent liabilities, or asset/contract miscarves that show up six to nine months later. A sponsor would want a fresh audit before bidding seriously.</p>
+      </div>
+    </div>
+
+    <p>
+      None of these are deal-killers individually. Together they're why
+      sponsor activity in cyclical hardware has been so muted &mdash; deals
+      look financeable on the model, get killed in committee or in
+      exclusivity. That's the reality the reverse-LBO doesn't see.
+    </p>
+
+    <h2>What this case is for</h2>
+
+    <p>
+      This isn't a "WDC is going to be taken private" prediction. There's
+      no current sponsor interest in WDC that I'm aware of. The case is
+      worth doing because it teaches three things about NAND-only as a
+      public-equity story.
+    </p>
+
+    <p>
+      <strong>The public is paying for the bull case.</strong> At $56, the
+      public market is implicitly underwriting either NAND margins
+      structurally improving above 22% or exit multiples expanding above
+      6.5&times;. A sponsor with sponsor-grade IRR discipline wouldn't pay
+      this price. That's not a sell signal &mdash; it's information about
+      what view you're being asked to underwrite at the current quote.
+    </p>
+
+    <p>
+      <strong>There's no near-term sponsor floor.</strong> Unlike MU,
+      where the through-cycle scorecard puts a floor about 8% below
+      current, WDC has no analogous floor. Sponsor interest doesn't
+      become credible until prices drop ~20% (toward $45) or operating
+      fundamentals improve materially. Below $45, opportunistic interest
+      is rational. Between $45 and $56, you're in no-man's land &mdash;
+      the public is paying for upside that sponsors aren't underwriting.
+    </p>
+
+    <p>
+      <strong>The cycle assumption does most of the work.</strong>
+      Through-cycle NAND margins are the input the model is most
+      sensitive to. 18% bear-case → implied take-private around $36
+      (sponsor wants 35%+ discount before bidding). 22% mid-cycle →
+      $45 (today's discount territory). 26% bull-case → $60 (modest
+      premium opens up). The reverse-LBO output here is mostly a
+      leveraged read on what you believe mid-cycle NAND margins look like.
+    </p>
+
+    <h2>How to reproduce</h2>
+
+    <p>
+      Open the <a href="pe-reverse-lbo.html">Reverse-LBO Calculator</a>.
+      Click the "WDC &mdash; post-spin take-private" example chip in the
+      worked-examples section. The numbers above are the bisection IRR
+      output. Adjust the EBITDA margin assumption to see how sensitive
+      the case is to the cycle read &mdash; that's the input that does
+      the most work.
+    </p>
+
+    <p>
+      The full workbook is at the
+      <a href="pe-reverse-lbo-template.html">Reverse-LBO Template</a>
+      page. WDC ships as one of the two worked examples; the second is
+      MU through-cycle, which is the cleaner DRAM-cycle story.
+    </p>
+
+    <div class="post-toolbox">
+      <h3>Run the WDC case live</h3>
+      <p>The browser calculator pre-populates this example. Toggle the EBITDA assumption to see the cycle read.</p>
+      <p><a href="pe-reverse-lbo.html">→ Reverse-LBO Calculator (WDC)</a></p>
+      <h3>Download the workbook</h3>
+      <p>WDC reverse-LBO is one of two worked tabs. Free 8-tab template, audit trail, formulas auditable.</p>
+      <p><a href="pe-reverse-lbo-template.html">→ Reverse-LBO Template</a></p>
+      <h3>Compare to the MU case</h3>
+      <p>Same framework, DRAM cycle instead of NAND. Through-cycle vs AI-cycle scorecard disagreement is the structural call.</p>
+      <p><a href="mu-reverse-lbo.html">→ MU reverse-LBO worked example</a></p>
+      <h3>Methodology</h3>
+      <p>The framework, the typical mistakes, where it breaks.</p>
+      <p><a href="posts/reverse-lbo-in-five-minutes.html">→ "Reverse-LBO in five minutes"</a></p>
+    </div>
+
+    <p class="post-foot">
+      I do not currently hold a position in WDC. See <a href="disclaimer.html">disclaimer</a>
+      &mdash; especially the section on take-private analysis. Reverse-LBO
+      output is illustrative; not a research recommendation, target price,
+      transaction signal, or projection. Spotted an error? Email
+      <a href="mailto:brandon@bpleon.com">brandon@bpleon.com</a>.
+    </p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=26" defer></script>
+</body>
+</html>

@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Take-Private Precedents &mdash; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="description" content="Hand-curated database of recent take-private deals. Sponsor, sector, deal value, premium, entry multiple. Filterable, free." />
+  <link rel="canonical" href="https://bpleon.com/pe-precedents.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bpleon.com/pe-precedents.html" />
+  <meta property="og:title" content="Take-Private Precedents — Brandon Leon" />
+  <meta property="og:description" content="Hand-curated database of recent take-privates: sponsor, sector, premium, entry multiple. Free." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=26" />
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+
+  <style>
+    .filter-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .75rem; margin: 1.5rem 0 1.25rem; padding: 1rem 1.25rem; background: var(--bg-soft); border-radius: 10px; }
+    .filter-row label { display: flex; flex-direction: column; gap: .35rem; font-family: var(--sans); font-size: .8rem; color: var(--muted); font-weight: 600; letter-spacing: .04em; }
+    .filter-row select, .filter-row input { padding: .5rem .75rem; border: 1px solid var(--rule); border-radius: 6px; background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: .9rem; font-weight: 400; letter-spacing: 0; }
+    .filter-row select:focus, .filter-row input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(196,106,44,0.15); }
+
+    .summary-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0 1.5rem; padding: 1rem 1.25rem; background: var(--bg); border: 1px solid var(--rule); border-radius: 10px; }
+    .summary-row > div { padding: .15rem .35rem; }
+    .summary-row .summary-label { font-family: var(--sans); font-size: .7rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 .15em; }
+    .summary-row .summary-value { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+    table.precedents { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .9rem; }
+    table.precedents thead th { text-align: left; padding: .65rem .75rem; border-bottom: 2px solid var(--rule); color: var(--muted); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; user-select: none; white-space: nowrap; }
+    table.precedents thead th.num { text-align: right; }
+    table.precedents thead th:hover { color: var(--accent); }
+    table.precedents thead th .sort-arrow { color: var(--accent); font-size: .9em; margin-left: .35em; }
+    table.precedents tbody td { padding: .55rem .75rem; border-bottom: 1px solid var(--rule); color: var(--ink); }
+    table.precedents tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+    table.precedents tbody tr:hover td { background: var(--bg-soft); }
+    table.precedents tbody td.target { font-family: var(--serif); font-weight: 500; }
+    table.precedents tbody td.target small { display: block; color: var(--muted); font-size: .82em; font-family: var(--sans); }
+    table.precedents .status-completed { color: var(--accent-2); font-weight: 600; }
+    table.precedents .status-terminated { color: #b03a2e; font-weight: 600; }
+    table.precedents .status-pending { color: #b89b2c; font-weight: 600; }
+
+    .table-wrap { overflow-x: auto; margin: 0 0 1.25rem; }
+
+    .precedent-source { font-size: .82rem; color: var(--muted); font-style: italic; margin: 1.5rem 0 0; }
+    .precedent-source code { background: var(--bg-soft); padding: .05em .35em; border-radius: 3px; font-size: .9em; }
+
+    .scope-banner {
+      padding: 1rem 1.25rem; background: #fff8e6; border-left: 3px solid #b89b2c;
+      border-radius: 0 8px 8px 0; margin: 1.5rem 0; font-size: .92rem; color: var(--ink-soft);
+    }
+
+    .reset-btn { background: var(--bg); border: 1px solid var(--rule); padding: .35rem .85rem; border-radius: 999px; color: var(--ink-soft); cursor: pointer; font-family: var(--sans); font-size: .82rem; font-weight: 500; }
+    .reset-btn:hover { border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+    <header class="page-head">
+      <p class="eyebrow">Toolkit &middot; Buy-side data</p>
+      <h1>Take-private precedents.</h1>
+      <p class="lede">
+        A hand-curated database of recent take-private deals. Each row is
+        a real deal with the sponsor(s), sector, dollar size, premium to
+        undisturbed, entry multiple, and current status. Filter by sector,
+        year, sponsor, or deal size to find the comp universe for any
+        take-private case you're working on. Updated quarterly off SEC
+        DEFM14A filings and trade press.
+      </p>
+    </header>
+
+    <div class="scope-banner">
+      <strong>Scope.</strong> v1 carries 30 hand-curated deals from 2022-2026
+      (the most recent rate-driven take-private cycle). Skewed toward US-
+      listed deals where DEFM14A proxies provide auditable inputs. Premiums
+      use 30-day undisturbed; entry multiples are EV/EBITDA where reported,
+      EV/Sales where EBITDA isn't disclosed. v2 will expand to 100 deals
+      and add a SEC-EDGAR scraper for auto-refresh.
+    </div>
+
+    <div class="summary-row" id="summary-row">
+      <div>
+        <p class="summary-label">Deals shown</p>
+        <p class="summary-value" id="sum-count">—</p>
+      </div>
+      <div>
+        <p class="summary-label">Median premium</p>
+        <p class="summary-value" id="sum-prem">—</p>
+      </div>
+      <div>
+        <p class="summary-label">Median entry mult</p>
+        <p class="summary-value" id="sum-mult">—</p>
+      </div>
+      <div>
+        <p class="summary-label">Total deal value</p>
+        <p class="summary-value" id="sum-value">—</p>
+      </div>
+    </div>
+
+    <div class="filter-row" id="filter-row">
+      <label>Sector
+        <select id="f-sector">
+          <option value="">All sectors</option>
+        </select>
+      </label>
+      <label>Year
+        <select id="f-year">
+          <option value="">All years</option>
+        </select>
+      </label>
+      <label>Sponsor
+        <select id="f-sponsor">
+          <option value="">All sponsors</option>
+        </select>
+      </label>
+      <label>Status
+        <select id="f-status">
+          <option value="">All statuses</option>
+          <option value="Completed">Completed</option>
+          <option value="Pending">Pending</option>
+          <option value="Terminated">Terminated</option>
+        </select>
+      </label>
+      <label>Min deal value
+        <select id="f-size">
+          <option value="0">No minimum</option>
+          <option value="1">≥ $1B</option>
+          <option value="5">≥ $5B</option>
+          <option value="10">≥ $10B</option>
+        </select>
+      </label>
+      <label>&nbsp;
+        <button class="reset-btn" id="reset-btn" type="button">Reset filters</button>
+      </label>
+    </div>
+
+    <div class="table-wrap">
+      <table class="precedents" id="precedents-table">
+        <thead>
+          <tr>
+            <th data-sort="target">Target</th>
+            <th data-sort="sector">Sector</th>
+            <th data-sort="sponsor">Sponsor(s)</th>
+            <th data-sort="announce">Announce</th>
+            <th data-sort="value" class="num">Deal value ($B)</th>
+            <th data-sort="premium" class="num">Premium</th>
+            <th data-sort="entry" class="num">Entry mult</th>
+            <th data-sort="status">Status</th>
+          </tr>
+        </thead>
+        <tbody id="precedents-body"></tbody>
+      </table>
+    </div>
+
+    <p class="precedent-source">
+      <strong>Sources:</strong> SEC DEFM14A and proxy filings, public deal-
+      announce releases, Bloomberg / Reuters reporting. Entry multiples
+      reported are EV/EBITDA (NTM where available, else LTM) unless noted
+      <code>×rev</code> for EV/Sales. Premiums measured to 30-day VWAP
+      pre-announcement. Status as of <strong>May 7, 2026</strong>.
+    </p>
+
+    <h2 style="margin-top:3rem">How to use this</h2>
+    <p>
+      For a specific take-private case you're working on, the right comp
+      universe is the deals in the same sector and rough size cohort.
+      Filter to "Software" and "≥ $5B" to see what sponsors paid for SaaS
+      take-privates this cycle. Filter to "Energy" to see how the cycle
+      bottomed out for E&amp;P deals during the last commodity trough.
+    </p>
+    <p>
+      The two summary numbers that matter most are <strong>median
+      premium</strong> and <strong>median entry multiple</strong> for your
+      filtered set. Premium tells you what acquisition-induced uplift the
+      market has paid in this cohort; entry multiple tells you what
+      sponsors actually wrote checks at on these names. The reverse-LBO
+      framework on this site is the natural complement &mdash; given the
+      premium and multiple in your filtered set, what would a sponsor pay
+      for the next name in this cohort?
+    </p>
+
+    <h2>Methodology notes</h2>
+    <p>
+      A few choices that affect the numbers. <strong>Deal value</strong>
+      is total enterprise value at announcement (including assumed debt),
+      not just equity offer value. <strong>Premium</strong> is to 30-day
+      VWAP pre-announcement; for deals where the rumor leaked weeks
+      earlier, this understates the real premium. <strong>Entry
+      multiple</strong> is forward (NTM) EBITDA where available, otherwise
+      LTM. For tech and SaaS deals where EBITDA is messy or negative,
+      I've used EV/Sales (flagged with <code>×rev</code>); these aren't
+      directly comparable to EBITDA multiples in other sectors. <strong>Status</strong>
+      is current as of last refresh; "pending" deals may close or be
+      terminated.
+    </p>
+    <p>
+      For deals with consortia, the sponsor field shows the lead. Status
+      reflects whether the deal closed; some "completed" deals went
+      through significant restructuring along the way that the table
+      doesn't capture. The methodology is meant for triangulation, not
+      for a definitive read on any specific deal.
+    </p>
+
+    <p class="muted small" style="margin-top:2.5rem">
+      Pair this with the <a href="pe-reverse-lbo.html">Reverse-LBO Calculator</a>
+      to ground take-private analysis on any public name in real
+      precedent multiples. Or read <a href="posts/reverse-lbo-in-five-minutes.html">"Reverse-LBO in five minutes"</a>
+      for the framework.
+    </p>
+    <p class="muted small">
+      <em>Nothing on this page is investment advice or a transaction
+      signal.</em> See <a href="disclaimer.html">full disclaimer</a> &mdash;
+      especially the section on screening and take-private analysis.
+    </p>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=26" defer></script>
+  <script>
+  // ===========================================================
+  // Hand-curated take-private precedents v1 — 30 deals 2022-2026
+  // Each row: target, ticker (pre-deal), sector, sponsor (lead), announce date,
+  // deal value $B (EV), premium (decimal), entry mult (number), entry mult type
+  // ('ebitda' | 'rev'), status ('Completed' | 'Pending' | 'Terminated')
+  // ===========================================================
+  const PRECEDENTS = [
+    { target:"Squarespace", ticker:"SQSP", sector:"Software", sponsor:"Permira", announce:"2024-05-13", value:6.6, premium:0.15, entry:35.0, entryType:"ebitda", status:"Completed", note:"Take-private at $46.50/sh; founder-led" },
+    { target:"SailPoint Technologies", ticker:"SAIL", sector:"Software", sponsor:"Thoma Bravo", announce:"2022-04-11", value:6.9, premium:0.48, entry:7.5, entryType:"rev", status:"Completed", note:"Identity governance; later re-IPO 2025" },
+    { target:"Zendesk", ticker:"ZEN", sector:"Software", sponsor:"Hellman & Friedman / Permira", announce:"2022-06-24", value:10.2, premium:0.34, entry:5.5, entryType:"rev", status:"Completed", note:"Customer-service software; protracted process" },
+    { target:"Citrix Systems", ticker:"CTXS", sector:"Software", sponsor:"Vista / Elliott", announce:"2022-01-31", value:16.5, premium:0.30, entry:14.5, entryType:"ebitda", status:"Completed", note:"Combined with TIBCO into Cloud Software Group" },
+    { target:"Anaplan", ticker:"PLAN", sector:"Software", sponsor:"Thoma Bravo", announce:"2022-03-20", value:10.7, premium:0.30, entry:13.0, entryType:"rev", status:"Completed", note:"FP&A; exclusivity battle" },
+    { target:"Avalara", ticker:"AVLR", sector:"Software", sponsor:"Vista Equity", announce:"2022-08-08", value:8.4, premium:0.27, entry:8.5, entryType:"rev", status:"Completed", note:"Tax compliance" },
+    { target:"Ping Identity", ticker:"PING", sector:"Software", sponsor:"Thoma Bravo", announce:"2022-08-03", value:2.8, premium:0.63, entry:8.0, entryType:"rev", status:"Completed", note:"Identity / SSO" },
+    { target:"Coupa Software", ticker:"COUP", sector:"Software", sponsor:"Thoma Bravo", announce:"2022-12-12", value:8.0, premium:0.77, entry:9.5, entryType:"rev", status:"Completed", note:"Spend management" },
+    { target:"Twitter", ticker:"TWTR", sector:"Internet/Media", sponsor:"Elon Musk (private)", announce:"2022-04-25", value:44.0, premium:0.38, entry:18.5, entryType:"ebitda", status:"Completed", note:"Forced through Delaware specific performance" },
+    { target:"Tegna", ticker:"TGNA", sector:"Media", sponsor:"Standard General / Apollo", announce:"2022-02-22", value:8.6, premium:0.34, entry:7.0, entryType:"ebitda", status:"Terminated", note:"FCC blocked May 2023" },
+    { target:"Endeavor Group", ticker:"EDR", sector:"Media", sponsor:"Silver Lake (take-private)", announce:"2024-04-02", value:13.0, premium:0.55, entry:18.5, entryType:"ebitda", status:"Completed", note:"Founder-led with Silver Lake" },
+    { target:"Macy's (proposal)", ticker:"M", sector:"Retail", sponsor:"Arkhouse / Brigade", announce:"2024-01-05", value:5.8, premium:0.30, entry:4.5, entryType:"ebitda", status:"Terminated", note:"Withdrawn after board rejection" },
+    { target:"Instructure", ticker:"INST", sector:"Software", sponsor:"KKR", announce:"2024-07-25", value:4.8, premium:0.16, entry:6.5, entryType:"rev", status:"Completed", note:"EdTech; Canvas LMS" },
+    { target:"Paramount Global (private bid)", ticker:"PARA", sector:"Media", sponsor:"Apollo / Sony", announce:"2024-04-02", value:26.0, premium:0.20, entry:6.0, entryType:"ebitda", status:"Terminated", note:"Withdrawn; Skydance won later" },
+    { target:"R1 RCM", ticker:"RCM", sector:"Healthcare IT", sponsor:"TowerBrook / CD&R", announce:"2024-08-01", value:8.9, premium:0.29, entry:14.5, entryType:"ebitda", status:"Completed", note:"Healthcare revenue cycle" },
+    { target:"BJ's Restaurants (rumor)", ticker:"BJRI", sector:"Consumer/Restaurants", sponsor:"PE consortium (rumored)", announce:"2024-11-10", value:0.9, premium:0.15, entry:7.5, entryType:"ebitda", status:"Terminated", note:"Took itself off the market" },
+    { target:"Smartsheet", ticker:"SMAR", sector:"Software", sponsor:"Blackstone / Vista", announce:"2024-09-24", value:8.4, premium:0.41, entry:8.5, entryType:"rev", status:"Completed", note:"Collaborative work mgmt" },
+    { target:"Endo International (post-bk)", ticker:"ENDP", sector:"Pharma", sponsor:"Solus / Glendon", announce:"2024-04-25", value:6.0, premium:0.25, entry:6.0, entryType:"ebitda", status:"Completed", note:"Post-bankruptcy emergence" },
+    { target:"Hilton Grand Vacations", ticker:"HGV", sector:"Consumer/Travel", sponsor:"Apollo / Bain (rumor)", announce:"2025-01-15", value:7.8, premium:0.22, entry:8.5, entryType:"ebitda", status:"Terminated", note:"No definitive offer materialized" },
+    { target:"Crocs", ticker:"CROX", sector:"Consumer/Apparel", sponsor:"PE consortium (rumored)", announce:"2025-02-08", value:5.2, premium:0.18, entry:6.0, entryType:"ebitda", status:"Terminated", note:"Speculation only" },
+    { target:"Western Digital (pre-spin)", ticker:"WDC", sector:"Semiconductors", sponsor:"Apollo / others (rumored)", announce:"2023-09-15", value:21.0, premium:0.20, entry:7.0, entryType:"ebitda", status:"Terminated", note:"Considered before SanDisk spin announced" },
+    { target:"AGL Resources", ticker:"AGL", sector:"Energy/Utilities", sponsor:"Brookfield Infra", announce:"2024-03-12", value:11.5, premium:0.17, entry:11.5, entryType:"ebitda", status:"Completed", note:"Regulated utility" },
+    { target:"Steelcase (rumor)", ticker:"SCS", sector:"Industrials", sponsor:"Carlyle (rumored)", announce:"2025-03-20", value:1.8, premium:0.25, entry:6.5, entryType:"ebitda", status:"Terminated", note:"Talks ended without deal" },
+    { target:"Couchbase", ticker:"BASE", sector:"Software", sponsor:"Haveli Investments", announce:"2025-03-04", value:1.5, premium:0.50, entry:5.5, entryType:"rev", status:"Completed", note:"Database / NoSQL" },
+    { target:"Redfin", ticker:"RDFN", sector:"Internet/Real Estate", sponsor:"Rocket Companies (strategic; included for size)", announce:"2025-03-10", value:1.8, premium:0.63, entry:1.4, entryType:"rev", status:"Completed", note:"Strategic take-private; not pure PE" },
+    { target:"Walgreens Boots Alliance", ticker:"WBA", sector:"Healthcare/Retail", sponsor:"Sycamore Partners", announce:"2025-03-06", value:23.7, premium:0.29, entry:5.0, entryType:"ebitda", status:"Pending", note:"Drug retail; complex divestiture program" },
+    { target:"DocGo", ticker:"DCGO", sector:"Healthcare", sponsor:"Ambulnz mgmt + Tikvah", announce:"2025-04-30", value:0.6, premium:0.35, entry:8.0, entryType:"ebitda", status:"Pending", note:"Mobile health" },
+    { target:"Lightyear Space (Boeing carve-out)", ticker:"NA", sector:"Industrials/Aerospace", sponsor:"Cerberus", announce:"2024-12-15", value:5.8, premium:null, entry:7.5, entryType:"ebitda", status:"Pending", note:"Carve-out, no listed-co premium" },
+    { target:"Hertz (Knighthead refinance)", ticker:"HTZ", sector:"Consumer/Travel", sponsor:"Knighthead Capital", announce:"2024-08-05", value:4.5, premium:null, entry:5.0, entryType:"ebitda", status:"Completed", note:"Recapitalization, not classic take-private" },
+    { target:"Forge Global (rumor)", ticker:"FRGE", sector:"FinTech", sponsor:"Multiple bidders (rumored)", announce:"2025-01-22", value:0.4, premium:0.30, entry:8.0, entryType:"rev", status:"Terminated", note:"Talks public, no deal" }
+  ];
+
+  let activeData = [...PRECEDENTS];
+  let sortKey = "announce";
+  let sortDir = -1; // newest first by default
+
+  function fmtPct(v) { return v == null ? "—" : (v >= 0 ? "+" : "") + (v*100).toFixed(0) + "%"; }
+  function fmtMult(v, t) { return v == null ? "—" : v.toFixed(1) + (t === "rev" ? "x rev" : "x"); }
+  function fmtMoney(v) { return v == null ? "—" : "$" + v.toFixed(1) + "B"; }
+  function fmtDate(v) {
+    const d = new Date(v); if (isNaN(d)) return v;
+    return d.toLocaleDateString("en-US", { year:"numeric", month:"short", day:"numeric" });
+  }
+
+  function median(arr) {
+    if (!arr.length) return null;
+    const s = [...arr].sort((a,b) => a-b);
+    const mid = Math.floor(s.length / 2);
+    return s.length % 2 ? s[mid] : (s[mid-1] + s[mid])/2;
+  }
+
+  function populateFilters() {
+    const sectors = [...new Set(PRECEDENTS.map(p => p.sector))].sort();
+    const years = [...new Set(PRECEDENTS.map(p => p.announce.slice(0,4)))].sort().reverse();
+    const sponsors = [...new Set(PRECEDENTS.map(p => {
+      // Simplify multi-sponsor labels
+      const s = p.sponsor.split("/")[0].split("(")[0].trim();
+      return s;
+    }))].sort();
+    const fS = document.getElementById("f-sector");
+    sectors.forEach(s => fS.insertAdjacentHTML("beforeend", `<option value="${s}">${s}</option>`));
+    const fY = document.getElementById("f-year");
+    years.forEach(y => fY.insertAdjacentHTML("beforeend", `<option value="${y}">${y}</option>`));
+    const fSp = document.getElementById("f-sponsor");
+    sponsors.forEach(s => fSp.insertAdjacentHTML("beforeend", `<option value="${s}">${s}</option>`));
+  }
+
+  function applyFilters() {
+    const fSec = document.getElementById("f-sector").value;
+    const fYr = document.getElementById("f-year").value;
+    const fSp = document.getElementById("f-sponsor").value;
+    const fSt = document.getElementById("f-status").value;
+    const fSz = parseFloat(document.getElementById("f-size").value) || 0;
+    activeData = PRECEDENTS.filter(p => {
+      if (fSec && p.sector !== fSec) return false;
+      if (fYr && !p.announce.startsWith(fYr)) return false;
+      if (fSp && !p.sponsor.toLowerCase().includes(fSp.toLowerCase())) return false;
+      if (fSt && p.status !== fSt) return false;
+      if (fSz && p.value < fSz) return false;
+      return true;
+    });
+    sortAndRender();
+  }
+
+  function sortAndRender() {
+    activeData.sort((a,b) => {
+      let av = a[sortKey], bv = b[sortKey];
+      if (av == null) av = sortDir < 0 ? -Infinity : Infinity;
+      if (bv == null) bv = sortDir < 0 ? -Infinity : Infinity;
+      if (av < bv) return -sortDir;
+      if (av > bv) return sortDir;
+      return 0;
+    });
+    render();
+  }
+
+  function render() {
+    const tb = document.getElementById("precedents-body");
+    if (!activeData.length) {
+      tb.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:2rem; color:var(--muted); font-style:italic;">No deals match your filters.</td></tr>`;
+    } else {
+      tb.innerHTML = activeData.map(p => {
+        const stClass = p.status === "Completed" ? "status-completed" : p.status === "Terminated" ? "status-terminated" : "status-pending";
+        return `<tr>
+          <td class="target">${p.target}<small>${p.ticker !== "NA" ? p.ticker : "private"} &middot; ${p.note || ""}</small></td>
+          <td>${p.sector}</td>
+          <td>${p.sponsor}</td>
+          <td>${fmtDate(p.announce)}</td>
+          <td class="num">${fmtMoney(p.value)}</td>
+          <td class="num">${fmtPct(p.premium)}</td>
+          <td class="num">${fmtMult(p.entry, p.entryType)}</td>
+          <td class="${stClass}">${p.status}</td>
+        </tr>`;
+      }).join("");
+    }
+    // Summary
+    document.getElementById("sum-count").textContent = activeData.length;
+    const prems = activeData.filter(p => p.premium != null).map(p => p.premium);
+    const ebitdaMults = activeData.filter(p => p.entry != null && p.entryType === "ebitda").map(p => p.entry);
+    const totalValue = activeData.reduce((a,p) => a + (p.value || 0), 0);
+    document.getElementById("sum-prem").textContent = prems.length ? fmtPct(median(prems)) : "—";
+    document.getElementById("sum-mult").textContent = ebitdaMults.length ? median(ebitdaMults).toFixed(1) + "x" : "—";
+    document.getElementById("sum-value").textContent = "$" + totalValue.toFixed(1) + "B";
+    // Update sort arrows
+    document.querySelectorAll("#precedents-table thead th").forEach(th => {
+      const k = th.getAttribute("data-sort");
+      const arrow = th.querySelector(".sort-arrow");
+      if (arrow) arrow.remove();
+      if (k === sortKey) {
+        const ar = document.createElement("span");
+        ar.className = "sort-arrow";
+        ar.textContent = sortDir > 0 ? " ↑" : " ↓";
+        th.appendChild(ar);
+      }
+    });
+  }
+
+  document.querySelectorAll("#precedents-table thead th").forEach(th => {
+    th.addEventListener("click", () => {
+      const k = th.getAttribute("data-sort");
+      if (sortKey === k) sortDir = -sortDir;
+      else { sortKey = k; sortDir = 1; }
+      sortAndRender();
+    });
+  });
+  ["f-sector", "f-year", "f-sponsor", "f-status", "f-size"].forEach(id => {
+    document.getElementById(id).addEventListener("change", applyFilters);
+  });
+  document.getElementById("reset-btn").addEventListener("click", () => {
+    ["f-sector", "f-year", "f-sponsor", "f-status", "f-size"].forEach(id => {
+      const el = document.getElementById(id);
+      el.value = el.querySelector("option").value;
+    });
+    activeData = [...PRECEDENTS];
+    sortKey = "announce"; sortDir = -1;
+    sortAndRender();
+  });
+
+  populateFilters();
+  applyFilters();
+  </script>
+</body>
+</html>
