@@ -453,10 +453,23 @@
         if (!q || !isFinite(q.regularMarketPrice)) return;
 
         var price = q.regularMarketPrice;
+        // Cache the latest quote so loadLeadPickSpark can compute today's
+        // day-over-day change correctly (price minus yesterday's close).
+        // For range='1d', spark data starts at today's open, so first/last
+        // would only give intraday change — that's not what visitors mean
+        // by "today's change" on a finance site.
+        latestLeadPickQuote = {
+          price: price,
+          previousClose: q.regularMarketPreviousClose
+        };
         var priceEl = document.getElementById('lp-price');
         var ttEl = document.getElementById('lp-totarget');
 
         if (priceEl) priceEl.textContent = '$' + price.toFixed(2);
+        // If the spark fetch already painted a "+X today" using stale spark
+        // data (range='1d' default), refresh it now with the correct
+        // previousClose-based number.
+        refreshLeadPickChange();
         // NOTE: do NOT write the change percent here. The change label is owned
         // exclusively by loadLeadPickSpark() so it stays in sync with whichever
         // sparkline range is active (1D -> "today", 1M -> "1m", etc). Writing
@@ -758,6 +771,40 @@
   // stats grid. Default is 1M so the recent action shows up proportionally
   // instead of being compressed by a 1Y view of a stock that 7x'd.
   var currentSparkRange = '1mo';
+  // Latest quote captured by the symbols fetch — used to compute today's
+  // day-over-day change for the 1D headline. Populated by renderWatchlist().
+  var latestLeadPickQuote = null;
+
+  // Refresh #lp-change using the rule: 1D -> price vs previousClose,
+  // any other range -> spark first vs last. Idempotent; safe to call
+  // from either the symbols-fetch path or the spark-fetch path.
+  function refreshLeadPickChange(sparkValues) {
+    var changeEl = document.getElementById('lp-change');
+    if (!changeEl) return;
+    var pct, suffix;
+    if (currentSparkRange === '1d' && latestLeadPickQuote &&
+        isFinite(latestLeadPickQuote.price) &&
+        isFinite(latestLeadPickQuote.previousClose) &&
+        latestLeadPickQuote.previousClose !== 0) {
+      pct = ((latestLeadPickQuote.price - latestLeadPickQuote.previousClose) /
+             latestLeadPickQuote.previousClose) * 100;
+      suffix = 'today';
+    } else if (sparkValues && sparkValues.length >= 2) {
+      var firstV = sparkValues[0], lastV = sparkValues[sparkValues.length - 1];
+      if (!(isFinite(firstV) && isFinite(lastV) && firstV !== 0)) return;
+      pct = ((lastV - firstV) / firstV) * 100;
+      var rangeLabels = {
+        '1d': 'today', '5d': '1w', '1mo': '1m',
+        '3mo': '3m',   '1y': '1y',  '5y': '5y'
+      };
+      suffix = rangeLabels[currentSparkRange] || currentSparkRange;
+    } else {
+      return; // not enough info yet
+    }
+    changeEl.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '% ' + suffix;
+    changeEl.className = 'lp-change ' + (pct >= 0 ? 'up' : 'down');
+  }
+
 
   function loadLeadPickSpark(range) {
     if (range) currentSparkRange = range;
@@ -782,25 +829,11 @@
         if (timestamps && timestamps.length === values.length) {
           attachSparkHover(sparkEl, values, timestamps, sparkOpts);
         }
-        // Drive the change label off the spark data so the value AND the
-        // suffix always reflect the active period. firstV is the period
-        // start (e.g. 1mo ago for range='1mo', yesterday's close for '1d');
-        // lastV is the latest price. This is the single writer of #lp-change
-        // — the symbols-fetch above intentionally leaves it alone.
-        var changeEl = document.getElementById('lp-change');
-        if (changeEl) {
-          var firstV = values[0], lastV = values[values.length - 1];
-          if (isFinite(firstV) && isFinite(lastV) && firstV !== 0) {
-            var periodPct = ((lastV - firstV) / firstV) * 100;
-            var rangeLabels = {
-              '1d': 'today', '5d': '1w', '1mo': '1m',
-              '3mo': '3m',   '1y': '1y',  '5y': '5y'
-            };
-            var suffix = rangeLabels[currentSparkRange] || currentSparkRange;
-            changeEl.textContent = (periodPct >= 0 ? '+' : '') + periodPct.toFixed(2) + '% ' + suffix;
-            changeEl.className = 'lp-change ' + (periodPct >= 0 ? 'up' : 'down');
-          }
-        }
+        // Hand the spark values to refreshLeadPickChange. For range='1d'
+        // it ignores them and uses (price − previousClose) so the headline
+        // reads the correct day-over-day move. For 1m/3m/1y/5y it falls
+        // back to the period change derived from spark first/last.
+        refreshLeadPickChange(values);
       })
       .catch(function () { /* leave placeholder */ });
   }
