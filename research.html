@@ -477,18 +477,9 @@
     <!-- ============== WIDGETS ============== -->
     <section class="vertical-section" id="widgets">
       <h2>Widget blueprint</h2>
-      <p class="vertical-sub">The output layer &mdash; what each source above turns into on the page, organised by vertical.</p>
+      <p class="vertical-sub">If the source tables above are the inputs, this is the outputs &mdash; the specific dashboards, trackers, and metrics each vertical's data becomes once it's wired up. Same order as above.</p>
 
-      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Semiconductor page</h3>
-      <ul class="widgets">
-        <li><strong>Memory pricing tracker.</strong> DRAM spot price trend, NAND spot trend if available, 4-week change, 13-week change, and an &ldquo;up/down streak&rdquo; counter.</li>
-        <li><strong>Global semi sales tracker.</strong> WSTS billings by region, 3-month moving average, YoY change, and cycle percentile.</li>
-        <li><strong>Equipment / capex tracker.</strong> SEMI billings, ASML / AMAT / LRCX commentary if you later add transcript parsing, and memory capex commentary.</li>
-        <li><strong>MU fundamentals tracker.</strong> Revenue, gross margin, inventory, days inventory, capex, operating cash flow, free cash flow, and management language from SEC filings and Micron IR.</li>
-        <li><strong>HBM tracker.</strong> Pull MU earnings transcripts/presentations and tag mentions of HBM, pricing, customer commitments, capacity, supply tightness, and margins.</li>
-      </ul>
-
-      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Energy page</h3>
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Oil &amp; energy</h3>
       <ul class="widgets">
         <li><strong>Oil dashboard.</strong> WTI, Brent, WTI&ndash;Brent spread, 1M / 3M / 12M change, moving averages, and percentile.</li>
         <li><strong>Inventory surprise dashboard.</strong> EIA crude, gasoline, distillate stocks, refinery utilization, imports, exports, product supplied.</li>
@@ -497,12 +488,28 @@
         <li><strong>XOM driver bridge.</strong> Oil price, gas price, refining utilization, product supplied, capex, buybacks, production, and free cash flow.</li>
       </ul>
 
-      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Shipping &amp; trade page</h3>
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Semiconductors</h3>
+      <ul class="widgets">
+        <li><strong>Memory pricing tracker.</strong> DRAM spot price trend, NAND spot trend if available, 4-week change, 13-week change, and an &ldquo;up/down streak&rdquo; counter.</li>
+        <li><strong>Global semi sales tracker.</strong> WSTS billings by region, 3-month moving average, YoY change, and cycle percentile.</li>
+        <li><strong>Equipment / capex tracker.</strong> SEMI billings, ASML / AMAT / LRCX commentary if you later add transcript parsing, and memory capex commentary.</li>
+        <li><strong>MU fundamentals tracker.</strong> Revenue, gross margin, inventory, days inventory, capex, operating cash flow, free cash flow, and management language from SEC filings and Micron IR.</li>
+        <li><strong>HBM tracker.</strong> Pull MU earnings transcripts/presentations and tag mentions of HBM, pricing, customer commitments, capacity, supply tightness, and margins.</li>
+      </ul>
+
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Shipping &amp; trade</h3>
       <ul class="widgets">
         <li><strong>Container freight tracker.</strong> Freightos, Drewry WCI, SCFI, and lane-specific China-to-U.S. indicators.</li>
         <li><strong>Port throughput tracker.</strong> Monthly TEUs from BTS / LA / LB and YoY change.</li>
         <li><strong>Trade flow tracker.</strong> Census imports/exports by HS code for semiconductors, electronics, crude oil, petroleum products, and energy equipment.</li>
         <li><strong>Supply-chain stress dashboard.</strong> NY Fed GSCPI, container rates, port TEUs, supplier-delivery indexes, and freight changes.</li>
+      </ul>
+
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Macro &amp; demand</h3>
+      <ul class="widgets">
+        <li><strong>Supply-chain pressure tracker.</strong> NY Fed GSCPI level, percentile, and 3-month change &mdash; the cleanest single read on whether the global supply chain is loose or tight.</li>
+        <li><strong>Industrial production overlay.</strong> FRED semiconductor industrial production indexed against WSTS billings &mdash; cross-check whether U.S. domestic production confirms or diverges from global cycle.</li>
+        <li><strong>PMI breadth dashboard.</strong> ISM manufacturing PMI plus its sub-indices (new orders, inventories, supplier deliveries) &mdash; the demand-side leading indicator that sits underneath every other vertical.</li>
       </ul>
     </section>
 
