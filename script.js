@@ -1470,6 +1470,96 @@
     setupHeroChartTabs();
   }
 
+  // ---------------------------------------------------------------------------
+  // Research page -- live rates & FX strip
+  // ---------------------------------------------------------------------------
+  // Lights up the .rates-strip block on research.html. Pulls ~1y daily history
+  // from the bpleon-quotes worker for each .rc-spark[data-sym] card, renders a
+  // sparkline via sparklineSvg(), and writes the latest reading + change into
+  // the .rc-foot cells. Yield symbols (^TNX, ^TYX, ^IRX) render as percentages
+  // with a basis-point change; everything else renders as a numeric level with
+  // a percent change vs. the first value in the spark window.
+  // ---------------------------------------------------------------------------
+  if (document.getElementById('rates-live-strip')) {
+    var rcCards = document.querySelectorAll('#rates-live-strip .rates-card');
+    if (rcCards.length) {
+      var rcSyms = [];
+      rcCards.forEach(function (card) {
+        var spark = card.querySelector('.rc-spark[data-sym]');
+        if (spark) {
+          var s = spark.getAttribute('data-sym');
+          if (s && rcSyms.indexOf(s) === -1) rcSyms.push(s);
+        }
+      });
+
+      function fmtRcLevel(sym, v) {
+        if (!isFinite(v)) return '—';
+        if (sym === '^TNX' || sym === '^TYX' || sym === '^IRX' || sym === '^FVX') {
+          return v.toFixed(2) + '%';
+        }
+        if (sym.indexOf('USD') !== -1 && sym.indexOf('=X') !== -1) {
+          // FX pairs: 4-decimal precision below 10, 2 above.
+          return v >= 10 ? v.toFixed(2) : v.toFixed(4);
+        }
+        if (Math.abs(v) >= 1000) return v.toLocaleString(undefined, { maximumFractionDigits: 0 });
+        if (Math.abs(v) >= 100)  return v.toFixed(2);
+        if (Math.abs(v) >= 10)   return v.toFixed(2);
+        return v.toFixed(2);
+      }
+      function fmtRcChange(sym, first, last) {
+        if (!isFinite(first) || !isFinite(last)) return { text: '', cls: 'flat' };
+        var isYield = (sym === '^TNX' || sym === '^TYX' || sym === '^IRX' || sym === '^FVX');
+        if (isYield) {
+          var bp = Math.round((last - first) * 100); // yields are in pct points; *100 => bp
+          var sign = bp > 0 ? '+' : (bp < 0 ? '' : '');
+          var clsY = bp > 0 ? 'up' : (bp < 0 ? 'down' : 'flat');
+          return { text: sign + bp + 'bp 1y', cls: clsY };
+        }
+        var pct = ((last / first) - 1) * 100;
+        var signp = pct > 0 ? '+' : (pct < 0 ? '' : '');
+        var clsP = pct > 0.05 ? 'up' : (pct < -0.05 ? 'down' : 'flat');
+        return { text: signp + pct.toFixed(1) + '% 1y', cls: clsP };
+      }
+
+      if (rcSyms.length) {
+        fetch(WORKER_URL + '?spark=' + encodeURIComponent(rcSyms.join(',')))
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (data) {
+            if (!data) return;
+            rcCards.forEach(function (card) {
+              var spark = card.querySelector('.rc-spark[data-sym]');
+              if (!spark) return;
+              var sym = spark.getAttribute('data-sym');
+              var values = data[sym];
+              if (!values || !values.length) {
+                spark.classList.remove('loading');
+                spark.innerHTML = '<span style="font-size:.72rem;color:var(--muted);">unavailable</span>';
+                return;
+              }
+              spark.classList.remove('loading');
+              spark.innerHTML = sparklineSvg(values, { width: 280, height: 32, padding: 2 });
+              var lastEl = card.querySelector('[data-rates-last]');
+              var chgEl  = card.querySelector('[data-rates-chg]');
+              var first = values[0], last = values[values.length - 1];
+              if (lastEl) lastEl.textContent = fmtRcLevel(sym, last);
+              if (chgEl) {
+                var c = fmtRcChange(sym, first, last);
+                chgEl.textContent = c.text;
+                chgEl.className = 'rc-chg ' + c.cls;
+              }
+            });
+          })
+          .catch(function () {
+            // Silent fail — leave skeleton; the rest of the page still works.
+            rcCards.forEach(function (card) {
+              var spark = card.querySelector('.rc-spark[data-sym]');
+              if (spark) spark.classList.remove('loading');
+            });
+          });
+      }
+    }
+  }
+
 })();
 
 // =============================================================================

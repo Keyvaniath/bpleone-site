@@ -27,7 +27,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=43" />
+  <link rel="stylesheet" href="style.css?v=44" />
 
   <style>
     /* ============== Research page local styles ==============
@@ -971,6 +971,21 @@
         <li id="w-cb-calendar"><strong>Global central bank calendar.</strong> Upcoming FOMC, ECB, BOE, BOJ, BOC meetings on a single timeline &mdash; the cross-rate context that matters for any USD-denominated cyclical.</li>
         <li id="w-multilateral"><strong>Multilateral outlook tracker.</strong> Side-by-side IMF WEO and World Bank GEP global GDP / inflation forecasts, current vs. previous release, with revisions highlighted &mdash; the slowest-moving but highest-credibility forecast layer.</li>
       </ul>
+
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Rates, FX &amp; credit</h3>
+      <ul class="widgets">
+        <li id="w-yield-curve"><strong>Yield curve tracker.</strong> Daily 3M / 2Y / 5Y / 10Y / 30Y constant-maturity yields from Treasury / FRED, plus SOFR and EFFR &mdash; with a curve-shape snapshot (steep / flat / inverted) and the live sparkline strip at the top of this section.</li>
+        <li id="w-curve-spreads"><strong>Curve spread tracker.</strong> 10Y&ndash;2Y, 10Y&ndash;3M, and 5Y&ndash;30Y spreads with percentile and recession-signal context &mdash; the recession-watch layer.</li>
+        <li id="w-breakevens"><strong>TIPS / breakevens tracker.</strong> 10Y breakeven inflation, 5y5y forward inflation, and real 10Y yield from FRED &mdash; the market-implied inflation expectation cross-check vs. CPI.</li>
+        <li id="w-credit-spreads"><strong>Credit spreads tracker.</strong> ICE BofA HY OAS and IG OAS via FRED, with percentile and 13-week change &mdash; the cleanest free read on credit conditions and risk appetite.</li>
+        <li id="w-fx"><strong>FX tracker.</strong> DXY, EUR/USD, USD/JPY, USD/CNY, plus BIS NEER/REER for the broad real-effective view &mdash; the FX overlay for any USD-denominated cyclical thesis.</li>
+      </ul>
+
+      <h3 style="margin-top:1.4rem;font-family:var(--serif);font-size:1.2rem;">Valuation reference (Damodaran)</h3>
+      <ul class="widgets">
+        <li id="w-damodaran"><strong>Cost-of-capital reference.</strong> Damodaran's WACC-by-industry, country ERPs, and unlevered-beta tables &mdash; the inputs the <a href="dcf.html">DCF tool</a> and <a href="wacc.html">WACC tool</a> default to, with annual refresh.</li>
+        <li id="w-multiples"><strong>Industry multiples reference.</strong> Damodaran's P/E, EV/EBITDA, EV/Sales, P/B and operating-margin / ROIC tables by industry &mdash; the comp-screen reference behind the <a href="comps.html">comps tool</a>.</li>
+      </ul>
     </section>
 
     <!-- ============== MVP STACK ============== -->
@@ -1066,6 +1081,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=43" defer></script>
+  <script src="script.js?v=44" defer></script>
 </body>
 </html>
