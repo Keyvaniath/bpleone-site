@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Weekly Market Outlook &mdash; Week of May 11, 2026 &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="The macro printed badly and the S&P printed higher. Weekly recap of CPI, retail sales, Michigan sentiment, the NVDA H200 China approval, Cisco's AI orders, Micron's 38% week, plus what we are watching into next week's docket." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/weekly-outlook-2026-05-15.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/weekly-outlook-2026-05-15.html" />
+  <meta property="og:title" content="Weekly Market Outlook &mdash; The macro broke. The market printed higher." />
+  <meta property="og:description" content="Hot CPI, soft retail, record-low Michigan sentiment, no Fed cuts. The S&P made a new all-time high anyway. The AI cycle is doing all the work." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="article:published_time" content="2026-05-15" />
+  <meta property="article:author" content="Brandon Leon" />
+  <meta property="article:section" content="Weekly Outlook" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=45" />
+
+  <style>
+    .pitch-meta {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      font-family: var(--sans); font-size: .85rem; color: var(--muted);
+      letter-spacing: .04em; margin: .25rem 0 1.75rem;
+    }
+    .pitch-meta span strong { color: var(--ink-soft); font-weight: 500; margin-right: .35em; letter-spacing: .04em; }
+
+    .pitch-thesis {
+      padding: 1.6rem 1.85rem; background: var(--bg-soft);
+      border-left: 3px solid var(--accent-2); border-radius: 12px;
+      margin: 1.25rem 0 2.75rem; font-family: var(--serif);
+      font-size: 1.16rem; line-height: 1.6; color: var(--ink);
+    }
+    .pitch-thesis p { margin: 0 0 1em; }
+    .pitch-thesis p:last-child { margin: 0; }
+    .pitch-thesis-label {
+      display: block; font-family: var(--sans); font-size: .78rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--accent-2);
+      margin: 0 0 .65em;
+    }
+
+    .pitch-section { margin: 3rem 0; padding-top: 1.75rem; border-top: 1px solid var(--rule); }
+    .pitch-section:first-of-type { border-top: 0; padding-top: 0; }
+    .pitch-section h2 {
+      margin: 0 0 .9rem; font-size: 1.85rem; font-weight: 700;
+      letter-spacing: -0.015em; color: var(--ink);
+      border-bottom: 2px solid var(--accent); padding-bottom: .4rem; line-height: 1.2;
+    }
+    .pitch-section h3 {
+      font-size: 1.3rem; font-weight: 600; margin-top: 2em;
+      color: var(--ink); letter-spacing: -0.01em;
+    }
+
+    .article-chart {
+      margin: 2rem 0; padding: 1.5rem;
+      background: var(--bg-soft); border-left: 3px solid var(--accent);
+      border-radius: 8px;
+    }
+    .article-chart .chart-title {
+      font-family: var(--sans); font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+      margin: 0 0 0.4rem;
+    }
+    .article-chart .chart-headline {
+      font-family: var(--serif); font-size: 1.2rem; font-weight: 500;
+      color: var(--ink); margin: 0 0 1.2rem; line-height: 1.4;
+    }
+    .article-chart .chart-svg {
+      width: 100%; height: auto; max-width: 720px;
+      display: block; margin: 0 auto;
+    }
+    .article-chart .chart-caption {
+      font-family: var(--sans); font-size: 0.82rem; color: var(--ink-soft);
+      margin: 1rem 0 0; line-height: 1.5; font-style: italic;
+    }
+
+    .kill-list { padding-left: 1.4rem; margin: 1rem 0 0; }
+    .kill-list li { margin-bottom: 1rem; line-height: 1.55; }
+    .kill-list li:last-child { margin-bottom: 0; }
+
+    sup.fn-ref { font-family: var(--sans); font-size: .72em; font-weight: 500;
+                 vertical-align: super; line-height: 0; margin-left: .12em; }
+    sup.fn-ref a { text-decoration: none; color: var(--accent); }
+    sup.fn-ref a:hover { color: var(--ink); }
+
+    .sources-list { font-family: var(--sans); font-size: .88rem; color: var(--ink-soft); padding-left: 1.5rem; margin: .5rem 0 0; }
+    .sources-list li { margin: .35rem 0; line-height: 1.5; }
+  </style>
+
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon &mdash; Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html" aria-current="page">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+
+    <header class="page-head">
+      <p class="eyebrow">Weekly outlook &middot; Macro &middot; AI &middot; semis &middot; May 15, 2026</p>
+      <h1>The macro broke. The market printed higher.</h1>
+
+      <p class="pitch-meta">
+        <span><strong>Author</strong> Brandon Leon</span>
+        <span><strong>Posted</strong> 2026-05-15 (Friday 7:00 AM PT)</span>
+        <span><strong>Coverage</strong> Weekly recap &middot; outlook into next week</span>
+      </p>
+
+      <div class="pitch-thesis">
+        <span class="pitch-thesis-label">Executive summary</span>
+        <p>Five things printed badly this week and the market made a new all-time high anyway. April CPI ran +3.8% year-over-year, the hottest since May 2023.<sup class="fn-ref"><a href="#fn1" id="fnref1a">1</a></sup> April retail sales slowed to +0.5% from +1.6% as gas prices ate discretionary spending.<sup class="fn-ref"><a href="#fn2" id="fnref2a">2</a></sup> Michigan consumer sentiment dropped to a record-low 48.2 with year-ahead inflation expectations spiking to 4.8%.<sup class="fn-ref"><a href="#fn3" id="fnref3a">3</a></sup> The 10-year Treasury yield pushed to 4.49%, the highest since July 2025, with the 30-year above 5%.<sup class="fn-ref"><a href="#fn4" id="fnref4a">4</a></sup> Fed rate-cut probability for 2026 collapsed to roughly 3%, and the market is now pricing a 28% chance of a December <em>hike</em>.<sup class="fn-ref"><a href="#fn5" id="fnref5a">5</a></sup></p>
+        <p>The S&amp;P 500 closed Thursday at 7,500-plus and the Nasdaq at 26,635, both new all-time highs.<sup class="fn-ref"><a href="#fn6" id="fnref6a">6</a></sup> Cisco printed a 12% revenue beat with $9 billion in AI infrastructure orders for FY26 (up from $5 billion guided).<sup class="fn-ref"><a href="#fn7" id="fnref7a">7</a></sup> NVIDIA cleared U.S. licensing to ship H200 chips to ten Chinese firms including Alibaba, Tencent, ByteDance, and JD &mdash; up to 75,000 chips per customer.<sup class="fn-ref"><a href="#fn8" id="fnref8a">8</a></sup> Micron, already up 116% since April 1, was the most-traded name on the tape this week and is closing in on a $1 trillion market cap.<sup class="fn-ref"><a href="#fn9" id="fnref9a">9</a></sup></p>
+        <p>The cooling-under-semis thesis from last Friday's recap got <em>validated</em>. The AI cycle is overwriting macro deterioration in real time. That isn&rsquo;t a stable equilibrium &mdash; record-low sentiment and 5% long-end yields will eventually pull the rest of the tape lower &mdash; but right now the supercycle is winning by a wider margin than anyone modeled. Our positioning bias stays: long structural AI infrastructure (semis, memory, networking, power), short broad cyclical beta and rate-sensitive consumer.</p>
+      </div>
+    </header>
+
+    <!-- ============== 1. THE WEEK IN NUMBERS ============== -->
+    <section class="pitch-section" id="week-in-numbers">
+      <h2>1. The week in numbers</h2>
+      <p>Five macro and five market data points define the week. The macro side is uniformly bad and the market side is uniformly good. The gap between them is the trade.</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 1 &mdash; The divergence in one frame</p>
+        <p class="chart-headline">Macro prints (red) miss to the bad side; markets (green) close at new ATHs anyway</p>
+        <svg class="chart-svg" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" aria-label="Macro misses vs market new highs">
+          <text x="360" y="28" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#0B1F3A" text-anchor="middle">MACRO MISSES (this week)</text>
+          <line x1="60" y1="40" x2="660" y2="40" stroke="#A12B2B" stroke-width="1"/>
+          <!-- Row 1: April CPI -->
+          <text x="60" y="68" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#0B1F3A">April CPI YoY</text>
+          <text x="60" y="83" font-family="Inter,sans-serif" font-size="10" fill="#6B7280">Highest since May 2023</text>
+          <rect x="280" y="55" width="380" height="28" fill="#A12B2B" opacity="0.22"/>
+          <text x="290" y="74" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#A12B2B">3.8%</text>
+          <text x="340" y="74" font-family="Inter,sans-serif" font-size="11" fill="#6B7280">vs. 3.7% est. &mdash; HOT MISS</text>
+          <!-- Row 2: April retail sales -->
+          <text x="60" y="113" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#0B1F3A">April retail sales MoM</text>
+          <text x="60" y="128" font-family="Inter,sans-serif" font-size="10" fill="#6B7280">Down from +1.6% prior</text>
+          <rect x="280" y="100" width="380" height="28" fill="#A12B2B" opacity="0.18"/>
+          <text x="290" y="119" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#A12B2B">+0.5%</text>
+          <text x="340" y="119" font-family="Inter,sans-serif" font-size="11" fill="#6B7280">vs. 0.6% est. &mdash; SOFT MISS</text>
+          <!-- Row 3: Michigan sentiment -->
+          <text x="60" y="158" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#0B1F3A">Michigan consumer sentiment</text>
+          <text x="60" y="173" font-family="Inter,sans-serif" font-size="10" fill="#6B7280">Record low; series began 1952</text>
+          <rect x="280" y="145" width="380" height="28" fill="#A12B2B" opacity="0.28"/>
+          <text x="290" y="164" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#A12B2B">48.2</text>
+          <text x="335" y="164" font-family="Inter,sans-serif" font-size="11" fill="#6B7280">vs. 49.5 est. &mdash; RECORD LOW</text>
+          <!-- Row 4: 1-yr inflation expectations -->
+          <text x="60" y="203" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#0B1F3A">1-yr inflation expectations</text>
+          <text x="60" y="218" font-family="Inter,sans-serif" font-size="10" fill="#6B7280">Largest 1-mo jump since Apr 2025</text>
+          <rect x="280" y="190" width="380" height="28" fill="#A12B2B" opacity="0.25"/>
+          <text x="290" y="209" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#A12B2B">4.8%</text>
+          <text x="335" y="209" font-family="Inter,sans-serif" font-size="11" fill="#6B7280">up from 3.8% prior &mdash; SPIKE</text>
+          <!-- Row 5: 10Y yield -->
+          <text x="60" y="248" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#0B1F3A">10-year Treasury yield</text>
+          <text x="60" y="263" font-family="Inter,sans-serif" font-size="10" fill="#6B7280">Highest since July 2025</text>
+          <rect x="280" y="235" width="380" height="28" fill="#A12B2B" opacity="0.22"/>
+          <text x="290" y="254" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#A12B2B">4.49%</text>
+          <text x="345" y="254" font-family="Inter,sans-serif" font-size="11" fill="#6B7280">30Y above 5% &mdash; RATES UP</text>
+          <!-- Market highs section -->
+          <text x="360" y="298" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#0B1F3A" text-anchor="middle">MARKET HIGHS (this week)</text>
+          <line x1="60" y1="310" x2="660" y2="310" stroke="#1D7A4F" stroke-width="1"/>
+          <text x="60" y="332" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#0B1F3A">S&amp;P 500 close (Thu)</text>
+          <rect x="280" y="320" width="180" height="22" fill="#1D7A4F" opacity="0.22"/>
+          <text x="290" y="335" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#1D7A4F">7,500+ (new ATH)</text>
+          <text x="480" y="335" font-family="Inter,sans-serif" font-size="11" fill="#0B1F3A">Nasdaq 26,635 ATH &middot; Dow 50,000+</text>
+        </svg>
+        <p class="chart-caption">Five-for-five macro misses to the downside. Three new all-time highs in the indices. Every textbook says this can&rsquo;t persist; the tape this week says it can, at least for now. Sources: BLS, Census, U-Mich, U.S. Treasury, S&amp;P Dow Jones (citations below).</p>
+      </figure>
+    </section>
+
+    <!-- ============== 2. THE CPI WAS BAD ============== -->
+    <section class="pitch-section" id="cpi-was-bad">
+      <h2>2. The CPI was actually bad &mdash; here&rsquo;s where the bad parts are</h2>
+      <p>The 3.8% headline understates the print. Energy carried the gain, but the components underneath it are deteriorating in ways that constrain the Fed and the consumer simultaneously.</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 2 &mdash; April CPI components, year-over-year</p>
+        <p class="chart-headline">Energy +17.9% (gasoline +28.4%) carried the gain; real wages fell 0.3% YoY</p>
+        <svg class="chart-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" aria-label="April CPI components breakdown">
+          <line x1="180" y1="40" x2="180" y2="280" stroke="#1A1F2E" stroke-width="1"/>
+          <line x1="180" y1="280" x2="700" y2="280" stroke="#1A1F2E" stroke-width="1"/>
+          <!-- x-axis 0 to 30%, 1 unit = 17.33 px -->
+          <text x="180" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">0%</text>
+          <text x="266" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">+5%</text>
+          <text x="353" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">+10%</text>
+          <text x="440" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">+15%</text>
+          <text x="526" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">+20%</text>
+          <text x="613" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">+25%</text>
+          <text x="700" y="298" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">+30%</text>
+          <line x1="266" y1="50" x2="266" y2="280" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="353" y1="50" x2="353" y2="280" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="440" y1="50" x2="440" y2="280" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="526" y1="50" x2="526" y2="280" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="613" y1="50" x2="613" y2="280" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <!-- Bars (each 28px tall, 32px row pitch) -->
+          <!-- Gasoline +28.4% -->
+          <rect x="180" y="56" width="492" height="24" fill="#A12B2B" opacity="0.92"/>
+          <text x="175" y="73" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#A12B2B" text-anchor="end">Gasoline</text>
+          <text x="680" y="73" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#A12B2B">+28.4%</text>
+          <!-- Energy +17.9% -->
+          <rect x="180" y="88" width="310" height="24" fill="#A12B2B" opacity="0.78"/>
+          <text x="175" y="105" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#A12B2B" text-anchor="end">Energy (all)</text>
+          <text x="498" y="105" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#A12B2B">+17.9%</text>
+          <!-- Headline 3.8% -->
+          <rect x="180" y="120" width="66" height="24" fill="#9E8240" opacity="0.9"/>
+          <text x="175" y="137" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#9E8240" text-anchor="end">Headline CPI</text>
+          <text x="254" y="137" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#9E8240">+3.8%</text>
+          <!-- Food 3.2% -->
+          <rect x="180" y="152" width="55" height="24" fill="#b56a3f" opacity="0.85"/>
+          <text x="175" y="169" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#0B1F3A" text-anchor="end">Food</text>
+          <text x="243" y="169" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#b56a3f">+3.2%</text>
+          <!-- Core 2.8% -->
+          <rect x="180" y="184" width="49" height="24" fill="#C9A961" opacity="0.92"/>
+          <text x="175" y="201" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#9E8240" text-anchor="end">Core CPI</text>
+          <text x="236" y="201" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#9E8240">+2.8%</text>
+          <text x="290" y="201" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" font-style="italic">vs. Fed&rsquo;s 2% target</text>
+          <!-- Real wages -0.3% -->
+          <rect x="175" y="216" width="6" height="24" fill="#A12B2B" opacity="0.85"/>
+          <text x="170" y="233" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#A12B2B" text-anchor="end">Real avg hourly wages</text>
+          <text x="195" y="233" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#A12B2B">&minus;0.3%</text>
+          <!-- Fed target line -->
+          <line x1="214" y1="180" x2="214" y2="212" stroke="#0B1F3A" stroke-width="1.5" stroke-dasharray="4,3"/>
+        </svg>
+        <p class="chart-caption">Energy &amp; gasoline are the visible problem; the under-the-hood issue is real wages turning negative. Consumers are seeing prices rise faster than their paychecks, which is why retail softened (+0.5% vs. +1.6%) and Michigan sentiment cratered (48.2 record low). Source: U.S. Bureau of Labor Statistics, April 2026 CPI Summary.</p>
+      </figure>
+
+      <p>Two things matter underneath the headline. First, the year-ahead inflation expectations from the Michigan survey jumped to <strong>4.8% from 3.8%</strong> &mdash; the largest one-month spike since April 2025. The Fed cares about anchored expectations more than it cares about any single print, and they just de-anchored a full percentage point. Second, <strong>real wages fell 0.3% year-over-year</strong>. That is the line where the consumer gives up on discretionary, which is what April retail showed: furniture &minus;2%, autos &minus;0.5%, department stores &minus;3.2%, clothing &minus;1.5%. Gasoline kept the headline retail number from being worse.</p>
+      <p>The PPI was equally hot: April producer prices ran +1.4% month-over-month, the largest gain since March 2022, and +6% year-over-year, the biggest since December 2022.<sup class="fn-ref"><a href="#fn4" id="fnref4b">4</a></sup> That feeds the May CPI in three to six weeks. The disinflation thesis is on hold &mdash; not dead, but the trajectory just paused.</p>
+    </section>
+
+    <!-- ============== 3. THE SUPERCYCLE THESIS VALIDATED ============== -->
+    <section class="pitch-section" id="supercycle-validated">
+      <h2>3. The supercycle thesis just got more validated</h2>
+      <p>Last Friday&rsquo;s <a href="cooling-under-semis-2026-05-08.html">cooling-under-semis</a> piece argued the AI cycle is strong enough to keep the index from caring about a cooling economy. This week the index didn&rsquo;t just not care &mdash; it printed a new all-time high in the face of five bad data points. The validation came through three single-name catalysts.</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 3 &mdash; AI infrastructure single-name rally, May to date</p>
+        <p class="chart-headline">MU +116% off the April 1 low; NVDA +15% MTD on China approval; CSCO +15% on $9B AI guide raise</p>
+        <svg class="chart-svg" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" aria-label="AI infrastructure name rally May 2026">
+          <line x1="160" y1="40" x2="160" y2="300" stroke="#1A1F2E" stroke-width="1"/>
+          <line x1="160" y1="300" x2="700" y2="300" stroke="#1A1F2E" stroke-width="1"/>
+          <text x="160" y="318" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">0%</text>
+          <text x="294" y="318" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">+25%</text>
+          <text x="429" y="318" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">+50%</text>
+          <text x="564" y="318" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">+100%</text>
+          <text x="700" y="318" font-family="Inter,sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">+125%</text>
+          <line x1="294" y1="50" x2="294" y2="300" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="429" y1="50" x2="429" y2="300" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="564" y1="50" x2="564" y2="300" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <!-- MU +116% since Apr 1 -->
+          <rect x="160" y="60" width="466" height="32" fill="#C9A961" opacity="0.92"/>
+          <text x="155" y="80" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#9E8240" text-anchor="end">Micron</text>
+          <text x="635" y="80" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#0B1F3A">+116%</text>
+          <text x="155" y="95" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end" font-style="italic">since April 1 low</text>
+          <!-- MU last week +38% -->
+          <rect x="160" y="100" width="205" height="22" fill="#C9A961" opacity="0.65"/>
+          <text x="155" y="116" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#9E8240" text-anchor="end">MU last week alone</text>
+          <text x="373" y="116" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#9E8240">+38%</text>
+          <text x="425" y="116" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" font-style="italic">best week since Dec 2008</text>
+          <!-- NVDA +15% MTD -->
+          <rect x="160" y="138" width="81" height="28" fill="#1D7A4F" opacity="0.92"/>
+          <text x="155" y="156" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#1D7A4F" text-anchor="end">NVIDIA</text>
+          <text x="248" y="156" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#0B1F3A">+15% MTD</text>
+          <text x="365" y="156" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" font-style="italic">H200 China approval (10 firms, up to 75K chips each)</text>
+          <!-- CSCO +15% on print -->
+          <rect x="160" y="174" width="81" height="28" fill="#b56a3f" opacity="0.92"/>
+          <text x="155" y="192" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#b56a3f" text-anchor="end">Cisco</text>
+          <text x="248" y="192" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#0B1F3A">+15% on print</text>
+          <text x="365" y="192" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" font-style="italic">FY26 AI orders raised to $9B from $5B</text>
+          <!-- Context callout -->
+          <rect x="160" y="220" width="540" height="70" fill="#0B1F3A" opacity="0.95" rx="6"/>
+          <text x="430" y="244" font-family="Inter,sans-serif" font-size="10" fill="#c9a961" text-anchor="middle" font-weight="600" letter-spacing="0.1em">FOR CONTEXT</text>
+          <text x="430" y="265" font-family="Inter,sans-serif" font-size="12" fill="#fbf7ef" text-anchor="middle" font-weight="600">S&amp;P 500 this week:  +1.6%   |   Nasdaq:  +1.7%   |   Dow:  +0.9%</text>
+          <text x="430" y="282" font-family="Inter,sans-serif" font-size="11" fill="rgba(251,247,239,0.78)" text-anchor="middle" font-style="italic">The supercycle names are doing 5-30x what the index is doing</text>
+        </svg>
+        <p class="chart-caption">The week was not broad. It was three names carrying the tape on three different AI-cycle catalysts: memory shortage (MU), China TAM unlock (NVDA), and AI infrastructure orders inflecting (CSCO). The index is up because of them, not in spite of them. Sources: CNBC, Reuters, Cisco IR.</p>
+      </figure>
+
+      <h3>Cisco: AI orders 4&times; YoY</h3>
+      <p>Cisco printed $15.84B revenue (vs. $15.56B expected) and EPS of $1.06 (vs. $1.04), and the FY26 guide was the news. Q4 revenue guided to $16.7&ndash;16.9B and full-year AI infrastructure revenue raised from $5B to <strong>$9 billion &mdash; greater than 4&times; the level of a year ago</strong>. They have already booked $5.3B of AI infrastructure and hyperscaler orders year-to-date. Restructuring: up to $1B in pretax charges and cutting 4,000 jobs to refocus on silicon, optics, security, and AI. Stock +15% on the print. The read-through is that the AI capex cycle is still inflecting <em>upward</em>, not plateauing.</p>
+
+      <h3>NVIDIA: China TAM unlocks 750,000 H200 chips</h3>
+      <p>The U.S. Commerce Department cleared shipments of H200 chips to roughly 10 Chinese firms &mdash; Alibaba, Tencent, ByteDance, JD.com, Lenovo and Foxconn as distributors &mdash; up to <strong>75,000 chips per customer</strong>. That is potentially three-quarters of a million H200 chips of incremental TAM. The caveat is that no deliveries have happened yet because Beijing pulled back guidance to its tech companies. Huang flew with Trump to a Xi summit to try to unlock the orders. The optionality is real and material, but execution is uncertain &mdash; we wouldn&rsquo;t model the China TAM into base-case earnings yet, but it&rsquo;s now in the bull case.</p>
+
+      <h3>Micron: memory shortage thesis is in motion</h3>
+      <p>MU was the most-traded stock on the tape this week. Up <strong>38% last week alone</strong> (best week since December 2008) and +116% since the April 1 low. The driver is the memory-shortage thesis: HBM demand is structurally outrunning supply, conventional DRAM is tightening alongside it, and contract pricing is moving. With the v1.1 PT at $865 and the bull at $1,036, we are watching whether the next print pushes us toward our bull case faster than modeled. The trim-discipline level at $900 is now in conversation, not theoretical.</p>
+    </section>
+
+    <!-- ============== 4. WHERE THE BOND MARKET IS POINTING ============== -->
+    <section class="pitch-section" id="bond-market">
+      <h2>4. Where the bond market is telling you to look</h2>
+      <p>Equities ignored the macro this week. Bonds didn&rsquo;t. The two-day repricing of Fed expectations is the most informative thing that happened all week and it isn&rsquo;t in the equity headlines.</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 4 &mdash; Fed rate-cut probability collapse, 2026</p>
+        <p class="chart-headline">Cut odds gone from 18% to 3% in weeks; market now prices a 28% chance of a December HIKE</p>
+        <svg class="chart-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" aria-label="Fed cut probability collapse">
+          <line x1="80" y1="280" x2="700" y2="280" stroke="#1A1F2E" stroke-width="1"/>
+          <line x1="80" y1="40" x2="80" y2="280" stroke="#1A1F2E" stroke-width="1"/>
+          <text x="72" y="284" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">0%</text>
+          <text x="72" y="220" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">10%</text>
+          <text x="72" y="156" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">20%</text>
+          <text x="72" y="92" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">30%</text>
+          <line x1="80" y1="220" x2="700" y2="220" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="80" y1="156" x2="700" y2="156" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <line x1="80" y1="92" x2="700" y2="92" stroke="#D9D2C2" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <!-- 2026 rate cut probability: 18% -> 3% -->
+          <text x="200" y="60" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#A12B2B" text-anchor="middle">2026 RATE CUT PROBABILITY</text>
+          <!-- Bar 1: ~3 weeks ago, 18% -->
+          <rect x="160" y="165" width="80" height="115" fill="#A12B2B" opacity="0.55"/>
+          <text x="200" y="158" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#A12B2B" text-anchor="middle">18%</text>
+          <text x="200" y="298" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#0B1F3A" text-anchor="middle">~3 wks ago</text>
+          <!-- Bar 2: today, 3% -->
+          <rect x="260" y="261" width="80" height="19" fill="#A12B2B" opacity="0.92"/>
+          <text x="300" y="254" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#A12B2B" text-anchor="middle">3%</text>
+          <text x="300" y="298" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#A12B2B" text-anchor="middle">today</text>
+          <!-- Arrow showing decline -->
+          <path d="M 240 200 Q 270 240 290 260" fill="none" stroke="#0B1F3A" stroke-width="2"/>
+          <polygon points="285,255 295,265 295,253" fill="#0B1F3A"/>
+          <!-- December rate hike probability -->
+          <text x="500" y="60" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A" text-anchor="middle">DECEMBER RATE HIKE PROBABILITY</text>
+          <!-- Bar 3: small (was ~0% recently) -->
+          <rect x="440" y="280" width="80" height="0" fill="#0B1F3A" opacity="0.45"/>
+          <text x="480" y="298" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#0B1F3A" text-anchor="middle">recently ~0%</text>
+          <!-- Bar 4: now 28% -->
+          <rect x="540" y="101" width="80" height="179" fill="#0B1F3A" opacity="0.85"/>
+          <text x="580" y="94" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#0B1F3A" text-anchor="middle">28%</text>
+          <text x="580" y="298" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#0B1F3A" text-anchor="middle">today</text>
+          <!-- Yield callout -->
+          <rect x="80" y="40" width="100" height="40" fill="#0B1F3A" opacity="0.92" rx="4"/>
+          <text x="130" y="58" font-family="Inter,sans-serif" font-size="9" fill="#c9a961" text-anchor="middle" font-weight="600">10Y YIELD</text>
+          <text x="130" y="74" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#fbf7ef" text-anchor="middle">4.49%</text>
+        </svg>
+        <p class="chart-caption">In a span of weeks, a 25bps cut for 2026 went from base case to barely a tail. A December hike, which had been zero, is now a quarter-probability event. The long end agrees: 30-year at 5.05%, 10-year at the highest since July 2025. Source: federal funds futures, U.S. Treasury, FOMC SEP.</p>
+      </figure>
+
+      <p>This matters because the AI cycle is paying for the index move, but <strong>rate-sensitive sectors are paying the bond market move</strong>. Anything with a 10x+ multiple and limited near-term earnings is going to feel the discount-rate compression. So far the AI tape has been strong enough to muscle through that, but if 10Y yields push toward 4.75% or 30Y toward 5.25%, the long-duration growth equity bid breaks regardless of how good Cisco&rsquo;s AI orders are. That&rsquo;s the macro risk-reward going into next week.</p>
+    </section>
+
+    <!-- ============== 5. WHAT WE'RE WATCHING ============== -->
+    <section class="pitch-section" id="watching">
+      <h2>5. What we&rsquo;re watching today and into next week</h2>
+      <p>Three buckets: today&rsquo;s remaining data, next week&rsquo;s docket, and the catalyst calendar through end of May.</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 5 &mdash; Catalyst calendar &mdash; rest of today through May 22</p>
+        <p class="chart-headline">Industrial Production today; Walmart, NVDA earnings, FOMC minutes next week</p>
+        <svg class="chart-svg" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" aria-label="Catalyst calendar next week">
+          <line x1="60" y1="180" x2="690" y2="180" stroke="#0B1F3A" stroke-width="2"/>
+          <polygon points="685,174 700,180 685,186" fill="#0B1F3A"/>
+          <!-- TODAY -->
+          <circle cx="100" cy="180" r="8" fill="#b56a3f"/>
+          <text x="100" y="205" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#b56a3f" text-anchor="middle">TODAY</text>
+          <text x="100" y="218" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Fri May 15</text>
+          <line x1="100" y1="172" x2="100" y2="80" stroke="#b56a3f" stroke-width="0.8" stroke-dasharray="2,2"/>
+          <rect x="40" y="40" width="160" height="42" fill="#fff" stroke="#b56a3f" stroke-width="1" rx="3"/>
+          <text x="120" y="56" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#b56a3f" text-anchor="middle">Industrial Production</text>
+          <text x="120" y="69" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="middle">April release &middot; 9:15 AM ET</text>
+          <text x="120" y="80" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="middle">capex / capacity util read</text>
+          <!-- Mon May 18 -->
+          <circle cx="240" cy="180" r="6" fill="#5b7f6b"/>
+          <text x="240" y="205" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#0B1F3A" text-anchor="middle">Mon May 18</text>
+          <text x="240" y="218" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Leading Index</text>
+          <!-- Tue May 19 (Walmart) -->
+          <circle cx="340" cy="180" r="9" fill="#C9A961" stroke="#9E8240" stroke-width="2"/>
+          <text x="340" y="205" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#9E8240" text-anchor="middle">Tue May 19</text>
+          <text x="340" y="218" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Home Depot earn.</text>
+          <!-- Wed May 20 (Walmart + FOMC minutes) -->
+          <circle cx="440" cy="180" r="9" fill="#C9A961" stroke="#9E8240" stroke-width="2"/>
+          <text x="440" y="205" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#9E8240" text-anchor="middle">Wed May 20</text>
+          <text x="440" y="218" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Walmart + FOMC mins</text>
+          <line x1="440" y1="172" x2="440" y2="80" stroke="#9E8240" stroke-width="0.8" stroke-dasharray="2,2"/>
+          <rect x="370" y="40" width="180" height="42" fill="#fff" stroke="#9E8240" stroke-width="1" rx="3"/>
+          <text x="460" y="56" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#9E8240" text-anchor="middle">Consumer health check</text>
+          <text x="460" y="69" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="middle">WMT post-bell; FOMC minutes 2pm</text>
+          <text x="460" y="80" font-family="Inter,sans-serif" font-size="9" fill="#A12B2B" text-anchor="middle" font-style="italic">tone could spike yields again</text>
+          <!-- Thu May 21 (NVDA) -->
+          <circle cx="540" cy="180" r="11" fill="#1D7A4F" stroke="#fbf7ef" stroke-width="2"/>
+          <text x="540" y="205" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#1D7A4F" text-anchor="middle">Thu May 21</text>
+          <text x="540" y="218" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">NVIDIA earnings</text>
+          <line x1="540" y1="172" x2="540" y2="270" stroke="#1D7A4F" stroke-width="0.8" stroke-dasharray="2,2"/>
+          <rect x="430" y="278" width="220" height="50" fill="#fff" stroke="#1D7A4F" stroke-width="1" rx="3"/>
+          <text x="540" y="296" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#1D7A4F" text-anchor="middle">THE PRINT OF THE QUARTER</text>
+          <text x="540" y="309" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="middle">FY26 Q1; data-center, H200 China commentary,</text>
+          <text x="540" y="320" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="middle">Blackwell ramp, Rubin platform color</text>
+          <!-- Fri May 22 -->
+          <circle cx="640" cy="180" r="6" fill="#5b7f6b"/>
+          <text x="640" y="205" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#0B1F3A" text-anchor="middle">Fri May 22</text>
+          <text x="640" y="218" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">U-Mich (final)</text>
+        </svg>
+        <p class="chart-caption">Industrial Production today gives the manufacturing read-through to AI capex (the data-center buildout shows up in capacity utilization). The Tuesday-Wednesday-Thursday triple of Home Depot &middot; Walmart + FOMC minutes &middot; NVIDIA is the actual market-moving stack next week. Nothing else even comes close. Source: BEA, BLS, S&amp;P Capital IQ, Federal Reserve.</p>
+      </figure>
+
+      <h3>Today (Friday May 15) &mdash; what we&rsquo;re watching</h3>
+      <ul class="kill-list">
+        <li><strong>Industrial Production for April.</strong> Released 9:15 AM ET. We are looking at capacity utilization specifically; the AI capex cycle should be pulling utilization higher in computer/electronics manufacturing even as overall utilization stays flat-to-down. If that divergence is widening, the supercycle has a real economic footprint, not just an equity-multiple one.</li>
+        <li><strong>Michigan Sentiment preliminary release.</strong> Already wired in at the record-low 48.2 from this morning&rsquo;s leak. The market did not move on it, which itself is the signal: the consumer-cycle narrative is being ignored in favor of the AI-cycle narrative.</li>
+        <li><strong>Yields and the dollar.</strong> Watching for whether 10Y crosses 4.55% (the level where the long-duration growth bid historically wobbles) or 30Y crosses 5.10% (where pension/insurance demand typically reawakens and yields cap).</li>
+      </ul>
+
+      <h3>Next week &mdash; the docket</h3>
+      <ul class="kill-list">
+        <li><strong>Tuesday: Home Depot.</strong> The cleanest consumer read for housing-adjacent durables. If HD prints a soft comp on big-ticket discretionary, the &ldquo;real wages negative + sentiment record low&rdquo; thesis gets a corporate confirmation.</li>
+        <li><strong>Wednesday post-bell: Walmart.</strong> Mass-market consumer read with the income skew baked in. Watch the food-vs-general-merchandise mix &mdash; if customers are trading down into grocery and out of GM, the cooling-economy thesis just got a marquee tell.</li>
+        <li><strong>Wednesday 2 PM: FOMC minutes from the April meeting.</strong> Looking specifically for the distribution of cut/hold/hike views among voters and the language on tariff and energy passthrough. A hawkish tone here adds another leg to the yield move.</li>
+        <li><strong>Thursday after the close: NVIDIA.</strong> The single most important print of the quarter. We will be watching: data-center revenue (consensus high $40-billion range, watch for a beat to a 5-handle), Blackwell ramp comments, Rubin platform timeline, and any explicit color on the H200 China license utilization. If NVDA prints a clean beat and the China commentary opens the door to actual Beijing approvals, the supercycle thesis goes from validated to entrenched.</li>
+      </ul>
+    </section>
+
+    <!-- ============== 6. INVESTMENT THESIS ============== -->
+    <section class="pitch-section" id="investment-thesis">
+      <h2>6. Investment thesis &mdash; what we&rsquo;re positioned for</h2>
+      <p>Same framework as last week, reinforced by the data. The selectivity bias holds. The supercycle is bigger than the macro right now, but the cushion against an eventual macro tantrum is shrinking with every record high.</p>
+
+      <h3>Overweight: structural AI infrastructure</h3>
+      <p>Memory (MU), compute anchor (NVDA), networking and custom silicon (AVGO, CSCO), data-center power (electrical equipment, transformers, cooling, utility interconnect). The Cisco print just told you order books are inflecting up 4x, not topping out. The NVDA China license is optionality with real magnitudes attached (up to 750,000 H200 chips of incremental demand). The MU rally is supply-tight memory pricing showing up in the tape before it shows up in the prints.</p>
+
+      <h3>Overweight: cybersecurity and defense</h3>
+      <p>Durable demand from a higher-rates, higher-geopolitical-risk regime. Earnings cyclicality is low; capital intensity is moderate; the demand drivers don&rsquo;t reverse on a soft jobs print.</p>
+
+      <h3>Underweight: broad cyclicals and rate-sensitive growth</h3>
+      <p>Anything that needs cheap capital to defend growth is getting punished at 4.5% 10Y. Anything tied to consumer discretionary big-ticket is getting punished by the &minus;0.3% real-wages line in this morning&rsquo;s CPI. Both are going to remain underweights until either yields back off or the consumer reaccelerates &mdash; neither of which is the modal path through next week.</p>
+
+      <h3>Hedge layer: long-end duration and gold</h3>
+      <p>If you&rsquo;re long AI infrastructure at single-name concentration, the cleanest hedge is not equity beta &mdash; it&rsquo;s a tail-risk overlay on the macro that&rsquo;s threatening the multiple. Long-end Treasuries make sense if you think 30Y cracks 5.10% and snaps back. Gold continues to make sense as long as inflation expectations are de-anchoring (4.8% one-year is doing real work here).</p>
+    </section>
+
+    <!-- ============== 7. WHAT BREAKS THIS ============== -->
+    <section class="pitch-section" id="what-breaks-this">
+      <h2>7. What ends this trade</h2>
+      <p>The supercycle is winning by a wider margin than it should be. That margin gets compressed by three specific things, ranked by probability over the next four weeks.</p>
+      <ol class="kill-list">
+        <li><strong>10-year yield through 4.75%.</strong> The pain threshold for long-duration growth equity. Above that level the multiple compression starts pulling the AI names lower regardless of fundamentals. Watching the 30Y above 5.10% as the leading indicator &mdash; the long end usually moves first.</li>
+        <li><strong>NVIDIA prints a soft Blackwell/Rubin guide on May 21.</strong> If management signals capacity tightness or pricing pressure that wasn&rsquo;t in the model, the &ldquo;AI orders inflecting&rdquo; framing fractures. We don&rsquo;t think this is the modal outcome &mdash; Cisco&rsquo;s commentary about AI orders 4x YoY is consistent with the supply chain still in inflection mode &mdash; but the asymmetry is real.</li>
+        <li><strong>A hot May CPI on June 11.</strong> If the April PPI passthrough lands in the May CPI report (we&rsquo;d expect a ~+0.4% MoM core print to confirm), the long end repricies higher and the Fed-hike conversation goes from 28% to 50%. That would be the macro-tantrum scenario.</li>
+      </ol>
+      <p>None of these have triggered yet. Three of three would have to fire to break the thesis. One of three changes the rating; two of three changes the size; three of three changes the side. We are watching the data with our finger on the disclosure trigger, as always.</p>
+    </section>
+
+    <!-- ============== 8. CLOSING ============== -->
+    <section class="pitch-section" id="closing">
+      <h2>8. Closing</h2>
+      <p>The week resolved a question we didn&rsquo;t fully know the answer to last Friday. The macro <em>can</em> deteriorate while the market prints higher, at least over a span of weeks, as long as the AI cycle keeps inflecting. That doesn&rsquo;t make this a one-decision long &mdash; the cushion against a macro tantrum is thinner today than it was a week ago, the yield curve is screaming, and the consumer is plainly cracking under wage compression. But it does mean the right trade for now is not to fade the structural winners, even at uncomfortable valuations.</p>
+      <p>Stay long quality, stay selective, watch the long end of the curve, and stay particularly close to Wednesday&rsquo;s FOMC minutes and Thursday&rsquo;s NVIDIA print. By next Friday we will know whether this is a trade that compounds for another quarter or one that broke at the moment everyone declared it bulletproof.</p>
+    </section>
+
+    <!-- ============== SOURCES ============== -->
+    <section class="pitch-section" id="sources">
+      <h2>Sources</h2>
+      <ol class="sources-list">
+        <li id="fn1">CNBC, &ldquo;CPI inflation April 2026: Prices rose 3.8% annually.&rdquo; <a href="https://www.cnbc.com/2026/05/12/cpi-inflation-april-2026-.html" target="_blank" rel="noopener">cnbc.com</a> <a href="#fnref1a">&crarr;</a></li>
+        <li id="fn2">US News / AP, &ldquo;Retail Sales up 0.5% in April From March as Higher Gas Prices Leave Less Room for Nonessential Items.&rdquo; <a href="https://www.usnews.com/news/business/articles/2026-05-14/retail-sales-up-0-5-in-april-from-march-as-higher-gas-prices-leave-less-room-for-nonessential-items" target="_blank" rel="noopener">usnews.com</a> <a href="#fnref2a">&crarr;</a></li>
+        <li id="fn3">University of Michigan Surveys of Consumers, May 2026 preliminary. <a href="https://data.sca.isr.umich.edu/" target="_blank" rel="noopener">sca.isr.umich.edu</a> <a href="#fnref3a">&crarr;</a></li>
+        <li id="fn4">Bloomberg, &ldquo;US 10-Year Treasury Yield Hits Highest Since July After PPI Data.&rdquo; <a href="https://www.bloomberg.com/news/articles/2026-05-13/us-10-year-treasury-yield-hits-highest-since-july-after-ppi-data" target="_blank" rel="noopener">bloomberg.com</a> <a href="#fnref4a">&crarr;</a> <a href="#fnref4b">&crarr;</a></li>
+        <li id="fn5">Morningstar, &ldquo;As Powell Closes Out Term as Fed Chair, Odds of Rate Cut in 2026 Vanish.&rdquo; <a href="https://www.morningstar.com/economy/powell-closes-out-term-fed-chair-odds-rate-cut-2026-vanish" target="_blank" rel="noopener">morningstar.com</a> <a href="#fnref5a">&crarr;</a></li>
+        <li id="fn6">CNBC, &ldquo;Stock market today: S&amp;P 500, Nasdaq record highs.&rdquo; <a href="https://www.cnbc.com/2026/05/13/stock-market-today-live-updates.html" target="_blank" rel="noopener">cnbc.com</a> <a href="#fnref6a">&crarr;</a></li>
+        <li id="fn7">Cisco Investor Relations, Q3 FY26 earnings release. <a href="https://investor.cisco.com/news/news-details/2026/CISCO-REPORTS-THIRD-QUARTER-EARNINGS/default.aspx" target="_blank" rel="noopener">investor.cisco.com</a> <a href="#fnref7a">&crarr;</a></li>
+        <li id="fn8">CNBC / Reuters, &ldquo;U.S. clears H200 chip sales to 10 China firms as Nvidia CEO looks for breakthrough.&rdquo; <a href="https://www.cnbc.com/2026/05/14/us-clears-h200-chip-sales-to-10-china-firms-as-nvidia-ceo-looks-for-breakthrough.html" target="_blank" rel="noopener">cnbc.com</a> <a href="#fnref8a">&crarr;</a></li>
+        <li id="fn9">CNBC, &ldquo;Micron shares are rising again despite weak overall market. Why memory chip rally seems unstoppable.&rdquo; <a href="https://www.cnbc.com/2026/05/11/micron-shares-are-rising-again-despite-weak-overall-market.html" target="_blank" rel="noopener">cnbc.com</a> <a href="#fnref9a">&crarr;</a></li>
+      </ol>
+      <p class="muted small" style="margin-top:1.5rem;">Nothing on this page is investment advice. See <a href="disclaimer.html">disclaimer</a>.</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=45" defer></script>
+</body>
+</html>

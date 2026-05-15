@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=44" />
+  <link rel="stylesheet" href="style.css?v=45" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
 </head>
@@ -125,31 +125,33 @@
         <h2>Just published</h2>
         <a class="more" href="writing.html">All writing &rarr;</a>
       </div>
-      <a class="feature-card" href="cooling-under-semis-2026-05-08.html">
+      <a class="feature-card" href="weekly-outlook-2026-05-15.html">
         <div class="feature-card-art" aria-hidden="true">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
             <rect width="200" height="200" fill="#0b1f3a" rx="10"/>
-            <!-- Faint horizontal grid for context -->
+            <!-- Faint horizontal grid -->
             <line x1="22" y1="160" x2="178" y2="160" stroke="#fbf7ef" stroke-width="1" opacity="0.18"/>
             <line x1="22" y1="100" x2="178" y2="100" stroke="#fbf7ef" stroke-width="1" opacity="0.12"/>
-            <!-- Broader market / macro cooling: drifting flat-to-down, cream, low opacity -->
-            <polyline points="22,128 50,124 78,128 106,134 134,140 162,146 178,150"
-                      stroke="#fbf7ef" stroke-width="2.5" fill="none"
+            <!-- Macro composite: drifting down (cream) -->
+            <polyline points="22,110 50,114 78,118 106,124 134,130 162,140 178,150"
+                      stroke="#fbf7ef" stroke-width="2.2" fill="none"
                       stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
-            <!-- Semis carrying the tape: strong uptrend, gold accent -->
-            <polyline points="22,158 50,140 78,116 106,94 134,68 162,48 178,34"
+            <!-- S&P: rising hard (gold) -->
+            <polyline points="22,150 50,138 78,120 106,98 134,72 162,48 178,28"
                       stroke="#c9a961" stroke-width="3.5" fill="none"
                       stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="178" cy="34" r="6" fill="#c9a961"/>
+            <circle cx="178" cy="28" r="6" fill="#c9a961"/>
+            <!-- Tiny "ATH" tag -->
+            <text x="160" y="22" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#c9a961" text-anchor="end">ATH</text>
           </svg>
         </div>
         <div class="feature-card-body">
-          <p class="eyebrow">Just published &middot; May 8, 2026 &middot; Market recap</p>
-          <h3>The market is cooling under the semis.</h3>
-          <p>Markets head into Friday's payrolls print with the economy clearly cooling &mdash; but equities have not broken. Underneath the index, semiconductors and AI infrastructure are doing the heavy lifting: 85% of S&amp;P 500 names beat this earnings season, tech drove 45% of YTD gains, and semis are up 24% YTD vs hyperscalers by 19 points. The index is not saying macro is fine &mdash; it is saying the AI cycle is strong enough to keep momentum alive while the broader economy decelerates.</p>
-          <p class="feature-card-cta">Read the recap &rarr;</p>
+          <p class="eyebrow">Just published &middot; May 15, 2026 &middot; Weekly outlook</p>
+          <h3>The macro broke. The market printed higher.</h3>
+          <p>Five macro data points missed badly this week &mdash; hot CPI (3.8%), soft retail (+0.5%), record-low Michigan sentiment (48.2), 10Y yields at 4.49%, and Fed cut probability collapsing from 18% to 3%. The S&amp;P and Nasdaq still closed at new all-time highs. Cisco AI orders 4&times; YoY, NVDA cleared for 10 Chinese firms, Micron up 38% on the week. The AI cycle is overwriting macro in real time.</p>
+          <p class="feature-card-cta">Read the outlook &rarr;</p>
         </div>
-      </a>
+        </a>
     </section>
 
     <!-- ====== JUST SHIPPED (newest tool / product) ====== -->
@@ -486,6 +488,6 @@
     </div>
   </footer>
 
-  <script src="script.js?v=44" defer></script>
+  <script src="script.js?v=45" defer></script>
 </body>
 </html>
