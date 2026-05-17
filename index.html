@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=45" />
+  <link rel="stylesheet" href="style.css?v=46" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
 </head>
@@ -125,31 +125,42 @@
         <h2>Just published</h2>
         <a class="more" href="writing.html">All writing &rarr;</a>
       </div>
-      <a class="feature-card" href="weekly-outlook-2026-05-15.html">
+      <a class="feature-card" href="weekly-outlook-2026-05-18.html">
         <div class="feature-card-art" aria-hidden="true">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
             <rect width="200" height="200" fill="#0b1f3a" rx="10"/>
-            <!-- Faint horizontal grid -->
-            <line x1="22" y1="160" x2="178" y2="160" stroke="#fbf7ef" stroke-width="1" opacity="0.18"/>
-            <line x1="22" y1="100" x2="178" y2="100" stroke="#fbf7ef" stroke-width="1" opacity="0.12"/>
-            <!-- Macro composite: drifting down (cream) -->
-            <polyline points="22,110 50,114 78,118 106,124 134,130 162,140 178,150"
-                      stroke="#fbf7ef" stroke-width="2.2" fill="none"
-                      stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
-            <!-- S&P: rising hard (gold) -->
-            <polyline points="22,150 50,138 78,120 106,98 134,72 162,48 178,28"
-                      stroke="#c9a961" stroke-width="3.5" fill="none"
-                      stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="178" cy="28" r="6" fill="#c9a961"/>
-            <!-- Tiny "ATH" tag -->
-            <text x="160" y="22" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#c9a961" text-anchor="end">ATH</text>
+            <!-- Week-grid: Mon-Fri columns -->
+            <line x1="22"  y1="36" x2="22"  y2="180" stroke="#fbf7ef" stroke-width="1" opacity="0.18"/>
+            <line x1="56"  y1="36" x2="56"  y2="180" stroke="#fbf7ef" stroke-width="1" opacity="0.18"/>
+            <line x1="90"  y1="36" x2="90"  y2="180" stroke="#fbf7ef" stroke-width="1" opacity="0.18"/>
+            <line x1="124" y1="36" x2="124" y2="180" stroke="#fbf7ef" stroke-width="1" opacity="0.18"/>
+            <line x1="158" y1="36" x2="158" y2="180" stroke="#fbf7ef" stroke-width="1" opacity="0.18"/>
+            <line x1="22"  y1="180" x2="178" y2="180" stroke="#fbf7ef" stroke-width="1" opacity="0.3"/>
+            <!-- Day labels -->
+            <text x="34"  y="28" font-family="Inter,sans-serif" font-size="9" fill="#fbf7ef" opacity="0.55" text-anchor="middle">M</text>
+            <text x="68"  y="28" font-family="Inter,sans-serif" font-size="9" fill="#fbf7ef" opacity="0.55" text-anchor="middle">T</text>
+            <text x="102" y="28" font-family="Inter,sans-serif" font-size="9" fill="#c9a961" font-weight="700" text-anchor="middle">W</text>
+            <text x="136" y="28" font-family="Inter,sans-serif" font-size="9" fill="#fbf7ef" opacity="0.55" text-anchor="middle">T</text>
+            <text x="170" y="28" font-family="Inter,sans-serif" font-size="9" fill="#fbf7ef" opacity="0.55" text-anchor="middle">F</text>
+            <!-- Wednesday highlight column -->
+            <rect x="90" y="36" width="34" height="144" fill="#c9a961" opacity="0.10"/>
+            <!-- Catalyst dots: tiny across the week, BIG on Wednesday -->
+            <circle cx="39"  cy="155" r="3"  fill="#fbf7ef" opacity="0.6"/>
+            <circle cx="73"  cy="135" r="3"  fill="#fbf7ef" opacity="0.6"/>
+            <circle cx="107" cy="90"  r="9"  fill="#c9a961"/>
+            <circle cx="107" cy="60"  r="7"  fill="#b56a3f"/>
+            <circle cx="141" cy="135" r="3"  fill="#fbf7ef" opacity="0.6"/>
+            <circle cx="175" cy="155" r="3"  fill="#fbf7ef" opacity="0.6"/>
+            <!-- Tags -->
+            <text x="118" y="64" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#b56a3f">NVDA</text>
+            <text x="118" y="94" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#c9a961">FOMC</text>
           </svg>
         </div>
         <div class="feature-card-body">
-          <p class="eyebrow">Just published &middot; May 15, 2026 &middot; Weekly outlook</p>
-          <h3>The macro broke. The market printed higher.</h3>
-          <p>Five macro data points missed badly this week &mdash; hot CPI (3.8%), soft retail (+0.5%), record-low Michigan sentiment (48.2), 10Y yields at 4.49%, and Fed cut probability collapsing from 18% to 3%. The S&amp;P and Nasdaq still closed at new all-time highs. Cisco AI orders 4&times; YoY, NVDA cleared for 10 Chinese firms, Micron up 38% on the week. The AI cycle is overwriting macro in real time.</p>
-          <p class="feature-card-cta">Read the outlook &rarr;</p>
+          <p class="eyebrow">Just published &middot; May 18, 2026 &middot; Week ahead</p>
+          <h3>Three tests the supercycle has to pass this week.</h3>
+          <p>The consumer (Home Depot Tue, TJX Wed, Walmart Thu), the Fed (FOMC minutes Wed 2pm &mdash; the most divided meeting since 1992), and NVIDIA (Wed after close, the print of the quarter). Wednesday May 20 is binary: a Fed disagreement read and an $87B Q2 guide land in the same eight-hour window. Above $87B = supercycle entrenched. Below $85B = the deceleration narrative finally arrives.</p>
+          <p class="feature-card-cta">Read the week ahead &rarr;</p>
         </div>
         </a>
     </section>
@@ -455,39 +466,4 @@
           <span class="rw-text"><em>Odd Lots</em> (Bloomberg) for the macro / commodities / crypto crossovers. <em>Acquired</em> when there&rsquo;s a tech business worth unpacking end-to-end &mdash; recent episodes on the chip stack are excellent.</span>
         </li>
       </ul>
-      <p class="muted small">Updated every few weeks on the <a href="now.html">/now</a> page. The full <a href="reading-list.html">reading list</a> &mdash; foundations, sectoral, capital allocation &amp; sponsor capital &mdash; lives there.</p>
-    </section>
-
-    <!-- ====== SUBSCRIBE ====== -->
-    <section class="section subscribe">
-      <h2>Subscribe</h2>
-      <p>New essays and research notes, sent occasionally. No spam, unsubscribe any time.</p>
-      <iframe
-        src="https://bpleon.substack.com/embed"
-        title="Subscribe"
-        width="100%"
-        height="150"
-        style="border:1px solid var(--rule); border-radius:8px; background:var(--bg);"
-        frameborder="0"
-        scrolling="no"></iframe>
-      <p class="subscribe-fallback">
-        Or subscribe directly on Substack: <a href="https://bpleon.substack.com" rel="noopener">bpleon.substack.com</a>
-      </p>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
-      <ul class="social">
-        <li><a href="now.html">Now</a></li>
-        <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
-        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
-      </ul>
-    </div>
-  </footer>
-
-  <script src="script.js?v=45" defer></script>
-</body>
-</html>
+      <p class="muted small">Updated every few weeks on the <a href="now.html">/now</a> page. The full <a href="reading-list.html">reading list</a> &mdash; foundations, sectoral, capital allocation &amp; s
