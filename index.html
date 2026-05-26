@@ -29,7 +29,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=46" />
+  <link rel="stylesheet" href="style.css?v=47" />
   <!-- Cloudflare Web Analytics -->
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
 </head>
@@ -125,41 +125,36 @@
         <h2>Just published</h2>
         <a class="more" href="writing.html">All writing &rarr;</a>
       </div>
-      <a class="feature-card" href="weekly-outlook-2026-05-18.html">
+      <a class="feature-card" href="weekly-outlook-2026-05-26.html">
         <div class="feature-card-art" aria-hidden="true">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
             <rect width="200" height="200" fill="#0b1f3a" rx="10"/>
-            <!-- Week-grid: Mon-Fri columns -->
-            <line x1="22"  y1="36" x2="22"  y2="180" stroke="#fbf7ef" stroke-width="1" opacity="0.18"/>
-            <line x1="56"  y1="36" x2="56"  y2="180" stroke="#fbf7ef" stroke-width="1" opacity="0.18"/>
-            <line x1="90"  y1="36" x2="90"  y2="180" stroke="#fbf7ef" stroke-width="1" opacity="0.18"/>
-            <line x1="124" y1="36" x2="124" y2="180" stroke="#fbf7ef" stroke-width="1" opacity="0.18"/>
-            <line x1="158" y1="36" x2="158" y2="180" stroke="#fbf7ef" stroke-width="1" opacity="0.18"/>
-            <line x1="22"  y1="180" x2="178" y2="180" stroke="#fbf7ef" stroke-width="1" opacity="0.3"/>
-            <!-- Day labels -->
-            <text x="34"  y="28" font-family="Inter,sans-serif" font-size="9" fill="#fbf7ef" opacity="0.55" text-anchor="middle">M</text>
-            <text x="68"  y="28" font-family="Inter,sans-serif" font-size="9" fill="#fbf7ef" opacity="0.55" text-anchor="middle">T</text>
-            <text x="102" y="28" font-family="Inter,sans-serif" font-size="9" fill="#c9a961" font-weight="700" text-anchor="middle">W</text>
-            <text x="136" y="28" font-family="Inter,sans-serif" font-size="9" fill="#fbf7ef" opacity="0.55" text-anchor="middle">T</text>
-            <text x="170" y="28" font-family="Inter,sans-serif" font-size="9" fill="#fbf7ef" opacity="0.55" text-anchor="middle">F</text>
-            <!-- Wednesday highlight column -->
-            <rect x="90" y="36" width="34" height="144" fill="#c9a961" opacity="0.10"/>
-            <!-- Catalyst dots: tiny across the week, BIG on Wednesday -->
-            <circle cx="39"  cy="155" r="3"  fill="#fbf7ef" opacity="0.6"/>
-            <circle cx="73"  cy="135" r="3"  fill="#fbf7ef" opacity="0.6"/>
-            <circle cx="107" cy="90"  r="9"  fill="#c9a961"/>
-            <circle cx="107" cy="60"  r="7"  fill="#b56a3f"/>
-            <circle cx="141" cy="135" r="3"  fill="#fbf7ef" opacity="0.6"/>
-            <circle cx="175" cy="155" r="3"  fill="#fbf7ef" opacity="0.6"/>
-            <!-- Tags -->
-            <text x="118" y="64" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#b56a3f">NVDA</text>
-            <text x="118" y="94" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#c9a961">FOMC</text>
+            <!-- Baseline -->
+            <line x1="22" y1="170" x2="178" y2="170" stroke="#fbf7ef" stroke-width="1" opacity="0.30"/>
+            <!-- Eight ascending weekly bars + a question-mark bar for PCE Friday -->
+            <rect x="22"  y="148" width="14" height="22" fill="#fbf7ef" opacity="0.40"/>
+            <rect x="40"  y="138" width="14" height="32" fill="#fbf7ef" opacity="0.50"/>
+            <rect x="58"  y="124" width="14" height="46" fill="#fbf7ef" opacity="0.60"/>
+            <rect x="76"  y="108" width="14" height="62" fill="#fbf7ef" opacity="0.70"/>
+            <rect x="94"  y="92"  width="14" height="78" fill="#c9a961" opacity="0.85"/>
+            <rect x="112" y="76"  width="14" height="94" fill="#c9a961"/>
+            <rect x="130" y="60"  width="14" height="110" fill="#c9a961"/>
+            <rect x="148" y="44"  width="14" height="126" fill="#c9a961"/>
+            <!-- PCE Friday: question-mark / pending bar with dashed outline -->
+            <rect x="166" y="32"  width="14" height="138" fill="none" stroke="#b56a3f" stroke-width="2" stroke-dasharray="3 2"/>
+            <text x="173" y="105" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#b56a3f" text-anchor="middle">?</text>
+            <!-- "8" callout -->
+            <text x="155" y="38" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#c9a961" text-anchor="middle">8</text>
+            <!-- PCE tag -->
+            <text x="173" y="26" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#b56a3f" text-anchor="middle">PCE</text>
+            <!-- Bottom label -->
+            <text x="100" y="190" font-family="Inter,sans-serif" font-size="8" font-weight="600" fill="#fbf7ef" opacity="0.55" text-anchor="middle" letter-spacing="1">EIGHT WEEKS UP &middot; PCE FRIDAY</text>
           </svg>
         </div>
         <div class="feature-card-body">
-          <p class="eyebrow">Just published &middot; May 18, 2026 &middot; Week ahead</p>
-          <h3>Three tests the supercycle has to pass this week.</h3>
-          <p>The consumer (Home Depot Tue, TJX Wed, Walmart Thu), the Fed (FOMC minutes Wed 2pm &mdash; the most divided meeting since 1992), and NVIDIA (Wed after close, the print of the quarter). Wednesday May 20 is binary: a Fed disagreement read and an $87B Q2 guide land in the same eight-hour window. Above $87B = supercycle entrenched. Below $85B = the deceleration narrative finally arrives.</p>
+          <p class="eyebrow">Just published &middot; May 26, 2026 &middot; Week ahead</p>
+          <h3>Eight weeks up. Now PCE has to confirm.</h3>
+          <p>NVIDIA crushed it with a $91B Q2 guide ($4B above Street). Walmart's U.S. comp confirmed the consumer at +4.1%. The FOMC April minutes printed the most divided meeting since October 1992. S&amp;P closed Friday at 7,473 &mdash; eight straight up weeks, the longest streak since 2017. But NVDA closed -1.77% on the print, the 10Y finished at 4.56%, and the hawks at the Fed openly want rate hikes kept on the table. Friday's April core PCE decides the next two months.</p>
           <p class="feature-card-cta">Read the week ahead &rarr;</p>
         </div>
         </a>

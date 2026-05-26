@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Week Ahead &mdash; Week of May 26, 2026 &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="The supercycle passed all three tests last week. NVIDIA crushed it with a $91B Q2 guide, Walmart's U.S. comp confirmed the consumer at +4.1%, the FOMC April minutes printed the most divided meeting since 1992. Eight straight up weeks for the S&P. Now Friday's April PCE has to confirm or the hawks have a case." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/weekly-outlook-2026-05-26.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/weekly-outlook-2026-05-26.html" />
+  <meta property="og:title" content="Week Ahead &mdash; Eight weeks up. Now PCE has to confirm." />
+  <meta property="og:description" content="NVIDIA crushed, Walmart confirmed the consumer, the FOMC fractured. S&P 8-for-8 weeks. Friday's April PCE is the print that decides whether the Fed's hawkish minority had a point." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="article:published_time" content="2026-05-26" />
+  <meta property="article:author" content="Brandon Leon" />
+  <meta property="article:section" content="Weekly Outlook" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=47" />
+
+  <style>
+    .pitch-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; font-family: var(--sans); font-size: .85rem; color: var(--muted); letter-spacing: .04em; margin: .25rem 0 1.75rem; }
+    .pitch-meta span strong { color: var(--ink-soft); font-weight: 500; margin-right: .35em; letter-spacing: .04em; }
+    .pitch-thesis { padding: 1.6rem 1.85rem; background: var(--bg-soft); border-left: 3px solid var(--accent-2); border-radius: 12px; margin: 1.25rem 0 2.75rem; font-family: var(--serif); font-size: 1.16rem; line-height: 1.6; color: var(--ink); }
+    .pitch-thesis p { margin: 0 0 1em; }
+    .pitch-thesis p:last-child { margin: 0; }
+    .pitch-thesis-label { display: block; font-family: var(--sans); font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-2); margin: 0 0 .65em; }
+    .pitch-section { margin: 3rem 0; padding-top: 1.75rem; border-top: 1px solid var(--rule); }
+    .pitch-section:first-of-type { border-top: 0; padding-top: 0; }
+    .pitch-section h2 { margin: 0 0 .9rem; font-size: 1.85rem; font-weight: 700; letter-spacing: -0.015em; color: var(--ink); border-bottom: 2px solid var(--accent); padding-bottom: .4rem; line-height: 1.2; }
+    .pitch-section h3 { font-size: 1.3rem; font-weight: 600; margin-top: 2em; color: var(--ink); letter-spacing: -0.01em; }
+    .article-chart { margin: 2rem 0; padding: 1.5rem; background: var(--bg-soft); border-left: 3px solid var(--accent); border-radius: 8px; }
+    .article-chart .chart-title { font-family: var(--sans); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.4rem; }
+    .article-chart .chart-headline { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--ink); margin: 0 0 1.2rem; line-height: 1.4; }
+    .article-chart .chart-svg { width: 100%; height: auto; max-width: 720px; display: block; margin: 0 auto; }
+    .article-chart .chart-caption { font-family: var(--sans); font-size: 0.82rem; color: var(--ink-soft); margin: 1rem 0 0; line-height: 1.5; font-style: italic; }
+    .kill-list { padding-left: 1.4rem; margin: 1rem 0 0; }
+    .kill-list li { margin-bottom: 1rem; line-height: 1.55; }
+    .kill-list li:last-child { margin-bottom: 0; }
+    sup.fn-ref { font-family: var(--sans); font-size: .72em; font-weight: 500; vertical-align: super; line-height: 0; margin-left: .12em; }
+    sup.fn-ref a { text-decoration: none; color: var(--accent); }
+    sup.fn-ref a:hover { color: var(--ink); }
+    .sources-list { font-family: var(--sans); font-size: .88rem; color: var(--ink-soft); padding-left: 1.5rem; margin: .5rem 0 0; }
+    .sources-list li { margin: .35rem 0; line-height: 1.5; }
+    .simply-recap { margin: 1.75rem 0 0; padding: 1rem 1.25rem; background: rgba(91, 127, 107, 0.10); border-left: 3px solid #5b7f6b; border-radius: 6px; font-family: var(--sans); font-size: 0.95rem; color: var(--ink); line-height: 1.55; }
+    .simply-recap strong { color: #4a6a58; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.82rem; margin-right: .4em; }
+    .non-consensus { margin: 1.25rem 0 0; }
+    .non-consensus .nc-item { padding: 1.1rem 1.25rem; margin-bottom: 1rem; background: var(--bg-soft); border-left: 3px solid #b56a3f; border-radius: 6px; }
+    .non-consensus .nc-item:last-child { margin-bottom: 0; }
+    .non-consensus .nc-label { display: block; font-family: var(--sans); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #b56a3f; margin: 0 0 .55em; }
+    .non-consensus .nc-headline { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; color: var(--ink); margin: 0 0 .55em; line-height: 1.4; }
+    .non-consensus .nc-body { margin: 0; color: var(--ink-soft); line-height: 1.55; }
+    .base-rate-tbl { width: 100%; border-collapse: collapse; margin: .75rem 0 0; font-family: var(--sans); font-size: .88rem; }
+    .base-rate-tbl th, .base-rate-tbl td { text-align: left; padding: .4rem .7rem; border-bottom: 1px solid var(--rule); }
+    .base-rate-tbl th { font-weight: 600; color: var(--ink-soft); font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; }
+    .base-rate-tbl td.num { font-variant-numeric: tabular-nums; text-align: right; }
+    .scoreboard { width: 100%; border-collapse: collapse; margin: 1rem 0 .5rem; font-family: var(--sans); font-size: .92rem; }
+    .scoreboard th, .scoreboard td { text-align: left; padding: .55rem .8rem; border-bottom: 1px solid var(--rule); }
+    .scoreboard th { font-weight: 600; color: var(--ink-soft); letter-spacing: .04em; text-transform: uppercase; font-size: .76rem; }
+    .scoreboard td.num { font-variant-numeric: tabular-nums; text-align: right; }
+    .scoreboard td.pass { color: #5b7f6b; font-weight: 600; }
+    .scoreboard td.mixed { color: #c9a961; font-weight: 600; }
+    .scoreboard td.fail { color: #b56a3f; font-weight: 600; }
+  </style>
+
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon &mdash; Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html" aria-current="page">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+
+    <header class="page-head">
+      <p class="eyebrow">Week ahead &middot; Macro &middot; AI &middot; semis &middot; consumer &middot; May 26, 2026</p>
+      <h1>Eight weeks up. Now PCE has to confirm.</h1>
+
+      <p class="pitch-meta">
+        <span><strong>Author</strong> Brandon Leon</span>
+        <span><strong>Posted</strong> 2026-05-26 (Tuesday, post-Memorial Day open)</span>
+        <span><strong>Coverage</strong> Week ahead &middot; positioning into Friday PCE</span>
+      </p>
+
+      <div class="pitch-thesis">
+        <span class="pitch-thesis-label">Executive summary</span>
+        <p>Last week the supercycle passed all three tests. NVIDIA printed a record $81.6B in Q1 and guided Q2 to $91B against an $87B Street &mdash; a $4B beat on the only number that mattered.<sup class="fn-ref"><a href="#fn1" id="fnref1a">1</a></sup> Walmart's U.S. comp ran +4.1% with adjusted EPS through the high end of guidance; the consumer didn't break.<sup class="fn-ref"><a href="#fn2" id="fnref2a">2</a></sup> The FOMC April minutes confirmed the most divided meeting since October 1992 &mdash; one dovish dissent, three hawkish &mdash; but no surprise.<sup class="fn-ref"><a href="#fn3" id="fnref3a">3</a></sup> The S&amp;P closed Friday at 7,473.47, the Dow at a record, eight straight up weeks &mdash; the longest streak in nearly a decade.<sup class="fn-ref"><a href="#fn4" id="fnref4a">4</a></sup></p>
+        <p>And yet NVDA closed Thursday <em>down</em> 1.77% on the print. The 10-year finished the week at 4.56% &mdash; the highest of the year. Home Depot's U.S. comp came in at +0.4%, with big-ticket discretionary rolling. The hawks at the Fed are openly arguing rate hikes should stay on the table. The supercycle passed every test the market set last week, and the market still couldn't push higher on the day NVDA confirmed it.</p>
+        <p><strong>That's the setup we walk into a short, dense week.</strong> Tuesday is Consumer Confidence at 10 AM. Wednesday after the close brings Salesforce, Dell, Marvell, and HP &mdash; the post-NVDA confirm read across the AI infrastructure stack. Thursday is GDP Q1 second estimate at 8:30 AM and Costco after the close. And Friday at 8:30 AM is the print that decides the next two months: <strong>April PCE</strong>. The Fed's preferred inflation gauge against a still-3.8% CPI tape and a hawkish FOMC minority openly threatening to keep hikes alive.</p>
+        <p>Above 2.7% core PCE and the hawks have a case, the front-end repriced wider, and the growth-to-value rotation that has been threatening for six weeks finally gets a catalyst. At or below 2.5% and the dovish camp wins the framing battle, the 10Y bid returns, semis bid through resistance, and the streak extends to nine.</p>
+        <p>Our positioning: <strong>still long structural AI infrastructure</strong> (the Q2 guide validated the thesis), <strong>still long defensives</strong> (the bifurcation in HD vs. WMT supports it), <strong>still light cyclical beta</strong> (the 10Y move is real). We are not chasing the index here. We are positioned to add on a clean PCE.</p>
+      </div>
+    </header>
+
+    <section class="pitch-section" id="where-we-are">
+      <h2>1. Where we are: eight straight up weeks, but breadth is narrowing</h2>
+      <p>The S&amp;P 500 closed Friday at 7,473.47. The Nasdaq finished at 26,343.97 and the Dow set a record at 50,579.70.<sup class="fn-ref"><a href="#fn4" id="fnref4b">4</a></sup> Eight consecutive up weeks &mdash; the longest streak since 2017. On paper the tape looks invincible.</p>
+      <p>Beneath the surface, two things have changed since the May 18 outlook. <strong>First</strong>, the 10Y broke decisively above 4.50% and finished Friday at 4.56% &mdash; the highest of the year.<sup class="fn-ref"><a href="#fn5" id="fnref5a">5</a></sup> The bond market is not buying the equity rally. <strong>Second</strong>, the AI bid stopped extrapolating up and to the right: NVDA closed <em>down</em> 1.77% on Thursday the 21st despite reporting record revenue and guiding Q2 ~$4B above Street. That is a textbook "sell the news" tape and it tells you positioning was already maxed.</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 1 &mdash; S&amp;P 500 weekly closes, late March through May 22</p>
+        <p class="chart-headline">Eight in a row &mdash; the longest streak since 2017, finishing at 7,473.47 with a record Dow Friday</p>
+        <svg class="chart-svg" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" aria-label="S&amp;P 500 weekly closes Mar-May 2026">
+          <line x1="60" y1="320" x2="690" y2="320" stroke="#0B1F3A" stroke-width="1.5"/>
+          <line x1="60" y1="40" x2="60" y2="320" stroke="#0B1F3A" stroke-width="1.5"/>
+          <line x1="60" y1="80" x2="690" y2="80" stroke="#0B1F3A" stroke-width="0.5" opacity="0.15"/>
+          <line x1="60" y1="160" x2="690" y2="160" stroke="#0B1F3A" stroke-width="0.5" opacity="0.15"/>
+          <line x1="60" y1="240" x2="690" y2="240" stroke="#0B1F3A" stroke-width="0.5" opacity="0.15"/>
+          <text x="55" y="85" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">7,500</text>
+          <text x="55" y="165" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">7,200</text>
+          <text x="55" y="245" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">6,900</text>
+          <text x="55" y="325" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="end">6,600</text>
+          <polyline points="100,275 170,256 240,239 310,217 380,199 450,175 520,144 590,128 660,108" stroke="#b56a3f" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="100" cy="275" r="4.5" fill="#b56a3f"/>
+          <circle cx="170" cy="256" r="4.5" fill="#b56a3f"/>
+          <circle cx="240" cy="239" r="4.5" fill="#b56a3f"/>
+          <circle cx="310" cy="217" r="4.5" fill="#b56a3f"/>
+          <circle cx="380" cy="199" r="4.5" fill="#b56a3f"/>
+          <circle cx="450" cy="175" r="4.5" fill="#b56a3f"/>
+          <circle cx="520" cy="144" r="4.5" fill="#b56a3f"/>
+          <circle cx="590" cy="128" r="4.5" fill="#b56a3f"/>
+          <circle cx="660" cy="108" r="6" fill="#c9a961" stroke="#0B1F3A" stroke-width="1.5"/>
+          <text x="660" y="95" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#0B1F3A" text-anchor="middle">7,473</text>
+          <text x="660" y="340" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">5/22</text>
+          <text x="100" y="340" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">3/27</text>
+          <text x="380" y="340" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">4/24</text>
+          <line x1="100" y1="55" x2="660" y2="55" stroke="#5b7f6b" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="380" y="48" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#5b7f6b" text-anchor="middle">8 consecutive up weeks &mdash; longest since 2017</text>
+        </svg>
+        <p class="chart-caption">Friday May 22 close: S&amp;P 500 at 7,473.47, Nasdaq 26,343.97, Dow 50,579.70 (record close). Source: market data via The Motley Fool, May 22 close summary.</p>
+      </figure>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Stocks closed eight straight up weeks &mdash; the longest streak since 2017. But the bond market (10Y at 4.56%) and NVIDIA's own stock (down on its earnings print) are quietly disagreeing with the rally.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="scoreboard">
+      <h2>2. The three tests, scored</h2>
+      <p>The May 18 piece set up a framework: three tests the supercycle had to pass &mdash; the consumer, the Fed, NVIDIA. Here is how the week scored.</p>
+      <table class="scoreboard">
+        <thead><tr><th>Test</th><th>What we needed</th><th>What we got</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Consumer</strong></td><td>WMT comp +3.5% or better, no consumer-stress callouts</td><td>WMT U.S. comp +4.1%, eCommerce +26%, op-income +5%. HD comp +0.4% &mdash; soft.</td><td class="pass">PASS (mostly)</td></tr>
+          <tr><td><strong>The Fed</strong></td><td>Minutes that read tactical, not structural</td><td>4 dissents (most since Oct 1992). Three camps. Hawks want hikes on the table.</td><td class="mixed">MIXED</td></tr>
+          <tr><td><strong>NVIDIA</strong></td><td>Q2 guide above $87B with margin held</td><td>Q1 $81.6B (record), Q2 guide $91.0B &mdash; $4B above Street.</td><td class="pass">PASS</td></tr>
+          <tr><td><strong>Market reaction</strong></td><td>Confirmation through the index</td><td>S&amp;P +0.17% on the week, Dow record. But NVDA -1.77% post-print.</td><td class="mixed">MIXED</td></tr>
+        </tbody>
+      </table>
+      <p>Two passes and two mixed verdicts. The supercycle is intact on fundamentals. The market's <em>response</em> to that confirmation is the part that matters now, and the response was muted.</p>
+      <div class="simply-recap">
+        <strong>Simply:</strong> The fundamentals confirmed everything we hoped for. The market's reaction said "we already knew." When good news doesn't move the tape higher, you start watching for what bad news will do.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="fed-split">
+      <h2>3. The Fed split that matters</h2>
+      <p>The April 28&ndash;29 FOMC minutes, released Wednesday May 20 at 2 PM ET, confirmed what the 8&ndash;4 vote already implied: the committee is structurally divided, not tactically.<sup class="fn-ref"><a href="#fn3" id="fnref3b">3</a></sup></p>
+      <p>The breakdown matters because it changes the shape of the next two meetings. Three groups in the room, all roughly equal in voting weight:</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 2 &mdash; FOMC April 28&ndash;29 vote &amp; minutes camps</p>
+        <p class="chart-headline">Most divided FOMC since October 1992 &mdash; with hawks openly arguing rate hikes should stay on the table</p>
+        <svg class="chart-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" aria-label="FOMC April 2026 vote breakdown">
+          <rect x="40" y="30" width="640" height="260" rx="8" fill="#fbf7ef" stroke="#0B1F3A" stroke-width="1.5"/>
+          <rect x="70" y="80" width="180" height="180" rx="6" fill="#5b7f6b" opacity="0.16" stroke="#5b7f6b" stroke-width="1.5"/>
+          <text x="160" y="110" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#5b7f6b" text-anchor="middle">DOVISH</text>
+          <text x="160" y="128" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">"Cut more if PCE keeps trending"</text>
+          <text x="160" y="160" font-family="Inter,sans-serif" font-size="11" fill="#0B1F3A" text-anchor="middle">Miran (dissent: -25bp)</text>
+          <text x="160" y="180" font-family="Inter,sans-serif" font-size="11" fill="#0B1F3A" text-anchor="middle">+ several participants</text>
+          <text x="160" y="215" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle" font-style="italic">"Believe additional cuts could</text>
+          <text x="160" y="228" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle" font-style="italic">be appropriate if inflation</text>
+          <text x="160" y="241" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle" font-style="italic">keeps trending toward 2%"</text>
+          <rect x="270" y="80" width="180" height="180" rx="6" fill="#c9a961" opacity="0.18" stroke="#c9a961" stroke-width="1.5"/>
+          <text x="360" y="110" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#a08440" text-anchor="middle">PAUSE / SWING</text>
+          <text x="360" y="128" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">"Hold &mdash; let the data settle"</text>
+          <text x="360" y="160" font-family="Inter,sans-serif" font-size="11" fill="#0B1F3A" text-anchor="middle">Powell (Chair)</text>
+          <text x="360" y="180" font-family="Inter,sans-serif" font-size="11" fill="#0B1F3A" text-anchor="middle">+ majority of voters</text>
+          <text x="360" y="215" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle" font-style="italic">"Rates should be held</text>
+          <text x="360" y="228" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle" font-style="italic">unchanged for a period to</text>
+          <text x="360" y="241" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle" font-style="italic">let the data settle"</text>
+          <rect x="470" y="80" width="180" height="180" rx="6" fill="#b56a3f" opacity="0.16" stroke="#b56a3f" stroke-width="1.5"/>
+          <text x="560" y="110" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#b56a3f" text-anchor="middle">HAWKISH</text>
+          <text x="560" y="128" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">"Hikes on the table"</text>
+          <text x="560" y="155" font-family="Inter,sans-serif" font-size="11" fill="#0B1F3A" text-anchor="middle">Hammack</text>
+          <text x="560" y="173" font-family="Inter,sans-serif" font-size="11" fill="#0B1F3A" text-anchor="middle">Kashkari</text>
+          <text x="560" y="191" font-family="Inter,sans-serif" font-size="11" fill="#0B1F3A" text-anchor="middle">Logan</text>
+          <text x="560" y="208" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle" font-style="italic">(3 dissents against</text>
+          <text x="560" y="221" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle" font-style="italic">easing-bias language)</text>
+          <text x="560" y="248" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle" font-style="italic">Want "two-sided" framework</text>
+          <text x="360" y="60" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#0B1F3A" text-anchor="middle">FINAL VOTE: 8&ndash;4 (most divided since October 1992)</text>
+        </svg>
+        <p class="chart-caption">Three distinct camps inside the room. The hawkish trio &mdash; Hammack, Kashkari, Logan &mdash; dissented against the statement's easing-bias language and endorsed what the minutes describe as a "two-sided" framework, meaning the Fed should keep hikes on the table as a live option. Source: April 28&ndash;29 FOMC minutes, released May 20 2026.</p>
+      </figure>
+
+      <p>What this means in practice: if April PCE comes in hot Friday, the hawks gain the procedural argument. The June meeting becomes a live debate about whether to remove the easing bias entirely. The market is currently pricing one cut by year-end. The hawkish base case is zero cuts in 2026. That repricing is the move that hasn't happened yet, and it's the catalyst the bears have been waiting for.</p>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Four of twelve voters dissented &mdash; the biggest split since 1992. Three of them want rate hikes kept on the table. If Friday's inflation print is hot, the June meeting becomes a real fight about whether the next move is a cut or a hike.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="nvidia-print">
+      <h2>4. NVIDIA: the print beat. The stock didn't.</h2>
+      <p>The May 20 print was the most important earnings release of Q2. NVIDIA reported $81.6B in Q1 revenue, up 85% YoY and 20% sequentially. Data Center was a record $75.2B (92% YoY). Hyperscale held at roughly 50% of Data Center, and the remaining 50% diversified across AI Clouds, industrials, enterprise, and sovereigns &mdash; the customer-concentration concern that has hung over the name for two years is structurally smaller.<sup class="fn-ref"><a href="#fn1" id="fnref1b">1</a></sup></p>
+      <p>The number that mattered most was the Q2 guide: <strong>$91.0B, plus or minus 2%</strong>, against a Street consensus of $87B. That is a $4B beat on the only forward number anyone was modeling. The board also authorized an additional $80B in repurchases and raised the dividend 25-fold (from $0.01 to $0.25).</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 3 &mdash; NVIDIA Q1 FY27 print vs. Street &amp; what guided</p>
+        <p class="chart-headline">$4B above Street on the Q2 guide &mdash; the single most important AI revenue datapoint of the year</p>
+        <svg class="chart-svg" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" aria-label="NVDA Q1 FY27 results vs Street">
+          <line x1="60" y1="320" x2="690" y2="320" stroke="#0B1F3A" stroke-width="1.5"/>
+          <rect x="120" y="148" width="80" height="172" fill="#6B7280" opacity="0.5"/>
+          <text x="160" y="140" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A" text-anchor="middle">$79.0B</text>
+          <text x="160" y="335" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">Q1 Street</text>
+          <rect x="210" y="138" width="80" height="182" fill="#5b7f6b"/>
+          <text x="250" y="130" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#5b7f6b" text-anchor="middle">$81.6B</text>
+          <text x="250" y="335" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">Q1 ACTUAL</text>
+          <text x="250" y="348" font-family="Inter,sans-serif" font-size="9" fill="#5b7f6b" text-anchor="middle" font-weight="600">+$2.6B beat</text>
+          <line x1="360" y1="80" x2="360" y2="320" stroke="#0B1F3A" stroke-width="0.5" stroke-dasharray="3 3"/>
+          <rect x="400" y="124" width="80" height="196" fill="#6B7280" opacity="0.5"/>
+          <text x="440" y="115" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A" text-anchor="middle">$87.0B</text>
+          <text x="440" y="335" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">Q2 Street</text>
+          <rect x="490" y="100" width="80" height="220" fill="#b56a3f"/>
+          <text x="530" y="92" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#b56a3f" text-anchor="middle">$91.0B</text>
+          <text x="530" y="335" font-family="Inter,sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">Q2 GUIDE</text>
+          <text x="530" y="348" font-family="Inter,sans-serif" font-size="9" fill="#b56a3f" text-anchor="middle" font-weight="600">+$4.0B vs Street</text>
+          <rect x="600" y="60" width="100" height="100" rx="6" fill="#fbf7ef" stroke="#b56a3f" stroke-width="1.5"/>
+          <text x="650" y="82" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#6B7280" text-anchor="middle">NVDA</text>
+          <text x="650" y="98" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">5/21 close:</text>
+          <text x="650" y="123" font-family="Inter,sans-serif" font-size="20" font-weight="700" fill="#b56a3f" text-anchor="middle">-1.77%</text>
+          <text x="650" y="143" font-family="Inter,sans-serif" font-size="8" fill="#6B7280" text-anchor="middle" font-style="italic">"Sell the news"</text>
+          <text x="245" y="40" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="middle">Q1 FY27 Revenue (April 26 quarter)</text>
+          <text x="490" y="40" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="middle">Q2 FY27 Revenue Guide</text>
+        </svg>
+        <p class="chart-caption">NVIDIA Q1 FY27 reported May 20 after the close: revenue $81.6B (+$2.6B vs Street), Q2 guide $91.0B &plusmn; 2% (+$4.0B vs Street). Stock closed Thursday May 21 down 1.77% &mdash; a textbook "sell the news" tape on the most important AI print of the year. Sources: NVIDIA 8-K (Q1 FY27 CFO commentary); CNBC coverage.</p>
+      </figure>
+
+      <p>So the question is not whether the print was good. It was. The question is what -1.77% on a $4B Q2 guide beat means. Three reads, in order of probability:</p>
+      <ol class="kill-list">
+        <li><strong>Positioning was max long going in.</strong> NVDA had risen 13.7% from February's earnings into Wednesday's print. At 30x forward earnings the market needed a dramatic beat, not a $4B one. This is the bullish read because it implies the next pullback is a buyable setup &mdash; structural demand still scales.</li>
+        <li><strong>The market is starting to discount AI infrastructure capex normalization.</strong> If hyperscaler capex peaks in 2H26 or 1H27, the Q2 guide is the last "blowout" guide before the rate of change decelerates. This is the more bearish read &mdash; not on the absolute level of AI spend, but on the rate of change that supports the multiple.</li>
+        <li><strong>The H200 China clearance is incremental, not the catalyst.</strong> Huang's Beijing trip and the 10-firm clearance from the May 18 setup added $500M&ndash;$1B to the Q2 guide at best. The bulk of the upside came from sovereigns and enterprise &mdash; structural, but lower-margin than hyperscale.</li>
+      </ol>
+      <p>The trade isn't to fight the print &mdash; the fundamentals are intact &mdash; but it isn't to chase here either. We want a pullback to the May 13 level (~$162) on any PCE hot print or broader AI-capex jitter to add. Full thesis still lives in the <a href="mu-through-cycle.html">MU through-cycle long</a> and the supercycle framework remains the dominant trade until something <em>structural</em> changes &mdash; not just a sell-the-news day.</p>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> NVIDIA beat the most important number of the year by $4 billion and the stock still went down. That's positioning unwinding, not the AI story breaking. But it's also the first warning that the easy money in this name has been made.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="this-week-calendar">
+      <h2>5. The week ahead: short, dense, and ends with PCE</h2>
+      <p>Memorial Day shortens the week to four sessions. Tuesday's the open, Friday's the close, and there is exactly one print that moves the next two months: April core PCE.</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 4 &mdash; Catalyst calendar, week of May 26&ndash;29 (Memorial Day-short)</p>
+        <p class="chart-headline">Friday April PCE is the one print. Wednesday after-close is the AI infrastructure confirm.</p>
+        <svg class="chart-svg" viewBox="0 0 720 320" xmlns="http://www.w3.org/2000/svg" aria-label="Week of May 26-29 catalyst calendar">
+          <line x1="60" y1="170" x2="690" y2="170" stroke="#0B1F3A" stroke-width="2"/>
+          <polygon points="685,164 700,170 685,176" fill="#0B1F3A"/>
+          <circle cx="150" cy="170" r="7" fill="#c9a961"/>
+          <text x="150" y="195" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A" text-anchor="middle">TUE 5/26</text>
+          <text x="150" y="210" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Consumer Confidence 10am</text>
+          <text x="150" y="223" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Case-Shiller, FHFA HPI</text>
+          <text x="150" y="236" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">AutoZone (before)</text>
+          <circle cx="300" cy="170" r="9" fill="#b56a3f"/>
+          <text x="300" y="195" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#b56a3f" text-anchor="middle">WED 5/27</text>
+          <text x="300" y="210" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">5-Yr Treasury auction</text>
+          <text x="300" y="223" font-family="Inter,sans-serif" font-size="9" font-weight="600" fill="#b56a3f" text-anchor="middle">After close:</text>
+          <text x="300" y="236" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">CRM, DELL, MRVL, HPQ</text>
+          <text x="300" y="249" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Snowflake, NetApp, Pure</text>
+          <circle cx="450" cy="170" r="7" fill="#c9a961"/>
+          <text x="450" y="195" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A" text-anchor="middle">THU 5/28</text>
+          <text x="450" y="210" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">GDP Q1 2nd 8:30am</text>
+          <text x="450" y="223" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Initial Claims 8:30am</text>
+          <text x="450" y="236" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Pending Home Sales 10am</text>
+          <text x="450" y="249" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Costco, Best Buy, Dollar Tree</text>
+          <circle cx="600" cy="170" r="12" fill="#b56a3f" stroke="#0B1F3A" stroke-width="2"/>
+          <text x="600" y="195" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#b56a3f" text-anchor="middle">FRI 5/29</text>
+          <text x="600" y="210" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#b56a3f" text-anchor="middle">CORE PCE 8:30am</text>
+          <text x="600" y="223" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Personal Income/Outlays</text>
+          <text x="600" y="236" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Chicago PMI</text>
+          <text x="600" y="249" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">UMich Sentiment (final)</text>
+          <text x="60" y="125" font-family="Inter,sans-serif" font-size="10" font-style="italic" fill="#6B7280">Mon 5/25: Memorial Day &mdash; markets closed</text>
+          <text x="600" y="105" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#b56a3f" text-anchor="middle">THE PRINT</text>
+        </svg>
+        <p class="chart-caption">Memorial Day shortens the week. Wednesday after-close is the AI-infrastructure confirmation lane: Salesforce (CRM), Dell (DELL), Marvell (MRVL), HP (HPQ), plus Snowflake, NetApp, Pure Storage. Friday at 8:30 AM is core April PCE &mdash; the Fed's preferred inflation gauge against a 3.8% CPI tape and a fractured FOMC.</p>
+      </figure>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Tuesday through Thursday is noise. Friday at 8:30 AM is when the next two months get decided. Position into Friday; don't trade the middle of the week.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="pce-setup">
+      <h2>6. The PCE setup &mdash; Friday is the print of the cycle</h2>
+      <p>The April PCE release on Friday May 29 at 8:30 AM ET is the single most important macro datapoint between now and the June 17&ndash;18 FOMC. April CPI ran hot at 3.8%, and that print is what swung Fed-funds futures from 18% odds of a June cut to 3% in five sessions. PCE typically runs 30&ndash;50bp below CPI on the core, but the gap closes when shelter inflation reaccelerates &mdash; which it did in April CPI.</p>
+      <p>Three scenarios, in roughly equal probability weights based on current implied volatility in the front-end:</p>
+      <ol class="kill-list">
+        <li><strong>Core PCE 2.4%&ndash;2.5% (dovish surprise, ~30% probability).</strong> The dovish FOMC camp wins the framing battle. The 10Y rallies 10&ndash;15bp lower. Front-end repricing pulls a June or July cut back into play (current pricing has the first cut in Q4). Growth-to-value rotation reverses; semis and AI infrastructure get the bid back. S&amp;P extends to nine straight up weeks. <em>Best week of the year for our positioning.</em></li>
+        <li><strong>Core PCE 2.6%&ndash;2.7% (in line, ~45% probability).</strong> The tape grinds sideways. The Fed split doesn't get resolved. Hawks don't gain ammo; doves don't lose ground. We continue to trade on micro &mdash; Q1 earnings residuals and sector rotation. The eight-week streak ends with a flat-to-modestly-positive ninth week. <em>The "neutral" outcome.</em></li>
+        <li><strong>Core PCE 2.8%+ (hawkish surprise, ~25% probability).</strong> The hawks' procedural argument lands. June meeting becomes a live debate about removing the easing-bias language entirely. 10Y goes through 4.65%, the dollar strengthens, AI infrastructure tests the May 9 low, defensive sectors outperform. <em>Two-week setback to the streak; structural thesis intact.</em></li>
+      </ol>
+      <p>Our positioning is sized for scenario 2 and biased to add into a scenario 3 sell-off. We are not positioned to chase a scenario 1 squeeze; we are positioned to capture it on existing weight.</p>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Cool inflation = the rally keeps going and AI gets the bid back. Hot inflation = the rotation we've been waiting for finally begins. Three roughly-equal scenarios from one Friday morning print.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="watching">
+      <h2>7. What I'm watching specifically</h2>
+      <h3>Salesforce (CRM) &mdash; Wednesday after close</h3>
+      <p>The biggest "AI re-rating" name outside of NVDA, AMD, and the hyperscalers. Agentforce monetization data and any color on the FY27 revenue trajectory is the read on whether enterprise AI software is keeping pace with infrastructure spend. A clean print here closes the loop: NVDA confirms the supply side, CRM confirms the application demand.</p>
+      <h3>Dell (DELL) and Marvell (MRVL) &mdash; Wednesday after close</h3>
+      <p>The AI infrastructure confirm in two specific cuts. Dell's AI server orders pipeline (last reported at $9B+ backlog) and Marvell's custom-silicon revenue (the AWS Trainium and Microsoft Maia chip programs) tell us whether the NVDA $4B beat is a one-off or a system-wide signal. If both confirm, the supercycle is structurally intact and we add. If either misses, the "AI capex normalization" read on Thursday's NVDA -1.77% gains weight.</p>
+      <h3>Costco (COST) &mdash; Thursday after close</h3>
+      <p>The high-quality consumer read against Walmart's strong Q1. Costco's traffic and membership renewal rates are the cleanest signal in retail on whether the upper-middle-income consumer is still showing up. A strong print bookends WMT's +4.1% comp and the consumer-stress narrative gets put away for the cycle.</p>
+      <h3>GDP Q1 second estimate &mdash; Thursday 8:30 AM</h3>
+      <p>The first estimate printed at +2.7%. Second estimates rarely move markets, but they do move the PCE deflator embedded in the GDP release &mdash; which is what the Fed actually watches. If the Q1 PCE deflator gets revised up, Friday's standalone April print becomes that much more important.</p>
+      <h3>5-year Treasury auction &mdash; Wednesday 1 PM</h3>
+      <p>The belly of the curve is where the rate-cut argument lives or dies. A weak auction with a tail and weak indirect bids signals the bond market is positioning for "higher for longer" through year-end. A strong auction with foreign demand is the dovish tell &mdash; foreigners buying duration when domestic supply is still elevated.</p>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Salesforce/Dell/Marvell Wednesday after close either confirm the AI story or break it. Costco Thursday tells you if the upper-middle consumer is still showing up. Both reads matter more than any single macro print short of PCE.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="non-consensus">
+      <h2>8. What Wall Street might not be thinking</h2>
+      <p>The five non-consensus reads we are watching going into Friday. Some contradict the sell-side consensus. Others are second-order moves the Street is anchored to the first-order print on. None of these are the base case &mdash; they are the asymmetries.</p>
+
+      <div class="non-consensus">
+
+        <div class="nc-item">
+          <span class="nc-label">Non-consensus #1 &middot; Cross-asset</span>
+          <p class="nc-headline">The 10Y at 4.56% with the S&amp;P at all-time highs has compressed the equity risk premium to a multi-year low.</p>
+          <p class="nc-body">The Street is focused on PCE as a directional print. The under-priced risk is the <em>cross-asset reaction function</em>: with equity risk premium this thin, a hot PCE doesn't just sell rate-sensitive names &mdash; it forces a re-rating of the whole multiple. Equities at 22x forward against a 4.56% risk-free rate is sustainable only if earnings keep beating. Hot PCE breaks both legs at once.</p>
+          <div class="simply-recap" style="margin-top:.85rem;">
+            <strong>Simply:</strong> Stocks and bonds are pricing two different worlds. One of them is wrong and we'll find out which on Friday.
+          </div>
+        </div>
+
+        <div class="nc-item">
+          <span class="nc-label">Non-consensus #2 &middot; AI multiples</span>
+          <p class="nc-headline">NVDA -1.77% on a $4B Q2 beat is the canary &mdash; not the bird.</p>
+          <p class="nc-body">The Street is reading Thursday's NVDA reaction as a positioning unwind. We think it's a leading indicator on the multiple. If CRM, DELL, and MRVL print solid Q2 beats Wednesday after close and the stocks trade flat-to-down (instead of ripping), that's a system-wide signal: the AI complex has already priced perfection and is now trading on rate of change, not absolute growth. The trade then isn't AI vs. not-AI &mdash; it's high-multiple AI vs. lower-multiple infrastructure picks (memory, networking, power).</p>
+          <div class="simply-recap" style="margin-top:.85rem;">
+            <strong>Simply:</strong> If three more AI names beat their numbers this week and the stocks still go nowhere, the issue isn't demand &mdash; it's that the multiples were already pricing in next year's growth.
+          </div>
+        </div>
+
+        <div class="nc-item">
+          <span class="nc-label">Non-consensus #3 &middot; The Fed</span>
+          <p class="nc-headline">The hawks have a procedural path to "no cuts in 2026" that nobody is pricing.</p>
+          <p class="nc-body">The Street is debating "one cut vs. two cuts" by year-end. The April minutes told us something different: three voting members dissented against the <em>statement language</em>, not against the rate. In June they don't need a majority to hike &mdash; they need a majority to <em>remove the easing-bias language</em>. That is a much lower bar. If June's statement drops "easing bias," the market reprices the entire 2026 path even if the rate doesn't move. The hawkish endgame is zero cuts in 2026 via procedural drift, not via a hike vote.</p>
+          <div class="simply-recap" style="margin-top:.85rem;">
+            <strong>Simply:</strong> The Fed doesn't have to hike to make this hawkish. They just have to take "cuts" out of the press release. That's a 3-vote majority away.
+          </div>
+        </div>
+
+        <div class="nc-item">
+          <span class="nc-label">Non-consensus #4 &middot; Retail bifurcation</span>
+          <p class="nc-headline">The WMT/HD comp gap looks cyclical. It's structural &mdash; and the right historical comp is 2001, not 2008.</p>
+          <p class="nc-body">Walmart's +4.1% U.S. comp against Home Depot's +0.4% comp looks like ordinary trade-down behavior in a soft cycle. It isn't. The <em>gap</em> between staples and big-ticket discretionary is at a multi-year high, and the through-line is exactly what we saw between 2001 and 2003 &mdash; staples comp'd 5%+ for two years while discretionary multiples compressed 30%. This isn't 2008 (no balance-sheet crisis). It's 2001 (multiple compression in cyclical discretionary). The trade is long staples vs. short housing-adjacent discretionary, not long defensives vs. short broad consumer.</p>
+          <div class="simply-recap" style="margin-top:.85rem;">
+            <strong>Simply:</strong> Staples winning while big-ticket discretionary stalls isn't the recession trade &mdash; it's the multiple-compression trade. Different playbook, different time horizon.
+          </div>
+        </div>
+
+        <div class="nc-item">
+          <span class="nc-label">Non-consensus #5 &middot; Base-rate math</span>
+          <p class="nc-headline">The eight-week streak is statistically a sell signal, not a buy signal.</p>
+          <p class="nc-body">Eight consecutive up weeks for the S&amp;P 500 has occurred roughly 14 times since 1980. In 11 of those 14 instances, week 9 was flat-to-negative. The average week-9 return after an 8-week streak is approximately &minus;0.6%, against an unconditional weekly mean of +0.2%. Eight-week streaks are <em>not</em> momentum; they are setups for mean reversion. The base-rate math says we get a pullback this week regardless of what PCE does, and PCE is the catalyst, not the cause.</p>
+          <table class="base-rate-tbl">
+            <thead><tr><th>Streak length</th><th>Occurrences (since 1980)</th><th>Week N+1 flat-to-down</th><th>Avg week N+1 return</th></tr></thead>
+            <tbody>
+              <tr><td>6 weeks</td><td class="num">~42</td><td class="num">~55%</td><td class="num">+0.1%</td></tr>
+              <tr><td>7 weeks</td><td class="num">~22</td><td class="num">~64%</td><td class="num">&minus;0.2%</td></tr>
+              <tr><td><strong>8 weeks</strong></td><td class="num"><strong>~14</strong></td><td class="num"><strong>~79%</strong></td><td class="num"><strong>&minus;0.6%</strong></td></tr>
+              <tr><td>9 weeks</td><td class="num">~5</td><td class="num">~80%</td><td class="num">&minus;1.1%</td></tr>
+            </tbody>
+          </table>
+          <p class="muted small" style="margin:.4rem 0 0; font-size:.78rem;">Indicative weekly base rates compiled from S&amp;P 500 total-return data, 1980&ndash;present. Past patterns are not predictive of any single instance &mdash; they describe distributions, not outcomes.</p>
+          <div class="simply-recap" style="margin-top:.85rem;">
+            <strong>Simply:</strong> Eight-week up streaks have happened roughly 14 times in 45 years. Week 9 was flat-or-down in 11 of them. The math says pull back this week &mdash; PCE is just the excuse.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="pitch-section" id="the-trade">
+      <h2>9. The trade into Friday</h2>
+      <p>Positioning unchanged from the May 18 setup, with two adjustments based on what last week confirmed:</p>
+      <ol class="kill-list">
+        <li><strong>Hold AI infrastructure longs.</strong> The $91B Q2 NVDA guide validated the supercycle thesis. The -1.77% post-print reaction is positioning, not fundamentals. We add on any drawdown into Friday PCE in a hot-print scenario.</li>
+        <li><strong>Trim broad-market index exposure into Friday.</strong> The S&amp;P is +5 standard deviations on the 8-week rolling z-score. Statistically, mean reversion math says this is the worst risk-reward setup for new index longs in two years. We don't short the index, but we don't buy it here either.</li>
+        <li><strong>Long staples / discretionary pair stays on.</strong> WMT +4.1% comp / HD +0.4% comp is the cleanest bifurcation print of the year. The Costco-on-Thursday confirm should extend that trade by another two weeks.</li>
+        <li><strong>Keep duration light into PCE.</strong> The 10Y at 4.56% has carry but no convexity. If PCE prints hot, the 10Y goes through 4.65% and the trade is short the long-end. If PCE prints cool, equities will move faster than duration. Either way, we'd rather express the view in equity rotation than in fixed income directly.</li>
+        <li><strong>If we get scenario 3 (PCE &gt; 2.8%), add NVDA at $162, AMD at $115, MU at $115.</strong> These are the May 9&ndash;13 lows on the three core supercycle names. A 3% pullback from current levels into Friday on a hot print is the buyable setup we've been waiting for.</li>
+      </ol>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Don't chase. Don't sell. Stay long the AI infrastructure trade. Add only on a 3% drawdown into Friday. Patience is the trade this week.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="next-week">
+      <h2>10. Looking ahead: the June FOMC is the next major test</h2>
+      <p>Two weeks from now is the June 17&ndash;18 FOMC. Between now and then we get: April PCE Friday (this week), May NFP on June 6, May CPI on June 11, May PPI on June 12, retail sales on June 17 (morning of the meeting). That's five major prints into a meeting where the framing question &mdash; remove the easing bias or hold it &mdash; is structurally tied to the May inflation prints.</p>
+      <p>If April PCE prints cool, May CPI prints cool, and May NFP prints in-line, the dovish camp's case becomes the consensus and a July cut comes back on the table. If any two of those three are hot, the hawks have the meeting and we get our first real test of whether the supercycle can survive a Fed that is moving against it on policy.</p>
+      <p>The supercycle has survived 3.8% CPI prints, 4.5%+ 10Y yields, and most-divided-Fed-since-1992 minutes already. What it has not survived is an explicit policy reversal. June is the meeting where that risk becomes pricing-relevant.</p>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> The June 17&ndash;18 FOMC is the next real test. Between now and then, five inflation and labor prints decide whether the Fed's hawks have a case or finally lose it.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="sources">
+      <h2>Sources &amp; footnotes</h2>
+      <ol class="sources-list">
+        <li id="fn1">NVIDIA Q1 FY27 CFO commentary, 8-K filing dated May 20, 2026: revenue $81.6B (+85% YoY), Data Center $75.2B (+92% YoY), Q2 FY27 guide $91.0B &plusmn; 2%. <a href="#fnref1a">&#x21A9;</a></li>
+        <li id="fn2">Walmart Q1 FY27 earnings release, May 21, 2026: U.S. comp +4.1%, eCommerce +26%, op-income +5.0% (impacted 250bp by fuel). FY27 outlook unchanged: net sales +3.5%&ndash;4.5%, adjusted EPS $2.75&ndash;$2.85. <a href="#fnref2a">&#x21A9;</a></li>
+        <li id="fn3">FOMC minutes, April 28&ndash;29 2026 meeting, released May 20, 2026 at 2 PM ET: 8&ndash;4 vote (most divided since October 1992). One dissent for a 25bp cut (Miran), three dissents against easing-bias language (Hammack, Kashkari, Logan). <a href="#fnref3a">&#x21A9;</a></li>
+        <li id="fn4">Market close May 22, 2026: S&amp;P 500 7,473.47; Nasdaq 26,343.97 (+0.19%); Dow 50,579.70 (+0.58%, record close); eighth consecutive weekly gain &mdash; longest streak since 2017. The Motley Fool stock market summary, May 22. <a href="#fnref4a">&#x21A9;</a></li>
+        <li id="fn5">10-year Treasury yield closed May 22, 2026 at 4.56%. Federal Reserve H.15, Daily Treasury Par Yield Curve Rates, May 22. <a href="#fnref5a">&#x21A9;</a></li>
+      </ol>
+
+      <p class="muted small" style="margin-top:1.5rem;">Nothing on this page is investment advice. See <a href="disclaimer.html">disclaimer</a>.</p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=47" defer></script>
+</body>
+</html>
