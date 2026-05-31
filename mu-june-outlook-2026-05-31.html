@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>June Is When Micron Has to Do the Work &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="MU ran 38% in 17 trading days. June stops being about narrative and starts being about numbers. FQ3 prints June 24 — $33.5B revenue, 81% gross margin, $19.15 EPS. The cleanest test of the thesis we'll get." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/mu-june-outlook-2026-05-31.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/mu-june-outlook-2026-05-31.html" />
+  <meta property="og:title" content="June Is When Micron Has to Do the Work" />
+  <meta property="og:description" content="MU ran 38% in 17 trading days. June stops being about narrative and starts being about numbers. FQ3 prints June 24 — $33.5B / 81% GM / $19.15 EPS. PT stays at $1,100. Trim ladder continues." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="article:published_time" content="2026-05-31" />
+  <meta property="article:author" content="Brandon Leon" />
+  <meta property="article:section" content="Single-name update" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=48" />
+
+  <!-- Page-scoped article styles, matching mu-after-ubs-2026-05-28 -->
+  <style>
+    .pitch-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-family: var(--sans);
+      font-size: .85rem;
+      color: var(--muted);
+      letter-spacing: .04em;
+      margin: .25rem 0 1.75rem;
+    }
+    .pitch-meta span strong {
+      color: var(--ink-soft);
+      font-weight: 500;
+      margin-right: .35em;
+      letter-spacing: .04em;
+    }
+
+    .pitch-thesis {
+      padding: 1.6rem 1.85rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent-2);
+      border-radius: 12px;
+      margin: 1.25rem 0 2.75rem;
+      font-family: var(--serif);
+      font-size: 1.16rem;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+    .pitch-thesis p { margin: 0 0 1em; }
+    .pitch-thesis p:last-child { margin: 0; }
+    .pitch-thesis-label {
+      display: block;
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 .65em;
+    }
+
+    .pitch-section {
+      margin: 3rem 0;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--rule);
+    }
+    .pitch-section:first-of-type { border-top: 0; padding-top: 0; }
+    .pitch-section h2 { margin-top: 0; font-size: 1.55rem; }
+    .pitch-section h3 { font-size: 1.15rem; margin-top: 1.6em; }
+
+    .pull-quote {
+      margin: 2rem 0;
+      padding: 1.4rem 1.85rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.18rem;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+
+    .article-chart {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+    }
+    .article-chart .chart-title {
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 .4rem;
+    }
+    .article-chart .chart-headline {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin: 0 0 1.2rem;
+      line-height: 1.4;
+    }
+    .article-chart .chart-img {
+      width: 100%;
+      height: auto;
+      max-width: 720px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 6px;
+      background: #fff;
+    }
+    .article-chart .chart-caption {
+      font-family: var(--sans);
+      font-size: .82rem;
+      color: var(--ink-soft);
+      margin: 1rem 0 0;
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    table.pitch-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0 2rem;
+      font-family: var(--sans);
+      font-size: .9rem;
+    }
+    table.pitch-table th {
+      background: var(--bg-soft);
+      color: var(--ink);
+      font-weight: 600;
+      letter-spacing: .04em;
+      padding: .65rem .9rem;
+      text-align: left;
+      border-bottom: 2px solid var(--rule);
+    }
+    table.pitch-table td {
+      padding: .65rem .9rem;
+      border-bottom: 1px solid var(--rule);
+      color: var(--ink-soft);
+      vertical-align: top;
+    }
+    table.pitch-table td strong { color: var(--ink); }
+    table.pitch-table tr.row-warn td { background: rgba(201,169,97,0.08); }
+    table.pitch-table tr.row-exit td { background: rgba(161,43,43,0.06); }
+
+    .disclosure {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+      font-family: var(--sans);
+      font-size: .82rem;
+      line-height: 1.55;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .pitch-cta {
+      margin: 3rem 0 1rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .read-time {
+      font-family: var(--sans);
+      font-size: .78rem;
+      color: var(--muted);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+  </style>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon &mdash; Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose">
+
+    <article>
+
+      <header class="page-head">
+        <p class="eyebrow">Single-name update &middot; Memory &middot; June 2026 outlook</p>
+        <h1>June is when Micron has to do the work.</h1>
+
+        <p class="pitch-meta">
+          <span><strong>Posted</strong> May 31, 2026</span>
+          <span><strong>Read time</strong> 5 min</span>
+          <span><strong>Author</strong> Brandon Leon</span>
+          <span><strong>Coverage</strong> Memory &middot; DRAM/HBM &middot; AI infrastructure</span>
+        </p>
+
+        <div class="pitch-thesis">
+          <span class="pitch-thesis-label">The setup</span>
+          <p>For most of May, Micron was a story about sell-side capitulation. Nine analyst actions across eight banks in three weeks. UBS tripling its price target to a Street-high $1,625. The stock running from $668 to $923.52 &mdash; up 38% in 17 trading days. By Friday I&rsquo;d already hit my first trim level.</p>
+          <p>June stops being about narrative. <strong>FQ3 prints Wednesday June 24, after the close.</strong> Management guided $33.5B in revenue, 81% gross margin, and $19.15 in non-GAAP EPS. That&rsquo;s the bar a $1 trillion market cap has to clear. The number that decides whether the rally is the start of something or the end of something.</p>
+          <p>What makes this print especially interesting: the last two quarters, MU has beaten its own guide by historically large margins. FQ2 was a 28% revenue beat and 45% EPS beat over what management told the Street to expect three months earlier. If even half of that pattern holds, FQ3 prints somewhere between &ldquo;clear beat&rdquo; and &ldquo;blowout.&rdquo; PT stays at $1,100. Next trim still at $1,100. The framework gets tested by an actual income statement instead of an analyst&rsquo;s spreadsheet.</p>
+        </div>
+      </header>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 1 &mdash; What 17 trading days look like</p>
+        <p class="chart-headline">$668 to $923.52, with seven sell-side raises along the way. The first trim trigger fired on the last bar.</p>
+        <img class="chart-img" src="assets/reports/mu-june-outlook-2026-05-31-c1-price-path.png" alt="MU price chart from May 5 to May 29, 2026 rising from $668 to $923 with annotated analyst upgrades and the $900 trim trigger line" />
+        <p class="chart-caption">Five-week round trip from contrarian conviction to consensus stampede. Source: closing prices via Yahoo Finance; sell-side notes via Bloomberg / firm disclosures.</p>
+      </figure>
+
+      <section class="pitch-section" id="why-june-matters">
+        <h2>Why June stops being a sell-side story</h2>
+
+        <p>Through May, the move was driven by analysts catching up to math that was already on the page. DRAM contract prices had moved 90&ndash;95% in a single quarter. Hyperscaler capex guides were the largest in the history of the industry. Micron itself had already printed 75% gross margin in FQ2. The estimates had to come up. Analysts came around to it in sequence. The stock came around to it in compressed time.</p>
+
+        <p>That&rsquo;s a story that runs out. There are only so many banks left to capitulate, and the ones who haven&rsquo;t yet (Goldman at $235 NEUTRAL, Morgan Stanley at a stale $350) are increasingly looking like the contrarians. When everyone above a thousand becomes consensus, the next leg has to come from somewhere other than sell-side mathematics.</p>
+
+        <p>It has to come from <strong>company numbers</strong>. From the actual income statement. From forward guidance. From management saying out loud what the spreadsheets have been implying.</p>
+
+        <div class="pull-quote">Sell-side models can pull a stock from $235 to $1,625 in three weeks. They can&rsquo;t pull it from $923 to $1,500 without an earnings number to point at. That&rsquo;s what June is.</div>
+
+        <p>The cleanest test arrives on Wednesday June 24, after the close. Micron reports fiscal Q3 2026 (the quarter ending May). It&rsquo;s the first earnings print since the whole memory complex re-priced. Every number management gives is going to be measured against the run-up &mdash; not against last quarter, not against last year, but against the $1 trillion the market has now decided the company is worth.</p>
+      </section>
+
+      <section class="pitch-section" id="the-bar">
+        <h2>The bar Micron has to clear</h2>
+
+        <p>Here&rsquo;s what management guided when they reported FQ2 on March 18, 2026. Coming off a quarter that printed $23.86B in revenue at 75% non-GAAP gross margin and $12.20 in EPS, the company told the Street to expect this:</p>
+
+        <table class="pitch-table">
+          <thead><tr><th>Line</th><th>FQ3'26 guide</th><th>vs FQ2'26 actual</th><th>vs FQ1'26 (two quarters ago)</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Revenue</strong></td><td>$33.5B &plusmn; $0.75B</td><td>+40% QoQ from $23.86B</td><td>+146% from $13.64B</td></tr>
+            <tr><td><strong>Gross margin</strong></td><td>~81%</td><td>+600bp from 75%</td><td>+2,420bp from 56.8%</td></tr>
+            <tr><td><strong>Non-GAAP EPS</strong></td><td>$19.15 &plusmn; $0.40</td><td>+57% from $12.20</td><td>+roughly 4&times; from $4.78</td></tr>
+            <tr><td><strong>OpEx</strong></td><td>~$1.4B</td><td>roughly flat</td><td>+slight</td></tr>
+          </tbody>
+        </table>
+
+        <p>Numbers like those are difficult to internalize. A quarterly revenue figure that, alone, exceeds what Micron earned across all of fiscal 2023. A non-GAAP gross margin profile that puts a memory company in the same neighborhood as software. EPS of $19 in a single quarter &mdash; the company&rsquo;s share-price valuation in 2018 was below $40.</p>
+
+        <p>What anchors the stock at $923 isn&rsquo;t that bar by itself. It&rsquo;s the question of whether management is sandbagging again. The last two quarters they did:</p>
+
+        <figure class="article-chart">
+          <p class="chart-title">Chart 2 &mdash; Revenue, gross margin, and the beat pattern</p>
+          <p class="chart-headline">The last verified quarter beat its guide by 28% on revenue and 7pp on margin. June 24 tells us if that pattern holds.</p>
+          <img class="chart-img" src="assets/reports/mu-june-outlook-2026-05-31-c2-rev-gm.png" alt="Bar chart of MU quarterly revenue from fiscal Q4 2025 through fiscal Q3 2026 guide with gross margin overlay. FQ2'26 bar shows the prior quarter guide marker at $18.7B versus the actual print of $23.86B with a beat callout indicating 27.6% revenue beat, 7 percentage point gross margin beat, and 45% EPS beat." />
+          <p class="chart-caption">Bars are actual revenue; the dashed line in the FQ2 bar shows where management originally guided when reporting FQ1. The 7pp GM beat on FQ2 is what produced the EPS surprise of $12.20 vs $8.42 guide. Source: Micron 8-K filings (FY25 Q4, FY26 Q1 and Q2 press releases), company guidance.</p>
+        </figure>
+
+        <p>Two quarters of evidence is a pattern, not a guarantee. But it&rsquo;s also the strongest possible signal we have about management&rsquo;s posture: in this cycle, they&rsquo;ve been conservative every single time. The right question isn&rsquo;t whether $33.5B/$19.15 prints. It&rsquo;s how far above those numbers it prints, and whether that&rsquo;s already in the stock at $923.</p>
+      </section>
+
+      <section class="pitch-section" id="what-im-watching">
+        <h2>What I&rsquo;m actually watching on the print</h2>
+
+        <p>The headline beat is almost ceremonial at this point. Three out of the last four quarters Micron has beaten the top of the range. The pricing data through May suggests they should again. The interesting reads aren&rsquo;t whether they beat &mdash; it&rsquo;s how, and what comes after.</p>
+
+        <p><strong>One. Gross margin trajectory.</strong> 81% is a number that doesn&rsquo;t sit comfortably in a memory company&rsquo;s P&amp;L. If they print 82&ndash;83%, the bull thesis (memory has structurally rerated, AI is permanent demand) gets actual fundamental support. If they print 79&ndash;80%, the bear thesis (this is peak; mix and ASP are already rolling) gets its first echo. The range matters more than the point.</p>
+
+        <p><strong>Two. Forward guide for FQ4 and color on FY27.</strong> The Street is modeling FQ4 above the FQ3 guide. Anything that anchors FY27 EPS at or above $80 (against the $100 we&rsquo;ve been using) keeps the trim ladder running. Anything that walks back FY27 commentary &mdash; even tonally &mdash; is the cycle-end signal we&rsquo;ve been calibrated for since April.</p>
+
+        <p><strong>Three. HBM3E ASP commentary.</strong> TrendForce flagged this in April: any 5%+ sequential decline in HBM3E contract pricing would compress margins meaningfully. If management strikes a defensive tone on HBM pricing for the second half &mdash; that&rsquo;s the first place a cycle starts to roll. I will be re-reading the prepared remarks specifically for this line.</p>
+
+        <p><strong>Four. Capex.</strong> Samsung&rsquo;s $73B 2026 capex is the largest single-year semi spend in history. Micron&rsquo;s response is the cleanest read on whether management thinks the pricing environment is durable. A capex guide that ramps Idaho aggressively into FY28 reads as confidence. A capex guide that throttles back reads as discipline &mdash; or fear.</p>
+
+        <div class="pull-quote">If the print is good and the commentary is great, the stock breaks $1,000 the next morning and my second trim fires on the way up. If the print is good but the commentary is cautious, the stock fades and the discipline we wrote down already does the work for us.</div>
+      </section>
+
+      <section class="pitch-section" id="my-prediction">
+        <h2>The scenario tree (not a point prediction)</h2>
+
+        <p>The honest answer to &ldquo;what do you think prints&rdquo; is that the range of defensible outcomes is wide enough that pretending I know the number is a tell. Here&rsquo;s what I actually think the matrix looks like, given verified contract pricing data, the FQ2 beat pattern, and what management was hinting at on the last call:</p>
+
+        <table class="pitch-table">
+          <thead><tr><th>Scenario</th><th>Revenue</th><th>GM</th><th>Implied EPS</th><th>What it means</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Guide in line</strong></td><td>$33.5B</td><td>81%</td><td>~$19.15</td><td>Management called it perfectly. First time this cycle. Stock probably fades 3&ndash;5% on perceived lack of upside.</td></tr>
+            <tr class="row-warn"><td><strong>Modest beat (base case)</strong></td><td>$34&ndash;35B</td><td>82&ndash;83%</td><td>$20&ndash;22</td><td>Most likely outcome. Beats consensus but not by enough to re-rate. Stock holds $900&ndash;1,000 range.</td></tr>
+            <tr><td><strong>Big beat (FQ2 pattern repeats)</strong></td><td>$36&ndash;38B</td><td>83&ndash;85%</td><td>$23&ndash;26</td><td>Validates the cycle-extension thesis. Stock breaks $1,000 the next morning. My second trim at $1,100 fires within days.</td></tr>
+            <tr class="row-exit"><td><strong>Negative surprise</strong></td><td>&lt;$32.5B</td><td>&lt;79%</td><td>&lt;$18</td><td>HBM ASP softness or a cost miss. Cycle-end signal. Stock to $800&ndash;850. I exit a second tranche regardless of price.</td></tr>
+          </tbody>
+        </table>
+
+        <p>The reason I&rsquo;m not putting a point estimate on this: I genuinely don&rsquo;t know which of those four lands. The base case is most likely (maybe 50%), the big beat is the second-most-likely (25%), guide-in-line is third (20%), and the negative surprise is the tail (5%). But those probabilities are based on pattern recognition, not on proprietary channel checks.</p>
+
+        <p>What I&rsquo;m more confident about: <strong>the forward commentary on FQ4 and FY27 matters more than the print itself.</strong> UBS&rsquo;s $1,625 PT requires roughly $100+ in FY27 EPS. DA Davidson&rsquo;s $1,500 is similar. If management gives any tonal signal that walks those numbers down, the stock cracks regardless of how good the in-quarter beat looks. If management leans into FY27 the way they leaned into FQ3 last quarter, the rally has another leg.</p>
+
+        <p>The stock reaction is mostly a function of how stretched current consensus already is. Sell-side estimates for FY27 EPS have moved from $73 in early May to roughly $90&ndash;95 today based on the PT raises. If the call validates $100+, those PTs hold. If it validates $80&ndash;85, the higher PTs start looking aspirational.</p>
+      </section>
+
+      <section class="pitch-section" id="june-calendar">
+        <h2>The June calendar (in one screen)</h2>
+
+        <p>For context, three discrete things move the tape this month other than MU itself:</p>
+
+        <table class="pitch-table">
+          <thead><tr><th>Date</th><th>Event</th><th>Why it matters for MU</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Jun 11</strong></td><td>May CPI release (8:30 ET)</td><td>If core CPI prints sticky again, the post-PCE 10Y selloff continues. Discount rate is one of the few things that can stall an AI-led tape.</td></tr>
+            <tr><td><strong>Jun 17&ndash;18</strong></td><td>FOMC meeting + SEP</td><td>The dot plot matters more than the decision. If 2026 median dots remove a cut, multiple compression starts in semis first.</td></tr>
+            <tr><td><strong>Jun 24 (after close)</strong></td><td><strong>MU FQ3 earnings</strong></td><td>The print and the call. The single highest-information event of June for this position.</td></tr>
+            <tr><td><strong>Jun 24&ndash;25</strong></td><td>SK Hynix HBM4 production milestone (expected)</td><td>Hynix is targeting initial HBM4 sampling. Any slip or pull-forward changes the supply-side narrative.</td></tr>
+            <tr><td><strong>Jun 27</strong></td><td>May PCE release</td><td>Anchors the second-half-of-the-year rate path. Less binary than CPI but more weight in Fed model.</td></tr>
+          </tbody>
+        </table>
+
+        <p>What jumps out is that MU&rsquo;s print lands a week after FOMC. By the time we hear from Mehrotra, the rates picture for the rest of the year is set. The market will know whether we&rsquo;re in &ldquo;dovish hold&rdquo; or &ldquo;hawkish pause&rdquo; before the most important AI-cycle data point of Q2 hits the tape. That sequencing is unusually clean.</p>
+      </section>
+
+      <section class="pitch-section" id="sell-side-state">
+        <h2>Where the sell-side actually stands today</h2>
+
+        <p>Three changes since the May 28 piece. DA Davidson raised PT from $1,000 to $1,500 (May 28 &mdash; now sits exactly on our bull case). Goldman&rsquo;s macro team hiked their S&amp;P 500 target to 8,000 and named Micron and NVIDIA as accounting for roughly a third of 2026 index EPS growth &mdash; without changing Goldman&rsquo;s own NEUTRAL rating on MU. Mizuho and BofA both reiterated post-UBS without raising further.</p>
+
+        <figure class="article-chart">
+          <p class="chart-title">Chart 3 &mdash; Sell-side PT distribution, updated through May 31</p>
+          <p class="chart-headline">Six of ten analysts now sit at or above our base PT. Two are at or above our bull case.</p>
+          <img class="chart-img" src="assets/reports/mu-june-outlook-2026-05-31-c3-sellside-may31.png" alt="Updated sell-side price target distribution as of May 31, 2026 showing ten analyst price targets with Goldman lowest at $235, UBS highest at $1,625, and Brandon's $1,100 PT in the middle of the cluster" />
+          <p class="chart-caption">Goldman alone in red below current. UBS, DA Davidson, HSBC, and Melius now above or at our PT. Source: bank notes via Bloomberg, firm disclosures.</p>
+        </figure>
+
+        <p>The cross-confirmation read &mdash; Goldman&rsquo;s macro desk endorsing the MU earnings thesis while Goldman&rsquo;s single-stock desk stays NEUTRAL &mdash; is exactly the kind of internal dissonance that resolves loudly when someone capitulates. I&rsquo;d watch for a Goldman PT raise sometime in the next four weeks.</p>
+      </section>
+
+      <section class="pitch-section" id="position">
+        <h2>Position update and what fires next</h2>
+
+        <p>I trimmed one-third on Friday May 29 at an average fill of $919, moving the position from roughly 6% of book down to 4%. Cost basis on the remaining two-thirds is unchanged. The trim ladder continues:</p>
+
+        <table class="pitch-table">
+          <thead><tr><th>Trigger</th><th>Action</th><th>Where we are</th></tr></thead>
+          <tbody>
+            <tr><td><s>$900</s></td><td><s>First trim</s></td><td><strong>Fired 5/29 at $923.52</strong> (avg fill $919). Position now ~4% of book.</td></tr>
+            <tr class="row-warn"><td><strong>$1,100</strong></td><td>Second trim (another third)</td><td>19% above current. Next rung. Could fire in the days after the FQ3 print on a clean beat.</td></tr>
+            <tr><td><strong>$1,400</strong></td><td>Third trim (another third)</td><td>52% above current. Requires the &ldquo;memory is software&rdquo; narrative to genuinely break through.</td></tr>
+            <tr class="row-exit"><td><strong>$1,500+</strong></td><td>Full exit, or any kill-shot</td><td>62% above current. UBS&rsquo;s ladder, DA Davidson&rsquo;s ladder. Where we step off.</td></tr>
+          </tbody>
+        </table>
+
+        <p>The framework keeps doing its job. The first trim was mechanical &mdash; the trigger fired, I sold, no decision required. That&rsquo;s the point of pre-committing. The hardest part of this trade was always going to be selling into strength while the narrative still felt durable. The ladder makes that decision in advance, so the in-moment version of me doesn&rsquo;t have to be strong-willed about it.</p>
+
+        <p>Three things would change the plan before the next rung:</p>
+
+        <p><strong>A clean miss on FQ3 revenue or guide.</strong> Stock back to $800&ndash;850 range. I hold the remaining position; the thesis is intact at lower multiples and the cycle just got a little longer. No additional buying &mdash; we already own enough.</p>
+
+        <p><strong>HBM3E pricing softness in the call.</strong> This is the kill-shot I&rsquo;ve been calibrated for. If management language goes defensive on HBM ASPs for second-half FY26, I exit a second tranche immediately on the call regardless of stock price.</p>
+
+        <p><strong>Hyperscaler capex revision downward.</strong> Watch the FY27 capex guides as MSFT/GOOG/META report in July. Any meaningful cut from the current $745B aggregate is the leading indicator that supply &gt; demand by 2028 starts pulling forward.</p>
+
+        <p>None of those have happened. Most of them probably won&rsquo;t. The base case is that June is a confirmation month, the print is good, and the discipline plays out the way it&rsquo;s designed to. But the framework only works if I&rsquo;m as willing to fire it on bad news as I was on good.</p>
+
+        <div class="pull-quote">The May story was about being right when no one else was. The June story is about being honest when everyone is. Different test. Same discipline.</div>
+
+        <p>I&rsquo;ll write the follow-up the morning of June 25.</p>
+      </section>
+
+      <section class="pitch-section" id="summary">
+        <h2>One-page summary</h2>
+
+        <table class="pitch-table">
+          <thead><tr><th>Item</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Rating</td><td><strong>BUY (with trim discipline)</strong></td></tr>
+            <tr><td>Last close</td><td>$923.52 (May 29, 2026)</td></tr>
+            <tr><td>12-month base PT</td><td>$1,100 (unchanged)</td></tr>
+            <tr><td>Bull case PT</td><td>$1,500 (now matches DA Davidson)</td></tr>
+            <tr><td>Bear case PT</td><td>$280 (cycle-end scenario)</td></tr>
+            <tr><td>Position size</td><td>~4% of book (post-trim)</td></tr>
+            <tr><td>Next decision date</td><td><strong>Wed, June 24 after close</strong> &mdash; MU FQ3 print</td></tr>
+            <tr><td>Next trim trigger</td><td>$1,100 (19% above current)</td></tr>
+            <tr><td>Kill-shot triggers</td><td>HBM3E ASP softness in call; FY27 walk-back; hyperscaler capex cut</td></tr>
+            <tr><td>FQ3 guide (the bar)</td><td>$33.5B rev / 81% GM / $19.15 EPS</td></tr>
+            <tr><td>My FQ3 base case (50% prob)</td><td>$34&ndash;35B rev / 82&ndash;83% GM / $20&ndash;22 EPS</td></tr>
+            <tr><td>FQ3 upside case (25% prob)</td><td>$36&ndash;38B rev / 83&ndash;85% GM / $23&ndash;26 EPS (FQ2 pattern)</td></tr>
+            <tr><td>FQ3 downside case (5% prob)</td><td>&lt;$32.5B rev / &lt;79% GM / &lt;$18 EPS (kill-shot)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <p class="disclosure">
+        Disclosure: I/we have a beneficial long position in the shares of MU either through stock ownership, options, or other derivatives. Position was reduced by approximately one-third on May 29, 2026 per the published trim ladder. I wrote this article myself, and it expresses my own opinions. I am not receiving compensation for it. I have no business relationship with any company whose stock is mentioned in this article. This is research and analysis only, not personalized financial advice. This commentary is for informational and educational purposes only and does not constitute investment, tax, or legal advice or a solicitation to buy or sell any security. Past performance is not indicative of future results. Readers should conduct their own research and consult a qualified financial professional before making investment decisions. Sources include Micron IR disclosures and 8-K filings, sell-side notes (UBS, BofA, HSBC, Melius Research, DA Davidson, Citigroup, Mizuho, TD Cowen, Morgan Stanley, Goldman Sachs), TrendForce DRAM contract pricing reports, Counterpoint Research HBM share data, hyperscaler Q1 2026 earnings transcripts, Korean Ministry of Trade export statistics, and Bloomberg consensus data. See <a href="disclaimer.html">disclaimer</a>.
+      </p>
+
+      <div class="pitch-cta">
+        <a class="btn" href="https://bpleon.substack.com/subscribe" target="_blank" rel="noopener">Get the next note by email &rarr;</a>
+        &nbsp;
+        <a class="btn btn-ghost" href="writing.html">All writing</a>
+      </div>
+
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=48" defer></script>
+</body>
+</html>

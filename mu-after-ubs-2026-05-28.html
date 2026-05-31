@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>I Bought Micron at $668. Here&rsquo;s Why I&rsquo;m Not Buying at $881. &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="Three weeks ago Goldman was at $235 on Micron and everyone agreed memory cycles always end in tears. On Tuesday UBS tripled their price target to $1,625 and the stock crossed $1 trillion. The variant view became consensus. Now comes the harder discipline." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/mu-after-ubs-2026-05-28.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/mu-after-ubs-2026-05-28.html" />
+  <meta property="og:title" content="I Bought Micron at $668. Here&rsquo;s Why I&rsquo;m Not Buying at $881." />
+  <meta property="og:description" content="Three weeks ago the sell-side median was $549. On Tuesday UBS tripled their PT to $1,625 and Micron crossed $1T. The variant view became consensus. PT stays at $1,100. Now we trim." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="article:published_time" content="2026-05-28" />
+  <meta property="article:author" content="Brandon Leon" />
+  <meta property="article:section" content="Single-name pitch" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=48" />
+
+  <!-- Page-scoped article styles, matching the cooling-under-semis-2026-05-08 piece. -->
+  <style>
+    .pitch-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      font-family: var(--sans);
+      font-size: .85rem;
+      color: var(--muted);
+      letter-spacing: .04em;
+      margin: .25rem 0 1.75rem;
+    }
+    .pitch-meta span strong {
+      color: var(--ink-soft);
+      font-weight: 500;
+      margin-right: .35em;
+      letter-spacing: .04em;
+    }
+
+    .pitch-thesis {
+      padding: 1.6rem 1.85rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent-2);
+      border-radius: 12px;
+      margin: 1.25rem 0 2.75rem;
+      font-family: var(--serif);
+      font-size: 1.16rem;
+      line-height: 1.6;
+      color: var(--ink);
+    }
+    .pitch-thesis p { margin: 0 0 1em; }
+    .pitch-thesis p:last-child { margin: 0; }
+    .pitch-thesis-label {
+      display: block;
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 .65em;
+    }
+
+    .pitch-section {
+      margin: 3rem 0;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--rule);
+    }
+    .pitch-section:first-of-type { border-top: 0; padding-top: 0; }
+    .pitch-section h2 { margin-top: 0; font-size: 1.55rem; }
+    .pitch-section h3 { font-size: 1.15rem; margin-top: 1.6em; }
+
+    .pull-quote {
+      margin: 2rem 0;
+      padding: 1.4rem 1.85rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.18rem;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+
+    /* Inline charts — PNG-based, matching the article-chart pattern. */
+    .article-chart {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 8px;
+    }
+    .article-chart .chart-title {
+      font-family: var(--sans);
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 .4rem;
+    }
+    .article-chart .chart-headline {
+      font-family: var(--serif);
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin: 0 0 1.2rem;
+      line-height: 1.4;
+    }
+    .article-chart .chart-img {
+      width: 100%;
+      height: auto;
+      max-width: 720px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 6px;
+      background: #fff;
+    }
+    .article-chart .chart-caption {
+      font-family: var(--sans);
+      font-size: .82rem;
+      color: var(--ink-soft);
+      margin: 1rem 0 0;
+      line-height: 1.5;
+      font-style: italic;
+    }
+
+    /* Trim-ladder + position-summary tables in the site's typography */
+    table.pitch-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0 2rem;
+      font-family: var(--sans);
+      font-size: .9rem;
+    }
+    table.pitch-table th {
+      background: var(--bg-soft);
+      color: var(--ink);
+      font-weight: 600;
+      letter-spacing: .04em;
+      padding: .65rem .9rem;
+      text-align: left;
+      border-bottom: 2px solid var(--rule);
+    }
+    table.pitch-table td {
+      padding: .65rem .9rem;
+      border-bottom: 1px solid var(--rule);
+      color: var(--ink-soft);
+      vertical-align: top;
+    }
+    table.pitch-table td strong { color: var(--ink); }
+    table.pitch-table tr.row-warn td { background: rgba(201,169,97,0.08); }
+    table.pitch-table tr.row-exit td { background: rgba(161,43,43,0.06); }
+
+    .disclosure {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--rule);
+      font-family: var(--sans);
+      font-size: .82rem;
+      line-height: 1.55;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .pitch-cta {
+      margin: 3rem 0 1rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+  </style>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon &mdash; Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose">
+
+    <article>
+
+      <header class="page-head">
+        <p class="eyebrow">Single-name pitch &middot; Memory &middot; May 28, 2026 &middot; Updated May 29</p>
+        <h1>I bought Micron at $668. Here&rsquo;s why I&rsquo;m not buying at $881.</h1>
+
+        <p class="pitch-meta">
+          <span><strong>Posted</strong> May 28, 2026</span>
+          <span><strong>Updated</strong> May 29, 2026 (post-close)</span>
+          <span><strong>Author</strong> Brandon Leon</span>
+          <span><strong>Coverage</strong> Memory &middot; DRAM/HBM &middot; AI infrastructure</span>
+        </p>
+
+        <div class="pitch-thesis">
+          <span class="pitch-thesis-label">The bottom line</span>
+          <p>A memory analyst&rsquo;s career goes through three phases. First they&rsquo;re a bull, and they&rsquo;re right for a while. Then they&rsquo;re a bull, and they&rsquo;re catastrophically wrong. Then they spend the rest of their career being a careful, modest bear who occasionally gets ridiculed for missing the next supercycle. Last week, after Micron crossed a trillion dollars in market cap, I started thinking about which phase I&rsquo;m in.</p>
+          <p>Three weeks ago I argued that Wall Street had a math problem on Micron: earnings estimates had been revised up 3.6&times; over eighteen months, but price targets hadn&rsquo;t followed. Goldman sat at $235 with a NEUTRAL rating &mdash; a 2.35&times; multiple on peak earnings. The variant view: apply 11&times; (Micron&rsquo;s historical recovery-year multiple) to consensus FY27 EPS of $100, and you get a $1,100 price target. Roughly double the street median of $549.</p>
+          <p>On Tuesday May 26, UBS tripled their price target from $535 to $1,625. The stock briefly crossed $1 trillion in market cap for the first time in company history. The variant view became consensus &mdash; faster than I expected.</p>
+          <p><strong>My PT stays at $1,100.</strong> I&rsquo;m not chasing UBS higher. The trim ladder I committed to at $668 still runs: $900 / $1,100 / $1,400 / full exit at $1,500 or any kill-shot. The hardest discipline isn&rsquo;t holding a contrarian view. It&rsquo;s giving up the contrarian view when it stops being contrarian.</p>
+        </div>
+
+        <div class="pitch-thesis" style="border-left-color: var(--accent); background: rgba(181,106,63,0.07);">
+          <span class="pitch-thesis-label">Update &mdash; May 29, post-close</span>
+          <p><strong>The first trim fired the day after we published.</strong> MU closed Friday at <strong>$923.52</strong>, up 4.8% on the day, blowing through the $900 first-rung trigger intraday. I sold one-third of the position into the $920s, average fill $919. Position is now sized around 4% of the book versus the 6% I carried into the print, and the cost basis on the remaining two-thirds is unchanged.</p>
+          <p>Two new sell-side data points showed up in the same 24 hours that argue both directions. <strong>DA Davidson raised its PT from $1,000 to $1,500</strong> on May 28, landing exactly on our bull case &mdash; the third bank now sitting at or above my full-exit level. Separately, <strong>Goldman&rsquo;s macro team hiked its S&amp;P 500 target to 8,000</strong> and credited NVDA plus MU with roughly a third of the index&rsquo;s 2026 EPS growth. That&rsquo;s the macro desk validating the micro thesis, which is the kind of cross-confirmation I weight heavily &mdash; and the kind I should be most suspicious of.</p>
+          <p>The macro backdrop also softened. <strong>April core PCE printed 0.2% MoM versus 0.3% expected</strong> (3.3% YoY in line). The dovish read on inflation removes one of the discrete bear catalysts I was watching into next week. Cuts back on the table for September, and the bid under high-beta semis stays intact for at least another month.</p>
+          <p>None of this changes the framework. The trim ladder is doing what it was designed to do: take risk down as the variant view becomes consensus, without forecasting the top. Next rung is $1,100. We&rsquo;re 19% away.</p>
+        </div>
+      </header>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 1 &mdash; Sell-side capitulation in three weeks</p>
+        <p class="chart-headline">Goldman alone at $235 in red. UBS new high at $1,625. Two banks land exactly on our $1,100.</p>
+        <img class="chart-img" src="assets/reports/mu-after-ubs-2026-05-28-c1-pt-trajectory.png" alt="Sell-side price target trajectory: Goldman at $235 NEUTRAL versus UBS at $1,625, with Brandon's $1,100 PT in between" />
+        <p class="chart-caption">Nine separate analyst actions across eight banks in three weeks. The cascade started with Mizuho on May 6, escalated with BofA on May 13, accelerated with Citi and HSBC on May 19, and broke open with UBS on May 26. Source: bank notes via Bloomberg / company disclosures.</p>
+      </figure>
+
+      <section class="pitch-section" id="how-a-stampede-starts">
+        <h2>How a stampede starts</h2>
+
+        <p>Wall Street analysts capitulate in a predictable way: not all at once, but in a sequence that makes each individual decision look reasonable. Nobody wants to be the first to break from consensus. But nobody wants to be the last one defending the old view either.</p>
+
+        <p>Mizuho moved first, on May 6, bumping their PT from $545 to $740. A respectable raise. Nothing dramatic.</p>
+
+        <p>Then on May 13, Bank of America raised their PT from $500 to $950. That&rsquo;s a 90% increase in a single note. DA Davidson initiated coverage the same day at $1,000. TD Cowen raised to $660. Three banks moving in one session. The dam had a crack.</p>
+
+        <p>On May 19, the crack became a flood. Citigroup went $425 to $840. HSBC went $750 to $1,100 &mdash; landing exactly on my number. Mizuho raised again, to $800. Melius Research the next day matched HSBC at $1,100.</p>
+
+        <p>Then on May 26, UBS broke the format. $535 to $1,625. A 204% increase. The largest single-note PT raise I&rsquo;ve tracked. And just to make the point, UBS&rsquo;s implied market cap of $1.8 trillion would make Micron the seventh-largest company in America &mdash; ahead of Tesla, ahead of Meta, ahead of Berkshire Hathaway.</p>
+
+        <div class="pull-quote">Sell-side analysts cover memory the way meteorologists cover Florida hurricanes. They have models that work in normal weather, and models that work in disasters, and they switch between the two whichever way the wind is blowing today.</div>
+
+        <p>Twelve hours after the UBS note, Micron crossed a trillion dollars in market cap for the first time in company history. It didn&rsquo;t stay there long. But that&rsquo;s not the point. The point is that twenty days earlier, the consensus thought it would never get there.</p>
+      </section>
+
+      <section class="pitch-section" id="what-actually-happened">
+        <h2>What actually happened</h2>
+
+        <p>It&rsquo;s tempting to say I was right. I&rsquo;ll resist the temptation, because what actually happened is something more interesting and more useful to understand.</p>
+
+        <p>The variant view wasn&rsquo;t a prediction. It was an observation. Wall Street had a math problem. Earnings estimates had moved aggressively. Price targets had not. Sooner or later, one of those two things had to give. Either the analysts would have to come back down on EPS (justifying their low PTs), or they&rsquo;d have to raise PTs to match the EPS they had already raised. The thesis was simply that, given the data flowing in &mdash; DRAM contract prices up 90-95% in a single quarter, hyperscaler capex guides of $745-775 billion, MU printing 75% gross margin in real time &mdash; the EPS direction wasn&rsquo;t going to reverse. So the PTs would have to move.</p>
+
+        <p>This is not a forecast that requires being smart. It requires being patient and refusing to rationalize. The math wins eventually. It just doesn&rsquo;t tell you when.</p>
+
+        <figure class="article-chart">
+          <p class="chart-title">Chart 2 &mdash; Why the EPS estimates were moving</p>
+          <p class="chart-headline">Q1 2026 DRAM contract prices +90-95% QoQ &mdash; the largest quarterly increase ever recorded.</p>
+          <img class="chart-img" src="assets/reports/mu-after-ubs-2026-05-28-c2-dram-pricing.png" alt="DRAM and HBM contract pricing index from Q1 2023 through Q2 2026E showing record Q1 2026 jump" />
+          <p class="chart-caption">When prices move like that, earnings models update. Eventually price targets do too. Q2 2026 is projected another +58-63% on top. Source: TrendForce contract pricing reports.</p>
+        </figure>
+      </section>
+
+      <section class="pitch-section" id="cycle-didnt-end">
+        <h2>Why the cycle didn&rsquo;t end (yet)</h2>
+
+        <p>Every previous memory cycle ended because supply caught up to demand. Sometimes demand fell off a cliff &mdash; 2018 (smartphones), 2022 (gaming and crypto). Sometimes supply rushed in too fast &mdash; 2008 (Korean overinvestment). The textbook says cycles end. The textbook is right.</p>
+
+        <p>What&rsquo;s different this time isn&rsquo;t that the cycle won&rsquo;t end. It&rsquo;s <em>when</em>. AI demand is so large and so concentrated that the cycle peak is taking longer to play out. Hyperscalers committed to memory at a scale that&rsquo;s still being absorbed. Microsoft alone said $25 billion of its $190 billion in 2026 capex was just paying up for components &mdash; that&rsquo;s $25 billion sitting on Micron&rsquo;s pricing power, in one line of one earnings call.</p>
+
+        <figure class="article-chart">
+          <p class="chart-title">Chart 3 &mdash; The structural shift</p>
+          <p class="chart-headline">Memory went from 8% of hyperscaler capex two years ago to ~30% today.</p>
+          <img class="chart-img" src="assets/reports/mu-after-ubs-2026-05-28-c3-memory-share.png" alt="Memory share of hyperscaler capital expenditure rising from 8% in 2023-24 to approximately 30% in 2026" />
+          <p class="chart-caption">That&rsquo;s not cyclical; that&rsquo;s the supercycle&rsquo;s economic engine. Hyperscalers told us memory was in shortage by paying up for it. Source: company disclosures, author estimates.</p>
+        </figure>
+
+        <p>So the bears were technically right (cycles end) but practically wrong (the timing was off by several quarters). The bulls were technically wrong (cycles end) but practically right (you make most of the money on the way up). The trade was between the two views: long the durability of the peak, short the permanence of it.</p>
+      </section>
+
+      <section class="pitch-section" id="this-time-is-different">
+        <h2>UBS thinks this time is different. I don&rsquo;t.</h2>
+
+        <p>The new bullish argument &mdash; the one UBS used to justify $1,625 &mdash; is that AI has &ldquo;permanently reshaped memory market fundamentals.&rdquo; That phrase deserves to be examined.</p>
+
+        <p>If you believe it, memory becomes a structural growth business. Recurring AI infrastructure demand. Long-term agreements that smooth pricing. A tri-opoly of Samsung, SK Hynix, and Micron with capital discipline. Apply a 16&times; multiple instead of 11&times;. Apply growth-stock economics. The PT goes from $1,100 to $1,800.</p>
+
+        <p>If you don&rsquo;t believe it, memory is still memory. The cycle still ends. The only question is what triggers the end, and when.</p>
+
+        <p>I&rsquo;d give UBS partial credit. The 5-year long-term agreements Micron signed earlier this year are real and remove some of the spot-market volatility from peak pricing. The HBM/DDR5 wafer-area math is genuinely structural &mdash; every Gb of HBM displaces three Gb of conventional DRAM, which tightens the entire DRAM market mechanically as AI accelerator volumes grow. CXMT, the Chinese hopeful, is at least two generations behind and under export-control pressure. These things matter.</p>
+
+        <p>What I don&rsquo;t give UBS credit for is the supply ramp. Samsung committed $73 billion to 2026 semiconductor capex &mdash; the largest single-year semi investment in history, up 128% year-over-year. SK Hynix&rsquo;s $12.85 billion advanced packaging plant goes live in Q1 2028. Micron&rsquo;s CHIPS-funded Idaho fab ramps through fiscal 2029. TSMC&rsquo;s CoWoS capacity, the binding constraint on HBM packaging, expands fivefold from 2024 to end-2027.</p>
+
+        <figure class="article-chart">
+          <p class="chart-title">Chart 4 &mdash; The supply response</p>
+          <p class="chart-headline">Samsung&rsquo;s $73B 2026 capex is the largest single-year semi investment in history.</p>
+          <img class="chart-img" src="assets/reports/mu-after-ubs-2026-05-28-c4-supply-capex.png" alt="2026 semiconductor capex by player showing Samsung's $73 billion leading the field" />
+          <p class="chart-caption">It isn&rsquo;t capex. It&rsquo;s a declaration that Samsung intends to recover market share. That capacity has to come online somewhere. Memory cycles end when supply meets demand. Source: company disclosures.</p>
+        </figure>
+
+        <p>None of that capacity hits the market in 2026. Some of it hits in 2027. Most of it hits in 2028. And the consensus path for hyperscaler capex growth &mdash; currently +51% in 2026 &mdash; decelerates to +13% in 2027 and +5% in 2028. If supply grows 30% per year in 2027-2028 while demand growth slows to 5%, you don&rsquo;t need to forecast a recession to see what happens. You just need to know how subtraction works.</p>
+
+        <div class="pull-quote">Memory cycles don&rsquo;t end because of forecasts. They end because of arithmetic.</div>
+      </section>
+
+      <section class="pitch-section" id="why-not-raising-pt">
+        <h2>Why I&rsquo;m not raising my price target</h2>
+
+        <p>I get this question a lot now. UBS at $1,625. DA Davidson up to $1,500 the same week. HSBC and Melius at $1,100, matching me. Stock through $920 by Friday, looking like it could blow through $1,000 in a few weeks. Why not move my number up?</p>
+
+        <p>Three reasons.</p>
+
+        <p><strong>First</strong>, methodology is methodology. My $1,100 came from consensus FY27 EPS times the median multiple Micron has historically traded at during recovery years. The math drives the number, not the other way around. If I raise the multiple to chase the street, I&rsquo;m back-fitting &mdash; picking the answer first and then finding a justification. That works once, by luck. It doesn&rsquo;t work as a process.</p>
+
+        <p><strong>Second</strong>, UBS&rsquo;s $1,625 implicitly assumes the cycle doesn&rsquo;t end. That&rsquo;s a stronger claim than I&rsquo;ve been willing to make. I&rsquo;ve explicitly modeled this trade as a cycle peak in fiscal 2027 with an exit by fiscal 2028 because the supply math is real and quantifiable. If I promote UBS&rsquo;s view to my base case, I&rsquo;m abandoning the framework that worked. The framework worked because it was honest about what it didn&rsquo;t know.</p>
+
+        <p><strong>Third</strong>, if I keep $1,100 and the stock blows through it, my pre-committed trim ladder catches the upside automatically. I don&rsquo;t need a higher headline number. I need to execute the discipline I already wrote down.</p>
+
+        <h3>The trim ladder, in case you forgot</h3>
+
+        <p>Here&rsquo;s what I committed to in early May, when this thesis was new:</p>
+
+        <table class="pitch-table">
+          <thead><tr><th>Level</th><th>Action</th><th>Where we are</th></tr></thead>
+          <tbody>
+            <tr class="row-warn"><td><strong>$900</strong></td><td>Trim one-third of the position</td><td><strong>Fired May 29 at $923.52.</strong> Avg fill $919. Done.</td></tr>
+            <tr><td><strong>$1,100</strong></td><td>Trim another third</td><td>19% above current ($923). The base price target.</td></tr>
+            <tr><td><strong>$1,400</strong></td><td>Trim another third</td><td>52% above current. Approaching bull case.</td></tr>
+            <tr class="row-exit"><td><strong>$1,500+</strong></td><td>Full exit, or if any kill-shot fires</td><td>62% above current. Bull case price target.</td></tr>
+          </tbody>
+        </table>
+
+        <p>Notice what this framework does. It commits me to selling into strength before I know whether UBS is right. If UBS is right and the stock runs to $1,800, I still capture most of that move on the way up &mdash; but I trim along the way so I don&rsquo;t ride the full cycle exit on the way down. If UBS is wrong and the stock peaks at $1,150 before rolling over, I&rsquo;ve already taken two of three trims by then.</p>
+
+        <p>The discipline doesn&rsquo;t require predicting the top. It requires admitting in advance that you can&rsquo;t predict the top.</p>
+      </section>
+
+      <section class="pitch-section" id="what-could-go-wrong">
+        <h2>What could still go wrong</h2>
+
+        <p>The bear case has been delayed, not disproven. Some things I&rsquo;m still watching.</p>
+
+        <figure class="article-chart">
+          <p class="chart-title">Chart 5 &mdash; Where the supply ramp arrives</p>
+          <p class="chart-headline">Through 2026, demand outruns supply. 2027 they cross. 2028 supply leads.</p>
+          <img class="chart-img" src="assets/reports/mu-after-ubs-2026-05-28-c5-supply-demand.png" alt="HBM supply versus demand balance from 2024 through 2028 with the 2028 risk window highlighted" />
+          <p class="chart-caption">That&rsquo;s the cycle exit window &mdash; and the reason we sell into strength, not on the way down. Source: TrendForce, Counterpoint, company guidance, author projections.</p>
+        </figure>
+
+        <p>The 2028 supply ramp is the strongest of the bear arguments and the one I&rsquo;ve already discussed. Samsung&rsquo;s $73 billion arrives in late 2027. SK Hynix&rsquo;s new packaging plant arrives Q1 2028. Micron&rsquo;s Idaho fab arrives in fiscal 2029. If hyperscaler capex decelerates the way consensus expects, the balance flips by late 2028.</p>
+
+        <p>Geopolitical escalation is the tail risk that nobody can model. Taiwan disruption catastrophically affects TSMC CoWoS, which catastrophically affects HBM, which catastrophically affects Micron&rsquo;s economics. I have no way to handicap this beyond knowing it&rsquo;s not zero.</p>
+
+        <p>Politically, the AI windfall tax narrative is still floating around. South Korea officially denied it in May, but the seed is planted. Watch for European or Japanese echoes. Post-November 2026 mid-term elections, the framing becomes politically palatable in the US too, especially if a few hyperscaler CEOs say something tone-deaf about their cash positions.</p>
+
+        <p>Workload architecture shifts &mdash; in-package SRAM, optical interconnects, processing-in-memory &mdash; could compress the HBM bandwidth premium over time. None of these are near-term. All of them are long-term.</p>
+
+        <p>And then there&rsquo;s Micron itself. The Idaho fab ramp is the largest greenfield project in company history. CHIPS-backed capex of roughly $50 billion over twenty years. Project delays, yield issues, or capital allocation missteps would compress the FY27-FY29 earnings path that this entire trade depends on. Companies of Micron&rsquo;s size and complexity have execution risk that doesn&rsquo;t show up in spreadsheets until it&rsquo;s already shown up.</p>
+
+        <p>None of these have fired. All of them could.</p>
+      </section>
+
+      <section class="pitch-section" id="discipline-going-forward">
+        <h2>What I keep coming back to</h2>
+
+        <p>Memory has been a graveyard for confident analysts. The 2018 cycle had everyone certain of a structural rerate. By 2023 the same names were printing negative gross margins. Five-year-ago Brandon would have looked at the UBS note this week and felt vindicated. Two-years-ago Brandon would have used it as justification to load up at $900. Today Brandon notices the pattern and reaches for the trim ladder.</p>
+
+        <p>The trade isn&rsquo;t about being right. It&rsquo;s about having a framework that survives both being wrong AND being right too early. The framework that worked in May at $668 is the same framework that says trim at $900 in late May. Refusing to update the framework just because the market caught up &mdash; that&rsquo;s the discipline.</p>
+
+        <div class="pull-quote">The hardest discipline isn&rsquo;t holding a contrarian view. It&rsquo;s giving up the contrarian view when it stops being contrarian. Three weeks ago everyone was wrong. Today, mostly everyone is right. The trade is the same.</div>
+
+        <p>I was a buyer at $668. I was a holder at $881. I was a trimmer at $923 last Friday. I&rsquo;ll be a trimmer again at $1,100, and an exiter at $1,500. None of this is about courage or conviction. It&rsquo;s just arithmetic with a calendar attached.</p>
+
+        <p>UBS may end up being right that this cycle is different. If they are, I&rsquo;ll miss some upside. That&rsquo;s the cost of refusing to chase. I&rsquo;ll take it.</p>
+      </section>
+
+      <section class="pitch-section" id="position-summary">
+        <h2>Position summary</h2>
+
+        <table class="pitch-table">
+          <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>Rating</td><td><strong>BUY (with trim discipline)</strong></td></tr>
+            <tr><td>12-month base PT (unchanged)</td><td><strong>$1,100</strong></td></tr>
+            <tr><td>Bull case PT (unchanged)</td><td>$1,500</td></tr>
+            <tr><td>Bear case PT (unchanged)</td><td>$280</td></tr>
+            <tr><td>Probability-weighted PT</td><td>~$995</td></tr>
+            <tr><td>Time horizon</td><td>Through FY27 cycle peak; exit by FY28 supply ramp</td></tr>
+            <tr><td>Position sizing</td><td>~4% post-trim (down from 6% pre-Friday)</td></tr>
+            <tr><td>Trim ladder</td><td><s>$900</s> (done 5/29 @ $919) / $1,100 / $1,400 / $1,500 (full exit)</td></tr>
+            <tr><td>Spot price (last close)</td><td>$923.52 (May 29, 2026)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <p class="disclosure">
+        Disclosure: I/we have a beneficial long position in the shares of MU either through stock ownership, options, or other derivatives. I wrote this article myself, and it expresses my own opinions. I am not receiving compensation for it. I have no business relationship with any company whose stock is mentioned in this article. This is research and analysis only, not personalized financial advice. This commentary is for informational and educational purposes only and does not constitute investment, tax, or legal advice or a solicitation to buy or sell any security. Past performance is not indicative of future results. Readers should conduct their own research and consult a qualified financial professional before making investment decisions. Sources include Micron IR disclosures, sell-side notes (UBS, BofA, HSBC, Melius Research, DA Davidson, Citigroup, Mizuho, TD Cowen, Morgan Stanley, Goldman Sachs), TrendForce DRAM contract pricing, Counterpoint Research HBM share data, hyperscaler Q1 2026 earnings transcripts, and Bloomberg consensus data. See <a href="disclaimer.html">disclaimer</a>.
+      </p>
+
+      <div class="pitch-cta">
+        <a class="btn" href="https://bpleon.substack.com/subscribe" target="_blank" rel="noopener">Get the next note by email &rarr;</a>
+        &nbsp;
+        <a class="btn btn-ghost" href="writing.html">All writing</a>
+      </div>
+
+    </article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=48" defer></script>
+</body>
+</html>
