@@ -33,3 +33,5 @@ assets/toolkit/*.~lock.*
 
 # Editor lock files
 .~lock.*
+
+MU-VERIFIED-DATA-REFERENCE.md
