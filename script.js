@@ -1309,7 +1309,26 @@
 
   var currentHeroRange = '1y';
 
-  function loadHeroChart(range) {
+  // Last-good cache for the hero chart, keyed by range. Lets the chart paint
+  // an instant line on repeat visits and survive a Yahoo/Worker blip with the
+  // most recent data instead of a permanent "Loading…".
+  function heroCacheSave(range, values, timestamps) {
+    try {
+      localStorage.setItem('bpleon_hero_' + range,
+        JSON.stringify({ v: values, t: timestamps || null }));
+    } catch (e) { /* storage full / disabled -- non-fatal */ }
+  }
+  function heroCacheLoad(range) {
+    try {
+      var raw = localStorage.getItem('bpleon_hero_' + range);
+      if (!raw) return null;
+      var o = JSON.parse(raw);
+      if (!o || !o.v || o.v.length < 2) return null;
+      return { values: o.v, timestamps: o.t };
+    } catch (e) { return null; }
+  }
+
+  function loadHeroChart(range, _attempt) {
     range = range || '1y';
     currentHeroRange = range;
     var line = document.getElementById('hero-chart-line');
@@ -1317,17 +1336,12 @@
     if (!line) return;
     var label = document.getElementById('hero-chart-label');
     var sym = '^GSPC';  // S&P 500 index
-    fetch(WORKER_URL + '?spark=' + encodeURIComponent(sym) +
-                       '&range=' + encodeURIComponent(range) +
-                       '&withDates=1')
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (data) {
-        if (!data || !data[sym]) return;
-        var entry = data[sym];
-        // Tolerate both shapes: { values, timestamps } or [..closes].
-        var values = Array.isArray(entry) ? entry : entry.values;
-        var timestamps = Array.isArray(entry) ? null : entry.timestamps;
-        if (!values || values.length < 2) return;
+
+    // Renderer extracted from the fetch handler so the SAME code can paint
+    // either live Yahoo data or the last-good copy from localStorage (used
+    // when the Worker/Yahoo is throttling). Returns true if it actually drew.
+    function paintHero(values, timestamps) {
+        if (!values || values.length < 2) return false;
         var w = 320, h = 240, padX = 24, padTop = 36, padBottom = 28;
         var min = Math.min.apply(null, values);
         var max = Math.max.apply(null, values);
@@ -1397,8 +1411,43 @@
             min: min, max: max, range: range_v, range_label: range,
           });
         }
+        return true;
+    }  // end paintHero
+
+    // Paint the last good copy immediately so there's no "Loading…" flash
+    // while the live request is in flight (and so a blip leaves a real line).
+    var seeded = heroCacheLoad(range);
+    if (seeded) paintHero(seeded.values, seeded.timestamps);
+
+    // Transient Worker/Yahoo failure: retry a few times with linear backoff so
+    // the chart heals itself without a page reload. The old code never retried,
+    // so one blip on initial load pinned "Loading…" until the next navigation.
+    function heroFallback() {
+      var attempt = _attempt || 0;
+      if (attempt >= 4) return;
+      setTimeout(function () {
+        if (currentHeroRange === range) loadHeroChart(range, attempt + 1);
+      }, 4000 * (attempt + 1));
+    }
+
+    // cache:'no-store' so the browser never replays a previously-cached empty
+    // body; the Worker already de-dupes upstream Yahoo hits at the CF edge.
+    fetch(WORKER_URL + '?spark=' + encodeURIComponent(sym) +
+                       '&range=' + encodeURIComponent(range) +
+                       '&withDates=1', { cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) {
+        var entry = data && data[sym];
+        // Tolerate both shapes: { values, timestamps } or [..closes].
+        var values = Array.isArray(entry) ? entry : (entry && entry.values);
+        var timestamps = Array.isArray(entry) ? null : (entry && entry.timestamps);
+        if (paintHero(values, timestamps)) {
+          heroCacheSave(range, values, timestamps);
+        } else {
+          heroFallback();
+        }
       })
-      .catch(function () { /* leave placeholder path */ });
+      .catch(function () { heroFallback(); });
   }
 
   // Attach (or re-attach) hover handlers to the hero S&P chart. Mouse X is
