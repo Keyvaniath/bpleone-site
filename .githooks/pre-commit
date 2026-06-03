@@ -28,16 +28,17 @@ if ! command -v node >/dev/null 2>&1; then
 fi
 
 # Skip if we have no tools/ scripts (e.g. fresh checkout missing them)
-if [ ! -f tools/build-site-index.js ] || [ ! -f tools/build-reports-manifest.js ]; then
+if [ ! -f tools/build-site-index.js ] || [ ! -f tools/build-reports-manifest.js ] || [ ! -f tools/build-sitemap-feed.js ]; then
   echo "[pre-commit] manifest scripts missing — skipping"
   exit 0
 fi
 
-echo "[pre-commit] regenerating manifests..."
+echo "[pre-commit] regenerating manifests + sitemap/feed..."
 node tools/build-reports-manifest.js >/dev/null
 node tools/build-site-index.js >/dev/null
+node tools/build-sitemap-feed.js >/dev/null
 
 # Re-stage the regenerated files if they changed
-git add assets/reports/manifest.json assets/site-index.json 2>/dev/null || true
+git add assets/reports/manifest.json assets/site-index.json sitemap.xml feed.xml 2>/dev/null || true
 
 echo "[pre-commit] manifests up to date"

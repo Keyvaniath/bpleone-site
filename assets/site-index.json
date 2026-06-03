@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-03",
   "fileCount": 103,
-  "totalBytes": 5595083,
+  "totalBytes": 5604671,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -145,8 +145,8 @@
     {
       "path": ".githooks/pre-commit",
       "name": "pre-commit",
-      "size": 1553,
-      "sizeText": "1.5 KB",
+      "size": 1673,
+      "sizeText": "1.6 KB",
       "modified": "2026-06-03",
       "ext": "",
       "category": "other"
@@ -271,9 +271,9 @@
     {
       "path": "comps-template.html",
       "name": "comps-template.html",
-      "size": 31227,
-      "sizeText": "30.5 KB",
-      "modified": "2026-05-31",
+      "size": 31785,
+      "sizeText": "31.0 KB",
+      "modified": "2026-06-03",
       "ext": ".html",
       "category": "pages"
     },
@@ -415,9 +415,9 @@
     {
       "path": "mu-june-outlook-2026-05-31.html",
       "name": "mu-june-outlook-2026-05-31.html",
-      "size": 31789,
-      "sizeText": "31.0 KB",
-      "modified": "2026-06-01",
+      "size": 35448,
+      "sizeText": "34.6 KB",
+      "modified": "2026-06-03",
       "ext": ".html",
       "category": "pages"
     },
@@ -649,9 +649,9 @@
     {
       "path": "writing.html",
       "name": "writing.html",
-      "size": 14640,
+      "size": 14670,
       "sizeText": "14.3 KB",
-      "modified": "2026-06-01",
+      "modified": "2026-06-03",
       "ext": ".html",
       "category": "pages"
     },
@@ -748,9 +748,9 @@
     {
       "path": "assets/reports/mu-june-outlook-2026-05-31-c3-sellside-may31.png",
       "name": "mu-june-outlook-2026-05-31-c3-sellside-may31.png",
-      "size": 209151,
-      "sizeText": "204.2 KB",
-      "modified": "2026-06-01",
+      "size": 212589,
+      "sizeText": "207.6 KB",
+      "modified": "2026-06-03",
       "ext": ".png",
       "category": "reports"
     },
@@ -766,9 +766,9 @@
     {
       "path": "package.json",
       "name": "package.json",
-      "size": 428,
-      "sizeText": "428 B",
-      "modified": "2026-05-07",
+      "size": 513,
+      "sizeText": "513 B",
+      "modified": "2026-06-03",
       "ext": ".json",
       "category": "site-code"
     },
@@ -793,8 +793,8 @@
     {
       "path": "feed.xml",
       "name": "feed.xml",
-      "size": 5902,
-      "sizeText": "5.8 KB",
+      "size": 5303,
+      "sizeText": "5.2 KB",
       "modified": "2026-06-03",
       "ext": ".xml",
       "category": "site-meta"
@@ -811,8 +811,8 @@
     {
       "path": "sitemap.xml",
       "name": "sitemap.xml",
-      "size": 4014,
-      "sizeText": "3.9 KB",
+      "size": 6311,
+      "sizeText": "6.2 KB",
       "modified": "2026-06-03",
       "ext": ".xml",
       "category": "site-meta"
