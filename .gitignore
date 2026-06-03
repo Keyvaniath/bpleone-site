@@ -34,8 +34,12 @@ assets/toolkit/*.~lock.*
 # Editor lock files
 .~lock.*
 
-# Local-only research reference docs (truth tables + session/research handoffs).
-# These hold pre-publication numbers and internal notes — never ship them.
+# Local-only internal docs (truth tables, handoffs, process notes). These hold
+# pre-publication numbers + internal notes — never ship them to the public site.
+# (HANDOFF*.md + SUBSCRIBER_IMPORT.md were tracked before this convention and
+# were live at bpleon.com/HANDOFF.md etc.; untracked 2026-06 so they 404.)
 MU-VERIFIED-DATA-REFERENCE.md
 DELL-RESEARCH-HANDOFF.md
 SESSION-HANDOFF-*.md
+HANDOFF*.md
+SUBSCRIBER_IMPORT.md
