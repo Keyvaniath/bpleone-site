@@ -34,8 +34,8 @@ assets/toolkit/*.~lock.*
 # Editor lock files
 .~lock.*
 
+# Local-only research reference docs (truth tables + session/research handoffs).
+# These hold pre-publication numbers and internal notes — never ship them.
 MU-VERIFIED-DATA-REFERENCE.md
-
-MU-VERIFIED-DATA-REFERENCE.md
-
-MU-VERIFIED-DATA-REFERENCE.md
+DELL-RESEARCH-HANDOFF.md
+SESSION-HANDOFF-*.md

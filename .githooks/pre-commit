@@ -9,6 +9,18 @@
 
 set -e
 
+# Guard: refuse to commit a truncated root-level HTML page. A file that lost its
+# tail (the </html> + the <script src="script.js"> include) still renders but
+# silently breaks the hero chart, ticker, and watchlist. This is exactly the
+# 302a838 regression — never again. Override with `git commit --no-verify`.
+for f in *.html; do
+  [ -e "$f" ] || continue
+  if ! tail -c 64 "$f" | grep -q '</html>'; then
+    echo "[pre-commit] ERROR: $f does not end with </html> (truncated?) — commit aborted."
+    exit 1
+  fi
+done
+
 # Skip if we have no node (e.g. shell-only environment)
 if ! command -v node >/dev/null 2>&1; then
   echo "[pre-commit] node not found — skipping manifest rebuild"

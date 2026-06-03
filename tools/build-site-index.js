@@ -10,6 +10,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const OUT  = path.join(ROOT, 'assets', 'site-index.json');
@@ -19,14 +20,27 @@ const EXCLUDE_DIRS = new Set([
   '.git', '.github', 'node_modules', 'drafts', 'tools', '.cache', 'dist'
 ]);
 const EXCLUDE_FILES = new Set([
-  // Local-only docs / state
-  'HANDOFF.md', 'HANDOFF-v3.md', 'README.md', 'SUBSCRIBER_IMPORT.md',
-  'worker-source.js', '.test-write', '.gitignore'
+  // Local-only docs / state. The git check-ignore pass in main() is the real
+  // safety net for .gitignore; this static list is the fallback for build
+  // environments where git may not be on PATH.
+  'HANDOFF.md', 'HANDOFF-v3.md', 'HANDOFF-pe-section-v1.md', 'README.md',
+  'SUBSCRIBER_IMPORT.md', 'worker-source.js', '.test-write', '.gitignore',
+  // Local-only research docs (also gitignored) — must never appear publicly.
+  'MU-VERIFIED-DATA-REFERENCE.md', 'DELL-RESEARCH-HANDOFF.md'
 ]);
 const EXCLUDE_SUFFIX = ['.broken', '.broken2', '.head', '.tail', '.tmp', '.swp', '.DS_Store'];
 
+// Dated / variant private docs the static set can't enumerate by name
+// (e.g. SESSION-HANDOFF-2026-06-01.md, a future MU-VERIFIED-* spin-off).
+function isPrivateDoc(name) {
+  return /^SESSION-HANDOFF-/i.test(name) ||
+         /-HANDOFF(\b|[-.])/i.test(name) ||
+         /^MU-VERIFIED-DATA/i.test(name);
+}
+
 function shouldExclude(rel, name) {
   if (EXCLUDE_FILES.has(name)) return true;
+  if (isPrivateDoc(name)) return true;
   if (name.startsWith('.')) return true; // dotfiles like .gitkeep, .vscode, etc
   for (const suf of EXCLUDE_SUFFIX) if (name.endsWith(suf)) return true;
   // Exclude site-index/manifest themselves from listing? No — leave them in.
@@ -79,8 +93,29 @@ function walk(dir, rel) {
   return out;
 }
 
+// Drop anything git actually ignores (worker-source.js, drafts/, the local
+// research truth tables/handoffs, etc.) so the public site-index never reveals
+// a private file's name or size. Degrades gracefully if git isn't on PATH.
+function filterGitIgnored(files) {
+  if (!files.length) return files;
+  let ignoredOut = '';
+  try {
+    ignoredOut = execFileSync('git', ['-C', ROOT, 'check-ignore', '--stdin'],
+      { input: files.map(f => f.path).join('\n'), encoding: 'utf8' });
+  } catch (e) {
+    if (e && e.status === 1) {
+      ignoredOut = (e.stdout || '');            // exit 1 = nothing ignored (not an error)
+    } else {
+      console.warn('  [warn] git check-ignore unavailable — relying on static excludes');
+      return files;
+    }
+  }
+  const ignored = new Set(ignoredOut.split(/\r?\n/).map(s => s.trim()).filter(Boolean));
+  return ignored.size ? files.filter(f => !ignored.has(f.path)) : files;
+}
+
 function main() {
-  const files = walk(ROOT, '').sort((a,b) =>
+  const files = filterGitIgnored(walk(ROOT, '')).sort((a,b) =>
     a.category.localeCompare(b.category) || a.path.localeCompare(b.path)
   );
   const counts = files.reduce((acc, f) => {

@@ -19,6 +19,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Guard against truncated HTML (lost </html> / script.js include)
+        run: |
+          # A truncated page (like the 302a838 incident that silently dropped
+          # index.html's closing tags + <script src="script.js">) still renders in
+          # browsers but breaks every JS-driven feature. Fail hard so it can't ship.
+          fail=0
+          for f in *.html; do
+            [ -e "$f" ] || continue
+            if ! tail -c 64 "$f" | grep -q '</html>'; then
+              echo "::error file=$f::$f does not end with </html> — truncated?"
+              fail=1
+            fi
+          done
+          [ "$fail" -eq 0 ] && echo "HTML integrity OK ($(ls *.html | wc -l) pages)." || exit 1
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
