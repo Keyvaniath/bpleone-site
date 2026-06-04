@@ -128,6 +128,12 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
   .bp-brand img { height: 30px; }
   .bp-footer-inner { flex-direction: column; align-items: flex-start; }
 }
+/* Wide data tables scroll horizontally on phones instead of forcing the whole
+   page to overflow sideways (min-width:0 lets the cards shrink below content). */
+@media (max-width: 680px) {
+  .card, .grid { min-width: 0; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+}
 </style>
 </head>
 <body spellcheck="false">

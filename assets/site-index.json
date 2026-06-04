@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 103,
-  "totalBytes": 5607344,
+  "totalBytes": 5610723,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -280,8 +280,8 @@
     {
       "path": "comps.html",
       "name": "comps.html",
-      "size": 21723,
-      "sizeText": "21.2 KB",
+      "size": 22046,
+      "sizeText": "21.5 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -379,9 +379,9 @@
     {
       "path": "lbo.html",
       "name": "lbo.html",
-      "size": 35686,
-      "sizeText": "34.8 KB",
-      "modified": "2026-05-31",
+      "size": 38742,
+      "sizeText": "37.8 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
