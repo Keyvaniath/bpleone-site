@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 103,
-  "totalBytes": 5644548,
+  "totalBytes": 5645366,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -316,9 +316,9 @@
     {
       "path": "dcf.html",
       "name": "dcf.html",
-      "size": 22670,
-      "sizeText": "22.1 KB",
-      "modified": "2026-05-31",
+      "size": 22932,
+      "sizeText": "22.4 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
@@ -361,9 +361,9 @@
     {
       "path": "lbo-ma-examples.html",
       "name": "lbo-ma-examples.html",
-      "size": 9303,
-      "sizeText": "9.1 KB",
-      "modified": "2026-05-31",
+      "size": 9859,
+      "sizeText": "9.6 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
