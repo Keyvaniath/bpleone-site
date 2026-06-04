@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 103,
-  "totalBytes": 5645366,
+  "totalBytes": 5647507,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -262,8 +262,8 @@
     {
       "path": "about.html",
       "name": "about.html",
-      "size": 7115,
-      "sizeText": "6.9 KB",
+      "size": 7899,
+      "sizeText": "7.7 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -352,9 +352,9 @@
     {
       "path": "index.html",
       "name": "index.html",
-      "size": 28093,
-      "sizeText": "27.4 KB",
-      "modified": "2026-06-03",
+      "size": 29450,
+      "sizeText": "28.8 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
