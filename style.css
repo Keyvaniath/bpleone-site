@@ -547,6 +547,14 @@ a.price-card.price-card-link {
 }
 
 /* Header / nav -------------------------------------------------------------- */
+/* Skip-to-content link (WCAG 2.4.1) — hidden until keyboard-focused. */
+.skip-link {
+  position: absolute; left: -9999px; top: .5rem; z-index: 2000;
+  background: var(--accent); color: #fff; padding: .55rem 1rem;
+  border-radius: 4px; font-family: var(--sans); font-size: .9rem; text-decoration: none;
+}
+.skip-link:focus { left: .5rem; }
+
 .site-header {
   display: flex;
   align-items: baseline;
