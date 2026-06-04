@@ -148,9 +148,13 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
 @media (max-width: 640px) {
   input[type="number"], input[type="text"], select, textarea { font-size: 16px; }
 }
+
+.skip-link { position: absolute; left: -9999px; top: 8px; z-index: 1000; background: var(--accent); color: #fff; padding: .55rem 1rem; border-radius: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; text-decoration: none; }
+.skip-link:focus { left: 8px; }
 </style>
 </head>
 <body spellcheck="false">
+<a class="skip-link" href="#main">Skip to content</a>
 <header class="bp-header">
   <a class="bp-brand" href="./index.html" aria-label="Brandon Leon — Home"><img src="./assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="170" height="44"></a>
   <nav class="bp-nav" aria-label="Primary">
@@ -163,7 +167,7 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
     <a href="./contact.html">Contact</a>
   </nav>
 </header>
-<div class="container">
+<div class="container" id="main">
   <div class="breadcrumb"><a href="./index.html">Home</a> &nbsp;·&nbsp; <a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Valuation calculators</div>
   <div class="kicker">TOOLKIT · TRADING COMPS</div>
   <h1>Trading Comps Calculator</h1>

@@ -153,9 +153,13 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
 @media (max-width: 640px) {
   input[type="number"], input[type="text"], select, textarea { font-size: 16px; }
 }
+
+.skip-link { position: absolute; left: -9999px; top: 8px; z-index: 1000; background: var(--accent); color: #fff; padding: .55rem 1rem; border-radius: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; text-decoration: none; }
+.skip-link:focus { left: 8px; }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <button class="share-btn" id="shareBtn" title="Copy a shareable link with your inputs">📋 SHARE THIS</button>
 <div class="share-toast" id="shareToast">Link copied — paste it anywhere</div>
@@ -180,7 +184,7 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
     <a href="./contact.html">Contact</a>
   </nav>
 </header>
-<div class="container">
+<div class="container" id="main">
     <div class="breadcrumb"><a href="./index.html">Home</a> &nbsp;·&nbsp; <a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Valuation calculators</div>
     <h1 class="headline">LBO Calculator</h1>
     <p class="subhead">Pick a sector scorecard, plug in current EBITDA, watch sponsor IRR and returns attribution recalculate live. Same engine as the 17-tab Python pipeline — just stripped down to the levers that actually move the deal.</p>

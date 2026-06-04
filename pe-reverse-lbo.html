@@ -132,9 +132,13 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
 @media (max-width: 640px) {
   input[type="number"], input[type="text"], select, textarea { font-size: 16px; }
 }
+
+.skip-link { position: absolute; left: -9999px; top: 8px; z-index: 1000; background: var(--accent); color: #fff; padding: .55rem 1rem; border-radius: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; text-decoration: none; }
+.skip-link:focus { left: 8px; }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 <header class="bp-header">
   <a class="bp-brand" href="./index.html" aria-label="Brandon Leon — Home"><img src="./assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="170" height="44"></a>
   <nav class="bp-nav" aria-label="Primary">
@@ -159,7 +163,7 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
     <p class="footnote" style="margin-top:6px;">Substack handles signup — no spam, unsubscribe anytime.</p>
 </div>
 
-<div class="container">
+<div class="container" id="main">
     <div class="breadcrumb"><a href="./index.html">Home</a> &nbsp;·&nbsp; <a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Buy-side tools</div>
     <h1 class="headline">Reverse-LBO Calculator</h1>
     <p class="subhead">Solve the LBO backward. Start with the price the public market is asking and a target sponsor IRR. Out comes the maximum entry multiple a financial buyer would pay — and the implied take-private price per share. If the implied price sits above the current quote, private capital would step in. If it sits below, the public is paying more than patient capital.</p>
