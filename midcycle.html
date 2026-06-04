@@ -310,8 +310,8 @@ function renderHistory() {
         div.className = 'row';
         div.innerHTML = `
             <div class="year-label">FY${row.year}</div>
-            <input type="number" id="rev_${i}" value="${row.rev}" data-idx="${i}" data-field="rev">
-            <input type="number" id="ebitda_${i}" value="${row.ebitda}" data-idx="${i}" data-field="ebitda">
+            <input type="number" id="rev_${i}" value="${row.rev}" data-idx="${i}" data-field="rev" aria-label="FY${row.year} revenue">
+            <input type="number" id="ebitda_${i}" value="${row.ebitda}" data-idx="${i}" data-field="ebitda" aria-label="FY${row.year} EBITDA">
         `;
         container.appendChild(div);
     });

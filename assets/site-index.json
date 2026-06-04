@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 108,
-  "totalBytes": 5853976,
+  "totalBytes": 5854045,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -424,8 +424,8 @@
     {
       "path": "midcycle.html",
       "name": "midcycle.html",
-      "size": 35449,
-      "sizeText": "34.6 KB",
+      "size": 35518,
+      "sizeText": "34.7 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
