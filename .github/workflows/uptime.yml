@@ -1,0 +1,47 @@
+# Uptime monitor for bpleon.com + the bpleon-quotes Worker.
+#
+# Runs every 15 min on GitHub's infra (external to Cloudflare, so it's a true
+# outside-in check). If the homepage or the Worker is down, the job FAILS and
+# GitHub emails you (the repo owner) — that's the alert. No third-party service.
+#
+# Make sure GitHub Actions failure emails are on:
+#   github.com → Settings → Notifications → Actions → "Send notifications for failed workflows only"
+#
+# Want louder alerts (Slack/Discord/SMS)? Add a webhook secret and a step here,
+# or point UptimeRobot at the same URLs — ask Claude to wire it up.
+
+name: Uptime — bpleon.com + Worker
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # every 15 minutes
+  workflow_dispatch:          # manual "Run workflow" button
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping homepage + Worker (3 retries each, so a single blip won't page you)
+        run: |
+          fail=0
+          # check <label> <url> <must-contain-string>
+          check() {
+            for i in 1 2 3; do
+              body=$(curl -s -m 20 -A "bpleon-uptime-bot" "$2" || true)
+              if printf '%s' "$body" | grep -q "$3"; then echo "  OK   $1"; return 0; fi
+              sleep 6
+            done
+            echo "  DOWN $1  ->  $2"; return 1
+          }
+          echo "Checking bpleon.com..."
+          check "homepage loads script.js" "https://bpleon.com/?cb=$RANDOM" 'script.js' || fail=1
+          echo "Checking Worker..."
+          W="https://bpleon-quotes.brandonpleone.workers.dev"
+          check "worker /spark"     "$W/?spark=%5EGSPC"          'GSPC'               || fail=1
+          check "worker /symbols"   "$W/?symbols=SPY"            'regularMarketPrice' || fail=1
+          check "worker /watchlist" "$W/?watchlist=read"         'sym'                || fail=1
+          if [ "$fail" -ne 0 ]; then
+            echo "::error::bpleon.com or the bpleon-quotes Worker is DOWN — see failed checks above."
+            exit 1
+          fi
+          echo "All systems green."

@@ -1,0 +1,77 @@
+# Smoke test: prove the homepage actually RENDERS its charts, not just loads.
+#
+# The `manifests.yml` guard catches a truncated <html>; this catches the subtler
+# failure that started everything — "page loads fine but the hero chart + ticker
+# are dead" (e.g. the missing <script src=script.js> regression). It serves THIS
+# commit's HTML locally and drives it with a real browser (charts fetch from the
+# live Worker), so it validates the about-to-ship version before you trust it.
+#
+# Runs on every push to main + on demand. Fails (and emails you) if charts don't
+# populate within ~20s.
+
+name: Smoke test — homepage renders charts
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Playwright (Chromium) + static server
+        run: |
+          npm install --no-save playwright http-server
+          npx playwright install --with-deps chromium
+
+      - name: Serve this commit and smoke-test the homepage
+        run: |
+          npx http-server . -p 8080 -s &
+          sleep 3
+          cat > smoke.js <<'EOF'
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch();
+            const page = await browser.newPage();
+            const fails = [];
+            await page.goto('http://localhost:8080/', { waitUntil: 'load', timeout: 30000 });
+
+            // 1) script.js must actually load (the regression that killed the homepage)
+            const scriptLoaded = await page.evaluate(() =>
+              performance.getEntriesByType('resource').some(r => /script\.js/.test(r.name)));
+            if (!scriptLoaded) fails.push('script.js was never loaded by the page');
+
+            // 2) hero chart must leave "Loading…" and show a real S&P label
+            try {
+              await page.waitForFunction(() => {
+                const l = document.getElementById('hero-chart-label');
+                return l && !/loading/i.test(l.textContent) && /S&P|\d{3,}/.test(l.textContent);
+              }, { timeout: 20000 });
+              console.log('OK  hero chart:', (await page.$eval('#hero-chart-label', e => e.textContent)).trim());
+            } catch { fails.push('hero chart stuck on Loading / never rendered'); }
+
+            // 3) ticker tape must populate with multiple items
+            try {
+              await page.waitForFunction(() => {
+                const t = document.getElementById('ticker-tape');
+                return t && t.querySelectorAll('.ticker-item').length > 3;
+              }, { timeout: 20000 });
+              const n = await page.$$eval('#ticker-tape .ticker-item', els => els.length);
+              console.log('OK  ticker populated:', n, 'items');
+            } catch { fails.push('ticker tape never populated'); }
+
+            await browser.close();
+            if (fails.length) {
+              console.error('\nSMOKE TEST FAILED:\n - ' + fails.join('\n - '));
+              process.exit(1);
+            }
+            console.log('\nSmoke test passed — homepage charts + ticker render.');
+          })().catch(e => { console.error(e); process.exit(1); });
+          EOF
+          node smoke.js
