@@ -1644,6 +1644,13 @@ main.prose.center {
   .subscribe { padding: 1.25rem; }
 }
 
+/* Wide data tables (article scoreboards, comp tables, sensitivity grids) scroll
+   horizontally on phones instead of forcing the whole page sideways. !important
+   beats the per-article inline <style> blocks, which load after this file. */
+@media (max-width: 680px) {
+  main table { display: block !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch; max-width: 100% !important; }
+}
+
 /* Print --------------------------------------------------------------------- */
 @media print {
   .site-header, .site-footer, .hero-cta, .more, .subscribe { display: none; }

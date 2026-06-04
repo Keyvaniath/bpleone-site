@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 103,
-  "totalBytes": 5633227,
+  "totalBytes": 5633635,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -784,9 +784,9 @@
     {
       "path": "style.css",
       "name": "style.css",
-      "size": 41176,
-      "sizeText": "40.2 KB",
-      "modified": "2026-05-08",
+      "size": 41584,
+      "sizeText": "40.6 KB",
+      "modified": "2026-06-04",
       "ext": ".css",
       "category": "site-code"
     },
