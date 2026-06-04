@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reverse DCF Calculator — Brandon Leon</title>
-<meta name="description" content="Reverse DCF: plug in price, FCF, WACC and terminal growth, and solve for the free-cash-flow growth rate the market is implicitly pricing in. The through-cycle reality check.">
+<title>Earnings Power Value (EPV) Calculator — Brandon Leon</title>
+<meta name="description" content="Earnings Power Value: what a business is worth assuming zero growth. Capitalize normalized, distributable earnings at the cost of capital to get a no-growth floor — then see how much of the price is paying for growth.">
 <meta name="theme-color" content="#fbf7ef">
-<link rel="canonical" href="https://bpleon.com/reverse-dcf.html">
-<meta property="og:title" content="Reverse DCF Calculator — Brandon Leon">
+<link rel="canonical" href="https://bpleon.com/epv.html">
+<meta property="og:title" content="Earnings Power Value (EPV) Calculator — Brandon Leon">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://bpleon.com/reverse-dcf.html">
-<meta property="og:description" content="Solve for the FCF growth rate the market is implicitly pricing into a stock. Is the expectation reasonable through the cycle, or priced for perfection?">
+<meta property="og:url" content="https://bpleon.com/epv.html">
+<meta property="og:description" content="Value a business assuming it never grows again. The no-growth floor — and how much of today's price is an unpromised growth premium.">
 <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="./assets/brand/01-master-monolith.svg">
@@ -21,12 +21,12 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "Reverse DCF Calculator",
-  "url": "https://bpleon.com/reverse-dcf.html",
+  "name": "Earnings Power Value (EPV) Calculator",
+  "url": "https://bpleon.com/epv.html",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "description": "Solve for the free-cash-flow growth rate the market is implicitly pricing into a stock, given price, base FCF, discount rate and terminal growth.",
+  "description": "Compute Earnings Power Value: capitalize normalized distributable earnings at the cost of capital for a zero-growth valuation, then compare it to price to isolate the embedded growth premium.",
   "isAccessibleForFree": true,
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "author": { "@type": "Person", "name": "Brandon Leon", "url": "https://bpleon.com/about.html" }
@@ -39,7 +39,7 @@
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://bpleon.com/" },
     { "@type": "ListItem", "position": 2, "name": "Toolkit", "item": "https://bpleon.com/toolkit.html" },
-    { "@type": "ListItem", "position": 3, "name": "Reverse DCF Calculator", "item": "https://bpleon.com/reverse-dcf.html" }
+    { "@type": "ListItem", "position": 3, "name": "Earnings Power Value Calculator", "item": "https://bpleon.com/epv.html" }
   ]
 }
 </script>
@@ -71,7 +71,9 @@ input[type="number"] { background: var(--input-bg); border: 1px solid var(--inpu
 input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-light); }
 .implied-kicker { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
 .implied-price { font-family: 'Newsreader', serif; font-size: 60px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 10px; }
-.implied-meta { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text-muted); margin-bottom: 18px; }
+.implied-meta { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text-muted); margin-bottom: 8px; }
+.vs-price { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text); margin-bottom: 18px; }
+.vs-price b { font-weight: 600; }
 .verdict { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; display: inline-block; padding: 5px 12px; border-radius: 999px; margin-bottom: 18px; }
 .verdict.cheap { background: rgba(91,127,107,0.16); color: #3f5d4f; }
 .verdict.fair { background: var(--accent-bg); color: var(--accent); }
@@ -79,7 +81,9 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
 .build-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; }
 .build-table td { padding: 7px 10px; border-bottom: 1px solid var(--rule); }
 .build-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.build-table tr.sub td { color: var(--text-muted); }
 .build-table tr.total td { font-weight: 600; background: var(--accent-bg); }
+.build-table tr.rule-top td { border-top: 2px solid var(--input-border); }
 .sens-section { margin-top: 40px; }
 .sens-section h2 { font-family: 'Newsreader', serif; font-size: 26px; font-weight: 600; margin-bottom: 6px; }
 .sens-section p.hint { color: var(--text-muted); font-style: italic; margin-bottom: 16px; }
@@ -138,45 +142,52 @@ table.sens td.center { background: var(--accent); color: #fff; font-weight: 600;
 </header>
 <div class="container" id="main">
   <div class="breadcrumb"><a href="./index.html">Home</a> &nbsp;·&nbsp; <a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Valuation calculators</div>
-  <div class="kicker">Toolkit · Reverse DCF</div>
-  <h1>Reverse DCF Calculator</h1>
-  <p class="subhead">A forward DCF asks "what's it worth?" A reverse DCF asks the more useful question: at today's price, what free-cash-flow growth is the market <em>already</em> paying for? Plug in the price and the discount rate, and solve for the expectation baked in — then judge whether it's reasonable through the cycle.</p>
+  <div class="kicker">Toolkit · Earnings Power Value</div>
+  <h1>Earnings Power Value</h1>
+  <p class="subhead">A DCF values the growth. Earnings Power Value asks the opposite question: what is this business worth if it never grows again — just earns its normalized profit, in perpetuity? Capitalize the steady-state cash at the cost of capital and you get a floor. Whatever the market charges above that floor is the price of growth you haven't been promised.</p>
 
   <div class="grid">
     <div class="card">
-      <h2>Inputs</h2>
-      <div class="subgroup-title" style="margin-top:0;">The stock</div>
-      <div class="row"><div class="lbl">Current price ($)</div><input type="number" id="price" value="110" step="0.01"></div>
-      <div class="row"><div class="lbl">Diluted shares (mm)</div><input type="number" id="shares" value="1126"></div>
-      <div class="row"><div class="lbl">Base FCF ($mm) <small>trailing or FY1</small></div><input type="number" id="fcf0" value="6200"></div>
+      <h2>Inputs <small style="font-weight:400;font-size:12px;color:var(--text-faint);font-family:Inter,sans-serif;">— all $ in millions</small></h2>
+      <div class="subgroup-title" style="margin-top:0;">Normalized operating earnings <small style="text-transform:none;letter-spacing:0;font-style:italic;">— through the cycle</small></div>
+      <div class="row"><div class="lbl">Revenue ($mm)</div><input type="number" id="rev" value="30000"></div>
+      <div class="row"><div class="lbl">Operating (EBIT) margin (%)</div><input type="number" id="margin" value="28" step="0.1"></div>
+      <div class="row"><div class="lbl">Normalized tax rate (%)</div><input type="number" id="tax" value="15" step="0.1"></div>
 
-      <div class="subgroup-title">Valuation assumptions</div>
-      <div class="row"><div class="lbl">Discount rate / WACC (%)</div><input type="number" id="wacc" value="9.0" step="0.1"></div>
-      <div class="row"><div class="lbl">Terminal growth (%)</div><input type="number" id="gt" value="2.5" step="0.1"></div>
-      <div class="row"><div class="lbl">Explicit forecast (yrs)</div><input type="number" id="years" value="10"></div>
+      <div class="subgroup-title">Reinvestment <small style="text-transform:none;letter-spacing:0;font-style:italic;">— steady-state only</small></div>
+      <div class="row"><div class="lbl">Depreciation &amp; amort. ($mm)</div><input type="number" id="da" value="8000"></div>
+      <div class="row"><div class="lbl">Maintenance capex ($mm) <small>not growth capex</small></div><input type="number" id="maint" value="6000"></div>
+
+      <div class="subgroup-title">Capital structure &amp; price</div>
+      <div class="row"><div class="lbl">Cost of capital / WACC (%)</div><input type="number" id="wacc" value="9.0" step="0.1"></div>
+      <div class="row"><div class="lbl">Cash &amp; investments ($mm)</div><input type="number" id="cash" value="9000"></div>
+      <div class="row"><div class="lbl">Total debt ($mm)</div><input type="number" id="debt" value="13000"></div>
+      <div class="row"><div class="lbl">Diluted shares (mm)</div><input type="number" id="shares" value="1126"></div>
+      <div class="row"><div class="lbl">Current price ($) <small>for comparison</small></div><input type="number" id="price" value="110" step="0.01"></div>
     </div>
 
     <div class="card">
-      <p class="implied-kicker">Market-implied FCF growth (explicit period)</p>
-      <p class="implied-price" id="impliedG">—</p>
+      <p class="implied-kicker">Earnings Power Value · per share (zero growth)</p>
+      <p class="implied-price" id="epvPS">—</p>
       <div id="verdict"></div>
-      <p class="implied-meta" id="impliedMeta">&nbsp;</p>
+      <p class="implied-meta" id="meta">&nbsp;</p>
+      <p class="vs-price" id="vsPrice">&nbsp;</p>
       <table class="build-table" id="buildTable"></table>
     </div>
   </div>
 
   <div class="sens-section">
     <h2>Sensitivity</h2>
-    <p class="hint">Implied explicit-period FCF growth across discount rate (rows) and terminal growth (columns). The center cell is your inputs.</p>
+    <p class="hint">EPV per share across normalized operating margin (rows) and cost of capital (columns) — the two levers that move it most. The center cell is your inputs.</p>
     <table class="sens" id="sensTable"></table>
   </div>
 
   <div class="howworks">
     <h3>How it works</h3>
-    <p><strong>The idea.</strong> Price already embeds an expectation. A reverse DCF holds the discount rate and terminal growth fixed, then solves for the single explicit-period FCF growth rate <em>g</em> that makes the discounted cash flows equal today's market cap. That <em>g</em> is what you're being asked to believe.</p>
-    <p><strong>The math.</strong> Market cap = Σ FCF₀(1+g)ᵗ ⁄ (1+r)ᵗ for t = 1…N, plus a Gordon terminal value FCF_N(1+gₜ) ⁄ (r − gₜ), discounted back N years. We binary-search <em>g</em> until the present value matches price × shares.</p>
-    <p><strong>How to use it.</strong> If the implied growth is far above what the business has ever sustained through a full cycle, the stock is priced for perfection. If it's below trend, expectations are beatable. This is the reality check behind every through-cycle thesis — pair it with the <a href="./dcf.html">forward DCF</a> and the <a href="./comps.html">comps</a> to triangulate.</p>
-    <p class="disclaimer">Equity-FCF (FCFE) framing: base FCF is treated as cash flow to equity, so the implied value is compared directly to market cap. Nothing here is investment advice. Built by Brandon Leon — independent research focused on cyclical industries.</p>
+    <p><strong>The idea.</strong> Earnings Power Value (Bruce Greenwald) values a company on its current, sustainable earning power with <em>zero</em> growth assumed — no hockey-stick, no terminal-growth guess. It is the most conservative honest number in valuation: what you own even if the business never expands again. For a cyclical, normalize first — use through-cycle margins, not the peak or the trough.</p>
+    <p><strong>The math.</strong> Normalized EBIT (margin × revenue) is taxed to NOPAT. Add back depreciation and subtract <em>maintenance</em> capex — a no-growth business only has to keep the lights on, not build new capacity — to get distributable earnings. Capitalize that into perpetuity at the cost of capital (divide by WACC) for the enterprise EPV, then add cash and subtract debt for the equity EPV, and divide by shares.</p>
+    <p><strong>How to use it.</strong> Compare EPV per share to the price. If price sits at or below EPV, you are buying the steady-state business and getting any future growth for free — the through-cycle investor's favorite setup. If price runs well above EPV, the market is capitalizing growth that hasn't happened yet; the gap is the <strong>growth premium</strong> you're paying. Triangulate with the <a href="./reverse-dcf.html">reverse DCF</a> — which tells you how much growth that premium implies — and the <a href="./through-cycle-pt.html">through-cycle PT</a> for the recovery case.</p>
+    <p class="disclaimer">Garbage in, garbage out: EPV is only as good as the normalization. Pick a margin and a maintenance-capex figure you would defend across a full cycle, not the number printed last quarter. Maintenance capex ≈ depreciation is a reasonable first approximation when you don't have a better estimate. Nothing here is investment advice. Built by Brandon Leon — independent research focused on cyclical industries.</p>
   </div>
 </div>
 
@@ -184,13 +195,12 @@ table.sens td.center { background: var(--accent); color: #fff; font-weight: 600;
   <p class="bp-more-label">More from the toolkit</p>
   <ul>
     <li><a href="./dcf.html">DCF</a></li>
+    <li><a href="./reverse-dcf.html">Reverse DCF</a></li>
+    <li><a href="./through-cycle-pt.html">Through-Cycle PT</a></li>
     <li><a href="./comps.html">Trading Comps</a></li>
     <li><a href="./lbo.html">LBO</a></li>
     <li><a href="./wacc.html">WACC</a></li>
-    <li><a href="./football.html">Football Field</a></li>
     <li><a href="./midcycle.html">Mid-Cycle EBITDA</a></li>
-    <li><a href="./through-cycle-pt.html">Through-Cycle PT</a></li>
-    <li><a href="./epv.html">EPV</a></li>
     <li><a href="./toolkit.html">All tools &rarr;</a></li>
   </ul>
 </nav>
@@ -209,92 +219,92 @@ table.sens td.center { background: var(--accent); color: #fff; font-weight: 600;
 
 <script>
 function v(id){ var e=document.getElementById(id); var x=parseFloat((e.value||'').toString().replace(/[, ]/g,'')); return isFinite(x)?x:null; }
-function fmtPct(g){ if(g===null||!isFinite(g)) return '—'; return (g*100).toFixed(1)+'%'; }
-function fmtUsd(x){ if(!isFinite(x)) return '—'; if(Math.abs(x)>=1000) return '$'+Math.round(x).toLocaleString(); return '$'+x.toFixed(0); }
+function fmtUsd(x){ if(x===null||!isFinite(x)) return '—'; var s=x<0?'-':''; var a=Math.abs(x); return s+'$'+Math.round(a).toLocaleString(); }
+function fmtPS(x){ if(x===null||!isFinite(x)) return '—'; var s=x<0?'-':''; return s+'$'+Math.abs(x).toFixed(2); }
+function fmtPct(x){ if(x===null||!isFinite(x)) return '—'; return (x>=0?'+':'')+(x*100).toFixed(1)+'%'; }
 
-// Present value of the FCFE stream for a given explicit growth g.
-function pv(fcf0, g, r, gt, N){
-  var sum=0;
-  for(var t=1;t<=N;t++){ sum += (fcf0*Math.pow(1+g,t))/Math.pow(1+r,t); }
-  var fN = fcf0*Math.pow(1+g,N);
-  var tv = fN*(1+gt)/(r-gt);
-  return sum + tv/Math.pow(1+r,N);
-}
-
-// Solve for the implied explicit growth g that makes PV == target market cap.
-function impliedGrowth(target, fcf0, r, gt, N){
-  if(!(target>0 && fcf0>0 && r>gt && N>=1 && r>0)) return null;
-  var lo=-0.6, hi=4.0;
-  if(pv(fcf0,lo,r,gt,N) > target) return { g:-Infinity }; // market pricing a decline steeper than -60%/yr
-  if(pv(fcf0,hi,r,gt,N) < target) return { g:Infinity };  // needs >400%/yr — unreachable
-  for(var i=0;i<200;i++){ var mid=(lo+hi)/2; if(pv(fcf0,mid,r,gt,N) < target) lo=mid; else hi=mid; }
-  return { g:(lo+hi)/2 };
+// Greenwald EPV per share from the normalized inputs.
+function epvPerShare(rev, marginPct, taxPct, da, maint, waccPct, cash, debt, shares){
+  if(!(waccPct>0 && shares>0)) return null;
+  var ebit = rev*(marginPct/100);
+  var nopat = ebit*(1-taxPct/100);
+  var distributable = nopat + da - maint;          // no-growth: add D&A, subtract maintenance capex only
+  var epvEnterprise = distributable/(waccPct/100); // capitalize into perpetuity
+  var epvEquity = epvEnterprise + cash - debt;
+  return { ebit:ebit, nopat:nopat, distributable:distributable, epvEnterprise:epvEnterprise, epvEquity:epvEquity, ps:epvEquity/shares };
 }
 
 function recompute(){
-  var price=v('price'), shares=v('shares'), fcf0=v('fcf0');
-  var r=v('wacc'), gt=v('gt'), N=v('years');
-  var gEl=document.getElementById('impliedG'), metaEl=document.getElementById('impliedMeta'), vEl=document.getElementById('verdict');
-  if(price===null||shares===null||fcf0===null||r===null||gt===null||N===null){ gEl.textContent='—'; metaEl.textContent='Fill in every field.'; vEl.innerHTML=''; document.getElementById('buildTable').innerHTML=''; document.getElementById('sensTable').innerHTML=''; return; }
-  var rr=r/100, gtt=gt/100, Nn=Math.max(1,Math.round(N));
-  var mktcap=price*shares;
-  var res=impliedGrowth(mktcap, fcf0, rr, gtt, Nn);
-  if(!res){ gEl.textContent='—'; metaEl.textContent= rr<=gtt ? 'Discount rate must exceed terminal growth.' : 'Check inputs.'; vEl.innerHTML=''; return; }
+  var rev=v('rev'), margin=v('margin'), tax=v('tax'), da=v('da'), maint=v('maint');
+  var wacc=v('wacc'), cash=v('cash'), debt=v('debt'), shares=v('shares'), price=v('price');
+  var psEl=document.getElementById('epvPS'), metaEl=document.getElementById('meta'),
+      vsEl=document.getElementById('vsPrice'), vEl=document.getElementById('verdict'),
+      bt=document.getElementById('buildTable'), st=document.getElementById('sensTable');
+  var need=[rev,margin,tax,da,maint,wacc,cash,debt,shares,price];
+  for(var k=0;k<need.length;k++){ if(need[k]===null){ psEl.textContent='—'; metaEl.textContent='Fill in every field.'; vsEl.innerHTML='&nbsp;'; vEl.innerHTML=''; bt.innerHTML=''; st.innerHTML=''; return; } }
+  if(wacc<=0){ psEl.textContent='—'; metaEl.textContent='Cost of capital must be greater than zero.'; vsEl.innerHTML='&nbsp;'; vEl.innerHTML=''; bt.innerHTML=''; st.innerHTML=''; return; }
+  if(shares<=0){ psEl.textContent='—'; metaEl.textContent='Shares must be greater than zero.'; vsEl.innerHTML='&nbsp;'; vEl.innerHTML=''; bt.innerHTML=''; st.innerHTML=''; return; }
 
-  if(res.g===Infinity){ gEl.textContent='>400%'; }
-  else if(res.g===-Infinity){ gEl.textContent='<-60%'; }
-  else gEl.textContent=fmtPct(res.g);
+  var R=epvPerShare(rev,margin,tax,da,maint,wacc,cash,debt,shares);
+  psEl.textContent=fmtPS(R.ps);
 
-  var fcfYield = fcf0/mktcap;
-  metaEl.innerHTML = 'Market cap '+fmtUsd(mktcap)+'mm &middot; base FCF yield '+(fcfYield*100).toFixed(1)+'% &middot; '+Nn+'-yr explicit, then '+gt.toFixed(1)+'% terminal';
+  var netCash=cash-debt;
+  metaEl.innerHTML='Distributable earnings '+fmtUsd(R.distributable)+'mm &middot; enterprise EPV '+fmtUsd(R.epvEnterprise)+'mm &middot; net '+(netCash>=0?'cash':'debt')+' '+fmtUsd(Math.abs(netCash))+'mm';
 
-  // verdict band relative to a rough "sustainable through-cycle" bar (~ GDP-plus)
+  // Comparison to price + growth premium
   vEl.innerHTML='';
-  if(isFinite(res.g)){
-    var v1;
-    if(res.g <= gtt+0.02) v1={c:'cheap',t:'Priced for little growth — low bar to beat'};
-    else if(res.g <= 0.12) v1={c:'fair',t:'Reasonable expectation — within historical norms'};
-    else v1={c:'rich',t:'Aggressive — priced for sustained outperformance'};
-    var span=document.createElement('span'); span.className='verdict '+v1.c; span.textContent=v1.t; vEl.appendChild(span);
+  if(R.ps>0){
+    var prem=(price-R.ps)/R.ps;        // how much price exceeds the no-growth value
+    var upside=(R.ps-price)/price;      // EPV vs price as an upside/(downside)
+    vsEl.innerHTML='vs current price <b>'+fmtPS(price)+'</b> &rarr; EPV is <b>'+fmtPct(upside)+'</b>; '+
+      (prem>0 ? 'market pays a <b>'+(prem*100).toFixed(0)+'%</b> premium for growth' : 'growth is in the price for <b>free</b>');
+    var band;
+    if(prem<=0) band={c:'cheap',t:'At or below no-growth value — growth is free'};
+    else if(prem<=0.25) band={c:'fair',t:'Modest growth premium — defensible'};
+    else band={c:'rich',t:'Large growth premium — most of the price is unproven growth'};
+    var span=document.createElement('span'); span.className='verdict '+band.c; span.textContent=band.t; vEl.appendChild(span);
+  } else {
+    vsEl.innerHTML='No positive earnings power at these inputs — distributable earnings are negative.';
   }
 
-  // build table — discounted PV pieces at the solved g
-  if(isFinite(res.g)){
-    var g=res.g, expl=0;
-    for(var t=1;t<=Nn;t++){ expl += (fcf0*Math.pow(1+g,t))/Math.pow(1+rr,t); }
-    var fN=fcf0*Math.pow(1+g,Nn); var tv=fN*(1+gtt)/(rr-gtt); var pvtv=tv/Math.pow(1+rr,Nn);
-    var rows=[
-      ['Implied FCF growth (yrs 1–'+Nn+')', fmtPct(g)],
-      ['PV of explicit FCF', fmtUsd(expl)+'mm'],
-      ['PV of terminal value', fmtUsd(pvtv)+'mm'],
-      ['Terminal as % of value', (pvtv/(expl+pvtv)*100).toFixed(0)+'%']
-    ];
-    var html='';
-    for(var i=0;i<rows.length;i++) html += '<tr><td>'+rows[i][0]+'</td><td class="num">'+rows[i][1]+'</td></tr>';
-    html += '<tr class="total"><td>Implied value = market cap</td><td class="num">'+fmtUsd(expl+pvtv)+'mm</td></tr>';
-    document.getElementById('buildTable').innerHTML=html;
-  } else { document.getElementById('buildTable').innerHTML=''; }
+  // Build table: the full EPV bridge
+  var rows=[
+    ['sub','Revenue', fmtUsd(rev)+'mm'],
+    ['sub','× operating margin '+margin.toFixed(1)+'%', '= '+fmtUsd(R.ebit)+'mm EBIT'],
+    ['sub','− tax @ '+tax.toFixed(1)+'%', '= '+fmtUsd(R.nopat)+'mm NOPAT'],
+    ['sub','+ D&amp;A', fmtUsd(da)+'mm'],
+    ['sub','− maintenance capex', '('+fmtUsd(maint)+'mm)'],
+    ['rule-top','Distributable earnings', fmtUsd(R.distributable)+'mm'],
+    ['sub','÷ cost of capital '+wacc.toFixed(1)+'%', '= '+fmtUsd(R.epvEnterprise)+'mm'],
+    ['sub','+ cash − debt', (netCash>=0?'+':'−')+fmtUsd(Math.abs(netCash)).replace('-','')+'mm'],
+    ['rule-top','Equity EPV', fmtUsd(R.epvEquity)+'mm'],
+    ['sub','÷ '+Math.round(shares).toLocaleString()+'mm shares', '']
+  ];
+  var html='';
+  for(var i=0;i<rows.length;i++){ html+='<tr class="'+rows[i][0]+'"><td>'+rows[i][1]+'</td><td class="num">'+rows[i][2]+'</td></tr>'; }
+  html+='<tr class="total"><td>EPV per share</td><td class="num">'+fmtPS(R.ps)+'</td></tr>';
+  bt.innerHTML=html;
 
-  // sensitivity: rows = WACC ±, cols = terminal growth ±
-  var wShifts=[-0.01,-0.005,0,0.005,0.01];
-  var gtShifts=[-0.01,-0.005,0,0.005,0.01];
-  var sh='<thead><tr><th>WACC \\ g<sub>t</sub></th>';
-  for(var c=0;c<gtShifts.length;c++){ sh+='<th>'+((gtt+gtShifts[c])*100).toFixed(1)+'%</th>'; }
+  // Sensitivity: rows = margin ±, cols = WACC ±
+  var mShifts=[-4,-2,0,2,4];        // percentage points of margin
+  var wShifts=[-1.5,-0.75,0,0.75,1.5]; // percentage points of WACC
+  var sh='<thead><tr><th>margin \\ WACC</th>';
+  for(var c=0;c<wShifts.length;c++){ sh+='<th>'+(wacc+wShifts[c]).toFixed(2)+'%</th>'; }
   sh+='</tr></thead><tbody>';
-  for(var ri=0;ri<wShifts.length;ri++){
-    var rw=rr+wShifts[ri];
-    sh+='<tr><th>'+(rw*100).toFixed(1)+'%</th>';
-    for(var ci=0;ci<gtShifts.length;ci++){
-      var gtc=gtt+gtShifts[ci];
+  for(var ri=0;ri<mShifts.length;ri++){
+    var mv=margin+mShifts[ri];
+    sh+='<tr><th>'+mv.toFixed(1)+'%</th>';
+    for(var ci=0;ci<wShifts.length;ci++){
+      var wv=wacc+wShifts[ci];
       var cell='—';
-      if(rw>gtc){ var rr2=impliedGrowth(mktcap,fcf0,rw,gtc,Nn); if(rr2){ cell = rr2.g===Infinity?'>400%':(rr2.g===-Infinity?'<-60%':fmtPct(rr2.g)); } }
+      if(wv>0){ var rr=epvPerShare(rev,mv,tax,da,maint,wv,cash,debt,shares); if(rr){ cell=fmtPS(rr.ps); } }
       var isC=(ri===2&&ci===2);
       sh+='<td class="'+(isC?'center':'')+'">'+cell+'</td>';
     }
     sh+='</tr>';
   }
   sh+='</tbody>';
-  document.getElementById('sensTable').innerHTML=sh;
+  st.innerHTML=sh;
 }
 
 var inputs=document.querySelectorAll('input');

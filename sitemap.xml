@@ -135,6 +135,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://bpleon.com/epv.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://bpleon.com/football.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
