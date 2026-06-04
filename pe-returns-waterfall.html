@@ -142,6 +142,13 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
 
 .skip-link { position: absolute; left: -9999px; top: 8px; z-index: 1000; background: var(--accent); color: #fff; padding: .55rem 1rem; border-radius: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; text-decoration: none; }
 .skip-link:focus { left: 8px; }
+
+/* Related-tools strip (cross-link between calculators) */
+.bp-more-tools { max-width: 1100px; margin: 48px auto 0; padding-top: 22px; border-top: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
+.bp-more-label { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+.bp-more-tools ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+.bp-more-tools a { display: inline-block; padding: 5px 12px; border: 1px solid var(--card-border); border-radius: 999px; font-size: 13px; color: var(--text-muted); text-decoration: none; background: var(--card); }
+.bp-more-tools a:hover { border-color: var(--accent); color: var(--accent); }
 </style>
 
 <script type="application/ld+json">
@@ -689,6 +696,21 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
 
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+<nav class="bp-more-tools" aria-label="More tools">
+  <p class="bp-more-label">More from the toolkit</p>
+  <ul>
+    <li><a href="./comps.html">Trading Comps</a></li>
+    <li><a href="./lbo.html">LBO</a></li>
+    <li><a href="./wacc.html">WACC</a></li>
+    <li><a href="./football.html">Football Field</a></li>
+    <li><a href="./midcycle.html">Mid-Cycle EBITDA</a></li>
+    <li><a href="./pe-cap-table.html">Cap Table</a></li>
+    <li><a href="./pe-qofe.html">QofE</a></li>
+    <li><a href="./pe-distribution-waterfall.html">Distribution Waterfall</a></li>
+    <li><a href="./pe-reverse-lbo.html">Reverse-LBO</a></li>
+    <li><a href="./toolkit.html">All tools &rarr;</a></li>
+  </ul>
+</nav>
 <footer class="bp-footer">
   <div class="bp-footer-inner">
     <p>© 2026 Brandon Leon</p>
