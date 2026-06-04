@@ -6,18 +6,19 @@
 <title>Returns Waterfall — Brandon Leon</title>
 <meta name="description" content="Decompose sponsor IRR and MOIC into the three drivers that actually move the deal: EBITDA growth, multiple expansion, and debt paydown. Plus a returns bridge visualization and sensitivity heatmap.">
 <link rel="canonical" href="https://bpleon.com/pe-returns-waterfall.html">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-    --bg: #F5EFE0; --card: #FAF6E8; --card-border: #E0D5BA;
-    --text: #1F1B14; --text-muted: #6B6453; --text-faint: #9C9684;
-    --accent: #C46A2C; --accent-light: #E5A572; --accent-bg: #F5E4CE;
-    --rule: #D8CDB0; --input-bg: #FFFEF7; --input-border: #C9BD9F;
-    --table-stripe: #F2EBD6; --green: #4F7A3F; --red: #B0432A;
-    --sage: #5b7f6b; --sage-bg: #E5EFE6; --navy: #0B3D91;
+    --bg: #fbf7ef; --card: #fdfaf1; --card-border: #e6dfd0;
+    --text: #1c1a16; --text-muted: #56503f; --text-faint: #8e887d;
+    --accent: #b56a3f; --accent-light: #d49a73; --accent-bg: #f1e6d8;
+    --rule: #e6dfd0; --input-bg: #fffdf7; --input-border: #d3c8ab;
+    --table-stripe: #f4eddf; --green: #5b7f6b; --red: #B0432A;
+    --sage: #5b7f6b; --sage-bg: #e7efe8; --navy: #0B3D91;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--bg); color: var(--text); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 17px; line-height: 1.6; padding: 60px 40px 100px; min-height: 100vh; }
+body { background: var(--bg); color: var(--text); font-family: 'Newsreader', Georgia, serif; font-size: 17px; line-height: 1.6; padding: 60px 40px 100px; min-height: 100vh; }
 .container { max-width: 1100px; margin: 0 auto; }
 .headline { font-size: 42px; font-weight: 600; line-height: 1.15; margin-bottom: 16px; letter-spacing: -0.01em; }
 .subhead { color: var(--text-muted); font-size: 18px; font-style: italic; margin-bottom: 32px; max-width: 800px; }
@@ -35,7 +36,7 @@ body { background: var(--bg); color: var(--text); font-family: 'Cormorant Garamo
 @media (max-width: 900px) { .grid-main { grid-template-columns: 1fr; } body { padding: 40px 20px 80px; } .headline { font-size: 32px; } }
 
 .card { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 28px 30px; }
-.card-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
+.card-title { font-family: 'Newsreader', serif; font-size: 22px; font-weight: 600; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid var(--rule); }
 .subgroup-title { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin: 18px 0 8px; }
 
 .spec-row { display: grid; grid-template-columns: 1fr 130px; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--rule); align-items: center; }
@@ -46,12 +47,12 @@ input[type="number"], input[type="text"] { background: var(--input-bg); border: 
 input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-light); }
 
 .implied-headline { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
-.implied-price { font-family: 'Cormorant Garamond', serif; font-size: 64px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+.implied-price { font-family: 'Newsreader', serif; font-size: 64px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 8px; }
 .implied-meta { font-size: 14px; color: var(--text-muted); font-family: 'Inter', sans-serif; margin-bottom: 18px; }
 
 .summary-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 18px; }
 .sum-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); }
-.sum-value { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; }
+.sum-value { font-family: 'Newsreader', serif; font-size: 26px; font-weight: 600; }
 
 .detail-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; margin-top: 8px; }
 .detail-table th { padding: 8px 10px; border-bottom: 1px solid var(--rule); color: var(--text-muted); text-align: left; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
@@ -75,7 +76,7 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
 .donut-wrap { display: grid; grid-template-columns: 200px 1fr; gap: 24px; align-items: center; margin-top: 8px; }
 @media (max-width: 720px) { .donut-wrap { grid-template-columns: 1fr; } }
 .donut-svg { width: 200px; height: 200px; }
-.donut-label-mid { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; }
+.donut-label-mid { font-family: 'Newsreader', serif; font-size: 22px; font-weight: 600; }
 .donut-label-sub { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; fill: var(--text-muted); }
 
 /* SENSITIVITY GRID */
@@ -86,12 +87,12 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
 
 .full-row { margin-bottom: 28px; }
 .howworks { margin-top: 50px; padding-top: 28px; border-top: 1px solid var(--rule); }
-.howworks h3 { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 600; margin-bottom: 12px; }
+.howworks h3 { font-family: 'Newsreader', serif; font-size: 24px; font-weight: 600; margin-bottom: 12px; }
 .howworks p { color: var(--text); margin-bottom: 12px; max-width: 800px; }
 .howworks strong { color: var(--text); }
 
 .cta { margin-top: 40px; padding: 24px 28px; background: var(--accent-bg); border: 1px solid var(--accent-light); border-radius: 4px; }
-.cta-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+.cta-title { font-family: 'Newsreader', serif; font-size: 22px; font-weight: 600; margin-bottom: 6px; }
 .cta-body { color: var(--text-muted); margin-bottom: 12px; }
 .cta a { color: var(--accent); font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--accent); }
 .cta-sage { margin-top: 20px; padding: 22px 28px; background: var(--sage-bg); border: 1px solid var(--sage); border-radius: 4px; }
@@ -106,9 +107,39 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
 .share-toast { position: fixed; top: 70px; right: 24px; background: var(--text); color: white; padding: 12px 18px; border-radius: 3px; font-family: 'Inter', sans-serif; font-size: 13px; z-index: 91; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
 .share-toast.show { opacity: 1; }
 @media (max-width: 700px) { .share-btn { top: 12px; right: 12px; padding: 8px 12px; font-size: 11px; } }
+
+/* ===== Shared brand header + footer (site cohesion) ===== */
+.bp-header { max-width: 1100px; margin: 0 auto 30px; padding: 0 0 16px; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-bottom: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
+.bp-brand { display: inline-flex; align-items: center; line-height: 0; flex-shrink: 0; text-decoration: none; }
+.bp-brand img { height: 36px; width: auto; display: block; }
+.bp-brand:hover { opacity: .85; }
+.bp-nav { display: flex; flex-wrap: wrap; gap: .8rem 1.35rem; font-size: 14.5px; }
+.bp-nav a { text-decoration: none; color: var(--text-muted); }
+.bp-nav a:hover { color: var(--accent); }
+.bp-nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
+.bp-footer { max-width: 1100px; margin: 56px auto 0; border-top: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
+.bp-footer-inner { padding: 22px 0 4px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 13.5px; color: var(--text-muted); }
+.bp-social { list-style: none; display: flex; gap: 1.25rem; padding: 0; margin: 0; }
+.bp-social a { color: var(--text-muted); text-decoration: none; }
+.bp-social a:hover { color: var(--accent); }
+@media (max-width: 640px) { .bp-nav { gap: .45rem .9rem; font-size: 13px; } .bp-brand img { height: 30px; } .bp-footer-inner { flex-direction: column; align-items: flex-start; } }
+/* Wide data tables scroll horizontally on phones instead of overflowing the page. */
+@media (max-width: 680px) { .card, .grid, .grid-main { min-width: 0; } table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; } }
 </style>
 </head>
 <body>
+<header class="bp-header">
+  <a class="bp-brand" href="./index.html" aria-label="Brandon Leon — Home"><img src="./assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="170" height="44"></a>
+  <nav class="bp-nav" aria-label="Primary">
+    <a href="./about.html">About</a>
+    <a href="./markets.html">Markets</a>
+    <a href="./toolkit.html" aria-current="page">Toolkit</a>
+    <a href="./reports.html">Reports</a>
+    <a href="./research.html">Research</a>
+    <a href="./writing.html">Writing</a>
+    <a href="./contact.html">Contact</a>
+  </nav>
+</header>
 
 <button class="share-btn" id="shareBtn" title="Copy a shareable link with your inputs">📋 SHARE THIS</button>
 <div class="share-toast" id="shareToast">Link copied — paste it anywhere</div>
@@ -589,5 +620,16 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
 
 <!-- Cloudflare Web Analytics -->
 <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+<footer class="bp-footer">
+  <div class="bp-footer-inner">
+    <p>© 2026 Brandon Leon</p>
+    <ul class="bp-social">
+      <li><a href="./now.html">Now</a></li>
+      <li><a href="./disclaimer.html">Disclaimer</a></li>
+      <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/brandonpleone/" rel="me noopener">LinkedIn</a></li>
+    </ul>
+  </div>
+</footer>
 </body>
 </html>
