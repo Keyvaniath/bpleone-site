@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 108,
-  "totalBytes": 5852687,
+  "totalBytes": 5853388,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -370,8 +370,8 @@
     {
       "path": "football.html",
       "name": "football.html",
-      "size": 34007,
-      "sizeText": "33.2 KB",
+      "size": 34708,
+      "sizeText": "33.9 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
