@@ -5,29 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Trading Comps Calculator — Brandon Leon</title>
 <meta name="description" content="Plug in target metrics + peer median multiples. Get implied share price across every standard methodology.">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #F5EFE0;
-  --card: #FAF6E8;
-  --card-border: #E0D5BA;
-  --text: #1F1B14;
-  --text-muted: #6B6453;
-  --text-faint: #9C9684;
-  --accent: #C46A2C;
-  --accent-light: #E5A572;
-  --accent-bg: #F5E4CE;
-  --rule: #D8CDB0;
-  --input-bg: #FFFEF7;
-  --input-border: #C9BD9F;
-  --table-stripe: #F2EBD6;
-  --green: #4F7A3F;
-  --red: #B0432A;
+  /* Brand palette (matches style.css — keeps calculators on-brand with the site). */
+  --bg: #fbf7ef;
+  --card: #fdfaf1;
+  --card-border: #e6dfd0;
+  --text: #1c1a16;
+  --text-muted: #56503f;
+  --text-faint: #8e887d;
+  --accent: #b56a3f;
+  --accent-light: #d49a73;
+  --accent-bg: #f1e6d8;
+  --rule: #e6dfd0;
+  --input-bg: #fffdf7;
+  --input-border: #d3c8ab;
+  --table-stripe: #f4eddf;
+  --green: #5b7f6b;
+  --red: #b0432a;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   background: var(--bg); color: var(--text);
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Newsreader', Georgia, serif;
   font-size: 17px; line-height: 1.6;
   padding: 60px 40px 100px; min-height: 100vh;
 }
@@ -53,7 +55,7 @@ input[type="number"], input[type="text"] {
 input[type="text"] { text-align: left; }
 input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-light); }
 .implied-kicker { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
-.implied-price { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+.implied-price { font-family: 'Newsreader', serif; font-size: 56px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 10px; }
 .implied-meta { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
 .implied-meta .pos { color: var(--green); font-weight: 600; }
 .implied-meta .neg { color: var(--red); font-weight: 600; }
@@ -66,14 +68,14 @@ table.football tr:nth-child(even) td { background: var(--table-stripe); }
 table.football .pos { color: var(--green); font-weight: 600; }
 table.football .neg { color: var(--red); font-weight: 600; }
 .sens-section { margin-top: 40px; }
-.sens-section h2 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; margin-bottom: 6px; }
+.sens-section h2 { font-family: 'Newsreader', serif; font-size: 26px; font-weight: 600; margin-bottom: 6px; }
 .sens-section p.hint { color: var(--text-muted); font-style: italic; margin-bottom: 16px; }
 table.sens { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; }
 table.sens th, table.sens td { padding: 9px 10px; border: 1px solid var(--rule); text-align: center; font-variant-numeric: tabular-nums; }
 table.sens th { background: var(--card); color: var(--text-muted); font-weight: 600; font-size: 12px; }
 table.sens td.center { background: var(--accent); color: white; font-weight: 600; }
 .howworks { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--rule); }
-.howworks h3 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; margin-bottom: 10px; }
+.howworks h3 { font-family: 'Newsreader', serif; font-size: 22px; font-weight: 600; margin-bottom: 10px; }
 .howworks p { color: var(--text); margin-bottom: 12px; max-width: 800px; }
 .howworks p strong { color: var(--accent); }
 .disclaimer { margin-top: 30px; font-size: 13px; color: var(--text-faint); font-style: italic; }
@@ -106,9 +108,41 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
 .breadcrumb { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); margin-bottom: 16px; letter-spacing: .02em; }
 .breadcrumb a { color: var(--text-muted); text-decoration: none; }
 .breadcrumb a:hover { color: var(--accent); }
+
+/* ===== Shared brand header + footer (site cohesion) ===== */
+.bp-header { max-width: 1080px; margin: 0 auto 30px; padding: 0 0 16px; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-bottom: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
+.bp-brand { display: inline-flex; align-items: center; line-height: 0; flex-shrink: 0; text-decoration: none; }
+.bp-brand img { height: 36px; width: auto; display: block; }
+.bp-brand:hover { opacity: .85; }
+.bp-nav { display: flex; flex-wrap: wrap; gap: .8rem 1.35rem; font-size: 14.5px; }
+.bp-nav a { text-decoration: none; color: var(--text-muted); }
+.bp-nav a:hover { color: var(--accent); }
+.bp-nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
+.bp-footer { max-width: 1080px; margin: 56px auto 0; border-top: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
+.bp-footer-inner { padding: 22px 0 4px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 13.5px; color: var(--text-muted); }
+.bp-social { list-style: none; display: flex; gap: 1.25rem; padding: 0; margin: 0; }
+.bp-social a { color: var(--text-muted); text-decoration: none; }
+.bp-social a:hover { color: var(--accent); }
+@media (max-width: 640px) {
+  .bp-nav { gap: .45rem .9rem; font-size: 13px; }
+  .bp-brand img { height: 30px; }
+  .bp-footer-inner { flex-direction: column; align-items: flex-start; }
+}
 </style>
 </head>
 <body spellcheck="false">
+<header class="bp-header">
+  <a class="bp-brand" href="./index.html" aria-label="Brandon Leon — Home"><img src="./assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="170" height="44"></a>
+  <nav class="bp-nav" aria-label="Primary">
+    <a href="./about.html">About</a>
+    <a href="./markets.html">Markets</a>
+    <a href="./toolkit.html" aria-current="page">Toolkit</a>
+    <a href="./reports.html">Reports</a>
+    <a href="./research.html">Research</a>
+    <a href="./writing.html">Writing</a>
+    <a href="./contact.html">Contact</a>
+  </nav>
+</header>
 <div class="container">
   <div class="breadcrumb"><a href="./index.html">Home</a> &nbsp;·&nbsp; <a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Valuation calculators</div>
   <div class="kicker">TOOLKIT · TRADING COMPS</div>
@@ -192,6 +226,18 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
 
   <p class="disclaimer">Nothing on this page is investment advice. Built by Brandon Leon — independent research focused on cyclical industries.</p>
 </div>
+
+<footer class="bp-footer">
+  <div class="bp-footer-inner">
+    <p>© 2026 Brandon Leon</p>
+    <ul class="bp-social">
+      <li><a href="./now.html">Now</a></li>
+      <li><a href="./disclaimer.html">Disclaimer</a></li>
+      <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/brandonpleone/" rel="me noopener">LinkedIn</a></li>
+    </ul>
+  </div>
+</footer>
 
 <script>
 function v(id) { var x = parseFloat(document.getElementById(id).value); return isNaN(x) ? null : x; }
