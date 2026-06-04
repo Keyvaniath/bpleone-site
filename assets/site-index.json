@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 108,
-  "totalBytes": 5829326,
+  "totalBytes": 5834570,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -280,8 +280,8 @@
     {
       "path": "accretion-dilution.html",
       "name": "accretion-dilution.html",
-      "size": 24911,
-      "sizeText": "24.3 KB",
+      "size": 26222,
+      "sizeText": "25.6 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -298,8 +298,8 @@
     {
       "path": "comps.html",
       "name": "comps.html",
-      "size": 28883,
-      "sizeText": "28.2 KB",
+      "size": 30194,
+      "sizeText": "29.5 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -352,8 +352,8 @@
     {
       "path": "epv.html",
       "name": "epv.html",
-      "size": 24621,
-      "sizeText": "24.0 KB",
+      "size": 25932,
+      "sizeText": "25.3 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -604,8 +604,8 @@
     {
       "path": "reverse-dcf.html",
       "name": "reverse-dcf.html",
-      "size": 21853,
-      "sizeText": "21.3 KB",
+      "size": 23164,
+      "sizeText": "22.6 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
