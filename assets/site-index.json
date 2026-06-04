@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 103,
-  "totalBytes": 5647507,
+  "totalBytes": 5657025,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -298,9 +298,9 @@
     {
       "path": "cooling-under-semis-2026-05-08.html",
       "name": "cooling-under-semis-2026-05-08.html",
-      "size": 58545,
-      "sizeText": "57.2 KB",
-      "modified": "2026-05-31",
+      "size": 59359,
+      "sizeText": "58.0 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
@@ -334,9 +334,9 @@
     {
       "path": "fed-april-2026.html",
       "name": "fed-april-2026.html",
-      "size": 26556,
-      "sizeText": "25.9 KB",
-      "modified": "2026-05-31",
+      "size": 27279,
+      "sizeText": "26.6 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
@@ -406,8 +406,8 @@
     {
       "path": "mu-after-ubs-2026-05-28.html",
       "name": "mu-after-ubs-2026-05-28.html",
-      "size": 32473,
-      "sizeText": "31.7 KB",
+      "size": 33326,
+      "sizeText": "32.5 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -424,26 +424,26 @@
     {
       "path": "mu-note-2026-05-05.html",
       "name": "mu-note-2026-05-05.html",
-      "size": 23271,
-      "sizeText": "22.7 KB",
-      "modified": "2026-05-31",
+      "size": 24008,
+      "sizeText": "23.4 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
     {
       "path": "mu-reverse-lbo.html",
       "name": "mu-reverse-lbo.html",
-      "size": 20003,
-      "sizeText": "19.5 KB",
-      "modified": "2026-05-31",
+      "size": 20728,
+      "sizeText": "20.2 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
     {
       "path": "mu-through-cycle.html",
       "name": "mu-through-cycle.html",
-      "size": 114067,
-      "sizeText": "111.4 KB",
+      "size": 114837,
+      "sizeText": "112.1 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -595,54 +595,54 @@
     {
       "path": "wdc-take-private.html",
       "name": "wdc-take-private.html",
-      "size": 20833,
-      "sizeText": "20.3 KB",
-      "modified": "2026-05-31",
+      "size": 21578,
+      "sizeText": "21.1 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
     {
       "path": "weekly-outlook-2026-05-04.html",
       "name": "weekly-outlook-2026-05-04.html",
-      "size": 39356,
-      "sizeText": "38.4 KB",
-      "modified": "2026-05-31",
+      "size": 40129,
+      "sizeText": "39.2 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
     {
       "path": "weekly-outlook-2026-05-15.html",
       "name": "weekly-outlook-2026-05-15.html",
-      "size": 50330,
-      "sizeText": "49.2 KB",
-      "modified": "2026-05-31",
+      "size": 51148,
+      "sizeText": "49.9 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
     {
       "path": "weekly-outlook-2026-05-18.html",
       "name": "weekly-outlook-2026-05-18.html",
-      "size": 50272,
-      "sizeText": "49.1 KB",
-      "modified": "2026-05-31",
+      "size": 51134,
+      "sizeText": "49.9 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
     {
       "path": "weekly-outlook-2026-05-26.html",
       "name": "weekly-outlook-2026-05-26.html",
-      "size": 52440,
-      "sizeText": "51.2 KB",
-      "modified": "2026-05-31",
+      "size": 53280,
+      "sizeText": "52.0 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
     {
       "path": "weekly-outlook-2026-05-29.html",
       "name": "weekly-outlook-2026-05-29.html",
-      "size": 58324,
-      "sizeText": "57.0 KB",
-      "modified": "2026-06-01",
+      "size": 59182,
+      "sizeText": "57.8 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
