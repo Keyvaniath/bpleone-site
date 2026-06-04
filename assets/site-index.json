@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 103,
-  "totalBytes": 5633635,
+  "totalBytes": 5634429,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -343,8 +343,8 @@
     {
       "path": "football.html",
       "name": "football.html",
-      "size": 25208,
-      "sizeText": "24.6 KB",
+      "size": 25473,
+      "sizeText": "24.9 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -397,8 +397,8 @@
     {
       "path": "midcycle.html",
       "name": "midcycle.html",
-      "size": 26625,
-      "sizeText": "26.0 KB",
+      "size": 26897,
+      "sizeText": "26.3 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -442,9 +442,9 @@
     {
       "path": "mu-through-cycle.html",
       "name": "mu-through-cycle.html",
-      "size": 114064,
+      "size": 114067,
       "sizeText": "111.4 KB",
-      "modified": "2026-05-31",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
@@ -586,8 +586,8 @@
     {
       "path": "wacc.html",
       "name": "wacc.html",
-      "size": 21414,
-      "sizeText": "20.9 KB",
+      "size": 21668,
+      "sizeText": "21.2 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
