@@ -600,5 +600,35 @@
     loadFromKv();
   })();
   </script>
+<script>
+/* Shareable scenario (added site-wide): hydrate inputs from the URL before the
+   calculator's first render, keep the URL in sync, and add a copy-link button.
+   Self-contained and isolated; with no URL params it is a no-op. */
+(function(){
+  var hadParams=false, SEL='input[id],select[id]';
+  try{
+    var p=new URLSearchParams(location.search);
+    document.querySelectorAll(SEL).forEach(function(el){ if(p.has(el.id)){ el.value=p.get(el.id); hadParams=true; } });
+  }catch(e){}
+  function shareBoot(){
+    try{
+      function syncURL(){ try{ var q=new URLSearchParams(); document.querySelectorAll(SEL).forEach(function(el){ if(String(el.value).trim()!=='') q.set(el.id, el.value); }); history.replaceState(null,'',location.pathname+(q.toString()?'?'+q.toString():'')); }catch(e){} }
+      document.querySelectorAll(SEL).forEach(function(el){ el.addEventListener('input', syncURL); el.addEventListener('change', syncURL); });
+      if(hadParams){ document.querySelectorAll(SEL).forEach(function(el){ el.dispatchEvent(new Event('input',{bubbles:true})); el.dispatchEvent(new Event('change',{bubbles:true})); }); }
+      if(document.querySelector('[data-share-link]')) return;
+      var anchor=document.querySelector('.subhead')||document.querySelector('.lede')||document.querySelector('h1');
+      if(anchor){
+        var b=document.createElement('button'); b.type='button'; b.setAttribute('data-share-link','1'); b.textContent='Copy link to this scenario';
+        b.style.cssText='display:inline-block;font-family:Inter,sans-serif;font-size:13px;color:#56503f;background:#fdfaf1;border:1px solid #e6dfd0;border-radius:999px;padding:6px 14px;cursor:pointer;margin:14px 0 0;transition:border-color .15s,color .15s;';
+        b.onmouseover=function(){b.style.borderColor='#b56a3f';b.style.color='#b56a3f';};
+        b.onmouseout=function(){b.style.borderColor='#e6dfd0';b.style.color='#56503f';};
+        b.onclick=function(){ var ok=false; try{ var ta=document.createElement('textarea'); ta.value=location.href; ta.style.cssText='position:fixed;left:-9999px;top:0'; document.body.appendChild(ta); ta.focus(); ta.select(); ok=document.execCommand('copy'); document.body.removeChild(ta); }catch(e){} if(!ok&&navigator.clipboard){try{navigator.clipboard.writeText(location.href);ok=true;}catch(e){}} b.textContent=ok?'Link copied ✓':'Copy from the address bar'; setTimeout(function(){b.textContent='Copy link to this scenario';},1800); };
+        anchor.parentNode.insertBefore(b, anchor.nextSibling);
+      }
+    }catch(e){}
+  }
+  if(document.readyState==='complete'){ shareBoot(); } else { window.addEventListener('load', shareBoot); }
+})();
+</script>
 </body>
 </html>
