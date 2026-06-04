@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 108,
-  "totalBytes": 5853388,
+  "totalBytes": 5853976,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -298,8 +298,8 @@
     {
       "path": "comps.html",
       "name": "comps.html",
-      "size": 30413,
-      "sizeText": "29.7 KB",
+      "size": 31001,
+      "sizeText": "30.3 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
