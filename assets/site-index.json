@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 107,
-  "totalBytes": 5762121,
+  "totalBytes": 5766676,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,8 +28,8 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 24693,
-      "sizeText": "24.1 KB",
+      "size": 24888,
+      "sizeText": "24.3 KB",
       "modified": "2026-06-04",
       "ext": ".json",
       "category": "assets"
@@ -613,8 +613,8 @@
     {
       "path": "toolkit.html",
       "name": "toolkit.html",
-      "size": 18758,
-      "sizeText": "18.3 KB",
+      "size": 22992,
+      "sizeText": "22.5 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -847,8 +847,8 @@
     {
       "path": "sitemap.xml",
       "name": "sitemap.xml",
-      "size": 6584,
-      "sizeText": "6.4 KB",
+      "size": 6710,
+      "sizeText": "6.6 KB",
       "modified": "2026-06-04",
       "ext": ".xml",
       "category": "site-meta"
