@@ -206,6 +206,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://bpleon.com/through-cycle-pt.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://bpleon.com/wacc.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

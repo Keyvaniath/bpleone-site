@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Through-Cycle Price Target — Brandon Leon</title>
+<meta name="description" content="Derive a cyclical's price target the through-cycle way: normalized EPS times a recovery multiple, across bear/base/bull, then probability-weighted into one blended target.">
+<meta name="theme-color" content="#fbf7ef">
+<link rel="canonical" href="https://bpleon.com/through-cycle-pt.html">
+<meta property="og:title" content="Through-Cycle Price Target — Brandon Leon">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bpleon.com/through-cycle-pt.html">
+<meta property="og:description" content="Normalized EPS x recovery multiple across bear/base/bull, probability-weighted. The through-cycle PT framework, as a tool.">
+<meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="./assets/brand/01-master-monolith.svg">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org", "@type": "WebApplication",
+  "name": "Through-Cycle Price Target Calculator",
+  "url": "https://bpleon.com/through-cycle-pt.html",
+  "applicationCategory": "FinanceApplication", "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Through-cycle EPS times a recovery multiple across bear/base/bull scenarios, probability-weighted into a blended price target.",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Person", "name": "Brandon Leon", "url": "https://bpleon.com/about.html" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org", "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://bpleon.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Toolkit", "item": "https://bpleon.com/toolkit.html" },
+    { "@type": "ListItem", "position": 3, "name": "Through-Cycle Price Target", "item": "https://bpleon.com/through-cycle-pt.html" }
+  ]
+}
+</script>
+<style>
+:root {
+  --bg: #fbf7ef; --card: #fdfaf1; --card-border: #e6dfd0;
+  --text: #1c1a16; --text-muted: #56503f; --text-faint: #8e887d;
+  --accent: #b56a3f; --accent-light: #d49a73; --accent-bg: #f1e6d8;
+  --rule: #e6dfd0; --input-bg: #fffdf7; --input-border: #d3c8ab;
+  --table-stripe: #f4eddf; --green: #5b7f6b; --red: #b0432a; --sage: #5b7f6b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Newsreader', Georgia, serif; font-size: 17px; line-height: 1.6; padding: 60px 40px 100px; min-height: 100vh; }
+.container { max-width: 1100px; margin: 0 auto; }
+.breadcrumb { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-muted); text-decoration: none; } .breadcrumb a:hover { color: var(--accent); }
+.kicker { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+h1 { font-size: 44px; font-weight: 600; line-height: 1.05; margin-bottom: 14px; letter-spacing: -0.015em; }
+.subhead { color: var(--text-muted); font-size: 18px; font-style: italic; line-height: 1.5; margin-bottom: 36px; max-width: 780px; }
+.card { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 26px 30px; margin-bottom: 28px; }
+.card h2 { font-size: 22px; font-weight: 600; margin-bottom: 6px; }
+.card .hint { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); font-style: italic; margin-bottom: 16px; }
+.scen-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 14px; }
+.scen-table th { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--rule); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; }
+.scen-table th.num { text-align: right; }
+.scen-table td { padding: 8px 10px; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+.scen-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.scen-table input { width: 90px; background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 3px; padding: 6px 8px; font-family: 'Inter', sans-serif; font-size: 14px; text-align: right; color: var(--text); }
+.scen-table input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-light); }
+.scen-table .scen-name { font-weight: 600; }
+.scen-table .pt { font-weight: 600; color: var(--accent); }
+.scen-table .pos { color: var(--green); font-weight: 600; } .scen-table .neg { color: var(--red); font-weight: 600; }
+.prob-note { font-family: 'Inter', sans-serif; font-size: 12.5px; margin-top: 10px; color: var(--text-muted); }
+.prob-note.warn { color: var(--red); }
+.headline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 700px) { .headline-grid { grid-template-columns: 1fr; } }
+.headline-kicker { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+.headline-num { font-family: 'Newsreader', serif; font-size: 52px; font-weight: 600; color: var(--accent); line-height: 1; }
+.headline-sub { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); margin-top: 6px; }
+.bar-wrap { margin-top: 26px; }
+.bar { position: relative; height: 14px; background: linear-gradient(90deg, rgba(176,67,42,.25), rgba(201,169,97,.25), rgba(91,127,107,.30)); border-radius: 7px; margin: 36px 0 30px; }
+.bar .pin { position: absolute; top: 50%; transform: translate(-50%,-50%); width: 12px; height: 12px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+.bar .pin.bear { background: var(--red); } .bar .pin.base { background: var(--accent); } .bar .pin.bull { background: var(--sage); }
+.bar .now { position: absolute; top: -10px; bottom: -10px; width: 2px; background: var(--text); }
+.bar .lab { position: absolute; font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-muted); transform: translateX(-50%); white-space: nowrap; }
+.bar .lab.top { top: -26px; } .bar .lab.bot { bottom: -24px; }
+@media (max-width: 900px) { body { padding: 40px 20px 70px; } h1 { font-size: 32px; } }
+.howworks { margin-top: 44px; padding-top: 24px; border-top: 1px solid var(--rule); }
+.howworks h3 { font-family: 'Newsreader', serif; font-size: 22px; font-weight: 600; margin-bottom: 10px; }
+.howworks p { color: var(--text); margin-bottom: 12px; max-width: 820px; }
+.howworks strong { color: var(--accent); }
+.disclaimer { margin-top: 26px; font-size: 13px; color: var(--text-faint); font-style: italic; }
+.skip-link { position: absolute; left: -9999px; top: 8px; z-index: 1000; background: var(--accent); color: #fff; padding: .55rem 1rem; border-radius: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; text-decoration: none; }
+.skip-link:focus { left: 8px; }
+.bp-header { max-width: 1100px; margin: 0 auto 30px; padding: 0 0 16px; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-bottom: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
+.bp-brand { display: inline-flex; align-items: center; line-height: 0; flex-shrink: 0; text-decoration: none; }
+.bp-brand img { height: 36px; width: auto; display: block; } .bp-brand:hover { opacity: .85; }
+.bp-nav { display: flex; flex-wrap: wrap; gap: .8rem 1.35rem; font-size: 14.5px; }
+.bp-nav a { text-decoration: none; color: var(--text-muted); } .bp-nav a:hover { color: var(--accent); }
+.bp-nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
+.bp-footer { max-width: 1100px; margin: 56px auto 0; border-top: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
+.bp-footer-inner { padding: 22px 0 4px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 13.5px; color: var(--text-muted); }
+.bp-social { list-style: none; display: flex; gap: 1.25rem; padding: 0; margin: 0; }
+.bp-social a { color: var(--text-muted); text-decoration: none; } .bp-social a:hover { color: var(--accent); }
+.bp-more-tools { max-width: 1100px; margin: 48px auto 0; padding-top: 22px; border-top: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
+.bp-more-label { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+.bp-more-tools ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+.bp-more-tools a { display: inline-block; padding: 5px 12px; border: 1px solid var(--card-border); border-radius: 999px; font-size: 13px; color: var(--text-muted); text-decoration: none; background: var(--card); }
+.bp-more-tools a:hover { border-color: var(--accent); color: var(--accent); }
+@media (max-width: 680px) {
+  .card { min-width: 0; } table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+  input { font-size: 16px !important; }
+  .bp-nav { gap: .45rem .9rem; font-size: 13px; } .bp-brand img { height: 30px; } .bp-footer-inner { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body spellcheck="false">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="bp-header">
+  <a class="bp-brand" href="./index.html" aria-label="Brandon Leon — Home"><img src="./assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="170" height="44"></a>
+  <nav class="bp-nav" aria-label="Primary">
+    <a href="./about.html">About</a>
+    <a href="./markets.html">Markets</a>
+    <a href="./toolkit.html" aria-current="page">Toolkit</a>
+    <a href="./reports.html">Reports</a>
+    <a href="./research.html">Research</a>
+    <a href="./writing.html">Writing</a>
+    <a href="./contact.html">Contact</a>
+  </nav>
+</header>
+<div class="container" id="main">
+  <div class="breadcrumb"><a href="./index.html">Home</a> &nbsp;·&nbsp; <a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Valuation calculators</div>
+  <div class="kicker">Toolkit · Through-Cycle PT</div>
+  <h1>Through-Cycle Price Target</h1>
+  <p class="subhead">For cyclicals, spot EPS lies — it's sky-high at the peak and negative at the trough. The honest target is <em>normalized</em> EPS times the multiple the market pays through the cycle. Set a bear / base / bull for each, weight them, and get one blended target with the full range.</p>
+
+  <div class="card">
+    <h2>Scenarios</h2>
+    <p class="hint">Through-cycle (normalized) EPS × recovery multiple = scenario PT. Probabilities should sum to 100%.</p>
+    <table class="scen-table">
+      <thead><tr><th>Scenario</th><th class="num">Norm. EPS ($)</th><th class="num">Multiple (×)</th><th class="num">Prob (%)</th><th class="num">Price target</th><th class="num">Upside</th></tr></thead>
+      <tbody>
+        <tr><td class="scen-name">Bear</td><td class="num"><input type="number" id="eps_bear" value="25" step="0.5"></td><td class="num"><input type="number" id="mult_bear" value="11" step="0.5"></td><td class="num"><input type="number" id="prob_bear" value="25" step="1"></td><td class="num pt" id="pt_bear">—</td><td class="num" id="up_bear">—</td></tr>
+        <tr><td class="scen-name">Base</td><td class="num"><input type="number" id="eps_base" value="100" step="0.5"></td><td class="num"><input type="number" id="mult_base" value="11" step="0.5"></td><td class="num"><input type="number" id="prob_base" value="50" step="1"></td><td class="num pt" id="pt_base">—</td><td class="num" id="up_base">—</td></tr>
+        <tr><td class="scen-name">Bull</td><td class="num"><input type="number" id="eps_bull" value="136" step="0.5"></td><td class="num"><input type="number" id="mult_bull" value="11" step="0.5"></td><td class="num"><input type="number" id="prob_bull" value="25" step="1"></td><td class="num pt" id="pt_bull">—</td><td class="num" id="up_bull">—</td></tr>
+      </tbody>
+    </table>
+    <p class="prob-note" id="probNote">&nbsp;</p>
+    <div style="margin-top:16px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;">
+      <span style="font-family:'Inter',sans-serif; font-size:13px; color:var(--text-muted);">Current price ($)</span>
+      <input type="number" id="price" value="920" step="0.01" style="width:120px; background:var(--input-bg); border:1px solid var(--input-border); border-radius:3px; padding:7px 10px; font-family:'Inter',sans-serif; font-size:14px; text-align:right; color:var(--text);">
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="headline-grid">
+      <div>
+        <p class="headline-kicker">Probability-weighted price target</p>
+        <p class="headline-num" id="blendedPT">—</p>
+        <p class="headline-sub" id="blendedUp">&nbsp;</p>
+      </div>
+      <div>
+        <p class="headline-kicker">Expected value vs. current</p>
+        <p class="headline-num" id="evUp">—</p>
+        <p class="headline-sub" id="rangeSub">&nbsp;</p>
+      </div>
+    </div>
+    <div class="bar-wrap">
+      <div class="bar" id="bar"></div>
+    </div>
+  </div>
+
+  <div class="howworks">
+    <h3>How it works</h3>
+    <p><strong>Normalize, don't annualize.</strong> A cyclical at the peak shows enormous EPS that won't persist; at the trough it can show losses. Through-cycle EPS is the mid-cycle earnings power — what the business makes in an average year across the whole cycle.</p>
+    <p><strong>The recovery multiple.</strong> Multiply normalized EPS by the P/E the market historically assigns through the cycle (for memory, ~11×). Do it three times — bear, base, bull — to bound the EPS and the multiple uncertainty, then weight by probability for one blended target.</p>
+    <p><strong>Why blend.</strong> A single point target hides the distribution. The probability-weighted PT is the expected value; the bear→bull range is the risk you're underwriting. Pre-commit your trim ladder against the bull and your exit against the bear. Pair with the <a href="./reverse-dcf.html">reverse DCF</a> to cross-check what price already implies.</p>
+    <p class="disclaimer">Defaults illustrate a memory-cycle thesis (≈11× recovery multiple). Nothing here is investment advice. Built by Brandon Leon — independent research focused on cyclical industries.</p>
+  </div>
+</div>
+
+<nav class="bp-more-tools" aria-label="More tools">
+  <p class="bp-more-label">More from the toolkit</p>
+  <ul>
+    <li><a href="./reverse-dcf.html">Reverse DCF</a></li>
+    <li><a href="./dcf.html">DCF</a></li>
+    <li><a href="./comps.html">Trading Comps</a></li>
+    <li><a href="./midcycle.html">Mid-Cycle EBITDA</a></li>
+    <li><a href="./football.html">Football Field</a></li>
+    <li><a href="./lbo.html">LBO</a></li>
+    <li><a href="./toolkit.html">All tools &rarr;</a></li>
+  </ul>
+</nav>
+
+<footer class="bp-footer">
+  <div class="bp-footer-inner">
+    <p>© 2026 Brandon Leon</p>
+    <ul class="bp-social">
+      <li><a href="./now.html">Now</a></li>
+      <li><a href="./disclaimer.html">Disclaimer</a></li>
+      <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/brandonpleone/" rel="me noopener">LinkedIn</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+function v(id){ var e=document.getElementById(id); var x=parseFloat((e.value||'').toString().replace(/[, ]/g,'')); return isFinite(x)?x:null; }
+function usd(x){ if(!isFinite(x)) return '—'; if(Math.abs(x)>=1000) return '$'+Math.round(x).toLocaleString(); return '$'+x.toFixed(2); }
+function pct(x){ if(!isFinite(x)) return '—'; var s=x>=0?'+':''; return s+(x*100).toFixed(1)+'%'; }
+
+function recompute(){
+  var price=v('price');
+  var sc=['bear','base','bull'], pt={}, prob={}, totProb=0, ok=true;
+  for(var i=0;i<sc.length;i++){
+    var k=sc[i], eps=v('eps_'+k), mult=v('mult_'+k), p=v('prob_'+k);
+    if(eps===null||mult===null||p===null){ ok=false; }
+    pt[k]= (eps!==null&&mult!==null)? eps*mult : null;
+    prob[k]= p!==null? p : 0; totProb += prob[k];
+    document.getElementById('pt_'+k).textContent = pt[k]!==null? usd(pt[k]) : '—';
+    var upEl=document.getElementById('up_'+k);
+    if(pt[k]!==null && price){ var u=(pt[k]-price)/price; upEl.textContent=pct(u); upEl.className='num '+(u>=0?'pos':'neg'); }
+    else { upEl.textContent='—'; upEl.className='num'; }
+  }
+  var note=document.getElementById('probNote');
+  if(Math.abs(totProb-100)>0.5){ note.textContent='Probabilities sum to '+totProb+'% — weighting is normalized to 100% for the blend.'; note.className='prob-note warn'; }
+  else { note.textContent='Probabilities sum to 100%.'; note.className='prob-note'; }
+
+  var blendedEl=document.getElementById('blendedPT'), bUp=document.getElementById('blendedUp');
+  var evUp=document.getElementById('evUp'), rangeSub=document.getElementById('rangeSub');
+  if(!ok || totProb<=0 || pt.bear===null||pt.base===null||pt.bull===null){
+    blendedEl.textContent='—'; bUp.innerHTML='&nbsp;'; evUp.textContent='—'; rangeSub.innerHTML='&nbsp;'; document.getElementById('bar').innerHTML=''; return;
+  }
+  var blended = (pt.bear*prob.bear + pt.base*prob.base + pt.bull*prob.bull)/totProb;
+  blendedEl.textContent=usd(blended);
+  if(price){ var bu=(blended-price)/price; bUp.textContent=pct(bu)+' vs current '+usd(price); var ev=document.getElementById('evUp'); ev.textContent=pct(bu); ev.style.color = bu>=0? 'var(--sage)':'var(--red)'; }
+  rangeSub.textContent='Range '+usd(pt.bear)+' → '+usd(pt.bull)+' · base '+usd(pt.base);
+
+  // range bar: map bear..bull (and current) onto 0..100%
+  var lo=Math.min(pt.bear, price||pt.bear), hi=Math.max(pt.bull, price||pt.bull);
+  var span=hi-lo || 1;
+  function posOf(x){ return Math.max(0,Math.min(100, (x-lo)/span*100)); }
+  var bar=document.getElementById('bar'); bar.innerHTML='';
+  function pin(x,cls,labtop){ if(!isFinite(x))return; var d=document.createElement('div'); d.className='pin '+cls; d.style.left=posOf(x)+'%'; bar.appendChild(d);
+    var l=document.createElement('div'); l.className='lab '+(labtop?'top':'bot'); l.style.left=posOf(x)+'%'; l.textContent=(cls.charAt(0).toUpperCase()+cls.slice(1))+' '+usd(x); bar.appendChild(l); }
+  pin(pt.bear,'bear',false); pin(pt.base,'base',true); pin(pt.bull,'bull',false);
+  if(price){ var n=document.createElement('div'); n.className='now'; n.style.left=posOf(price)+'%'; bar.appendChild(n);
+    var nl=document.createElement('div'); nl.className='lab top'; nl.style.left=posOf(price)+'%'; nl.style.color='var(--text)'; nl.textContent='Now '+usd(price); bar.appendChild(nl); }
+}
+var inputs=document.querySelectorAll('input');
+for(var i=0;i<inputs.length;i++){ inputs[i].addEventListener('input', recompute); }
+recompute();
+</script>
+</body>
+</html>
