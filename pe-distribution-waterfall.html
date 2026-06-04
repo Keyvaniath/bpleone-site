@@ -755,5 +755,30 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
   if(document.readyState==='complete'){ shareBoot(); } else { window.addEventListener('load', shareBoot); }
 })();
 </script>
+<script>
+/* Accessibility: give each calculator field an accessible name derived from its
+   visible label so screen readers announce what it is. Conservative — uses the
+   field's own preceding label element, and a single-input row's label; never a
+   numeric-only string; skips anything ambiguous so it can't mislabel. */
+(function(){
+  function run(){ try{
+    function clean(s){ return (s||'').replace(/\s+/g,' ').trim().slice(0,80); }
+    function ok(t){ return t && /[a-zA-Z]/.test(t) && t.length<=80; }
+    function labelFor(el){
+      var ps=el.previousElementSibling;
+      if(ps && /^(DIV|LABEL|SPAN|P)$/.test(ps.tagName) && !ps.querySelector('input,select,textarea,button')){ var t=clean(ps.textContent); if(ok(t)) return t; }
+      var row=el.closest('.row,.spec-row,.field,.input-row');
+      if(row && row.querySelectorAll('input,select').length===1){ var l=row.querySelector('.lbl,.label,.method-name,label'); if(l && !l.contains(el)){ var t2=clean(l.textContent); if(ok(t2)) return t2; } }
+      var lab=el.closest('label'); if(lab){ var t3=clean(lab.textContent); if(ok(t3)) return t3; }
+      return null;
+    }
+    document.querySelectorAll('input[id],select[id]').forEach(function(el){
+      if(el.getAttribute('aria-label')||el.getAttribute('aria-labelledby')||el.closest('label')) return;
+      var name=labelFor(el); if(name) el.setAttribute('aria-label', name);
+    });
+  }catch(e){} }
+  if(document.readyState!=='loading') run(); else document.addEventListener('DOMContentLoaded', run);
+})();
+</script>
 </body>
 </html>
