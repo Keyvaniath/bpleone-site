@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 103,
-  "totalBytes": 5634429,
+  "totalBytes": 5635455,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -262,9 +262,9 @@
     {
       "path": "about.html",
       "name": "about.html",
-      "size": 6730,
-      "sizeText": "6.6 KB",
-      "modified": "2026-05-31",
+      "size": 7115,
+      "sizeText": "6.9 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
@@ -559,9 +559,9 @@
     {
       "path": "reports.html",
       "name": "reports.html",
-      "size": 18585,
-      "sizeText": "18.1 KB",
-      "modified": "2026-05-31",
+      "size": 18894,
+      "sizeText": "18.5 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
@@ -577,9 +577,9 @@
     {
       "path": "toolkit.html",
       "name": "toolkit.html",
-      "size": 16714,
-      "sizeText": "16.3 KB",
-      "modified": "2026-05-31",
+      "size": 17046,
+      "sizeText": "16.6 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
