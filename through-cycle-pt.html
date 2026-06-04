@@ -248,8 +248,11 @@ function recompute(){
   if(price){ var n=document.createElement('div'); n.className='now'; n.style.left=posOf(price)+'%'; bar.appendChild(n);
     var nl=document.createElement('div'); nl.className='lab top'; nl.style.left=posOf(price)+'%'; nl.style.color='var(--text)'; nl.textContent='Now '+usd(price); bar.appendChild(nl); }
 }
+// Shareable scenario: hydrate inputs from the URL on load, then keep the URL in sync.
+(function(){try{var p=new URLSearchParams(location.search);document.querySelectorAll('input[id]').forEach(function(el){if(p.has(el.id))el.value=p.get(el.id);});}catch(e){}})();
+function syncURL(){try{var q=new URLSearchParams();document.querySelectorAll('input[id]').forEach(function(el){if(String(el.value).trim()!=='')q.set(el.id,el.value);});history.replaceState(null,'',location.pathname+(q.toString()?'?'+q.toString():''));}catch(e){}}
 var inputs=document.querySelectorAll('input');
-for(var i=0;i<inputs.length;i++){ inputs[i].addEventListener('input', recompute); }
+for(var i=0;i<inputs.length;i++){ inputs[i].addEventListener('input', recompute); inputs[i].addEventListener('input', syncURL); }
 recompute();
 </script>
 </body>
