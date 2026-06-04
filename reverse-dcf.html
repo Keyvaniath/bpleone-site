@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reverse DCF Calculator — Brandon Leon</title>
+<meta name="description" content="Reverse DCF: plug in price, FCF, WACC and terminal growth, and solve for the free-cash-flow growth rate the market is implicitly pricing in. The through-cycle reality check.">
+<meta name="theme-color" content="#fbf7ef">
+<link rel="canonical" href="https://bpleon.com/reverse-dcf.html">
+<meta property="og:title" content="Reverse DCF Calculator — Brandon Leon">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://bpleon.com/reverse-dcf.html">
+<meta property="og:description" content="Solve for the FCF growth rate the market is implicitly pricing into a stock. Is the expectation reasonable through the cycle, or priced for perfection?">
+<meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="./assets/brand/01-master-monolith.svg">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Reverse DCF Calculator",
+  "url": "https://bpleon.com/reverse-dcf.html",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript",
+  "description": "Solve for the free-cash-flow growth rate the market is implicitly pricing into a stock, given price, base FCF, discount rate and terminal growth.",
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Person", "name": "Brandon Leon", "url": "https://bpleon.com/about.html" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://bpleon.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Toolkit", "item": "https://bpleon.com/toolkit.html" },
+    { "@type": "ListItem", "position": 3, "name": "Reverse DCF Calculator", "item": "https://bpleon.com/reverse-dcf.html" }
+  ]
+}
+</script>
+<style>
+:root {
+  --bg: #fbf7ef; --card: #fdfaf1; --card-border: #e6dfd0;
+  --text: #1c1a16; --text-muted: #56503f; --text-faint: #8e887d;
+  --accent: #b56a3f; --accent-light: #d49a73; --accent-bg: #f1e6d8;
+  --rule: #e6dfd0; --input-bg: #fffdf7; --input-border: #d3c8ab;
+  --table-stripe: #f4eddf; --green: #5b7f6b; --red: #b0432a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Newsreader', Georgia, serif; font-size: 17px; line-height: 1.6; padding: 60px 40px 100px; min-height: 100vh; }
+.container { max-width: 1100px; margin: 0 auto; }
+.breadcrumb { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+.breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--accent); }
+.kicker { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; }
+h1 { font-size: 44px; font-weight: 600; line-height: 1.05; margin-bottom: 14px; letter-spacing: -0.015em; }
+.subhead { color: var(--text-muted); font-size: 18px; font-style: italic; line-height: 1.5; margin-bottom: 36px; max-width: 760px; }
+.grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: 28px; }
+@media (max-width: 900px) { body { padding: 40px 20px 70px; } .grid { grid-template-columns: 1fr; } h1 { font-size: 32px; } }
+.card { background: var(--card); border: 1px solid var(--card-border); border-radius: 4px; padding: 26px 30px; }
+.card h2 { font-size: 22px; font-weight: 600; margin-bottom: 16px; padding-bottom: 9px; border-bottom: 1px solid var(--rule); }
+.subgroup-title { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin: 18px 0 8px; }
+.row { display: grid; grid-template-columns: 1fr 120px; gap: 14px; align-items: center; padding: 7px 0; }
+.row .lbl { font-size: 16px; } .row .lbl small { color: var(--text-muted); font-size: 12px; font-style: italic; }
+input[type="number"] { background: var(--input-bg); border: 1px solid var(--input-border); border-radius: 3px; padding: 8px 10px; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text); text-align: right; width: 100%; }
+input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent-light); }
+.implied-kicker { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+.implied-price { font-family: 'Newsreader', serif; font-size: 60px; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 10px; }
+.implied-meta { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text-muted); margin-bottom: 18px; }
+.verdict { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; display: inline-block; padding: 5px 12px; border-radius: 999px; margin-bottom: 18px; }
+.verdict.cheap { background: rgba(91,127,107,0.16); color: #3f5d4f; }
+.verdict.fair { background: var(--accent-bg); color: var(--accent); }
+.verdict.rich { background: rgba(176,67,42,0.12); color: var(--red); }
+.build-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; }
+.build-table td { padding: 7px 10px; border-bottom: 1px solid var(--rule); }
+.build-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.build-table tr.total td { font-weight: 600; background: var(--accent-bg); }
+.sens-section { margin-top: 40px; }
+.sens-section h2 { font-family: 'Newsreader', serif; font-size: 26px; font-weight: 600; margin-bottom: 6px; }
+.sens-section p.hint { color: var(--text-muted); font-style: italic; margin-bottom: 16px; }
+table.sens { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; }
+table.sens th, table.sens td { padding: 9px 10px; border: 1px solid var(--rule); text-align: center; font-variant-numeric: tabular-nums; }
+table.sens th { background: var(--card); color: var(--text-muted); font-weight: 600; font-size: 12px; }
+table.sens td.center { background: var(--accent); color: #fff; font-weight: 600; }
+.howworks { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--rule); }
+.howworks h3 { font-family: 'Newsreader', serif; font-size: 22px; font-weight: 600; margin-bottom: 10px; }
+.howworks p { color: var(--text); margin-bottom: 12px; max-width: 820px; }
+.howworks strong { color: var(--accent); }
+.disclaimer { margin-top: 26px; font-size: 13px; color: var(--text-faint); font-style: italic; }
+.skip-link { position: absolute; left: -9999px; top: 8px; z-index: 1000; background: var(--accent); color: #fff; padding: .55rem 1rem; border-radius: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; text-decoration: none; }
+.skip-link:focus { left: 8px; }
+.bp-header { max-width: 1100px; margin: 0 auto 30px; padding: 0 0 16px; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-bottom: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
+.bp-brand { display: inline-flex; align-items: center; line-height: 0; flex-shrink: 0; text-decoration: none; }
+.bp-brand img { height: 36px; width: auto; display: block; }
+.bp-brand:hover { opacity: .85; }
+.bp-nav { display: flex; flex-wrap: wrap; gap: .8rem 1.35rem; font-size: 14.5px; }
+.bp-nav a { text-decoration: none; color: var(--text-muted); }
+.bp-nav a:hover { color: var(--accent); }
+.bp-nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
+.bp-footer { max-width: 1100px; margin: 56px auto 0; border-top: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
+.bp-footer-inner { padding: 22px 0 4px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 13.5px; color: var(--text-muted); }
+.bp-social { list-style: none; display: flex; gap: 1.25rem; padding: 0; margin: 0; }
+.bp-social a { color: var(--text-muted); text-decoration: none; }
+.bp-social a:hover { color: var(--accent); }
+.bp-more-tools { max-width: 1100px; margin: 48px auto 0; padding-top: 22px; border-top: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
+.bp-more-label { font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+.bp-more-tools ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+.bp-more-tools a { display: inline-block; padding: 5px 12px; border: 1px solid var(--card-border); border-radius: 999px; font-size: 13px; color: var(--text-muted); text-decoration: none; background: var(--card); }
+.bp-more-tools a:hover { border-color: var(--accent); color: var(--accent); }
+@media (max-width: 680px) {
+  .card, .grid { min-width: 0; }
+  table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+  input[type="number"] { font-size: 16px; }
+  .bp-nav { gap: .45rem .9rem; font-size: 13px; }
+  .bp-brand img { height: 30px; }
+  .bp-footer-inner { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body spellcheck="false">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="bp-header">
+  <a class="bp-brand" href="./index.html" aria-label="Brandon Leon — Home"><img src="./assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="170" height="44"></a>
+  <nav class="bp-nav" aria-label="Primary">
+    <a href="./about.html">About</a>
+    <a href="./markets.html">Markets</a>
+    <a href="./toolkit.html" aria-current="page">Toolkit</a>
+    <a href="./reports.html">Reports</a>
+    <a href="./research.html">Research</a>
+    <a href="./writing.html">Writing</a>
+    <a href="./contact.html">Contact</a>
+  </nav>
+</header>
+<div class="container" id="main">
+  <div class="breadcrumb"><a href="./index.html">Home</a> &nbsp;·&nbsp; <a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Valuation calculators</div>
+  <div class="kicker">Toolkit · Reverse DCF</div>
+  <h1>Reverse DCF Calculator</h1>
+  <p class="subhead">A forward DCF asks "what's it worth?" A reverse DCF asks the more useful question: at today's price, what free-cash-flow growth is the market <em>already</em> paying for? Plug in the price and the discount rate, and solve for the expectation baked in — then judge whether it's reasonable through the cycle.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Inputs</h2>
+      <div class="subgroup-title" style="margin-top:0;">The stock</div>
+      <div class="row"><div class="lbl">Current price ($)</div><input type="number" id="price" value="110" step="0.01"></div>
+      <div class="row"><div class="lbl">Diluted shares (mm)</div><input type="number" id="shares" value="1126"></div>
+      <div class="row"><div class="lbl">Base FCF ($mm) <small>trailing or FY1</small></div><input type="number" id="fcf0" value="6200"></div>
+
+      <div class="subgroup-title">Valuation assumptions</div>
+      <div class="row"><div class="lbl">Discount rate / WACC (%)</div><input type="number" id="wacc" value="9.0" step="0.1"></div>
+      <div class="row"><div class="lbl">Terminal growth (%)</div><input type="number" id="gt" value="2.5" step="0.1"></div>
+      <div class="row"><div class="lbl">Explicit forecast (yrs)</div><input type="number" id="years" value="10"></div>
+    </div>
+
+    <div class="card">
+      <p class="implied-kicker">Market-implied FCF growth (explicit period)</p>
+      <p class="implied-price" id="impliedG">—</p>
+      <div id="verdict"></div>
+      <p class="implied-meta" id="impliedMeta">&nbsp;</p>
+      <table class="build-table" id="buildTable"></table>
+    </div>
+  </div>
+
+  <div class="sens-section">
+    <h2>Sensitivity</h2>
+    <p class="hint">Implied explicit-period FCF growth across discount rate (rows) and terminal growth (columns). The center cell is your inputs.</p>
+    <table class="sens" id="sensTable"></table>
+  </div>
+
+  <div class="howworks">
+    <h3>How it works</h3>
+    <p><strong>The idea.</strong> Price already embeds an expectation. A reverse DCF holds the discount rate and terminal growth fixed, then solves for the single explicit-period FCF growth rate <em>g</em> that makes the discounted cash flows equal today's market cap. That <em>g</em> is what you're being asked to believe.</p>
+    <p><strong>The math.</strong> Market cap = Σ FCF₀(1+g)ᵗ ⁄ (1+r)ᵗ for t = 1…N, plus a Gordon terminal value FCF_N(1+gₜ) ⁄ (r − gₜ), discounted back N years. We binary-search <em>g</em> until the present value matches price × shares.</p>
+    <p><strong>How to use it.</strong> If the implied growth is far above what the business has ever sustained through a full cycle, the stock is priced for perfection. If it's below trend, expectations are beatable. This is the reality check behind every through-cycle thesis — pair it with the <a href="./dcf.html">forward DCF</a> and the <a href="./comps.html">comps</a> to triangulate.</p>
+    <p class="disclaimer">Equity-FCF (FCFE) framing: base FCF is treated as cash flow to equity, so the implied value is compared directly to market cap. Nothing here is investment advice. Built by Brandon Leon — independent research focused on cyclical industries.</p>
+  </div>
+</div>
+
+<nav class="bp-more-tools" aria-label="More tools">
+  <p class="bp-more-label">More from the toolkit</p>
+  <ul>
+    <li><a href="./dcf.html">DCF</a></li>
+    <li><a href="./comps.html">Trading Comps</a></li>
+    <li><a href="./lbo.html">LBO</a></li>
+    <li><a href="./wacc.html">WACC</a></li>
+    <li><a href="./football.html">Football Field</a></li>
+    <li><a href="./midcycle.html">Mid-Cycle EBITDA</a></li>
+    <li><a href="./toolkit.html">All tools &rarr;</a></li>
+  </ul>
+</nav>
+
+<footer class="bp-footer">
+  <div class="bp-footer-inner">
+    <p>© 2026 Brandon Leon</p>
+    <ul class="bp-social">
+      <li><a href="./now.html">Now</a></li>
+      <li><a href="./disclaimer.html">Disclaimer</a></li>
+      <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+      <li><a href="https://www.linkedin.com/in/brandonpleone/" rel="me noopener">LinkedIn</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+function v(id){ var e=document.getElementById(id); var x=parseFloat((e.value||'').toString().replace(/[, ]/g,'')); return isFinite(x)?x:null; }
+function fmtPct(g){ if(g===null||!isFinite(g)) return '—'; return (g*100).toFixed(1)+'%'; }
+function fmtUsd(x){ if(!isFinite(x)) return '—'; if(Math.abs(x)>=1000) return '$'+Math.round(x).toLocaleString(); return '$'+x.toFixed(0); }
+
+// Present value of the FCFE stream for a given explicit growth g.
+function pv(fcf0, g, r, gt, N){
+  var sum=0;
+  for(var t=1;t<=N;t++){ sum += (fcf0*Math.pow(1+g,t))/Math.pow(1+r,t); }
+  var fN = fcf0*Math.pow(1+g,N);
+  var tv = fN*(1+gt)/(r-gt);
+  return sum + tv/Math.pow(1+r,N);
+}
+
+// Solve for the implied explicit growth g that makes PV == target market cap.
+function impliedGrowth(target, fcf0, r, gt, N){
+  if(!(target>0 && fcf0>0 && r>gt && N>=1 && r>0)) return null;
+  var lo=-0.6, hi=4.0;
+  if(pv(fcf0,lo,r,gt,N) > target) return { g:-Infinity }; // market pricing a decline steeper than -60%/yr
+  if(pv(fcf0,hi,r,gt,N) < target) return { g:Infinity };  // needs >400%/yr — unreachable
+  for(var i=0;i<200;i++){ var mid=(lo+hi)/2; if(pv(fcf0,mid,r,gt,N) < target) lo=mid; else hi=mid; }
+  return { g:(lo+hi)/2 };
+}
+
+function recompute(){
+  var price=v('price'), shares=v('shares'), fcf0=v('fcf0');
+  var r=v('wacc'), gt=v('gt'), N=v('years');
+  var gEl=document.getElementById('impliedG'), metaEl=document.getElementById('impliedMeta'), vEl=document.getElementById('verdict');
+  if(price===null||shares===null||fcf0===null||r===null||gt===null||N===null){ gEl.textContent='—'; metaEl.textContent='Fill in every field.'; vEl.innerHTML=''; document.getElementById('buildTable').innerHTML=''; document.getElementById('sensTable').innerHTML=''; return; }
+  var rr=r/100, gtt=gt/100, Nn=Math.max(1,Math.round(N));
+  var mktcap=price*shares;
+  var res=impliedGrowth(mktcap, fcf0, rr, gtt, Nn);
+  if(!res){ gEl.textContent='—'; metaEl.textContent= rr<=gtt ? 'Discount rate must exceed terminal growth.' : 'Check inputs.'; vEl.innerHTML=''; return; }
+
+  if(res.g===Infinity){ gEl.textContent='>400%'; }
+  else if(res.g===-Infinity){ gEl.textContent='<-60%'; }
+  else gEl.textContent=fmtPct(res.g);
+
+  var fcfYield = fcf0/mktcap;
+  metaEl.innerHTML = 'Market cap '+fmtUsd(mktcap)+'mm &middot; base FCF yield '+(fcfYield*100).toFixed(1)+'% &middot; '+Nn+'-yr explicit, then '+gt.toFixed(1)+'% terminal';
+
+  // verdict band relative to a rough "sustainable through-cycle" bar (~ GDP-plus)
+  vEl.innerHTML='';
+  if(isFinite(res.g)){
+    var v1;
+    if(res.g <= gtt+0.02) v1={c:'cheap',t:'Priced for little growth — low bar to beat'};
+    else if(res.g <= 0.12) v1={c:'fair',t:'Reasonable expectation — within historical norms'};
+    else v1={c:'rich',t:'Aggressive — priced for sustained outperformance'};
+    var span=document.createElement('span'); span.className='verdict '+v1.c; span.textContent=v1.t; vEl.appendChild(span);
+  }
+
+  // build table — discounted PV pieces at the solved g
+  if(isFinite(res.g)){
+    var g=res.g, expl=0;
+    for(var t=1;t<=Nn;t++){ expl += (fcf0*Math.pow(1+g,t))/Math.pow(1+rr,t); }
+    var fN=fcf0*Math.pow(1+g,Nn); var tv=fN*(1+gtt)/(rr-gtt); var pvtv=tv/Math.pow(1+rr,Nn);
+    var rows=[
+      ['Implied FCF growth (yrs 1–'+Nn+')', fmtPct(g)],
+      ['PV of explicit FCF', fmtUsd(expl)+'mm'],
+      ['PV of terminal value', fmtUsd(pvtv)+'mm'],
+      ['Terminal as % of value', (pvtv/(expl+pvtv)*100).toFixed(0)+'%']
+    ];
+    var html='';
+    for(var i=0;i<rows.length;i++) html += '<tr><td>'+rows[i][0]+'</td><td class="num">'+rows[i][1]+'</td></tr>';
+    html += '<tr class="total"><td>Implied value = market cap</td><td class="num">'+fmtUsd(expl+pvtv)+'mm</td></tr>';
+    document.getElementById('buildTable').innerHTML=html;
+  } else { document.getElementById('buildTable').innerHTML=''; }
+
+  // sensitivity: rows = WACC ±, cols = terminal growth ±
+  var wShifts=[-0.01,-0.005,0,0.005,0.01];
+  var gtShifts=[-0.01,-0.005,0,0.005,0.01];
+  var sh='<thead><tr><th>WACC \\ g<sub>t</sub></th>';
+  for(var c=0;c<gtShifts.length;c++){ sh+='<th>'+((gtt+gtShifts[c])*100).toFixed(1)+'%</th>'; }
+  sh+='</tr></thead><tbody>';
+  for(var ri=0;ri<wShifts.length;ri++){
+    var rw=rr+wShifts[ri];
+    sh+='<tr><th>'+(rw*100).toFixed(1)+'%</th>';
+    for(var ci=0;ci<gtShifts.length;ci++){
+      var gtc=gtt+gtShifts[ci];
+      var cell='—';
+      if(rw>gtc){ var rr2=impliedGrowth(mktcap,fcf0,rw,gtc,Nn); if(rr2){ cell = rr2.g===Infinity?'>400%':(rr2.g===-Infinity?'<-60%':fmtPct(rr2.g)); } }
+      var isC=(ri===2&&ci===2);
+      sh+='<td class="'+(isC?'center':'')+'">'+cell+'</td>';
+    }
+    sh+='</tr>';
+  }
+  sh+='</tbody>';
+  document.getElementById('sensTable').innerHTML=sh;
+}
+
+var inputs=document.querySelectorAll('input');
+for(var i=0;i<inputs.length;i++){ inputs[i].addEventListener('input', recompute); }
+recompute();
+</script>
+</body>
+</html>
