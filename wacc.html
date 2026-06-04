@@ -91,6 +91,12 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
 @media (max-width: 640px) { .bp-nav { gap: .45rem .9rem; font-size: 13px; } .bp-brand img { height: 30px; } .bp-footer-inner { flex-direction: column; align-items: flex-start; } }
 /* Wide data tables scroll horizontally on phones instead of overflowing the page. */
 @media (max-width: 680px) { .card, .grid, .grid-main { min-width: 0; } table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; } }
+
+/* Stop iOS Safari from zooming in when a field is focused (it zooms when the
+   field font-size is < 16px). */
+@media (max-width: 640px) {
+  input[type="number"], input[type="text"], select, textarea { font-size: 16px; }
+}
 </style>
 </head>
 <body>

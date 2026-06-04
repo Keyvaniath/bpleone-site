@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 103,
-  "totalBytes": 5635455,
+  "totalBytes": 5637705,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -280,8 +280,8 @@
     {
       "path": "comps.html",
       "name": "comps.html",
-      "size": 22046,
-      "sizeText": "21.5 KB",
+      "size": 22271,
+      "sizeText": "21.7 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -343,8 +343,8 @@
     {
       "path": "football.html",
       "name": "football.html",
-      "size": 25473,
-      "sizeText": "24.9 KB",
+      "size": 25698,
+      "sizeText": "25.1 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -379,8 +379,8 @@
     {
       "path": "lbo.html",
       "name": "lbo.html",
-      "size": 38742,
-      "sizeText": "37.8 KB",
+      "size": 38967,
+      "sizeText": "38.1 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -397,8 +397,8 @@
     {
       "path": "midcycle.html",
       "name": "midcycle.html",
-      "size": 26897,
-      "sizeText": "26.3 KB",
+      "size": 27122,
+      "sizeText": "26.5 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -460,8 +460,8 @@
     {
       "path": "pe-cap-table.html",
       "name": "pe-cap-table.html",
-      "size": 43063,
-      "sizeText": "42.1 KB",
+      "size": 43288,
+      "sizeText": "42.3 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -469,8 +469,8 @@
     {
       "path": "pe-distribution-waterfall.html",
       "name": "pe-distribution-waterfall.html",
-      "size": 39450,
-      "sizeText": "38.5 KB",
+      "size": 39675,
+      "sizeText": "38.7 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -487,8 +487,8 @@
     {
       "path": "pe-qofe.html",
       "name": "pe-qofe.html",
-      "size": 30649,
-      "sizeText": "29.9 KB",
+      "size": 30874,
+      "sizeText": "30.2 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -496,8 +496,8 @@
     {
       "path": "pe-returns-waterfall.html",
       "name": "pe-returns-waterfall.html",
-      "size": 40225,
-      "sizeText": "39.3 KB",
+      "size": 40450,
+      "sizeText": "39.5 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -514,8 +514,8 @@
     {
       "path": "pe-reverse-lbo.html",
       "name": "pe-reverse-lbo.html",
-      "size": 37812,
-      "sizeText": "36.9 KB",
+      "size": 38037,
+      "sizeText": "37.1 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -586,8 +586,8 @@
     {
       "path": "wacc.html",
       "name": "wacc.html",
-      "size": 21668,
-      "sizeText": "21.2 KB",
+      "size": 21893,
+      "sizeText": "21.4 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"

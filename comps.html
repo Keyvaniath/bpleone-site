@@ -134,6 +134,12 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
   .card, .grid { min-width: 0; }
   table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
 }
+
+/* Stop iOS Safari from zooming in when a field is focused (it zooms when the
+   field font-size is < 16px). */
+@media (max-width: 640px) {
+  input[type="number"], input[type="text"], select, textarea { font-size: 16px; }
+}
 </style>
 </head>
 <body spellcheck="false">
