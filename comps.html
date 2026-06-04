@@ -152,6 +152,33 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
 .skip-link { position: absolute; left: -9999px; top: 8px; z-index: 1000; background: var(--accent); color: #fff; padding: .55rem 1rem; border-radius: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; text-decoration: none; }
 .skip-link:focus { left: 8px; }
 </style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://bpleon.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Toolkit",
+      "item": "https://bpleon.com/toolkit.html"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Trading Comps Calculator",
+      "item": "https://bpleon.com/comps.html"
+    }
+  ]
+}
+</script>
 </head>
 <body spellcheck="false">
 <a class="skip-link" href="#main">Skip to content</a>
