@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 103,
-  "totalBytes": 5638790,
+  "totalBytes": 5639046,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -406,18 +406,18 @@
     {
       "path": "mu-after-ubs-2026-05-28.html",
       "name": "mu-after-ubs-2026-05-28.html",
-      "size": 32313,
-      "sizeText": "31.6 KB",
-      "modified": "2026-06-01",
+      "size": 32473,
+      "sizeText": "31.7 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
     {
       "path": "mu-june-outlook-2026-05-31.html",
       "name": "mu-june-outlook-2026-05-31.html",
-      "size": 35448,
-      "sizeText": "34.6 KB",
-      "modified": "2026-06-03",
+      "size": 35544,
+      "sizeText": "34.7 KB",
+      "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
     },
