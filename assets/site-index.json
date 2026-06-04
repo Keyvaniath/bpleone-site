@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 108,
-  "totalBytes": 5795037,
+  "totalBytes": 5800022,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,7 +28,7 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 25113,
+      "size": 25114,
       "sizeText": "24.5 KB",
       "modified": "2026-06-04",
       "ext": ".json",
@@ -280,8 +280,8 @@
     {
       "path": "accretion-dilution.html",
       "name": "accretion-dilution.html",
-      "size": 23665,
-      "sizeText": "23.1 KB",
+      "size": 24911,
+      "sizeText": "24.3 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -352,8 +352,8 @@
     {
       "path": "epv.html",
       "name": "epv.html",
-      "size": 23375,
-      "sizeText": "22.8 KB",
+      "size": 24621,
+      "sizeText": "24.0 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -604,8 +604,8 @@
     {
       "path": "reverse-dcf.html",
       "name": "reverse-dcf.html",
-      "size": 20607,
-      "sizeText": "20.1 KB",
+      "size": 21853,
+      "sizeText": "21.3 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
@@ -613,8 +613,8 @@
     {
       "path": "through-cycle-pt.html",
       "name": "through-cycle-pt.html",
-      "size": 20185,
-      "sizeText": "19.7 KB",
+      "size": 21431,
+      "sizeText": "20.9 KB",
       "modified": "2026-06-04",
       "ext": ".html",
       "category": "pages"
