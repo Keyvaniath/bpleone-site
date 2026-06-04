@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-04",
   "fileCount": 108,
-  "totalBytes": 5854045,
+  "totalBytes": 5854082,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -334,7 +334,7 @@
     {
       "path": "dcf.html",
       "name": "dcf.html",
-      "size": 27237,
+      "size": 27274,
       "sizeText": "26.6 KB",
       "modified": "2026-06-04",
       "ext": ".html",
