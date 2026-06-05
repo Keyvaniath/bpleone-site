@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-05",
   "fileCount": 109,
-  "totalBytes": 5880977,
+  "totalBytes": 5900998,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,9 +28,9 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 25114,
-      "sizeText": "24.5 KB",
-      "modified": "2026-06-04",
+      "size": 25333,
+      "sizeText": "24.7 KB",
+      "modified": "2026-06-05",
       "ext": ".json",
       "category": "assets"
     },
@@ -280,8 +280,8 @@
     {
       "path": "accretion-dilution.html",
       "name": "accretion-dilution.html",
-      "size": 26507,
-      "sizeText": "25.9 KB",
+      "size": 27736,
+      "sizeText": "27.1 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -298,8 +298,8 @@
     {
       "path": "comps.html",
       "name": "comps.html",
-      "size": 31067,
-      "sizeText": "30.3 KB",
+      "size": 32296,
+      "sizeText": "31.5 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -334,9 +334,9 @@
     {
       "path": "dcf.html",
       "name": "dcf.html",
-      "size": 27274,
-      "sizeText": "26.6 KB",
-      "modified": "2026-06-04",
+      "size": 28503,
+      "sizeText": "27.8 KB",
+      "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
     },
@@ -352,8 +352,8 @@
     {
       "path": "epv.html",
       "name": "epv.html",
-      "size": 26217,
-      "sizeText": "25.6 KB",
+      "size": 27446,
+      "sizeText": "26.8 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -370,8 +370,8 @@
     {
       "path": "football.html",
       "name": "football.html",
-      "size": 34774,
-      "sizeText": "34.0 KB",
+      "size": 36003,
+      "sizeText": "35.2 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -406,8 +406,8 @@
     {
       "path": "lbo.html",
       "name": "lbo.html",
-      "size": 47171,
-      "sizeText": "46.1 KB",
+      "size": 48400,
+      "sizeText": "47.3 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -424,8 +424,8 @@
     {
       "path": "midcycle.html",
       "name": "midcycle.html",
-      "size": 35584,
-      "sizeText": "34.8 KB",
+      "size": 36813,
+      "sizeText": "36.0 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -487,8 +487,8 @@
     {
       "path": "pe-cap-table.html",
       "name": "pe-cap-table.html",
-      "size": 51637,
-      "sizeText": "50.4 KB",
+      "size": 52866,
+      "sizeText": "51.6 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -496,8 +496,8 @@
     {
       "path": "pe-distribution-waterfall.html",
       "name": "pe-distribution-waterfall.html",
-      "size": 47985,
-      "sizeText": "46.9 KB",
+      "size": 49214,
+      "sizeText": "48.1 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -514,8 +514,8 @@
     {
       "path": "pe-qofe.html",
       "name": "pe-qofe.html",
-      "size": 39211,
-      "sizeText": "38.3 KB",
+      "size": 40440,
+      "sizeText": "39.5 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -523,8 +523,8 @@
     {
       "path": "pe-returns-waterfall.html",
       "name": "pe-returns-waterfall.html",
-      "size": 48783,
-      "sizeText": "47.6 KB",
+      "size": 50012,
+      "sizeText": "48.8 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -541,8 +541,8 @@
     {
       "path": "pe-reverse-lbo.html",
       "name": "pe-reverse-lbo.html",
-      "size": 46379,
-      "sizeText": "45.3 KB",
+      "size": 47608,
+      "sizeText": "46.5 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -550,8 +550,8 @@
     {
       "path": "position-sizing.html",
       "name": "position-sizing.html",
-      "size": 25283,
-      "sizeText": "24.7 KB",
+      "size": 26512,
+      "sizeText": "25.9 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -613,8 +613,8 @@
     {
       "path": "reverse-dcf.html",
       "name": "reverse-dcf.html",
-      "size": 23449,
-      "sizeText": "22.9 KB",
+      "size": 24678,
+      "sizeText": "24.1 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -622,8 +622,8 @@
     {
       "path": "through-cycle-pt.html",
       "name": "through-cycle-pt.html",
-      "size": 23438,
-      "sizeText": "22.9 KB",
+      "size": 24667,
+      "sizeText": "24.1 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -640,8 +640,8 @@
     {
       "path": "wacc.html",
       "name": "wacc.html",
-      "size": 30214,
-      "sizeText": "29.5 KB",
+      "size": 31443,
+      "sizeText": "30.7 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -849,7 +849,7 @@
       "name": "feed.xml",
       "size": 5303,
       "sizeText": "5.2 KB",
-      "modified": "2026-06-04",
+      "modified": "2026-06-05",
       "ext": ".xml",
       "category": "site-meta"
     },
@@ -865,9 +865,9 @@
     {
       "path": "sitemap.xml",
       "name": "sitemap.xml",
-      "size": 6851,
-      "sizeText": "6.7 KB",
-      "modified": "2026-06-04",
+      "size": 6989,
+      "sizeText": "6.8 KB",
+      "modified": "2026-06-05",
       "ext": ".xml",
       "category": "site-meta"
     },
