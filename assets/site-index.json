@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-05",
   "fileCount": 109,
-  "totalBytes": 5901092,
+  "totalBytes": 5906468,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -280,8 +280,8 @@
     {
       "path": "accretion-dilution.html",
       "name": "accretion-dilution.html",
-      "size": 27736,
-      "sizeText": "27.1 KB",
+      "size": 28072,
+      "sizeText": "27.4 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -298,8 +298,8 @@
     {
       "path": "comps.html",
       "name": "comps.html",
-      "size": 32296,
-      "sizeText": "31.5 KB",
+      "size": 32632,
+      "sizeText": "31.9 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -334,8 +334,8 @@
     {
       "path": "dcf.html",
       "name": "dcf.html",
-      "size": 28503,
-      "sizeText": "27.8 KB",
+      "size": 28839,
+      "sizeText": "28.2 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -352,8 +352,8 @@
     {
       "path": "epv.html",
       "name": "epv.html",
-      "size": 27446,
-      "sizeText": "26.8 KB",
+      "size": 27782,
+      "sizeText": "27.1 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -370,8 +370,8 @@
     {
       "path": "football.html",
       "name": "football.html",
-      "size": 36003,
-      "sizeText": "35.2 KB",
+      "size": 36339,
+      "sizeText": "35.5 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -406,8 +406,8 @@
     {
       "path": "lbo.html",
       "name": "lbo.html",
-      "size": 48400,
-      "sizeText": "47.3 KB",
+      "size": 48736,
+      "sizeText": "47.6 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -424,8 +424,8 @@
     {
       "path": "midcycle.html",
       "name": "midcycle.html",
-      "size": 36813,
-      "sizeText": "36.0 KB",
+      "size": 37149,
+      "sizeText": "36.3 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -487,8 +487,8 @@
     {
       "path": "pe-cap-table.html",
       "name": "pe-cap-table.html",
-      "size": 52866,
-      "sizeText": "51.6 KB",
+      "size": 53202,
+      "sizeText": "52.0 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -496,8 +496,8 @@
     {
       "path": "pe-distribution-waterfall.html",
       "name": "pe-distribution-waterfall.html",
-      "size": 49214,
-      "sizeText": "48.1 KB",
+      "size": 49550,
+      "sizeText": "48.4 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -514,8 +514,8 @@
     {
       "path": "pe-qofe.html",
       "name": "pe-qofe.html",
-      "size": 40462,
-      "sizeText": "39.5 KB",
+      "size": 40798,
+      "sizeText": "39.8 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -523,8 +523,8 @@
     {
       "path": "pe-returns-waterfall.html",
       "name": "pe-returns-waterfall.html",
-      "size": 50084,
-      "sizeText": "48.9 KB",
+      "size": 50420,
+      "sizeText": "49.2 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -541,8 +541,8 @@
     {
       "path": "pe-reverse-lbo.html",
       "name": "pe-reverse-lbo.html",
-      "size": 47608,
-      "sizeText": "46.5 KB",
+      "size": 47944,
+      "sizeText": "46.8 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -550,8 +550,8 @@
     {
       "path": "position-sizing.html",
       "name": "position-sizing.html",
-      "size": 26512,
-      "sizeText": "25.9 KB",
+      "size": 26848,
+      "sizeText": "26.2 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -613,8 +613,8 @@
     {
       "path": "reverse-dcf.html",
       "name": "reverse-dcf.html",
-      "size": 24678,
-      "sizeText": "24.1 KB",
+      "size": 25014,
+      "sizeText": "24.4 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -622,8 +622,8 @@
     {
       "path": "through-cycle-pt.html",
       "name": "through-cycle-pt.html",
-      "size": 24667,
-      "sizeText": "24.1 KB",
+      "size": 25003,
+      "sizeText": "24.4 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
@@ -640,8 +640,8 @@
     {
       "path": "wacc.html",
       "name": "wacc.html",
-      "size": 31443,
-      "sizeText": "30.7 KB",
+      "size": 31779,
+      "sizeText": "31.0 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
