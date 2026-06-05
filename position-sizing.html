@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Accretion / Dilution Calculator — Brandon Leon</title>
-<meta name="description" content="Merger accretion/dilution: combine acquirer and target, fund the deal with a cash/stock mix, and solve for pro-forma EPS, the accretion or dilution, and the synergies needed to break even.">
+<title>Position Sizing (Kelly Criterion) — Brandon Leon</title>
+<meta name="description" content="Scenario-based Kelly position sizing: lay out the bear / base / bull cases and their odds, and solve for the bet size that maximizes long-run compounding — then apply your fraction (half-Kelly by default).">
 <meta name="theme-color" content="#fbf7ef">
-<link rel="canonical" href="https://bpleon.com/accretion-dilution.html">
-<meta property="og:title" content="Accretion / Dilution Calculator — Brandon Leon">
+<link rel="canonical" href="https://bpleon.com/position-sizing.html">
+<meta property="og:title" content="Position Sizing (Kelly Criterion) — Brandon Leon">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://bpleon.com/accretion-dilution.html">
-<meta property="og:description" content="Will an acquisition add to EPS or dilute it? Pro-forma EPS from a cash/stock deal, plus the break-even synergies.">
+<meta property="og:url" content="https://bpleon.com/position-sizing.html">
+<meta property="og:description" content="Turn bear/base/bull scenarios into a Kelly-optimal position size, then size down to half-Kelly. Valuation says what; this says how much.">
 <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="./assets/brand/01-master-monolith.svg">
@@ -21,12 +21,12 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "Accretion / Dilution Calculator",
-  "url": "https://bpleon.com/accretion-dilution.html",
+  "name": "Position Sizing (Kelly Criterion) Calculator",
+  "url": "https://bpleon.com/position-sizing.html",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Any",
   "browserRequirements": "Requires JavaScript",
-  "description": "Model the first-year EPS accretion or dilution of an acquisition from a cash/stock financing mix, debt cost, tax rate and synergies, including the break-even synergy level.",
+  "description": "Solve for the Kelly-optimal position size from bear/base/bull scenario probabilities and returns, with fractional-Kelly sizing and expected log-growth.",
   "isAccessibleForFree": true,
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "author": { "@type": "Person", "name": "Brandon Leon", "url": "https://bpleon.com/about.html" }
@@ -39,7 +39,7 @@
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://bpleon.com/" },
     { "@type": "ListItem", "position": 2, "name": "Toolkit", "item": "https://bpleon.com/toolkit.html" },
-    { "@type": "ListItem", "position": 3, "name": "Accretion / Dilution Calculator", "item": "https://bpleon.com/accretion-dilution.html" }
+    { "@type": "ListItem", "position": 3, "name": "Position Sizing (Kelly Criterion)", "item": "https://bpleon.com/position-sizing.html" }
   ]
 }
 </script>
@@ -80,11 +80,11 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
 .verdict.fair { background: var(--accent-bg); color: var(--accent); }
 .verdict.rich { background: rgba(176,67,42,0.12); color: var(--red); }
 .build-table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; font-size: 13px; }
+.build-table th { text-align: right; padding: 7px 10px; border-bottom: 1px solid var(--input-border); font-weight: 600; color: var(--text-muted); font-size: 12px; }
+.build-table th:first-child { text-align: left; }
 .build-table td { padding: 7px 10px; border-bottom: 1px solid var(--rule); }
 .build-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
-.build-table tr.sub td { color: var(--text-muted); }
 .build-table tr.total td { font-weight: 600; background: var(--accent-bg); }
-.build-table tr.rule-top td { border-top: 2px solid var(--input-border); }
 .sens-section { margin-top: 40px; }
 .sens-section h2 { font-family: 'Newsreader', serif; font-size: 26px; font-weight: 600; margin-bottom: 6px; }
 .sens-section p.hint { color: var(--text-muted); font-style: italic; margin-bottom: 16px; }
@@ -92,8 +92,6 @@ table.sens { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-
 table.sens th, table.sens td { padding: 9px 10px; border: 1px solid var(--rule); text-align: center; font-variant-numeric: tabular-nums; }
 table.sens th { background: var(--card); color: var(--text-muted); font-weight: 600; font-size: 12px; }
 table.sens td.center { background: var(--accent); color: #fff; font-weight: 600; }
-table.sens td.pos { color: #3f5d4f; } table.sens td.neg { color: var(--red); }
-table.sens td.center.pos, table.sens td.center.neg { color: #fff; }
 .howworks { margin-top: 50px; padding-top: 24px; border-top: 1px solid var(--rule); }
 .howworks h3 { font-family: 'Newsreader', serif; font-size: 22px; font-weight: 600; margin-bottom: 10px; }
 .howworks p { color: var(--text); margin-bottom: 12px; max-width: 820px; }
@@ -144,67 +142,64 @@ table.sens td.center.pos, table.sens td.center.neg { color: #fff; }
   </nav>
 </header>
 <div class="container" id="main">
-  <div class="breadcrumb"><a href="./index.html">Home</a> &nbsp;·&nbsp; <a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; M&amp;A calculators</div>
-  <div class="kicker">Toolkit · Accretion / Dilution</div>
-  <h1>Accretion / Dilution</h1>
-  <p class="subhead">Will the deal add to earnings or dilute them? Plug in the two companies and the structure — cash versus stock, the offer price, the cost of debt, the synergies — and read off pro-forma EPS, the accretion or dilution, and the pre-tax synergies you'd need just to break even.</p>
+  <div class="breadcrumb"><a href="./index.html">Home</a> &nbsp;·&nbsp; <a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Portfolio tools</div>
+  <div class="kicker">Toolkit · Position Sizing</div>
+  <h1>Position Sizing</h1>
+  <p class="subhead">Valuation tells you what to buy; sizing tells you how much. Lay out your scenarios — the downside, the base case, the upside, and the odds of each — and the Kelly criterion solves for the bet size that maximizes long-run compounding. Then apply your fraction: most people, sensibly, bet half or less.</p>
 
   <div class="grid">
     <div class="card">
-      <h2>Inputs <small style="font-weight:400;font-size:12px;color:var(--text-faint);font-family:Inter,sans-serif;">— $mm unless noted</small></h2>
-      <div class="subgroup-title" style="margin-top:0;">Acquirer</div>
-      <div class="row"><div class="lbl">Net income ($mm)</div><input type="number" id="aqNI" value="8000"></div>
-      <div class="row"><div class="lbl">Diluted shares (mm)</div><input type="number" id="aqShares" value="1126"></div>
-      <div class="row"><div class="lbl">Share price ($)</div><input type="number" id="aqPrice" value="110" step="0.01"></div>
+      <h2>Scenarios</h2>
+      <div class="subgroup-title" style="margin-top:0;">Bear case</div>
+      <div class="row"><div class="lbl">Bear probability (%)</div><input type="number" id="pBear" value="25" step="1"></div>
+      <div class="row"><div class="lbl">Bear return (%)</div><input type="number" id="rBear" value="-40" step="1"></div>
 
-      <div class="subgroup-title">Target &amp; offer</div>
-      <div class="row"><div class="lbl">Net income ($mm)</div><input type="number" id="tgtNI" value="1500"></div>
-      <div class="row"><div class="lbl">Diluted shares (mm)</div><input type="number" id="tgtShares" value="300"></div>
-      <div class="row"><div class="lbl">Offer price / share ($)</div><input type="number" id="offerPrice" value="60" step="0.01"></div>
+      <div class="subgroup-title">Base case</div>
+      <div class="row"><div class="lbl">Base probability (%)</div><input type="number" id="pBase" value="50" step="1"></div>
+      <div class="row"><div class="lbl">Base return (%)</div><input type="number" id="rBase" value="15" step="1"></div>
 
-      <div class="subgroup-title">Deal structure &amp; financing</div>
-      <div class="row"><div class="lbl">Stock-financed (%) <small>rest is cash/debt</small></div><input type="number" id="pctStock" value="50" step="1"></div>
-      <div class="row"><div class="lbl">Pre-tax cost of new debt (%)</div><input type="number" id="debtRate" value="6.0" step="0.1"></div>
-      <div class="row"><div class="lbl">Marginal tax rate (%)</div><input type="number" id="tax" value="21" step="0.1"></div>
-      <div class="row"><div class="lbl">Run-rate synergies ($mm) <small>pre-tax</small></div><input type="number" id="syn" value="400"></div>
+      <div class="subgroup-title">Bull case</div>
+      <div class="row"><div class="lbl">Bull probability (%)</div><input type="number" id="pBull" value="25" step="1"></div>
+      <div class="row"><div class="lbl">Bull return (%)</div><input type="number" id="rBull" value="80" step="1"></div>
+
+      <div class="subgroup-title">Sizing</div>
+      <div class="row"><div class="lbl">Kelly fraction applied (%) <small>50 = half-Kelly</small></div><input type="number" id="kfrac" value="50" step="5"></div>
     </div>
 
     <div class="card">
-      <p class="implied-kicker">Year-1 EPS accretion / (dilution)</p>
-      <p class="implied-price" id="adPct">—</p>
+      <p class="implied-kicker">Suggested position · % of portfolio</p>
+      <p class="implied-price" id="pos">—</p>
       <div id="verdict"></div>
       <p class="implied-meta" id="meta">&nbsp;</p>
-      <p class="vs-price" id="vsPrice">&nbsp;</p>
+      <p class="vs-price" id="growthLine">&nbsp;</p>
       <table class="build-table" id="buildTable"></table>
     </div>
   </div>
 
   <div class="sens-section">
     <h2>Sensitivity</h2>
-    <p class="hint">Accretion / (dilution) across the cash-vs-stock mix (rows) and run-rate synergies (columns). The center cell is your inputs. Green is accretive, red dilutive.</p>
+    <p class="hint">Suggested position across the Kelly fraction you apply (rows) and the bear-case return you assume (columns) — the downside drives sizing more than anything. The center cell is your inputs.</p>
     <table class="sens" id="sensTable"></table>
   </div>
 
   <div class="howworks">
     <h3>How it works</h3>
-    <p><strong>The idea.</strong> Accretion/dilution is the first question on any deal. Combine the two income statements, pay for it with some mix of cash (raised as debt) and stock (newly issued shares), and check whether pro-forma EPS lands above or below the acquirer's standalone EPS. Accretive isn't the same as value-creating — but a dilutive deal needs a very good story.</p>
-    <p><strong>The math.</strong> Offer value = target shares × offer price. Split it into a cash portion (funded with debt that costs after-tax interest) and a stock portion (funded by issuing acquirer shares at its price). Pro-forma net income = acquirer + target + after-tax synergies − after-tax interest on the new debt. Pro-forma shares = acquirer shares + new shares issued. Then pro-forma EPS ÷ standalone EPS − 1 is the accretion or dilution.</p>
-    <p><strong>The shorthand.</strong> In an all-stock deal, the result flips on the multiples: accretive when the target's P/E is <em>below</em> the acquirer's, dilutive when it's above — you're trading paper for earnings. Cash-financed, the test is the target's earnings yield versus the after-tax cost of the debt. This tool runs the full version with the mix, the tax shield and the synergies, and solves for the <strong>break-even synergies</strong> — the run-rate number that takes EPS back to flat. Pair it with the <a href="./lbo.html">LBO</a> for the sponsor's view and the <a href="./comps.html">comps</a> for the price.</p>
-    <p class="disclaimer">First-year, static analysis: no purchase-accounting step-ups or intangible amortization, no balance-sheet cash used, no revenue dis-synergies, no share buyback offset. A screening tool, not a fairness opinion. Nothing here is investment advice. Built by Brandon Leon — independent research focused on cyclical industries.</p>
+    <p><strong>The idea.</strong> The Kelly criterion is the bet size that maximizes the long-run <em>compound</em> growth rate of your capital — not your expected return (that would say bet everything), but the geometric growth that survives the losing scenarios. It's the bridge from a valuation view to a portfolio decision: a great thesis sized wrong still blows up.</p>
+    <p><strong>The math.</strong> For a set of outcomes with probabilities <em>p</em> and returns <em>r</em>, full Kelly is the fraction <em>f</em> that maximizes Σ&nbsp;<em>p</em>·ln(1&nbsp;+&nbsp;<em>f·r</em>). We solve for where its derivative, Σ&nbsp;<em>p·r</em>&nbsp;/&nbsp;(1&nbsp;+&nbsp;<em>f·r</em>), crosses zero, bounded so no scenario can take you below zero. Your applied size is that fraction scaled by the Kelly fraction you choose.</p>
+    <p><strong>How to use it.</strong> Pull the scenarios straight from the <a href="./through-cycle-pt.html">through-cycle PT</a> — each price target is a return, each scenario a probability. Then <em>bet a fraction.</em> Full Kelly is mathematically optimal but brutally volatile, and it assumes your inputs are exactly right (they aren't); half-Kelly keeps ~75% of the growth at a quarter of the variance. If the tool suggests more than 100%, that's leverage — a sign your inputs are too rosy, not a green light.</p>
+    <p class="disclaimer">This is a math tool, not investment advice, and not a recommendation to take any position. The Kelly criterion only maximizes growth if your probabilities and returns are exactly correct — they never are, so real sizing should be more conservative than full Kelly. Position sizing is personal: size to what you can actually hold through the drawdown. Built by Brandon Leon — independent research focused on cyclical industries.</p>
   </div>
 </div>
 
 <nav class="bp-more-tools" aria-label="More tools">
   <p class="bp-more-label">More from the toolkit</p>
   <ul>
-    <li><a href="./lbo.html">LBO</a></li>
+    <li><a href="./through-cycle-pt.html">Through-Cycle PT</a></li>
+    <li><a href="./reverse-dcf.html">Reverse DCF</a></li>
+    <li><a href="./epv.html">EPV</a></li>
     <li><a href="./dcf.html">DCF</a></li>
     <li><a href="./comps.html">Trading Comps</a></li>
-    <li><a href="./wacc.html">WACC</a></li>
-    <li><a href="./epv.html">EPV</a></li>
-    <li><a href="./reverse-dcf.html">Reverse DCF</a></li>
-    <li><a href="./through-cycle-pt.html">Through-Cycle PT</a></li>
-    <li><a href="./position-sizing.html">Position Sizing</a></li>
+    <li><a href="./accretion-dilution.html">Accretion / Dilution</a></li>
     <li><a href="./toolkit.html">All tools &rarr;</a></li>
   </ul>
 </nav>
@@ -223,101 +218,87 @@ table.sens td.center.pos, table.sens td.center.neg { color: #fff; }
 
 <script>
 function v(id){ var e=document.getElementById(id); var x=parseFloat((e.value||'').toString().replace(/[, ]/g,'')); return isFinite(x)?x:null; }
-function fmtUsd(x){ if(x===null||!isFinite(x)) return '—'; var s=x<0?'-':''; return s+'$'+Math.round(Math.abs(x)).toLocaleString(); }
-function fmtEps(x){ if(x===null||!isFinite(x)) return '—'; var s=x<0?'-':''; return s+'$'+Math.abs(x).toFixed(2); }
-function fmtPct(x){ if(x===null||!isFinite(x)) return '—'; return (x>=0?'+':'−')+Math.abs(x*100).toFixed(1)+'%'; }
+function fmtPct(x,dp){ if(x===null||!isFinite(x)) return '—'; dp=(dp==null?1:dp); return (x>=0?'':'−')+Math.abs(x*100).toFixed(dp)+'%'; }
+function fmtSigned(x,dp){ if(x===null||!isFinite(x)) return '—'; dp=(dp==null?1:dp); return (x>=0?'+':'−')+Math.abs(x*100).toFixed(dp)+'%'; }
 
-// First-year accretion/dilution from the deal inputs.
-function deal(aqNI, aqShares, aqPrice, tgtNI, tgtShares, offerPrice, pctStock, debtRate, taxPct, syn){
-  if(!(aqShares>0 && aqPrice>0)) return null;
-  var t = taxPct/100;
-  var offerValue = tgtShares*offerPrice;
-  var stockConsid = offerValue*(pctStock/100);
-  var cashConsid  = offerValue*(1-pctStock/100);
-  var newShares = stockConsid/aqPrice;
-  var atSyn = syn*(1-t);
-  var atInt = cashConsid*(debtRate/100)*(1-t);
-  var proNI = aqNI + tgtNI + atSyn - atInt;
-  var proShares = aqShares + newShares;
-  var standEPS = aqNI/aqShares;
-  var proEPS = proNI/proShares;
-  var ad = standEPS!==0 ? (proEPS/standEPS - 1) : null;
-  // break-even pre-tax synergies: standEPS*proShares = aqNI+tgtNI - atInt + Sbe*(1-t)
-  var Sbe = (1-t)!==0 ? (standEPS*proShares - aqNI - tgtNI + atInt)/(1-t) : null;
-  return { offerValue:offerValue, stockConsid:stockConsid, cashConsid:cashConsid, newShares:newShares,
-    atSyn:atSyn, atInt:atInt, proNI:proNI, proShares:proShares, standEPS:standEPS, proEPS:proEPS, ad:ad, Sbe:Sbe };
+// Build normalized scenario list [[p,r],...] with p summing to 1.
+function scenarios(){
+  var raw=[[v('pBear'),v('rBear')],[v('pBase'),v('rBase')],[v('pBull'),v('rBull')]];
+  for(var i=0;i<raw.length;i++){ if(raw[i][0]===null||raw[i][1]===null) return null; }
+  var psum=raw[0][0]+raw[1][0]+raw[2][0];
+  if(!(psum>0)) return null;
+  return raw.map(function(s){ return [ (s[0]/psum), s[1]/100 ]; });  // p normalized, r to decimal
+}
+function expRet(s){ return s[0][0]*s[0][1]+s[1][0]*s[1][1]+s[2][0]*s[2][1]; }
+function gprime(f,s){ var t=0; for(var i=0;i<s.length;i++){ var d=1+f*s[i][1]; if(d<=0) return -1e9; t+=s[i][0]*s[i][1]/d; } return t; }
+function growth(f,s){ var t=0; for(var i=0;i<s.length;i++){ var x=1+f*s[i][1]; if(x<=0) return NaN; t+=s[i][0]*Math.log(x); } return t; }
+function fmax(s){ var m=Infinity; for(var i=0;i<s.length;i++){ if(s[i][1]<0){ var b=-1/s[i][1]; if(b<m) m=b; } } return isFinite(m)? m*0.9999 : 50; }
+// Full-Kelly fraction = argmax growth; solved as the root of gprime in [0, fmax).
+function fullKelly(s){
+  if(expRet(s)<=0) return 0;            // no positive edge -> don't size in
+  var hi=fmax(s);
+  if(gprime(hi,s)>0) return hi;         // edge so strong the no-ruin bound binds
+  var lo=0;
+  for(var i=0;i<200;i++){ var mid=(lo+hi)/2; if(gprime(mid,s)>0) lo=mid; else hi=mid; }
+  return (lo+hi)/2;
 }
 
 function recompute(){
-  var aqNI=v('aqNI'), aqShares=v('aqShares'), aqPrice=v('aqPrice'),
-      tgtNI=v('tgtNI'), tgtShares=v('tgtShares'), offerPrice=v('offerPrice'),
-      pctStock=v('pctStock'), debtRate=v('debtRate'), tax=v('tax'), syn=v('syn');
-  var adEl=document.getElementById('adPct'), metaEl=document.getElementById('meta'),
-      vsEl=document.getElementById('vsPrice'), vEl=document.getElementById('verdict'),
+  var posEl=document.getElementById('pos'), metaEl=document.getElementById('meta'),
+      gEl=document.getElementById('growthLine'), vEl=document.getElementById('verdict'),
       bt=document.getElementById('buildTable'), st=document.getElementById('sensTable');
-  var need=[aqNI,aqShares,aqPrice,tgtNI,tgtShares,offerPrice,pctStock,debtRate,tax,syn];
-  for(var k=0;k<need.length;k++){ if(need[k]===null){ adEl.textContent='—'; adEl.className='implied-price'; metaEl.textContent='Fill in every field.'; vsEl.innerHTML='&nbsp;'; vEl.innerHTML=''; bt.innerHTML=''; st.innerHTML=''; return; } }
-  if(aqShares<=0||aqPrice<=0){ adEl.textContent='—'; adEl.className='implied-price'; metaEl.textContent='Acquirer shares and price must be greater than zero.'; vsEl.innerHTML='&nbsp;'; vEl.innerHTML=''; bt.innerHTML=''; st.innerHTML=''; return; }
+  var kf=v('kfrac'); var s=scenarios();
+  if(s===null||kf===null){ posEl.textContent='—'; posEl.className='implied-price'; metaEl.textContent='Fill in every field.'; gEl.innerHTML='&nbsp;'; vEl.innerHTML=''; bt.innerHTML=''; st.innerHTML=''; return; }
+  var E=expRet(s), fk=fullKelly(s), applied=fk*(kf/100);
 
-  var R=deal(aqNI,aqShares,aqPrice,tgtNI,tgtShares,offerPrice,pctStock,debtRate,tax,syn);
-  adEl.textContent=fmtPct(R.ad);
-  adEl.className='implied-price '+(R.ad>=0?'pos':'neg');
+  posEl.textContent = fk<=0 ? '0%' : (applied*100).toFixed(1)+'%';
+  posEl.className='implied-price '+(fk<=0?'neg':'pos');
 
-  var prem = (tgtShares>0 && tgtNI>0) ? null : null;
-  var tgtPE = tgtNI>0 ? R.offerValue/tgtNI : null;
-  var aqPE  = aqNI>0 ? (aqPrice*aqShares)/aqNI : null;
-  metaEl.innerHTML='Offer '+fmtUsd(R.offerValue)+'mm ('+Math.round(100-pctStock)+'% cash / '+Math.round(pctStock)+'% stock) &middot; '+
-    (tgtPE!==null?'target '+tgtPE.toFixed(1)+'x':'')+(aqPE!==null?' vs acquirer '+aqPE.toFixed(1)+'x P/E':'');
+  metaEl.innerHTML='Expected return '+fmtSigned(E)+' &middot; full Kelly '+(fk*100).toFixed(0)+'% &middot; half '+(fk*50).toFixed(0)+'%';
 
   vEl.innerHTML='';
   var band;
-  if(R.ad>0.005) band={c:'cheap',t:'Accretive — adds to EPS in year one'};
-  else if(R.ad<-0.005) band={c:'rich',t:'Dilutive — lowers EPS in year one'};
-  else band={c:'fair',t:'Roughly EPS-neutral'};
+  if(fk<=0) band={c:'rich',t:'Negative edge — Kelly says don’t size in'};
+  else if(fk>1) band={c:'fair',t:'Edge looks large — full Kelly implies leverage; trust it less'};
+  else band={c:'cheap',t:'Positive edge — size a fraction of full Kelly'};
   var span=document.createElement('span'); span.className='verdict '+band.c; span.textContent=band.t; vEl.appendChild(span);
 
-  var beTxt;
-  if(R.Sbe<=0) beTxt='accretive even with <b>zero</b> synergies';
-  else beTxt='break-even needs <b>'+fmtUsd(R.Sbe)+'mm</b> pre-tax synergies';
-  vsEl.innerHTML='Standalone EPS <b>'+fmtEps(R.standEPS)+'</b> &rarr; pro-forma <b>'+fmtEps(R.proEPS)+'</b>; '+beTxt;
+  if(fk>0){
+    var gFull=growth(fk,s), gApp=growth(applied,s);
+    gEl.innerHTML='Expected log-growth: <b>'+fmtSigned(gApp,2)+'</b> at your size, <b>'+fmtSigned(gFull,2)+'</b> at full Kelly';
+  } else {
+    gEl.innerHTML='With no positive edge, the growth-maximising size is zero.';
+  }
 
-  // Build table — the pro-forma bridge
-  var rows=[
-    ['sub','Acquirer net income', fmtUsd(aqNI)+'mm'],
-    ['sub','+ target net income', fmtUsd(tgtNI)+'mm'],
-    ['sub','+ after-tax synergies', fmtUsd(R.atSyn)+'mm'],
-    ['sub','− after-tax interest on new debt', '('+fmtUsd(R.atInt)+'mm)'],
-    ['rule-top','Pro-forma net income', fmtUsd(R.proNI)+'mm'],
-    ['sub','Acquirer shares', Math.round(aqShares).toLocaleString()+'mm'],
-    ['sub','+ new shares issued', '+'+(R.newShares).toFixed(1)+'mm'],
-    ['rule-top','Pro-forma shares', (R.proShares).toFixed(1)+'mm'],
-    ['sub','Standalone EPS', fmtEps(R.standEPS)],
-    ['sub','Pro-forma EPS', fmtEps(R.proEPS)]
-  ];
-  var html='';
-  for(var i=0;i<rows.length;i++){ html+='<tr class="'+rows[i][0]+'"><td>'+rows[i][1]+'</td><td class="num">'+rows[i][2]+'</td></tr>'; }
-  html+='<tr class="total"><td>Accretion / (dilution)</td><td class="num">'+fmtPct(R.ad)+'</td></tr>';
+  // Build table: scenario contributions + Kelly tiers
+  var names=['Bear','Base','Bull'];
+  var html='<tr><th>Scenario</th><th>Prob</th><th>Return</th><th>p &times; r</th></tr>';
+  for(var i=0;i<s.length;i++){ html+='<tr><td>'+names[i]+'</td><td class="num">'+(s[i][0]*100).toFixed(0)+'%</td><td class="num">'+fmtSigned(s[i][1])+'</td><td class="num">'+fmtSigned(s[i][0]*s[i][1])+'</td></tr>'; }
+  html+='<tr class="total"><td>Expected return</td><td class="num"></td><td class="num"></td><td class="num">'+fmtSigned(E)+'</td></tr>';
+  if(fk>0){
+    var tiers=[['Full Kelly',1],['Half Kelly',0.5],['Quarter Kelly',0.25]];
+    html+='<tr><th>Sizing</th><th></th><th>Position</th><th>Log-growth</th></tr>';
+    for(var t=0;t<tiers.length;t++){ var ff=fk*tiers[t][1]; html+='<tr><td>'+tiers[t][0]+'</td><td></td><td class="num">'+(ff*100).toFixed(1)+'%</td><td class="num">'+fmtSigned(growth(ff,s),2)+'</td></tr>'; }
+  }
   bt.innerHTML=html;
 
-  // Sensitivity: rows = stock-financed % (absolute), cols = synergies ± around input
-  var stockRows=[0,25,50,75,100];
-  var synShifts=[-400,-200,0,200,400];
-  var sh='<thead><tr><th>% stock \\ synergies</th>';
-  for(var c=0;c<synShifts.length;c++){ var sv=Math.max(0,syn+synShifts[c]); sh+='<th>'+fmtUsd(sv)+'mm</th>'; }
+  // Sensitivity: rows = Kelly fraction applied, cols = bear-case return shift
+  var fracRows=[100,50,25,12.5];
+  var bearShift=[-20,-10,0,10,20];   // percentage points on bear return
+  var baseBear=v('rBear');
+  var sh='<thead><tr><th>Kelly \\ bear ret.</th>';
+  for(var c=0;c<bearShift.length;c++){ sh+='<th>'+(baseBear+bearShift[c])+'%</th>'; }
   sh+='</tr></thead><tbody>';
-  // nearest row to user's pctStock for centering
-  var nearest=stockRows[0], nd=1e9;
-  for(var z=0;z<stockRows.length;z++){ var d=Math.abs(stockRows[z]-pctStock); if(d<nd){nd=d;nearest=stockRows[z];} }
-  for(var ri=0;ri<stockRows.length;ri++){
-    var ps=stockRows[ri];
-    sh+='<tr><th>'+ps+'%</th>';
-    for(var ci=0;ci<synShifts.length;ci++){
-      var sv2=Math.max(0,syn+synShifts[ci]);
-      var rr=deal(aqNI,aqShares,aqPrice,tgtNI,tgtShares,offerPrice,ps,debtRate,tax,sv2);
-      var cell='—', cls='';
-      if(rr&&rr.ad!==null){ cell=fmtPct(rr.ad); cls=rr.ad>=0?'pos':'neg'; }
-      var isC=(ps===nearest && synShifts[ci]===0);
-      sh+='<td class="'+cls+(isC?' center':'')+'">'+cell+'</td>';
+  for(var ri=0;ri<fracRows.length;ri++){
+    sh+='<tr><th>'+fracRows[ri]+'%</th>';
+    for(var ci=0;ci<bearShift.length;ci++){
+      // rebuild scenarios with shifted bear return
+      var s2=scenarios(); if(s2){ s2[0][1]=(baseBear+bearShift[ci])/100; }
+      var cell='—';
+      if(s2){ var fk2=fullKelly(s2); var ap=fk2*(fracRows[ri]/100); cell = fk2<=0?'0%':(ap*100).toFixed(0)+'%'; }
+      var isC=(fracRows[ri]===Math.round(kf) && bearShift[ci]===0);
+      // center highlight: match the closest fraction row to kf and the 0 shift col
+      sh+='<td class="'+(bearShift[ci]===0 && Math.abs(fracRows[ri]-kf)<0.01 ?'center':'')+'">'+cell+'</td>';
     }
     sh+='</tr>';
   }
@@ -329,7 +310,7 @@ function recompute(){
 (function(){try{var p=new URLSearchParams(location.search);document.querySelectorAll('input[id]').forEach(function(el){if(p.has(el.id))el.value=p.get(el.id);});}catch(e){}})();
 function syncURL(){try{var q=new URLSearchParams();document.querySelectorAll('input[id]').forEach(function(el){if(String(el.value).trim()!=='')q.set(el.id,el.value);});history.replaceState(null,'',location.pathname+(q.toString()?'?'+q.toString():''));}catch(e){}}
 // Discoverable copy-link affordance for the shareable scenario.
-(function(){var sub=document.querySelector('.subhead');if(!sub)return;var b=document.createElement('button');b.type='button';b.textContent='Copy link to this scenario';b.style.cssText='display:inline-block;font-family:Inter,sans-serif;font-size:13px;color:#56503f;background:#fdfaf1;border:1px solid #e6dfd0;border-radius:999px;padding:6px 14px;cursor:pointer;margin:0 0 30px;transition:border-color .15s,color .15s;';b.onmouseover=function(){b.style.borderColor='#b56a3f';b.style.color='#b56a3f';};b.onmouseout=function(){b.style.borderColor='#e6dfd0';b.style.color='#56503f';};b.onclick=function(){var ok=false;try{var ta=document.createElement('textarea');ta.value=location.href;ta.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(ta);ta.focus();ta.select();ok=document.execCommand('copy');document.body.removeChild(ta);}catch(e){}if(!ok&&navigator.clipboard&&navigator.clipboard.writeText){try{navigator.clipboard.writeText(location.href);ok=true;}catch(e){}}b.textContent=ok?'Link copied ✓':'Copy from the address bar';setTimeout(function(){b.textContent='Copy link to this scenario';},1800);};sub.parentNode.insertBefore(b,sub.nextSibling);})();
+(function(){var sub=document.querySelector('.subhead');if(!sub)return;var b=document.createElement('button');b.type='button';b.textContent='Copy link to this scenario';b.style.cssText='display:inline-block;font-family:Inter,sans-serif;font-size:13px;color:#56503f;background:#fdfaf1;border:1px solid #e6dfd0;border-radius:999px;padding:6px 14px;cursor:pointer;margin:0 0 30px;transition:border-color .15s,color .15s;';b.onmouseover=function(){b.style.borderColor='#b56a3f';b.style.color='#b56a3f';};b.onmouseout=function(){b.style.borderColor='#e6dfd0';b.style.color='#56503f';};b.onclick=function(){var ok=false;try{var ta=document.createElement('textarea');ta.value=location.href;ta.style.cssText='position:fixed;left:-9999px;top:0';document.body.appendChild(ta);ta.focus();ta.select();ok=document.execCommand('copy');document.body.removeChild(ta);}catch(e){}if(!ok&&navigator.clipboard){try{navigator.clipboard.writeText(location.href);ok=true;}catch(e){}}b.textContent=ok?'Link copied ✓':'Copy from the address bar';setTimeout(function(){b.textContent='Copy link to this scenario';},1800);};sub.parentNode.insertBefore(b,sub.nextSibling);})();
 var inputs=document.querySelectorAll('input');
 for(var i=0;i<inputs.length;i++){ inputs[i].addEventListener('input', recompute); inputs[i].addEventListener('input', syncURL); }
 recompute();
