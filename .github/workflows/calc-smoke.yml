@@ -1,0 +1,74 @@
+# Smoke test: prove every calculator actually loads and computes — no NaN, no
+# JS errors, no blank outputs. Complements smoke.yml (which covers the homepage
+# charts). The calculators are pure client-side (no Worker fetch), so this test
+# is fast and deterministic: it serves THIS commit's HTML and drives each tool
+# with a real browser, catching regressions before they ship.
+#
+# Runs on every push to main + on demand. Fails (and emails you) if any of the
+# 16 calculators throws, shows NaN/undefined/Infinity, or has no inputs.
+
+name: Smoke test — calculators compute
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  calc-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Playwright (Chromium) + static server
+        run: |
+          npm install --no-save playwright http-server
+          npx playwright install --with-deps chromium
+
+      - name: Serve this commit and smoke-test every calculator
+        run: |
+          npx http-server . -p 8080 -s &
+          sleep 3
+          cat > calc-smoke.js <<'EOF'
+          const { chromium } = require('playwright');
+          const TOOLS = [
+            'reverse-dcf', 'through-cycle-pt', 'epv', 'accretion-dilution', 'position-sizing',
+            'comps', 'lbo', 'wacc', 'dcf', 'football', 'midcycle',
+            'pe-cap-table', 'pe-qofe', 'pe-distribution-waterfall', 'pe-returns-waterfall', 'pe-reverse-lbo'
+          ];
+          (async () => {
+            const browser = await chromium.launch();
+            const fails = [];
+            for (const t of TOOLS) {
+              const page = await browser.newPage();
+              const errors = [];
+              page.on('pageerror', e => errors.push(String(e).slice(0, 100)));
+              page.on('console', m => { if (m.type() === 'error') errors.push(m.text().slice(0, 100)); });
+              try {
+                await page.goto('http://localhost:8080/' + t + '.html', { waitUntil: 'load', timeout: 30000 });
+                await page.waitForTimeout(900); // let on-load compute + scripts settle
+                const txt = await page.evaluate(() => document.body.innerText);
+                const hasInput = await page.evaluate(() => !!document.querySelector('input'));
+                if (!hasInput) fails.push(t + ': no inputs found (page broken?)');
+                if (/\bNaN\b/.test(txt)) fails.push(t + ': shows NaN on load');
+                if (/\bundefined\b/.test(txt)) fails.push(t + ': shows "undefined" on load');
+                if (/\bInfinity\b/.test(txt)) fails.push(t + ': shows Infinity on load');
+                if (errors.length) fails.push(t + ': JS error — ' + errors[0]);
+                else console.log('OK  ' + t);
+              } catch (e) {
+                fails.push(t + ': failed to load — ' + String(e).slice(0, 100));
+              }
+              await page.close();
+            }
+            await browser.close();
+            if (fails.length) {
+              console.error('\nCALCULATOR SMOKE TEST FAILED:\n - ' + fails.join('\n - '));
+              process.exit(1);
+            }
+            console.log('\nSmoke test passed — all ' + TOOLS.length + ' calculators load and compute cleanly.');
+          })().catch(e => { console.error(e); process.exit(1); });
+          EOF
+          node calc-smoke.js
