@@ -307,7 +307,7 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
         return sign + '$' + v.toFixed(1) + 'M';
     }
     const fmtPct = v => isFinite(v) ? (v * 100).toFixed(1) + '%' : '—';
-    const fmtPctSig = v => (v >= 0 ? '+' : '') + (v * 100).toFixed(1) + '%';
+    const fmtPctSig = v => isFinite(v) ? (v >= 0 ? '+' : '') + (v * 100).toFixed(1) + '%' : '—';
 
     function render() {
         const v = {};

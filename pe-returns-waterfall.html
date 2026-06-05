@@ -441,7 +441,7 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
     }
     const fmtPct = v => isFinite(v) ? (v * 100).toFixed(1) + '%' : '—';
     const fmtMult = v => isFinite(v) ? v.toFixed(2) + 'x' : '—';
-    const fmtPctOf = (v, total) => total > 0 ? ((v/total) * 100).toFixed(0) + '%' : '—';
+    const fmtPctOf = (v, total) => (isFinite(v) && total > 0) ? ((v/total) * 100).toFixed(0) + '%' : '—';
 
     /* Returns bridge SVG: equity in → +growth → +multiple → +debt → +recap → exit equity */
     function renderBridge(r) {
@@ -543,8 +543,8 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
         });
         // Center label: dominant driver
         const top = items.reduce((a,b) => b.value > a.value ? b : a, items[0]);
-        const topPct = ((top.value / total) * 100).toFixed(0);
-        svg += `<text x="50" y="48" class="donut-label-mid" text-anchor="middle">${topPct}%</text>`;
+        const _tp = (top.value / total) * 100; const topPct = isFinite(_tp) ? Math.round(_tp) + '%' : '—';
+        svg += `<text x="50" y="48" class="donut-label-mid" text-anchor="middle">${topPct}</text>`;
         svg += `<text x="50" y="62" class="donut-label-sub" text-anchor="middle">FROM ${top.name.toUpperCase()}</text>`;
         $('donut-svg').innerHTML = svg;
 
@@ -553,7 +553,7 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 1px 
         items.forEach(it => {
             const pct = (it.value / total) * 100;
             const flag = it.name === 'Multiple Δ' && pct > 30 ? ' <span style="color:var(--red);font-size:11px;">⚠ re-rate bet</span>' : '';
-            html += `<tr><td><div class="swatch-cell"><span class="swatch" style="background:${it.color}"></span><span>${it.name}${flag}</span></div></td><td class="num">${fmtMoney(it.value)}</td><td class="num">${pct.toFixed(0)}%</td></tr>`;
+            html += `<tr><td><div class="swatch-cell"><span class="swatch" style="background:${it.color}"></span><span>${it.name}${flag}</span></div></td><td class="num">${fmtMoney(it.value)}</td><td class="num">${fmtPctOf(it.value, total)}</td></tr>`;
         });
         html += `<tr class="total"><td>Total value created</td><td class="num">${fmtMoney(total)}</td><td class="num">100%</td></tr>`;
         $('attrib-table').innerHTML = html;

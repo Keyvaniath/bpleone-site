@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-05",
   "fileCount": 109,
-  "totalBytes": 5900998,
+  "totalBytes": 5901092,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -514,7 +514,7 @@
     {
       "path": "pe-qofe.html",
       "name": "pe-qofe.html",
-      "size": 40440,
+      "size": 40462,
       "sizeText": "39.5 KB",
       "modified": "2026-06-05",
       "ext": ".html",
@@ -523,8 +523,8 @@
     {
       "path": "pe-returns-waterfall.html",
       "name": "pe-returns-waterfall.html",
-      "size": 50012,
-      "sizeText": "48.8 KB",
+      "size": 50084,
+      "sizeText": "48.9 KB",
       "modified": "2026-06-05",
       "ext": ".html",
       "category": "pages"
