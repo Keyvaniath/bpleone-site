@@ -196,31 +196,31 @@
     <section class="section">
       <div class="section-head">
         <h2>Just shipped</h2>
-        <a class="more" href="toolkit.html#buy-side">All buy-side tools &rarr;</a>
+        <a class="more" href="toolkit.html">Full toolkit &rarr;</a>
       </div>
-      <a class="feature-card" href="pe-reverse-lbo.html">
+      <a class="feature-card" href="through-cycle-pt.html">
         <div class="feature-card-art" aria-hidden="true">
           <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
             <rect width="200" height="200" fill="#0B3D91" rx="10"/>
-            <!-- Reverse-arrow visual: target IRR going backward to entry mult; price line crossing -->
-            <line x1="32"  y1="148" x2="172" y2="148" stroke="#fbf7ef" stroke-width="1" opacity="0.4"/>
-            <line x1="32"  y1="100" x2="172" y2="100" stroke="#fbf7ef" stroke-width="1" opacity="0.4"/>
-            <line x1="32"  y1="52"  x2="172" y2="52"  stroke="#fbf7ef" stroke-width="1" opacity="0.4"/>
-            <!-- Reverse arrow path: from right top to bottom-left -->
-            <path d="M 162 38 L 36 158" stroke="#C9A961" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-            <!-- Arrowhead at bottom-left -->
-            <polyline points="36,158 50,158 36,144" stroke="#C9A961" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- IRR-target dot on arrow start -->
-            <circle cx="162" cy="38" r="6" fill="#C9A961"/>
-            <!-- Take-private price tick at intersection -->
-            <line x1="100" y1="92" x2="100" y2="108" stroke="#fbf7ef" stroke-width="2.5"/>
-            <circle cx="100" cy="100" r="5" fill="#fbf7ef"/>
+            <!-- Through-cycle scenario fan: bear/base/bull normalized targets -> probability-weighted blend -->
+            <line x1="28" y1="148" x2="172" y2="148" stroke="#fbf7ef" stroke-width="1" opacity="0.35"/>
+            <line x1="28" y1="100" x2="172" y2="100" stroke="#fbf7ef" stroke-width="1" opacity="0.35"/>
+            <line x1="28" y1="52"  x2="172" y2="52"  stroke="#fbf7ef" stroke-width="1" opacity="0.35"/>
+            <!-- "now" / current price, dashed -->
+            <line x1="28" y1="126" x2="172" y2="126" stroke="#fbf7ef" stroke-width="1.5" opacity="0.55" stroke-dasharray="3 4"/>
+            <!-- scenario path: bear (low) -> base -> bull (high) -->
+            <path d="M 46 150 L 100 104 L 154 50" stroke="#C9A961" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="46" cy="150" r="5" fill="#C9A961"/>
+            <circle cx="154" cy="50" r="5" fill="#C9A961"/>
+            <!-- blended, probability-weighted target (emphasized) -->
+            <circle cx="100" cy="104" r="7" fill="#C9A961"/>
+            <circle cx="100" cy="104" r="11.5" fill="none" stroke="#C9A961" stroke-width="1.5" opacity="0.55"/>
           </svg>
         </div>
         <div class="feature-card-body">
-          <p class="eyebrow">Just shipped &middot; May 2026 &middot; Buy-side</p>
-          <h3>Reverse-LBO Calculator + buy-side suite</h3>
-          <p>Five new browser calculators (reverse-LBO, returns waterfall, distribution waterfall, cap table, QofE quick-check), the take-private precedents database (30 deals), and an 8-tab reverse-LBO workbook with worked MU and WDC examples. Free credentialing artifacts &mdash; pipeline on request, like the DCF and LBO/M&amp;A templates.</p>
+          <p class="eyebrow">Just shipped &middot; June 2026 &middot; Valuation</p>
+          <h3>The through-cycle valuation suite</h3>
+          <p>Five browser calculators that run the whole arc &mdash; value, target, size. Reverse DCF (the FCF growth the market's already pricing in), EPV (the no-growth floor), Through-Cycle PT (normalized EPS &times; recovery multiple, probability-weighted), Accretion / Dilution (first-year deal EPS), and Position Sizing (Kelly, half by default). All free, browser-only, and shareable by URL.</p>
           <p class="feature-card-cta">Open the calculator &rarr;</p>
         </div>
       </a>
