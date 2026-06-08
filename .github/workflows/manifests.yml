@@ -36,6 +36,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Verify internal links resolve (no dead hrefs / missing assets)
+        run: node tools/check-links.js
       - name: Regenerate manifests
         run: npm run manifests
       - name: Warn if structural manifest diff (file count or size changed)
