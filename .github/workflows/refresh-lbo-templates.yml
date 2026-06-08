@@ -4,9 +4,14 @@
 name: Refresh LBO/M&A worked examples
 
 on:
-  schedule:
-    - cron: "0 8 * * *"      # 08:00 UTC = 04:00 ET (post-close US, pre-open EU)
-  workflow_dispatch:           # Manual run from Actions tab
+  # Daily schedule disabled 2026-06: this was failing EVERY morning because the
+  # cross-repo checkout (step below) needs secrets.MODEL_REPO_TOKEN — a PAT for
+  # the private model repo — which isn't set, and `repository:` still points at
+  # the template placeholder `brandonpleone/lbo-ma-model`. To re-enable: set that
+  # secret, point `repository:` at your real model repo, then uncomment the cron.
+  # schedule:
+  #   - cron: "0 8 * * *"      # 08:00 UTC = 04:00 ET (post-close US, pre-open EU)
+  workflow_dispatch:           # Manual run from Actions tab (still works)
 
 jobs:
   refresh:
