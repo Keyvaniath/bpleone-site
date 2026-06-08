@@ -1,0 +1,20 @@
+# Line endings: store and check out as LF everywhere. Overrides the machine's
+# core.autocrlf=true, so the working tree stops drifting to CRLF and git stops
+# warning "LF will be replaced by CRLF" on every `git add`. Files are already LF,
+# so adding this causes no renormalization churn.
+* text=auto eol=lf
+
+# Binary assets — never normalize line endings or attempt text diffs.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.pdf   binary
+*.xlsx  binary
+*.xlsm  binary
+*.pptx  binary
+*.docx  binary
+*.woff  binary
+*.woff2 binary
