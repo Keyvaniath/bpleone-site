@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-08",
   "fileCount": 109,
-  "totalBytes": 5927188,
+  "totalBytes": 5927838,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -622,8 +622,8 @@
     {
       "path": "through-cycle-pt.html",
       "name": "through-cycle-pt.html",
-      "size": 26298,
-      "sizeText": "25.7 KB",
+      "size": 26948,
+      "sizeText": "26.3 KB",
       "modified": "2026-06-08",
       "ext": ".html",
       "category": "pages"
