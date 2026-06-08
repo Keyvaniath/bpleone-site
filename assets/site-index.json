@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-08",
   "fileCount": 109,
-  "totalBytes": 5927941,
+  "totalBytes": 5927928,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -631,9 +631,9 @@
     {
       "path": "toolkit.html",
       "name": "toolkit.html",
-      "size": 24496,
+      "size": 24483,
       "sizeText": "23.9 KB",
-      "modified": "2026-06-05",
+      "modified": "2026-06-08",
       "ext": ".html",
       "category": "pages"
     },
