@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-08",
   "fileCount": 112,
-  "totalBytes": 6110482,
+  "totalBytes": 6111600,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -325,8 +325,8 @@
     {
       "path": "contact.html",
       "name": "contact.html",
-      "size": 3907,
-      "sizeText": "3.8 KB",
+      "size": 4133,
+      "sizeText": "4.0 KB",
       "modified": "2026-06-08",
       "ext": ".html",
       "category": "pages"
@@ -361,8 +361,8 @@
     {
       "path": "disclaimer.html",
       "name": "disclaimer.html",
-      "size": 7800,
-      "sizeText": "7.6 KB",
+      "size": 8081,
+      "sizeText": "7.9 KB",
       "modified": "2026-06-08",
       "ext": ".html",
       "category": "pages"
@@ -433,8 +433,8 @@
     {
       "path": "markets.html",
       "name": "markets.html",
-      "size": 17113,
-      "sizeText": "16.7 KB",
+      "size": 17260,
+      "sizeText": "16.9 KB",
       "modified": "2026-06-08",
       "ext": ".html",
       "category": "pages"
@@ -496,8 +496,8 @@
     {
       "path": "now.html",
       "name": "now.html",
-      "size": 6171,
-      "sizeText": "6.0 KB",
+      "size": 6408,
+      "sizeText": "6.3 KB",
       "modified": "2026-06-08",
       "ext": ".html",
       "category": "pages"
@@ -595,8 +595,8 @@
     {
       "path": "projects.html",
       "name": "projects.html",
-      "size": 10220,
-      "sizeText": "10.0 KB",
+      "size": 10447,
+      "sizeText": "10.2 KB",
       "modified": "2026-06-08",
       "ext": ".html",
       "category": "pages"

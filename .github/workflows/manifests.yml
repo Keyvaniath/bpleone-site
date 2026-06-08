@@ -38,6 +38,8 @@ jobs:
           node-version: '20'
       - name: Verify internal links resolve (no dead hrefs / missing assets)
         run: node tools/check-links.js
+      - name: Meta / HTML-validity tripwire (warn-only — canonical/og copy-paste, dup id, lang)
+        run: node tools/check-meta.js
       - name: Regenerate manifests
         run: npm run manifests
       - name: Warn if structural manifest diff (file count or size changed)
