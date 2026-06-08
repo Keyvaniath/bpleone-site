@@ -45,8 +45,12 @@ jobs:
             for (const t of TOOLS) {
               const page = await browser.newPage();
               const errors = [];
+              // Block external fonts: the calculators use font-display:swap (function is unaffected),
+              // and Google Fonts rate-limits the shared CI runner IP with 403s after a few rapid loads.
+              await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort()).catch(() => {});
               page.on('pageerror', e => errors.push(String(e).slice(0, 100)));
-              page.on('console', m => { if (m.type() === 'error') errors.push(m.text().slice(0, 100)); });
+              // Only real JS errors count — ignore resource-load failures (fonts, favicons), which don't break the tool.
+              page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/i.test(m.text())) errors.push(m.text().slice(0, 100)); });
               try {
                 await page.goto('http://localhost:8080/' + t + '.html', { waitUntil: 'load', timeout: 30000 });
                 await page.waitForTimeout(900); // let on-load compute + scripts settle

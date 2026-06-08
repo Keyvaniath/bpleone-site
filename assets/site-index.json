@@ -30,7 +30,7 @@
       "name": "site-index.json",
       "size": 25333,
       "sizeText": "24.7 KB",
-      "modified": "2026-06-05",
+      "modified": "2026-06-08",
       "ext": ".json",
       "category": "assets"
     },
@@ -849,7 +849,7 @@
       "name": "feed.xml",
       "size": 5303,
       "sizeText": "5.2 KB",
-      "modified": "2026-06-05",
+      "modified": "2026-06-08",
       "ext": ".xml",
       "category": "site-meta"
     },
@@ -867,7 +867,7 @@
       "name": "sitemap.xml",
       "size": 6989,
       "sizeText": "6.8 KB",
-      "modified": "2026-06-05",
+      "modified": "2026-06-08",
       "ext": ".xml",
       "category": "site-meta"
     },
