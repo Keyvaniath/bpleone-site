@@ -815,5 +815,26 @@ select { background: var(--input-bg); border: 1px solid var(--input-border); bor
   if(document.readyState!=='loading') run(); else document.addEventListener('DOMContentLoaded', run);
 })();
 </script>
+<script>
+/* Reset-to-defaults affordance, paired with the copy-link button: one click
+   clears the URL scenario and restores the calculator's default inputs. */
+(function(){
+  function add(){
+    try{
+      var btns=document.querySelectorAll('button'), copy=null;
+      for(var i=0;i<btns.length;i++){ if(/Copy link to this scenario/.test(btns[i].textContent)){ copy=btns[i]; break; } }
+      if(!copy || copy.parentNode.querySelector('[data-reset]')) return;
+      var rb=document.createElement('button'); rb.type='button'; rb.setAttribute('data-reset','1'); rb.textContent='Reset';
+      rb.style.cssText='display:inline-block;font-family:Inter,sans-serif;font-size:13px;color:#56503f;background:#fdfaf1;border:1px solid #e6dfd0;border-radius:999px;padding:6px 14px;cursor:pointer;margin-left:8px;transition:border-color .15s,color .15s;';
+      rb.onmouseover=function(){rb.style.borderColor='#b56a3f';rb.style.color='#b56a3f';};
+      rb.onmouseout=function(){rb.style.borderColor='#e6dfd0';rb.style.color='#56503f';};
+      rb.onclick=function(){ location.href=location.pathname; };
+      copy.parentNode.insertBefore(rb, copy.nextSibling);
+    }catch(e){}
+  }
+  if(document.readyState!=='loading') add(); else window.addEventListener('load', add);
+  setTimeout(add, 450);
+})();
+</script>
 </body>
 </html>
