@@ -1,0 +1,19 @@
+{
+  "_comment": "Golden DEFAULT-INPUT outputs per calculator, asserted by .github/workflows/calc-smoke.yml. On load with default inputs, each calculator's rendered body text MUST contain every string listed for it — this catches a 'computes the WRONG number' regression that the NaN/undefined checks miss (e.g. DCF silently returning $35 instead of $31.48). Values captured 2026-06-08 from the live render and verified present in body.innerText for all 16. If you DELIBERATELY change a default input or a formula, re-capture the affected calculator's output and update its array here; the test failure message points back to this file.",
+  "reverse-dcf": ["5.6%", "within historic"],
+  "through-cycle-pt": ["$1,100", "$1,496", "$275.00"],
+  "epv": ["$101,556mm", "most of the price is unproven"],
+  "accretion-dilution": ["adds to EPS in year one"],
+  "position-sizing": ["full Kelly implies leverage"],
+  "comps": ["$467.32"],
+  "lbo": ["$110.40B", "$50.51B"],
+  "wacc": ["12.38%"],
+  "dcf": ["$31.48", "$3,148M"],
+  "football": ["$1531", "$405"],
+  "midcycle": ["$191.41"],
+  "pe-cap-table": ["$203.4M", "4.07x"],
+  "pe-qofe": ["$9.5M", "+19.0%"],
+  "pe-distribution-waterfall": ["$222.4M", "$32.7M"],
+  "pe-returns-waterfall": ["$50.51B", "$94.05B"],
+  "pe-reverse-lbo": ["7.10x", "$97.94B"]
+}

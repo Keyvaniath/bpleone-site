@@ -1,11 +1,14 @@
-# Smoke test: prove every calculator actually loads and computes — no NaN, no
-# JS errors, no blank outputs. Complements smoke.yml (which covers the homepage
-# charts). The calculators are pure client-side (no Worker fetch), so this test
-# is fast and deterministic: it serves THIS commit's HTML and drives each tool
-# with a real browser, catching regressions before they ship.
+# Smoke test: prove every calculator actually loads AND computes the RIGHT
+# numbers — no NaN, no JS errors, no blank outputs, and the default-input
+# headline figures still match their known-correct values (tools/calc-golden.json).
+# That value-assertion is the part NaN-checks miss: a formula regression that
+# returns a wrong-but-finite number. Complements smoke.yml (homepage charts).
+# Pure client-side (no Worker fetch), so it's fast and deterministic: it serves
+# THIS commit's HTML and drives each tool with a real browser.
 #
 # Runs on every push to main + on demand. Fails (and emails you) if any of the
-# 16 calculators throws, shows NaN/undefined/Infinity, or has no inputs.
+# 16 calculators throws, shows NaN/undefined/Infinity, has no inputs, or drifts
+# from its golden output.
 
 name: Smoke test — calculators compute
 
@@ -39,6 +42,7 @@ jobs:
             'comps', 'lbo', 'wacc', 'dcf', 'football', 'midcycle',
             'pe-cap-table', 'pe-qofe', 'pe-distribution-waterfall', 'pe-returns-waterfall', 'pe-reverse-lbo'
           ];
+          const GOLDEN = require('./tools/calc-golden.json');  // known-correct default-input figures
           (async () => {
             const browser = await chromium.launch();
             const fails = [];
@@ -60,6 +64,11 @@ jobs:
                 if (/\bNaN\b/.test(txt)) fails.push(t + ': shows NaN on load');
                 if (/\bundefined\b/.test(txt)) fails.push(t + ': shows "undefined" on load');
                 if (/\bInfinity\b/.test(txt)) fails.push(t + ': shows Infinity on load');
+                // Value-assertion: the default-input output must still contain its known-correct
+                // figures — catches a "computes the WRONG number" regression the checks above miss.
+                for (const g of (GOLDEN[t] || [])) {
+                  if (!txt.includes(g)) fails.push(t + ': output no longer contains "' + g + '" — value drift; if you changed a default/formula, update tools/calc-golden.json');
+                }
                 if (errors.length) fails.push(t + ': JS error — ' + errors[0]);
                 else console.log('OK  ' + t);
               } catch (e) {
@@ -72,7 +81,7 @@ jobs:
               console.error('\nCALCULATOR SMOKE TEST FAILED:\n - ' + fails.join('\n - '));
               process.exit(1);
             }
-            console.log('\nSmoke test passed — all ' + TOOLS.length + ' calculators load and compute cleanly.');
+            console.log('\nSmoke test passed — all ' + TOOLS.length + ' calculators load, compute cleanly, and match their golden outputs.');
           })().catch(e => { console.error(e); process.exit(1); });
           EOF
           node calc-smoke.js
