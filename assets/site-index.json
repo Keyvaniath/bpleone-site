@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-09",
   "fileCount": 113,
-  "totalBytes": 6157644,
+  "totalBytes": 6157523,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -469,8 +469,8 @@
     {
       "path": "mu-june-outlook-2026-05-31.html",
       "name": "mu-june-outlook-2026-05-31.html",
-      "size": 38251,
-      "sizeText": "37.4 KB",
+      "size": 38154,
+      "sizeText": "37.3 KB",
       "modified": "2026-06-09",
       "ext": ".html",
       "category": "pages"
@@ -739,7 +739,7 @@
     {
       "path": "writing.html",
       "name": "writing.html",
-      "size": 15500,
+      "size": 15476,
       "sizeText": "15.1 KB",
       "modified": "2026-06-09",
       "ext": ".html",
