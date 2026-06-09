@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-09",
   "fileCount": 113,
-  "totalBytes": 6157615,
+  "totalBytes": 6157644,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -469,8 +469,8 @@
     {
       "path": "mu-june-outlook-2026-05-31.html",
       "name": "mu-june-outlook-2026-05-31.html",
-      "size": 38222,
-      "sizeText": "37.3 KB",
+      "size": 38251,
+      "sizeText": "37.4 KB",
       "modified": "2026-06-09",
       "ext": ".html",
       "category": "pages"
