@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-09",
   "fileCount": 113,
-  "totalBytes": 6157420,
+  "totalBytes": 6157615,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,8 +28,8 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 26109,
-      "sizeText": "25.5 KB",
+      "size": 26304,
+      "sizeText": "25.7 KB",
       "modified": "2026-06-09",
       "ext": ".json",
       "category": "assets"
