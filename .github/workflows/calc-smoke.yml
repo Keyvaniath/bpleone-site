@@ -49,12 +49,18 @@ jobs:
             for (const t of TOOLS) {
               const page = await browser.newPage();
               const errors = [];
-              // Block external fonts: the calculators use font-display:swap (function is unaffected),
-              // and Google Fonts rate-limits the shared CI runner IP with 403s after a few rapid loads.
-              await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort()).catch(() => {});
+              // Block EVERY off-origin request — fonts, the Substack subscribe iframe (X-Frame-Options),
+              // the Cloudflare RUM beacon (cloudflareinsights, CORS-blocked on localhost), analytics.
+              // The calculators are pure client-side, so none of it affects compute or the golden
+              // outputs — but on localhost these external hits throw console errors that false-fail the run.
+              await page.route('**/*', r => {
+                const u = r.request().url();
+                return /^(http:\/\/localhost|http:\/\/127\.0\.0\.1|data:)/.test(u) ? r.continue() : r.abort();
+              }).catch(() => {});
               page.on('pageerror', e => errors.push(String(e).slice(0, 100)));
-              // Only real JS errors count — ignore resource-load failures (fonts, favicons), which don't break the tool.
-              page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/i.test(m.text())) errors.push(m.text().slice(0, 100)); });
+              // Backstop: only genuine same-origin JS errors count — ignore external-resource noise
+              // (blocked requests, framing/CORS refusals from the Substack iframe + CF beacon).
+              page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource|net::ERR|X-Frame-Options|Refused to (display|load|connect)|blocked by CORS|cloudflareinsights|cdn-cgi/i.test(m.text())) errors.push(m.text().slice(0, 100)); });
               try {
                 await page.goto('http://localhost:8080/' + t + '.html', { waitUntil: 'load', timeout: 30000 });
                 await page.waitForTimeout(900); // let on-load compute + scripts settle
