@@ -913,9 +913,9 @@ function renderData(){
         <div id="cloudStatus" class="mut" style="margin-top:6px"></div></div>
     </div></div>`;
   html+=`<div class="panel"><h3>Import Pokémon cards</h3>
-      <div class="hint">Load your trading-desk <code>inventory_summary.json</code> (preferred — fully valued) or <code>inventory.json</code>. Re-import after each <code>run_all.py</code> refresh to update card values.${CARDMETA&&CARDMETA.generatedAt?` <br>Loaded: <b>${CARDS.length}</b> cards · values as of <b>${CARDMETA.generatedAt.slice(0,10)}</b>`:CARDS.length?` <br>Loaded: <b>${CARDS.length}</b> cards`:""}</div>
-      <input type="file" id="cardFile" accept=".json,application/json"><br><br>
-      <textarea id="cardPaste" rows="5" style="width:100%" placeholder="…or paste inventory_summary.json contents here"></textarea>
+      <div class="hint"><b>Two ways to load cards:</b><br>① Your trading-desk <code>inventory_summary.json</code> (preferred — fully valued; this <i>replaces</i> the list).<br>② <b>Paste straight from Excel</b> — in Excel select your rows <i>including a header row</i> with columns <code>Name</code>, <code>Qty</code>, <code>Cost</code>, <code>Value</code> (and optionally <code>Grade</code>, <code>Section</code>), copy, and paste below — this <i>adds</i> them (Cost/Value read as line totals).${CARDMETA&&CARDMETA.generatedAt?` <br>Loaded: <b>${CARDS.length}</b> cards · values as of <b>${CARDMETA.generatedAt.slice(0,10)}</b>`:CARDS.length?` <br>Loaded: <b>${CARDS.length}</b> cards`:""}</div>
+      <input type="file" id="cardFile" accept=".json,.csv,.tsv,.txt,application/json,text/csv"><br><br>
+      <textarea id="cardPaste" rows="5" style="width:100%" placeholder="Paste inventory_summary.json — OR — paste Excel rows (header first): Name, Qty, Cost, Value"></textarea>
       <div class="inline" style="margin-top:8px"><button id="parseCards" class="primary">Parse &amp; import cards</button>
         <button class="danger" id="clearCards">Remove cards</button></div>
       <div id="cardMsg" class="mut" style="margin-top:8px"></div></div>`;
@@ -1035,7 +1035,35 @@ function computeCards(){
     best: rows.filter(c=>c.pnlPct!=null).slice().sort((a,b)=>b.pnlPct-a.pnlPct)[0],
     worst: rows.filter(c=>c.pnlPct!=null).slice().sort((a,b)=>a.pnlPct-b.pnlPct)[0] };
 }
+function parseCardSheet(text){
+  var lines=text.split(/\r?\n/).filter(function(l){return l.trim();});
+  if(lines.length<2) return null;
+  var useTab=lines[0].indexOf('\t')>=0;
+  function cells(l){ return useTab? l.split('\t') : parseCSVLine(l); }
+  var hdr=cells(lines[0]).map(function(h){return (h||'').trim().toLowerCase();});
+  function col(re){ for(var i=0;i<hdr.length;i++){ if(re.test(hdr[i])) return i; } return -1; }
+  var iName=col(/name|card|item|descrip/), iQty=col(/qty|quantity|count|^#$/), iCost=col(/cost|paid|basis|buy/), iVal=col(/value|market|worth|current|^price|sell/), iGr=col(/grade|cond/), iSec=col(/section|type|categ/);
+  if(iName<0) return null;
+  var out=[];
+  for(var r=1;r<lines.length;r++){ var c=cells(lines[r]); var nm=(c[iName]||'').trim(); if(!nm)continue;
+    var qty=iQty>=0?pnum(c[iQty]):null; qty=(qty&&qty>0)?qty:1;
+    var cost=iCost>=0?pnum(c[iCost]):null; cost=cost||0;
+    var val=iVal>=0?pnum(c[iVal]):null;
+    var grade=iGr>=0?(c[iGr]||'').trim():'';
+    var section=iSec>=0?(c[iSec]||'').trim().toLowerCase():'';
+    if(!section) section=/seal|box|etb|pack|booster|tin|bundle|case/i.test(nm)?'sealed':'singles';
+    out.push({ name:nm, grade:grade||'Raw', section:section, qty:qty, cost:cost, value:val, pnl:(val!=null)?val-cost:null, pnlPct:(val!=null&&cost>0)?(val-cost)/cost:null, signal:null, perDay:null, valueSource:'manual', tcgId:null }); }
+  return out.length?out:null;
+}
 function importCards(text, msgEl){
+  text=(text||'').trim();
+  if(text && text.charAt(0)!=='{' && text.charAt(0)!=='['){   // not JSON -> treat as an Excel/CSV paste (adds to existing)
+    var sheet=parseCardSheet(text);
+    if(!sheet){ if(msgEl)msgEl.textContent="Couldn't read that. Paste from Excel with a header row (Name, Qty, Cost, Value — optional Grade, Section), or load your pipeline's inventory_summary.json."; return false; }
+    CARDS=(CARDS||[]).concat(sheet); clearSampleFlag(); save(); computeCards(); maybeSnapshot(); renderAll();
+    if(msgEl) msgEl.innerHTML="Added <b>"+sheet.length+"</b> card(s) from your sheet — total now <b>"+CARDS.length+"</b>. (Cost/Value read as line totals; P/L computed.)";
+    return true;
+  }
   let data; try{ data=JSON.parse(text); }catch(e){ if(msgEl)msgEl.textContent="Not valid JSON: "+e.message; return false; }
   const out=[]; let meta=null;
   if(data && Array.isArray(data.holdings)){              // inventory_summary.json (preferred — pre-valued)
