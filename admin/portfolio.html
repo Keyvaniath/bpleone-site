@@ -919,6 +919,12 @@ function renderData(){
       <div class="inline" style="margin-top:8px"><button id="parseCards" class="primary">Parse &amp; import cards</button>
         <button class="danger" id="clearCards">Remove cards</button></div>
       <div id="cardMsg" class="mut" style="margin-top:8px"></div></div>`;
+  html+=`<div class="panel"><h3>Your cards <span class="pill">edit — no files</span></h3>
+    <div class="hint">Add, change, or remove cards right here, like your holdings — no JSON, no Excel. <b>Cost</b> &amp; <b>Value</b> are line totals; P/L is computed for you.${CARDS&&CARDS.length?` <b>${CARDS.length}</b> card line(s).`:` No cards yet — click <b>+ Add card</b>, or import a file above.`}</div>
+    <div class="scroll"><table class="tight"><thead><tr><th style="text-align:left">Name</th><th>Qty</th><th>Cost $</th><th>Value $</th><th>Grade</th><th>Section</th><th></th></tr></thead><tbody id="cardEditBody">`;
+  (CARDS||[]).forEach((c,i)=>{ html+=cardEditRow(c,i); });
+  html+=`</tbody></table></div>
+    <div class="inline" style="margin-top:10px"><button id="addCard">+ Add card</button><button class="primary" id="saveCards">Save cards</button></div></div>`;
   el.innerHTML=html;
   wireData(el);
 }
@@ -949,6 +955,35 @@ function readEditTable(el){
   });
   return out;
 }
+function cardEditRow(c,i){
+  var sec=(c.section||'singles');
+  return `<tr data-ci="${i}">
+    <td><input type="text" data-cf="name" value="${(c.name||'').replace(/"/g,'&quot;')}" style="width:210px"></td>
+    <td><input type="number" class="num-in" data-cf="qty" value="${c.qty??1}" step="1" style="width:55px"></td>
+    <td><input type="number" class="num-in" data-cf="cost" value="${c.cost??''}" step="any" style="width:85px"></td>
+    <td><input type="number" class="num-in" data-cf="value" value="${c.value??''}" step="any" style="width:85px"></td>
+    <td><input type="text" data-cf="grade" value="${(c.grade||'').replace(/"/g,'&quot;')}" style="width:80px"></td>
+    <td><select data-cf="section"><option value="singles"${sec==='singles'?' selected':''}>singles</option><option value="sealed"${sec==='sealed'?' selected':''}>sealed</option></select></td>
+    <td class="row-actions"><button class="danger" data-carddel="${i}">✕</button></td></tr>`;
+}
+function readCardTable(el){
+  const out=[];
+  el.querySelectorAll("#cardEditBody tr").forEach(tr=>{
+    const idx=tr.dataset.ci!=null?+tr.dataset.ci:-1;
+    const o=(idx>=0&&CARDS[idx])?Object.assign({},CARDS[idx]):{};
+    tr.querySelectorAll("input,select").forEach(inp=>{ const f=inp.dataset.cf; let v=inp.value;
+      if(["qty","cost","value"].includes(f)){ v=v===""?null:parseFloat(v); }
+      o[f]=v; });
+    if(o.name && (""+o.name).trim()){
+      o.qty=(o.qty&&o.qty>0)?o.qty:1; o.cost=o.cost||0;
+      o.pnl=(o.value!=null)?o.value-o.cost:null;
+      o.pnlPct=(o.value!=null&&o.cost>0)?(o.value-o.cost)/o.cost:null;
+      if(!o.valueSource)o.valueSource='manual';
+      out.push(o);
+    }
+  });
+  return out;
+}
 function wireData(el){
   el.querySelectorAll("button[data-del]").forEach(b=>b.onclick=()=>{ HOLDINGS.splice(+b.dataset.del,1); renderData(); });
   el.querySelector("#addRow").onclick=()=>{ HOLDINGS=readEditTable(el); HOLDINGS.push({ticker:"",shares:null,avgCost:null,sector:"",thesis:""}); renderData(); };
@@ -970,6 +1005,9 @@ function wireData(el){
   const cf=el.querySelector("#cardFile"); if(cf) cf.onchange=e=>{ const f=e.target.files[0]; if(!f)return; const rd=new FileReader(); rd.onload=()=>{ el.querySelector("#cardPaste").value=rd.result; }; rd.readAsText(f); };
   const pc=el.querySelector("#parseCards"); if(pc) pc.onclick=()=>{ importCards(el.querySelector("#cardPaste").value, el.querySelector("#cardMsg")); };
   const cc=el.querySelector("#clearCards"); if(cc) cc.onclick=()=>{ if(confirm("Remove all imported cards?")){ CARDS=[]; CARDMETA=null; save(); computeCards(); renderAll(); } };
+  el.querySelectorAll("button[data-carddel]").forEach(b=>b.onclick=()=>{ CARDS.splice(+b.dataset.carddel,1); save(); computeCards(); renderData(); });
+  var addC=el.querySelector("#addCard"); if(addC) addC.onclick=()=>{ CARDS=readCardTable(el); CARDS.push({name:"",qty:1,cost:null,value:null,grade:"",section:"singles"}); renderData(); };
+  var saveC=el.querySelector("#saveCards"); if(saveC) saveC.onclick=()=>{ CARDS=readCardTable(el); clearSampleFlag(); save(); computeCards(); renderAll(); };
   try{ renderCloudPanel(el); }catch(e){}
 }
 
