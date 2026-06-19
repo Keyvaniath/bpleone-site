@@ -26,7 +26,9 @@ const EXCLUDE_FILES = new Set([
   'HANDOFF.md', 'HANDOFF-v3.md', 'HANDOFF-pe-section-v1.md', 'README.md',
   'SUBSCRIBER_IMPORT.md', 'worker-source.js', '.test-write', '.gitignore',
   // Local-only research docs (also gitignored) — must never appear publicly.
-  'MU-VERIFIED-DATA-REFERENCE.md', 'DELL-RESEARCH-HANDOFF.md'
+  'MU-VERIFIED-DATA-REFERENCE.md', 'DELL-RESEARCH-HANDOFF.md',
+  // Private portfolio analyzer (holdings / net worth) — never list its URL in the public manifest.
+  'portfolio.html'
 ]);
 const EXCLUDE_SUFFIX = ['.broken', '.broken2', '.head', '.tail', '.tmp', '.swp', '.DS_Store'];
 
