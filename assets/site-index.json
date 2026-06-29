@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-06-29",
   "fileCount": 127,
-  "totalBytes": 8108371,
+  "totalBytes": 8110182,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -784,8 +784,8 @@
     {
       "path": "weekly-outlook-2026-06-29.html",
       "name": "weekly-outlook-2026-06-29.html",
-      "size": 41793,
-      "sizeText": "40.8 KB",
+      "size": 43604,
+      "sizeText": "42.6 KB",
       "modified": "2026-06-29",
       "ext": ".html",
       "category": "pages"
