@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Micron didn&rsquo;t fade. It ripped 16%. What we got wrong &mdash; and the contract that rewrote the thesis. &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="We called the FQ3 print priced and likely to fade. Micron ripped 16% to a record instead. The honest reckoning — what we got wrong, why the discipline still won, and the strategic customer agreements that actually rewrote the thesis and re-rate the PT from $1,100 toward $1,500." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/mu-fq3-reaction-2026-06-28.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/mu-fq3-reaction-2026-06-28.html" />
+  <meta property="og:title" content="Micron didn&rsquo;t fade. It ripped 16%. What we got wrong &mdash; and the contract that rewrote the thesis." />
+  <meta property="og:description" content="We said priced-and-likely-to-fade. It ripped 16% to a record. What we got wrong, why the scale-out still won, and the SCA collar that re-rates the thesis from $1,100 toward $1,500." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="article:published_time" content="2026-06-28" />
+  <meta property="article:author" content="Brandon Leon" />
+  <meta property="article:section" content="Single-name update" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=49" />
+
+  <style>
+    .pitch-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; font-family: var(--sans); font-size: .85rem; color: var(--muted); letter-spacing: .04em; margin: .25rem 0 1.75rem; }
+    .pitch-meta span strong { color: var(--ink-soft); font-weight: 500; margin-right: .35em; letter-spacing: .04em; }
+    .pitch-thesis { padding: 1.6rem 1.85rem; background: var(--bg-soft); border-left: 3px solid var(--accent-2); border-radius: 12px; margin: 1.25rem 0 2.75rem; font-family: var(--serif); font-size: 1.16rem; line-height: 1.6; color: var(--ink); }
+    .pitch-thesis p { margin: 0 0 1em; }
+    .pitch-thesis p:last-child { margin: 0; }
+    .pitch-thesis-label { display: block; font-family: var(--sans); font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 .65em; }
+    .pitch-section { margin: 3rem 0; padding-top: 1.75rem; border-top: 1px solid var(--rule); }
+    .pitch-section:first-of-type { border-top: 0; padding-top: 0; }
+    .pitch-section h2 { margin-top: 0; font-size: 1.55rem; }
+    .pitch-section h3 { font-size: 1.15rem; margin-top: 1.6em; }
+    .pull-quote { margin: 2rem 0; padding: 1.4rem 1.85rem; background: var(--bg-soft); border-left: 3px solid var(--accent); border-radius: 10px; font-family: var(--serif); font-style: italic; font-size: 1.18rem; line-height: 1.55; color: var(--ink); }
+    .article-chart { margin: 2rem 0; padding: 1.5rem; background: var(--bg-soft); border-left: 3px solid var(--accent); border-radius: 8px; }
+    .article-chart .chart-title { font-family: var(--sans); font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 .4rem; }
+    .article-chart .chart-headline { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--ink); margin: 0 0 1.2rem; line-height: 1.4; }
+    .article-chart .chart-img { width: 100%; height: auto; max-width: 780px; display: block; margin: 0 auto; border-radius: 6px; background: #fff; }
+    .article-chart .chart-caption { font-family: var(--sans); font-size: .82rem; color: var(--ink-soft); margin: 1rem 0 0; line-height: 1.5; font-style: italic; }
+    table.pitch-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0 2rem; font-family: var(--sans); font-size: .9rem; }
+    table.pitch-table th { background: var(--bg-soft); color: var(--ink); font-weight: 600; letter-spacing: .04em; padding: .65rem .9rem; text-align: left; border-bottom: 2px solid var(--rule); }
+    table.pitch-table td { padding: .65rem .9rem; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+    table.pitch-table td strong { color: var(--ink); }
+    table.pitch-table tr.row-warn td { background: rgba(201,169,97,0.08); }
+    table.pitch-table tr.row-exit td { background: rgba(161,43,43,0.06); }
+    .simply-recap { margin: 1.75rem 0 0; padding: 1rem 1.25rem; background: rgba(91, 127, 107, 0.10); border-left: 3px solid #5b7f6b; border-radius: 6px; font-family: var(--sans); font-size: 0.95rem; color: var(--ink); line-height: 1.55; }
+    .simply-recap strong { color: #4a6a58; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.82rem; margin-right: .4em; }
+    .street-list { margin: 1.25rem 0; padding-left: 1.5rem; }
+    .street-list li { padding: .9rem 0; border-bottom: 1px solid var(--rule); line-height: 1.6; }
+    .street-list li:last-child { border-bottom: none; }
+    .street-list li::marker { font-weight: 700; color: var(--accent); }
+    .disclosure { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-family: var(--sans); font-size: .82rem; line-height: 1.55; color: var(--muted); font-style: italic; }
+    .pitch-cta { margin: 3rem 0 1rem; padding-top: 2rem; border-top: 1px solid var(--rule); }
+  </style>
+
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Micron didn't fade. It ripped 16%. What we got wrong — and the contract that rewrote the thesis.",
+    "description": "We called the FQ3 print priced and likely to fade. Micron ripped 16% to a record instead. What we got wrong, why the discipline still won, and the SCA collar that re-rates the PT from $1,100 toward $1,500.",
+    "url": "https://bpleon.com/mu-fq3-reaction-2026-06-28.html",
+    "mainEntityOfPage": "https://bpleon.com/mu-fq3-reaction-2026-06-28.html",
+    "image": "https://bpleon.com/assets/brand/og-image.png",
+    "author": { "@type": "Person", "name": "Brandon Leon", "url": "https://bpleon.com/about.html" },
+    "publisher": { "@type": "Person", "name": "Brandon Leon" },
+    "datePublished": "2026-06-28"
+  }
+  </script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon &mdash; Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose">
+    <article>
+
+      <header class="page-head">
+        <p class="eyebrow">Single-name update &middot; Memory &middot; FQ3 reckoning</p>
+        <h1>Micron didn&rsquo;t fade. It ripped 16%. What we got wrong &mdash; and the contract that rewrote the thesis.</h1>
+
+        <p class="pitch-meta">
+          <span><strong>Posted</strong> June 28, 2026</span>
+          <span><strong>Read time</strong> 9 min</span>
+          <span><strong>Author</strong> Brandon Leon</span>
+          <span><strong>Coverage</strong> Memory &middot; DRAM/HBM &middot; AI infrastructure</span>
+        </p>
+
+        <div class="pitch-thesis">
+          <span class="pitch-thesis-label">The reckoning</span>
+          <p>Five days ago I wrote that the in-quarter beat was priced, that the most likely outcome was a solid-but-priced print that fades, and I leaned toward not chasing. <strong>Micron printed $41.46B in revenue, an 84.9% gross margin and $25.11 in EPS &mdash; both non-GAAP &mdash; guided next quarter to $50B, and the stock ripped ~16% (a +15.7% single session) to a record $1,213.56.</strong> The fade I flagged as most likely never came. I was wrong on the direction, and the honest thing is to say so plainly before saying anything else.</p>
+          <p>Two things are also true. First, the framework still won: we had scaled out roughly 60% of the position &mdash; five 10% trims on the way up and a sixth into the print&rsquo;s spike &mdash; and held the ~40% residual behind a hard stop, so the core we kept rode the entire ~16%. Being wrong on the call and right on the position at the same time is exactly what the discipline is built to do. Second &mdash; and this is the part the headlines missed &mdash; <strong>the real story wasn&rsquo;t the quarter. It was the contract.</strong></p>
+          <p>Micron signed $100 billion of multi-year strategic customer agreements, and management said the quiet part out loud: at the contracted <em>floor</em> price, margins run <em>above the company&rsquo;s all-time peaks</em>. That structurally de-risks the down-cycle and earns Micron a higher multiple than memory has ever deserved &mdash; which is why the price target moves from $1,100 toward <strong>~$1,500</strong>. The same contracts also cap the upside, which is why I&rsquo;m not reaching for the $2,000 the Street now prints. And the stock gave back 6.7% the very next day, which tells you the easy money is already gone.</p>
+        </div>
+      </header>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 1 &mdash; The blowout, the pullback, and the re-rate</p>
+        <p class="chart-headline">~$668 to a record $1,213.56 on the print, &minus;6.7% the next day, and a price target that moves from $1,100 toward ~$1,500.</p>
+        <img loading="lazy" decoding="async" class="chart-img" src="assets/reports/mu-fq3-reaction-2026-06-28-c1-print-rerate.png" alt="MU daily closes from the ~$668 May 6 entry through the FQ3 print: a ~16% pop to a record $1,213.56 close on June 25, a 6.7% pullback to $1,132.33 on June 26, the $950-$1,200 scale-out zone where ~60% was booked, the old $1,100 price target now passed, the re-rated ~$1,500 base, and the $900 full-exit stop." />
+        <p class="chart-caption">Daily closes, May 5&ndash;June 26, 2026. From a ~$668 entry on May 6, the print took the stock to a record $1,213.56 (+15.7% on the day) on June 25, then it gave back 6.7% to $1,132.33 the next day in a broad chip selloff. We booked ~60% of the position across the $950&ndash;$1,200 scale-out zone and hold the residual behind a $900 stop. Source: closing prices via the bpleon price feed; FQ3 figures per Micron&rsquo;s 8-K.</p>
+      </figure>
+
+      <section class="pitch-section" id="what-we-got-wrong">
+        <h2>What we got wrong</h2>
+        <p>The print-eve framework had four scenarios. The modal case I leaned on, at roughly even odds, was a modest beat that the stock couldn&rsquo;t celebrate because it was priced &mdash; the Broadcom template, where a record quarter sells off because the good news is already owned. The low-probability tail was a blowout that breaks higher.</p>
+        <p>The tail didn&rsquo;t just hit; the print sailed past even my upside scenario. Revenue of $41.46B cleared the $36&ndash;38B I had pencilled for the bull case, and the FQ4 guide of $50B demolished the $42B-and-up bar that would have counted as a blowout. The beat was so far beyond consensus &mdash; about $6B over the Street on revenue, ~$5 over on EPS &mdash; that the in-price bar simply did not matter. There was no fade to be had on a number that large.</p>
+        <p>I&rsquo;ll name the error precisely: I correctly identified that the stock was priced for a strong print, and I incorrectly assumed a strong print was the ceiling. Management had told us for two quarters they sandbag; I modeled the sandbag and still underestimated it. That is the second time this cycle the company&rsquo;s conservatism has been larger than my adjustment for it. Lesson logged.</p>
+        <div class="simply-recap">
+          <strong>Simply:</strong> We said a good-but-priced quarter would probably fade. Instead Micron crushed it so completely &mdash; revenue and next-quarter guidance billions above what anyone modeled &mdash; that there was nothing left to fade. Our forecast was wrong, full stop.
+        </div>
+      </section>
+
+      <section class="pitch-section" id="framework-won">
+        <h2>Why the discipline still won</h2>
+        <p>Here is the part that matters more than the call. Going into the print we had already booked roughly 50% in five 10% trims on the way up &mdash; $950, $1,000, $1,100, $1,150 and $1,200 &mdash; selling into strength; we trimmed a sixth 10% into the print&rsquo;s spike, taking the booked total to ~60%, and held the ~40% residual behind a single hard line: a close below $900 and we are fully out. We did not buy options into the print (the implied move was already rich and the vol crush punishing), and we did not sell covered calls (which would have capped exactly the rip that came).</p>
+        <p>So when the stock gapped ~16%, the residual rode with it. We captured the upside on the ~40% we kept while having de-risked the ~60% we had already booked &mdash; the textbook outcome of a framework designed to win whichever way the print lands. The point of the scale-out was never to predict the number. It was to make the prediction not matter.</p>
+        <div class="pull-quote">Being wrong on the call and right on the position at the same time is not luck. It is what pre-committed discipline is for &mdash; it turns &ldquo;I don&rsquo;t know what prints&rdquo; into &ldquo;I win either way.&rdquo;</div>
+        <div class="simply-recap">
+          <strong>Simply:</strong> We had already sold ~60% into the run-up and kept the rest with a stop under it. So even though our forecast was wrong, the money was positioned right &mdash; the part we held caught the full ~16%, and the part we sold was booked at good prices.
+        </div>
+      </section>
+
+      <section class="pitch-section" id="the-contract">
+        <h2>The real story: the contract, not the quarter</h2>
+        <p>Everyone covered the blowout. Almost no one led with the thing that actually changed the company. On the call, Micron detailed <strong>16 strategic customer agreements totaling roughly $100 billion of contracted revenue</strong>, backed by about <strong>$22 billion of customer cash already on deposit</strong>, covering ~20% of DRAM and a third of NAND volume. These are take-or-pay: binding volume commitments, prepaid. Separately &mdash; and this is the figure that drives the collar below &mdash; management said roughly <strong>40% of revenue</strong> now carries fixed prices or price ceilings near current levels.</p>
+        <p>The structure is the story. From the call, verbatim: the largest agreements carry <em>&ldquo;a ceiling price for existing products at the current CQ2 market price and a floor price through the term.&rdquo;</em> Then the line that re-rates the multiple: <em>&ldquo;At the floor price, our profitability levels are higher than peak margins at any time in the past.&rdquo;</em></p>
+        <p>Read that again. Even in a downturn, on the contracted ~40% of revenue, Micron now earns <em>more than it ever did at any prior cycle peak</em>. The boom-bust amplitude that always capped memory&rsquo;s multiple has been partially contracted away. That is a genuine structural change, not a cyclical high &mdash; and it is the real reason a memory company can carry a higher multiple than memory companies historically have.</p>
+        <p>But a collar has two sides. The same ceilings mean that on that ~40% of revenue, Micron <em>cannot fully reprice</em> if 2027 gets tighter &mdash; while the unhedged peers, SK Hynix and Samsung, keep the full shortage torque. So the contracts raise the floor and cap the ceiling at once. Micron has traded some of its upside for a great deal of its downside. For a position we are now mostly holding as a lower-risk runner, that is a trade I&rsquo;ll take.</p>
+        <div class="simply-recap">
+          <strong>Simply:</strong> The bigger news than the quarter was the contracts. Micron locked in $100B of multi-year demand at prices that &mdash; even at the worst-case floor &mdash; earn better margins than its best year ever. That makes it far less of a boom-bust stock. The catch: those same contracts cap how high it can go if memory keeps getting scarcer.
+        </div>
+      </section>
+
+      <section class="pitch-section" id="the-rerate">
+        <h2>The re-rate: $1,100 toward ~$1,500</h2>
+        <p>Our $1,100 target was built on roughly $100 of FY27 EPS at an ~11&times; recovery multiple. The print broke both inputs. The $50B revenue guide at ~86% gross margin implies roughly <strong>$31</strong> of FQ4 EPS &mdash; which puts FY26 EPS around <strong>$73</strong> ($4.78 + $12.20 + $25.11 + the implied ~$31), and annualizes the FQ4 exit rate to roughly <strong>$124</strong> ($31 &times; 4). FY27 EPS in the <strong>$120&ndash;130</strong> range is now the reasonable base, not the bull case.</p>
+        <p>The multiple has to move too, and the collar is the reason it legitimately can. A company whose downside margins exceed its old peak margins is not an 11&times; trough-cyclical &mdash; 12&ndash;13&times; is defensible for the first time. That math &mdash; ~$120 &times; ~12.5&times; &mdash; puts the base case at roughly <strong>$1,500</strong>. The verified floor argues it could reach <strong>$1,600</strong>; the verified ceiling is why I will <em>not</em> chase the <strong>$2,000</strong> the Street&rsquo;s high marks now print, because that torque belongs to the unhedged peers, not to Micron specifically.</p>
+        <p>The change gets a story, because every change should. The trigger is the FQ3 blowout, the $50B guide, and the $100B contract backlog; the old number was too low on earnings power <em>and</em> on the multiple. New base: ~$1,500, up from $1,100. I&rsquo;ll formalize the year-by-year model before treating that as a hard number.</p>
+        <table class="pitch-table">
+          <thead><tr><th>Input</th><th>Old ($1,100 PT)</th><th>New (post-print)</th></tr></thead>
+          <tbody>
+            <tr><td>FY27 EPS</td><td>~$100</td><td><strong>~$120&ndash;130</strong></td></tr>
+            <tr><td>Multiple</td><td>~11&times; (trough-recovery)</td><td><strong>~12.5&times;</strong> (floor &gt; prior peak = de-risked)</td></tr>
+            <tr class="row-warn"><td>Base PT</td><td>$1,100</td><td><strong>~$1,500</strong> (floor argues $1,600)</td></tr>
+            <tr><td>Bull PT</td><td>$1,500</td><td>~$2,000 &mdash; <em>but capped on MU by the ceilings</em></td></tr>
+            <tr class="row-exit"><td>Bear PT</td><td>$280</td><td>~$900 (cycle rolls despite the contracts)</td></tr>
+          </tbody>
+        </table>
+        <div class="simply-recap">
+          <strong>Simply:</strong> Earnings power roughly doubled what our old target assumed, and the contracts make the business safer, so the fair multiple rises too. That moves our price target from $1,100 toward about $1,500. We won&rsquo;t reach for the $2,000 some banks now use, because Micron&rsquo;s own contracts cap its upside.
+        </div>
+      </section>
+
+      <section class="pitch-section" id="street-missing">
+        <h2>Three things the Street is underweighting</h2>
+        <p>The post-print sell-side is a wall of upgrades to $1,500&ndash;$2,000. But read who&rsquo;s writing: the loudest bulls are long the stock and won&rsquo;t trim; the most rigorous analysts are the cautious ones, and at least one prior Strong-Buy was downgraded to Sell into the rip. Three points the consensus is glossing over.</p>
+        <ol class="street-list">
+          <li><strong>The SCAs are a collar, not a one-way de-risk.</strong> The same contracts that lift the floor cap ~40% of revenue at today&rsquo;s prices. If 2027 tightens further, Micron can&rsquo;t fully capture it &mdash; the unhedged peers can. The $2,000 targets price the de-risk and ignore the cap.</li>
+          <li><strong>Commodity DRAM led the blowout, not just HBM.</strong> DRAM ASPs rose roughly 60% on modest bit growth &mdash; the quarter was a <em>pricing</em> event as much as an AI-mix event. Conventional DRAM pricing is the most cyclical line in the model, and it will mean-revert. Some of this margin is structural; some is simply the top of a price spike.</li>
+          <li><strong>The cycle still ends &mdash; just later and softer than the bears claim.</strong> Management sees tightness persisting beyond 2027 and only gradual supply improvement in 2028, with &ldquo;no line of sight&rdquo; to a catch-up. That is more durable than a hard 2028 cliff &mdash; but greenfield fabs do arrive, and FY2028+ is the window where the contracts roll and the cyclicality returns. This is a stock to own with an exit calendar, not forever.</li>
+        </ol>
+        <div class="simply-recap">
+          <strong>Simply:</strong> Wall Street rushed to $1,500&ndash;$2,000, but three things are underweighted: the contracts cap upside as well as protect downside; a big chunk of the beat was ordinary DRAM pricing that will fall back; and the cycle still ends &mdash; later than the bears say, but it ends. Own it with a plan to leave, not a wedding ring.
+        </div>
+      </section>
+
+      <section class="pitch-section" id="the-pullback">
+        <h2>The 6.7% pullback the next day</h2>
+        <p>The stock printed its record on June 25 and fell 6.7% on June 26 in a broad chip selloff &mdash; AI-efficiency jitters and power-market worries, nothing Micron-specific. This was not my fade arriving a day late; that call was wrong, and a market-wide risk-off session is not a vindication of it. What the pullback does mark is the change in regime: at $1,200, a great deal is already in the price. Micron is no longer the one-way melt-up it was from ~$668; it is a two-way stock that has to be fed by an income statement, and it now sits roughly 70% above where the contrarian trade began.</p>
+        <p>The easy money &mdash; the gap between estimates and price that we caught in May &mdash; is gone. From $1,132 this is no longer a variant-view bet. It is the more ordinary job of riding a validated cycle with a stop under it and a known window for the exit.</p>
+        <div class="simply-recap">
+          <strong>Simply:</strong> The record close lasted one day before a 6.7% drop. Nothing was wrong with Micron &mdash; the whole chip sector pulled back &mdash; but it confirms the stock now trades both ways. The big, easy gains are behind us; from here it&rsquo;s a steadier ride with a safety net.
+        </div>
+      </section>
+
+      <section class="pitch-section" id="position-next">
+        <h2>The position, and what&rsquo;s next</h2>
+        <p>We are mostly out by design &mdash; roughly 60% booked across the run-up &mdash; and we hold the ~40% residual. At $1,132 the math from here is asymmetric but no longer lopsided: roughly +30% to the ~$1,500 base and more to the capped bull, against ~&minus;20% to the $900 stop if the cycle rolls. That is a hold, not an add &mdash; owned with an eye to the FY2028+ window where the contracts roll and the cyclicality returns.</p>
+        <table class="pitch-table">
+          <thead><tr><th>Item</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>As of</td><td>June 26, 2026 close (post-print)</td></tr>
+            <tr><td>Rating</td><td><strong>BUY (with trim discipline)</strong></td></tr>
+            <tr><td>Last price</td><td>$1,132.33 (Jun 26 close)</td></tr>
+            <tr><td>Record close</td><td>$1,213.56 (Jun 25, +15.7% on the print)</td></tr>
+            <tr><td>Base PT</td><td><strong>~$1,500</strong> (up from $1,100; floor argues $1,600)</td></tr>
+            <tr><td>Bull / Bear PT</td><td>~$2,000 (capped on MU) / ~$900 (cycle rolls)</td></tr>
+            <tr><td>Position</td><td>~60% booked via a $950&ndash;$1,200 scale-out; hold the ~40% residual</td></tr>
+            <tr><td>Stop</td><td>Full exit of the residual on a close at $900</td></tr>
+            <tr class="row-warn"><td>Next trim</td><td>Re-arm only ~$1,400&ndash;1,500+; don&rsquo;t sell a validated winner here</td></tr>
+            <tr><td>FQ3 print</td><td>$41.46B rev / 84.9% GM / $25.11 EPS (non-GAAP); FQ4 guide $50B / ~86% / $31</td></tr>
+            <tr><td>Exit calendar</td><td>FY2028+ &mdash; gradual supply, contracts roll, cyclicality returns</td></tr>
+            <tr class="row-exit"><td>Kill-shots</td><td>HBM ASP softness; SCA price terms below spot; a hyperscaler capex cut at the late-July prints</td></tr>
+          </tbody>
+        </table>
+        <p>The next real test isn&rsquo;t Micron&rsquo;s &mdash; it&rsquo;s the hyperscaler capital-expenditure prints in late July. The $100B of contracts is the supply side proving demand is real; the capex prints are the demand side confirming it keeps coming. That is the read that matters for the whole AI-infrastructure complex, and the one I&rsquo;d wait for before deploying fresh capital anywhere in it.</p>
+        <div class="pull-quote">In May the trade was being right when no one was. The quarter that just printed was being honest when we were wrong. From here, it&rsquo;s the least glamorous job of all: hold a winner, respect the stop, and watch the calendar.</div>
+        <div class="simply-recap">
+          <strong>Simply:</strong> We hold the rest, with a stop at $900 and no plans to trim again until ~$1,400&ndash;1,500. We won&rsquo;t add up here. The thing to watch next isn&rsquo;t Micron &mdash; it&rsquo;s whether the big cloud companies confirm the spending in late July, which is what really powers the whole trade.
+        </div>
+      </section>
+
+      <p class="disclosure">
+        Disclosure: I/we have a beneficial long position in the shares of MU through stock ownership. The position has been reduced by roughly 60% through a disciplined scale-out into the June rally, as described above; a residual is retained behind a stop. I wrote this article myself, and it expresses my own opinions. I am not receiving compensation for it. I have no business relationship with any company whose stock is mentioned. This is research and analysis only, not personalized financial advice. This commentary is for informational and educational purposes only and does not constitute investment, tax, or legal advice or a solicitation to buy or sell any security. Past performance is not indicative of future results. Readers should conduct their own research and consult a qualified financial professional before making investment decisions. Sources include Micron&rsquo;s FQ3 2026 8-K and earnings-call transcript, sell-side notes via Benzinga/Bloomberg/firm disclosures, TrendForce/Counterpoint memory data, and the bpleon price feed. See <a href="disclaimer.html">disclaimer</a>.
+      </p>
+
+      <div class="pitch-cta">
+        <a class="btn" href="https://bpleon.substack.com/subscribe" target="_blank" rel="noopener">Get the next note by email &rarr;</a>
+        &nbsp;
+        <a class="btn btn-ghost" href="writing.html">All writing</a>
+      </div>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleone/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=49" defer></script>
+</body>
+</html>
