@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-07-02",
   "fileCount": 136,
-  "totalBytes": 8413998,
+  "totalBytes": 8416017,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,9 +28,9 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 30274,
-      "sizeText": "29.6 KB",
-      "modified": "2026-06-29",
+      "size": 31891,
+      "sizeText": "31.1 KB",
+      "modified": "2026-07-02",
       "ext": ".json",
       "category": "assets"
     },
@@ -442,8 +442,8 @@
     {
       "path": "dell-initiation-2026-06-09.html",
       "name": "dell-initiation-2026-06-09.html",
-      "size": 67420,
-      "sizeText": "65.8 KB",
+      "size": 67435,
+      "sizeText": "65.9 KB",
       "modified": "2026-07-02",
       "ext": ".html",
       "category": "pages"
@@ -1090,9 +1090,9 @@
     {
       "path": "feed.xml",
       "name": "feed.xml",
-      "size": 8683,
-      "sizeText": "8.5 KB",
-      "modified": "2026-06-29",
+      "size": 9217,
+      "sizeText": "9.0 KB",
+      "modified": "2026-07-02",
       "ext": ".xml",
       "category": "site-meta"
     },
@@ -1108,8 +1108,8 @@
     {
       "path": "sitemap.xml",
       "name": "sitemap.xml",
-      "size": 8542,
-      "sizeText": "8.3 KB",
+      "size": 8395,
+      "sizeText": "8.2 KB",
       "modified": "2026-07-02",
       "ext": ".xml",
       "category": "site-meta"
