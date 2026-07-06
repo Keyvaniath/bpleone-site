@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-07-06",
   "fileCount": 141,
-  "totalBytes": 8761045,
+  "totalBytes": 8763644,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,9 +28,9 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 31891,
-      "sizeText": "31.1 KB",
-      "modified": "2026-07-02",
+      "size": 33160,
+      "sizeText": "32.4 KB",
+      "modified": "2026-07-06",
       "ext": ".json",
       "category": "assets"
     },
@@ -757,8 +757,8 @@
     {
       "path": "spacex-initiation-2026-06-16.html",
       "name": "spacex-initiation-2026-06-16.html",
-      "size": 30706,
-      "sizeText": "30.0 KB",
+      "size": 31038,
+      "sizeText": "30.3 KB",
       "modified": "2026-07-06",
       "ext": ".html",
       "category": "pages"
@@ -1135,9 +1135,9 @@
     {
       "path": "feed.xml",
       "name": "feed.xml",
-      "size": 9217,
-      "sizeText": "9.0 KB",
-      "modified": "2026-07-02",
+      "size": 10346,
+      "sizeText": "10.1 KB",
+      "modified": "2026-07-06",
       "ext": ".xml",
       "category": "site-meta"
     },
@@ -1153,8 +1153,8 @@
     {
       "path": "sitemap.xml",
       "name": "sitemap.xml",
-      "size": 8884,
-      "sizeText": "8.7 KB",
+      "size": 8753,
+      "sizeText": "8.5 KB",
       "modified": "2026-07-06",
       "ext": ".xml",
       "category": "site-meta"
