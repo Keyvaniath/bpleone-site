@@ -97,8 +97,20 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://bpleon.com/mu-unwind-2026-07-02.html</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://bpleon.com/projects.html</loc>
     <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://bpleon.com/spacex-initiation-2026-06-16.html</loc>
+    <lastmod>2026-06-16</lastmod>
+    <changefreq>never</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
