@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-07-06",
   "fileCount": 141,
-  "totalBytes": 8763646,
+  "totalBytes": 8763660,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -757,7 +757,7 @@
     {
       "path": "spacex-initiation-2026-06-16.html",
       "name": "spacex-initiation-2026-06-16.html",
-      "size": 31038,
+      "size": 31052,
       "sizeText": "30.3 KB",
       "modified": "2026-07-06",
       "ext": ".html",
