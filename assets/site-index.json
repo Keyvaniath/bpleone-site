@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-07-06",
   "fileCount": 141,
-  "totalBytes": 8763660,
+  "totalBytes": 8764089,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -757,8 +757,8 @@
     {
       "path": "spacex-initiation-2026-06-16.html",
       "name": "spacex-initiation-2026-06-16.html",
-      "size": 31052,
-      "sizeText": "30.3 KB",
+      "size": 31169,
+      "sizeText": "30.4 KB",
       "modified": "2026-07-06",
       "ext": ".html",
       "category": "pages"
@@ -1153,8 +1153,8 @@
     {
       "path": "sitemap.xml",
       "name": "sitemap.xml",
-      "size": 8753,
-      "sizeText": "8.5 KB",
+      "size": 9065,
+      "sizeText": "8.9 KB",
       "modified": "2026-07-06",
       "ext": ".xml",
       "category": "site-meta"
