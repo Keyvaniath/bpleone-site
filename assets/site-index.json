@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-07-08",
   "fileCount": 146,
-  "totalBytes": 9888155,
+  "totalBytes": 9890206,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,9 +28,9 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 33571,
-      "sizeText": "32.8 KB",
-      "modified": "2026-07-06",
+      "size": 34629,
+      "sizeText": "33.8 KB",
+      "modified": "2026-07-08",
       "ext": ".json",
       "category": "assets"
     },
@@ -550,8 +550,8 @@
     {
       "path": "mu-reckoning-2026-07-08.html",
       "name": "mu-reckoning-2026-07-08.html",
-      "size": 34309,
-      "sizeText": "33.5 KB",
+      "size": 34373,
+      "sizeText": "33.6 KB",
       "modified": "2026-07-08",
       "ext": ".html",
       "category": "pages"
@@ -1036,8 +1036,8 @@
     {
       "path": "assets/reports/mu-reckoning-2026-07-08-c2-bifurcation.png",
       "name": "mu-reckoning-2026-07-08-c2-bifurcation.png",
-      "size": 113527,
-      "sizeText": "110.9 KB",
+      "size": 113711,
+      "sizeText": "111.0 KB",
       "modified": "2026-07-08",
       "ext": ".png",
       "category": "reports"
@@ -1180,9 +1180,9 @@
     {
       "path": "feed.xml",
       "name": "feed.xml",
-      "size": 11477,
-      "sizeText": "11.2 KB",
-      "modified": "2026-07-06",
+      "size": 12044,
+      "sizeText": "11.8 KB",
+      "modified": "2026-07-08",
       "ext": ".xml",
       "category": "site-meta"
     },
@@ -1198,9 +1198,9 @@
     {
       "path": "sitemap.xml",
       "name": "sitemap.xml",
-      "size": 8960,
-      "sizeText": "8.8 KB",
-      "modified": "2026-07-06",
+      "size": 9138,
+      "sizeText": "8.9 KB",
+      "modified": "2026-07-08",
       "ext": ".xml",
       "category": "site-meta"
     },
