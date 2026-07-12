@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Track record &mdash; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="Every equity-research call, graded in public &mdash; wins and misses. Micron, SpaceX, Dell, and the macro calls, each linked to the note that made it and the grade it earned." />
+  <link rel="canonical" href="https://bpleon.com/track-record.html" />
+  <link rel="alternate" type="application/rss+xml" title="Brandon Leon &mdash; Writing" href="feed.xml" />
+  <meta property="og:title" content="Track record — Brandon Leon" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bpleon.com/track-record.html" />
+  <meta property="og:description" content="Every call, graded in public — the wins, a working contrarian call, a losing call, and an owned miss. Each links to the note that made it and the grade it earned." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=49" />
+  <style>
+    .tr-section-head { margin: 2.75rem 0 .5rem; padding-bottom: .55rem; border-bottom: 2px solid var(--ink); font-family: var(--sans); font-size: .85rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+    .tr-section-note { margin: 0 0 1rem; color: var(--muted); font-family: var(--sans); font-size: .85rem; }
+
+    .tr-card { padding: 1.75rem 0; border-bottom: 1px solid var(--rule); }
+    .tr-card:last-of-type { border-bottom: none; }
+    .tr-card-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem .75rem; margin-bottom: .35rem; }
+    .tr-card-head h3 { margin: 0; font-family: var(--serif); font-size: 1.4rem; line-height: 1.15; }
+    .tr-sub { color: var(--muted); font-family: var(--sans); font-size: .82rem; font-weight: 500; letter-spacing: .03em; text-transform: uppercase; }
+
+    .tr-verdict { margin-left: auto; font-family: var(--sans); font-size: .68rem; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: .22rem .62rem; border-radius: 999px; white-space: nowrap; }
+    .tr-verdict.win     { background: rgba(26,115,74,.12);  color: #1a734a; }
+    .tr-verdict.working { background: rgba(26,115,74,.12);  color: #1a734a; }
+    .tr-verdict.miss    { background: rgba(166,58,42,.12);   color: #a63a2a; }
+    .tr-verdict.mixed   { background: var(--bg-soft); color: var(--ink-soft); border: 1px solid var(--rule); }
+
+    .tr-meta { display: grid; grid-template-columns: max-content 1fr; gap: .35rem 1.1rem; margin: .65rem 0 .75rem; font-family: var(--sans); font-size: .92rem; }
+    .tr-meta dt { color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-size: .68rem; font-weight: 600; padding-top: .22rem; }
+    .tr-meta dd { margin: 0; color: var(--ink); }
+    .tr-card > p { margin: .5rem 0 .75rem; color: var(--ink-soft); }
+    .tr-links { font-family: var(--sans); font-size: .9rem; }
+    .tr-links a { color: var(--ink-soft); }
+    .tr-links a + a { margin-left: 1.1rem; }
+
+    .tr-how { margin: 3rem 0 2rem; padding: 1.75rem 2rem; background: var(--bg-soft); border-radius: 12px; border-left: 3px solid var(--accent-2); }
+    .tr-how h2 { margin-top: 0; font-family: var(--serif); font-size: 1.25rem; }
+    .tr-how p { margin: 0; color: var(--ink-soft); }
+    .tr-asof { margin: 2rem 0 1.25rem; color: var(--muted); font-family: var(--sans); font-size: .85rem; }
+    .tr-cta { margin: 1.5rem 0 1rem; }
+
+    @media (max-width: 540px) {
+      .tr-verdict { margin-left: 0; }
+      .tr-meta { grid-template-columns: 1fr; gap: .1rem .5rem; }
+      .tr-meta dt { padding-top: .4rem; }
+    }
+  </style>
+  <!-- Cloudflare Web Analytics -->
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+<a class="skip-link" href="#main">Skip to content</a>
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main id="main" class="prose wide">
+    <header class="page-head">
+      <p class="eyebrow">Track record</p>
+      <h1>Every call, graded in public.</h1>
+      <p class="lede">
+        A research brand is worth exactly what its calibration is &mdash;
+        and calibration you can&rsquo;t check is just marketing. So here is
+        the ledger: open positions and public calls, the wins and the
+        misses, each linked to the note that made it and the grade it
+        earned. Where I was wrong, the note said so first, and this page
+        keeps the receipt.
+      </p>
+    </header>
+
+    <h2 class="tr-section-head">Open positions</h2>
+    <p class="tr-section-note">Single-name coverage, marked to the live tape. Each links to the full note.</p>
+
+    <article id="mu" class="tr-card">
+      <div class="tr-card-head">
+        <h3>Micron Technology</h3>
+        <span class="tr-sub">MU &middot; Memory / semis</span>
+        <span class="tr-verdict win">Position +47% &middot; calls owned</span>
+      </div>
+      <dl class="tr-meta">
+        <dt>The call</dt>
+        <dd>Opened ~$668 (May 6). Rated BUY, then HOLD. Base target walked $1,500 &rarr; $1,300 &rarr; $1,100 across three public cuts, each narrated. Hard $900 close-stop.</dd>
+        <dt>The mark</dt>
+        <dd>$979 &mdash; ~+47% from entry, with ~60% of the position booked into a $950&ndash;$1,200 scale-out and the runner held above the $900 stop.</dd>
+      </dl>
+      <p>
+        The position is the win; the calls inside it are the honesty. I said the
+        FQ3 print was priced and would fade &mdash; it ripped ~16% to a record
+        $1,213.56 instead, and the note opened with &ldquo;I was wrong on the
+        direction, full stop.&rdquo; Then I cut the bull target three times as the
+        SK hynix listing and added industry capacity broke Micron&rsquo;s scarcity
+        premium &mdash; a multiple cut, not an earnings cut, argued each time.
+        Right on the position, repeatedly humbled on the calls.
+      </p>
+      <p class="tr-links">
+        <a href="mu-fq3-reaction-2026-06-28.html">The miss I owned &rarr;</a>
+        <a href="mu-reckoning-2026-07-08.html">Latest re-underwrite &rarr;</a>
+      </p>
+    </article>
+
+    <article id="spcx" class="tr-card">
+      <div class="tr-card-head">
+        <h3>SpaceX</h3>
+        <span class="tr-sub">SPCX &middot; Space / conglomerate</span>
+        <span class="tr-verdict working">Thesis playing out</span>
+      </div>
+      <dl class="tr-meta">
+        <dt>The call</dt>
+        <dd>Initiated HOLD (Jul 5) &mdash; fair value ~$115, 12-month target $135. &ldquo;Sell the premium, buy under $120.&rdquo; No position.</dd>
+        <dt>The mark</dt>
+        <dd>~$145 &mdash; down from the ~$214 draft-date high we refused to chase, closing the distance to our $135 target.</dd>
+      </dl>
+      <p>
+        We initiated the Street&rsquo;s only rating below the stock &mdash; seven
+        bank targets ($205&ndash;$300) sat above it. The melt-up has since
+        round-tripped ~32% from ~$214 toward our fair value, exactly as the note
+        argued it would. It isn&rsquo;t closed, and the supply cliff &mdash;
+        lock-ups releasing through December &mdash; is still ahead. But the
+        contrarian call is working.
+      </p>
+      <p class="tr-links">
+        <a href="spacex-initiation-2026-06-16.html">The initiation &rarr;</a>
+      </p>
+    </article>
+
+    <article id="dell" class="tr-card">
+      <div class="tr-card-head">
+        <h3>Dell Technologies</h3>
+        <span class="tr-sub">DELL &middot; AI servers / hardware</span>
+        <span class="tr-verdict miss">Not working yet</span>
+      </div>
+      <dl class="tr-meta">
+        <dt>The call</dt>
+        <dd>Initiated HOLD (Jul 2) &mdash; probability-weighted reference ~$340, accumulate lower on a $320 / $285 / $250 ladder, off a $371 anchor. No position.</dd>
+        <dt>The mark</dt>
+        <dd>$435 &mdash; ~+17% above the anchor, above a ladder it never triggered, trading toward the $484 Street target we&rsquo;d called the bull case.</dd>
+      </dl>
+      <p>
+        Wrong so far, and I&rsquo;ll say it as plainly as I&rsquo;d say a win. The
+        call was patience &mdash; wait for weakness to accumulate into. Instead
+        Dell ran to the upside on exactly the AI-server durability the note argued
+        the market hadn&rsquo;t yet proven. The ladder still stands and the
+        memory-cost kill-shot is still live, but the entry thesis hasn&rsquo;t
+        paid. This is the one in red.
+      </p>
+      <p class="tr-links">
+        <a href="dell-initiation-2026-06-09.html">The initiation &rarr;</a>
+      </p>
+    </article>
+
+    <h2 class="tr-section-head">Called in public, graded in public</h2>
+    <p class="tr-section-note">The macro calls, scored in my own words &mdash; including the ones that died.</p>
+
+    <article id="fomc-june" class="tr-card">
+      <div class="tr-card-head">
+        <h3>June FOMC &mdash; Warsh&rsquo;s debut</h3>
+        <span class="tr-sub">Macro &middot; Rates</span>
+        <span class="tr-verdict miss">Miss, owned in full</span>
+      </div>
+      <dl class="tr-meta">
+        <dt>The call</dt>
+        <dd>Pre-meeting: Warsh underwhelms the hawks, the surprise skews dovish-of-fear, the rally holds.</dd>
+        <dt>What happened</dt>
+        <dd>Wrong. He out-hawked the tape &mdash; the 2-year ripped 16bp to 4.216% (the exact 15bp-plus falsifier I&rsquo;d named pre-call), the dots flipped to a 2026 hike, the S&amp;P fell to 7,420.</dd>
+      </dl>
+      <p>
+        Killed by my own rule, the same afternoon: &ldquo;We were wrong&hellip; we
+        own it.&rdquo; The lesson I took from it &mdash; a new chair&rsquo;s first
+        meeting is structurally hawkish, and you do not fade a risk that&rsquo;s
+        cleanly aligned with the actor&rsquo;s incentives &mdash; is the one the
+        July 8 minutes went on to confirm. A wrong call that paid for itself in a
+        framework.
+      </p>
+      <p class="tr-links">
+        <a href="weekly-outlook-2026-06-19.html">The grade &rarr;</a>
+      </p>
+    </article>
+
+    <article id="scoreboard" class="tr-card">
+      <div class="tr-card-head">
+        <h3>The week I graded myself</h3>
+        <span class="tr-sub">Macro &middot; July 6 scoreboard</span>
+        <span class="tr-verdict mixed">&frac12; right &middot; 1 wrong &middot; 1 leaking</span>
+      </div>
+      <p>
+        Three calls from the prior week, scored in print the week after, in my own
+        words. The jobs base case &mdash; half credit: &ldquo;the hike moved out as
+        we said, but +57K is not a middle number, it&rsquo;s a soft one.&rdquo;
+        &ldquo;Suppliers reprice last&rdquo; &mdash; the miss, owned in full:
+        &ldquo;on price, the split trade lost money in week one; that&rsquo;s the
+        grade, and there&rsquo;s no dressing it up.&rdquo; And the &ldquo;calmer
+        long end&rdquo; &mdash; leaking, not yet broken: &ldquo;the week traded
+        Schwab&rsquo;s scenario, not ours, and we say so.&rdquo;
+      </p>
+      <p class="tr-links">
+        <a href="weekly-outlook-2026-07-06.html">The scoreboard &rarr;</a>
+        <a href="weekly-outlook-2026-07-13.html">How the rules held next &rarr;</a>
+      </p>
+    </article>
+
+    <div class="tr-how">
+      <h2>How I grade</h2>
+      <p>
+        Every call ships with a pre-committed falsifier &mdash; the specific
+        number that, if it prints, means I&rsquo;m wrong. When it prints, the note
+        says so before it says anything else. Targets get walked in public with
+        the reason attached; misses get their own paragraph, not a footnote. The
+        scale-out is fixed before the catalyst, not rationalized after it. Being
+        wrong on a call and right on the position at the same time is not luck
+        &mdash; it is what pre-committed discipline is for.
+      </p>
+    </div>
+
+    <p class="tr-asof">
+      Marks as of July 11, 2026, from the same live quotes that drive the site.
+      Open positions move; this page moves with them. Nothing here is investment
+      advice &mdash; see the <a href="disclaimer.html">disclaimer</a>.
+    </p>
+
+    <p class="tr-cta">
+      <a class="btn" href="writing.html">Read the latest &rarr;</a>
+      &nbsp;
+      <a class="btn btn-ghost" href="https://bpleon.substack.com" rel="noopener">Subscribe</a>
+    </p>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=49" defer></script>
+</body>
+</html>
