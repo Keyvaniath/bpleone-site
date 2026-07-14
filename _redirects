@@ -8,6 +8,12 @@ https://www.bpleon.com/* https://bpleon.com/:splat 301
 /feed       /feed.xml        200
 /rss        /feed.xml        200
 
+# Internal scaffolding is local-only (untracked). These paths were public
+# before that convention; redirect them home so any stale edge-cached copy
+# stops being served and they can never resurface.
+/CLAUDE.md   /   301
+/README.md   /   301
+
 # NOTE: Pretty-URL rules like "/about /about.html 200" were removed
 # because Cloudflare Pages now auto-redirects /foo.html -> /foo
 # (canonical clean URLs), which collides with these rewrites and

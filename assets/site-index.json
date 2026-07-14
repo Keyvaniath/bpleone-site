@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-07-14",
   "fileCount": 151,
-  "totalBytes": 10271762,
+  "totalBytes": 10272011,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -136,9 +136,9 @@
     {
       "path": "_redirects",
       "name": "_redirects",
-      "size": 642,
-      "sizeText": "642 B",
-      "modified": "2026-05-01",
+      "size": 891,
+      "sizeText": "891 B",
+      "modified": "2026-07-14",
       "ext": "",
       "category": "other"
     },
