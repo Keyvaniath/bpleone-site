@@ -93,7 +93,9 @@
   .muted-box{background:#f6f1e6;border:1px dashed var(--line);border-radius:10px;padding:12px;color:var(--muted);font-size:12.5px}
   code{background:#f1ead9;padding:1px 5px;border-radius:4px;font-size:12px}
   .tight td,.tight th{padding:5px 8px}
-  @media print{ nav.tabs,.top-actions,.banner,.foot,button,input,select,textarea{display:none!important} section.tab{display:none!important} section.tab#overview,section.tab#networth{display:block!important} header.top{border-bottom:1px solid #999} .panel{break-inside:avoid;box-shadow:none} body{font-size:11.5px} }
+  .brief-stamp{ font-size:12px; color:var(--mut,#8a8378); margin-top:3px }
+  .brief-stamp b{ color:var(--ink,#2b2620) }
+  @media print{ nav.tabs,.top-actions,.banner,.foot,button,input,select,textarea{display:none!important} section.tab{display:none!important} section.tab#overview,section.tab#networth{display:block!important} header.top{border-bottom:1px solid #999} .brief-stamp{color:#333;font-size:11px} .panel{break-inside:avoid;box-shadow:none} body{font-size:11.5px} }
 </style>
 <!-- Fonts: system fallback (serif=Georgia, sans=Segoe UI) — no external dependency, works fully offline -->
 </head>
@@ -103,6 +105,7 @@
     <div class="brand">
       <h1>Portfolio Analyzer</h1>
       <div class="sub">Live equity book · P&amp;L · risk · allocation · signals · tax — powered by your bpleon-quotes feed</div>
+      <div class="brief-stamp" id="briefStamp"></div>
     </div>
     <div class="top-actions">
       <div class="status" id="status"><span class="dot"></span>Idle</div>
@@ -113,7 +116,7 @@
   </header>
 
   <div class="banner" id="sampleBanner">
-    <span><b>Sample portfolio loaded.</b> Replace it with your real book in the <b>Data</b> tab — paste a Schwab Positions CSV or edit holdings directly.</span>
+    <span><b>No holdings loaded — this desk only runs on your REAL data.</b> In the <b>Data</b> tab: hit <b>⚡ Sync from Schwab</b> (live broker truth) or <b>Import backup</b> (portfolio-backup.json).</span>
     <button class="ghost" onclick="document.getElementById('tab-data-btn').click()">Go to Data →</button>
   </div>
 
@@ -125,6 +128,7 @@
     <button data-tab="quant">Quant</button>
     <button data-tab="risk">Risk</button>
     <button data-tab="momentum">Momentum</button>
+    <button data-tab="news">News</button>
     <button data-tab="signals">Signals</button>
     <button data-tab="tax">Tax</button>
     <button data-tab="income">Income</button>
@@ -144,6 +148,7 @@
   <section class="tab" id="quant"></section>
   <section class="tab" id="risk"></section>
   <section class="tab" id="momentum"></section>
+  <section class="tab" id="news"></section>
   <section class="tab" id="signals"></section>
   <section class="tab" id="tax"></section>
   <section class="tab" id="income"></section>
@@ -169,7 +174,8 @@
    Market data: bpleon-quotes Worker (CORS-open).
    ============================================================ */
 const BASE = "https://bpleon-quotes.brandonpleone.workers.dev/";
-const LS = { hold:"pa_holdings", cash:"pa_cash", set:"pa_settings", snaps:"pa_snapshots", sample:"pa_is_sample", cards:"pa_cards", cardmeta:"pa_cardmeta", journal:"pa_journal", watchlist:"pa_watchlist" };
+const LS = { hold:"pa_holdings", cash:"pa_cash", set:"pa_settings", snaps:"pa_snapshots", sample:"pa_is_sample", cards:"pa_cards", cardmeta:"pa_cardmeta", journal:"pa_journal", watchlist:"pa_watchlist", pmlog:"pa_pmlog" };
+let PMLOG = [];           // self-learning ledger: every advice item logged {key,cat,title,tk,dir,date,px} then graded vs later price
 
 /* ---------- state ---------- */
 let HOLDINGS = [];        // {ticker,shares,avgCost,sector,account,targetBuy,targetSell,thesis,buyDate}
@@ -187,21 +193,15 @@ let WATCHLIST = [];       // candidate names [{ticker,targetBuy,thesis}]
 let lastRefresh = null;
 const BENCHES = ["QQQ","SPY","^GSPC","IWM","DIA","SMH","XLK","VTI"];
 
-const SAMPLE = [
-  {ticker:"MU",  shares:30, avgCost:95,  sector:"Technology", account:"Schwab", targetBuy:480, targetSell:680, ladder:[700,900,1100,1300], trimmedThrough:700, thesis:"HBM share gains + DRAM cycle bottoming.", buyDate:"2025-02-10"},
-  {ticker:"NVDA",shares:10, avgCost:120, sector:"Technology", account:"Schwab", targetBuy:160, targetSell:260, thesis:"AI datacenter compute leader.", buyDate:"2025-01-15"},
-  {ticker:"AMD", shares:20, avgCost:150, sector:"Technology", account:"Schwab", targetBuy:130, targetSell:240, thesis:"MI accelerator ramp.", buyDate:"2025-06-01"},
-  {ticker:"AVGO",shares:5,  avgCost:210, sector:"Technology", account:"Schwab", targetBuy:180, targetSell:300, thesis:"Custom silicon + VMware.", buyDate:"2024-11-20"},
-  {ticker:"TSM", shares:15, avgCost:140, sector:"Technology", account:"Schwab", targetBuy:160, targetSell:260, thesis:"Leading-edge foundry monopoly.", buyDate:"2025-03-05"},
-  {ticker:"MSFT",shares:8,  avgCost:400, sector:"Technology", account:"Schwab", targetBuy:380, targetSell:560, thesis:"Azure + Copilot monetization.", buyDate:"2024-09-10"}
-];
+/* NO SAMPLE DATA — Brandon's standing rule: this desk renders only his real book.
+   First run shows the connect-your-data banner instead of fake positions. */
 
 /* ---------- persistence ---------- */
 function load(){
   try{
     const h = JSON.parse(localStorage.getItem(LS.hold)||"null");
     if(Array.isArray(h) && h.length){ HOLDINGS=h; }
-    else { HOLDINGS = SAMPLE.map(x=>({...x})); localStorage.setItem(LS.sample,"1"); }
+    else { HOLDINGS = []; }
     CASH = parseFloat(localStorage.getItem(LS.cash)||"0")||0;
     const s = JSON.parse(localStorage.getItem(LS.set)||"null"); if(s) SETTINGS={...SETTINGS,...s};
     const sn = JSON.parse(localStorage.getItem(LS.snaps)||"null"); if(Array.isArray(sn)) SNAPS=sn;
@@ -209,8 +209,9 @@ function load(){
     const cm = JSON.parse(localStorage.getItem(LS.cardmeta)||"null"); if(cm) CARDMETA=cm;
     const jr = JSON.parse(localStorage.getItem(LS.journal)||"null"); if(Array.isArray(jr)) JOURNAL=jr;
     const wl = JSON.parse(localStorage.getItem(LS.watchlist)||"null"); if(Array.isArray(wl)) WATCHLIST=wl;
-  }catch(e){ HOLDINGS = SAMPLE.map(x=>({...x})); }
-  document.getElementById("sampleBanner").classList.toggle("hide", localStorage.getItem(LS.sample)!=="1");
+    const pl = JSON.parse(localStorage.getItem(LS.pmlog)||"null"); if(Array.isArray(pl)) PMLOG=pl;
+  }catch(e){ HOLDINGS = []; }
+  document.getElementById("sampleBanner").classList.toggle("hide", HOLDINGS.length>0);
 }
 function save(){
   try{
@@ -222,6 +223,8 @@ function save(){
     localStorage.setItem(LS.cardmeta, JSON.stringify(CARDMETA));
     localStorage.setItem(LS.journal, JSON.stringify(JOURNAL));
     localStorage.setItem(LS.watchlist, JSON.stringify(WATCHLIST));
+    localStorage.setItem(LS.pmlog, JSON.stringify(PMLOG));
+    localStorage.setItem('pa_saved_at', new Date().toISOString());
   }catch(e){ if(window.console)console.warn('save failed (storage full or blocked) — data kept in memory this session', e); }
   try{ cloudAutoPush(); }catch(e){}
 }
@@ -232,18 +235,26 @@ var CLOUD_KEY='pa_cloud_secret';
 function cloudSecret(){ try{ return sessionStorage.getItem(CLOUD_KEY)||''; }catch(e){ return ''; } }
 function cloudSetSecret(s){ try{ if(s) sessionStorage.setItem(CLOUD_KEY,s); else sessionStorage.removeItem(CLOUD_KEY); }catch(e){} }
 function cloudEnabled(){ return !!cloudSecret() && location.protocol!=='file:'; }
-function buildBlob(){ return { HOLDINGS:HOLDINGS, CASH:CASH, SETTINGS:SETTINGS, SNAPS:SNAPS, CARDS:CARDS, CARDMETA:CARDMETA, JOURNAL:JOURNAL, WATCHLIST:WATCHLIST, _savedAt:new Date().toISOString() }; }
-function applyBlob(o){ if(!o||typeof o!=='object')return false; if(o.HOLDINGS)HOLDINGS=o.HOLDINGS; if(o.CASH!=null)CASH=o.CASH; if(o.SETTINGS)SETTINGS=Object.assign({},SETTINGS,o.SETTINGS); if(o.SNAPS)SNAPS=o.SNAPS; if(o.CARDS)CARDS=o.CARDS; if(o.CARDMETA)CARDMETA=o.CARDMETA; if(o.JOURNAL)JOURNAL=o.JOURNAL; if(o.WATCHLIST)WATCHLIST=o.WATCHLIST; return true; }
+function buildBlob(){ return { HOLDINGS:HOLDINGS, CASH:CASH, SETTINGS:SETTINGS, SNAPS:SNAPS, CARDS:CARDS, CARDMETA:CARDMETA, JOURNAL:JOURNAL, WATCHLIST:WATCHLIST, PMLOG:PMLOG, _savedAt:new Date().toISOString() }; }
+function applyBlob(o){ if(!o||typeof o!=='object')return false; if(o.HOLDINGS)HOLDINGS=o.HOLDINGS; if(o.CASH!=null)CASH=o.CASH; if(o.SETTINGS)SETTINGS=Object.assign({},SETTINGS,o.SETTINGS); if(o.SNAPS)SNAPS=o.SNAPS; if(o.CARDS)CARDS=o.CARDS; if(o.CARDMETA)CARDMETA=o.CARDMETA; if(o.JOURNAL)JOURNAL=o.JOURNAL; if(o.WATCHLIST)WATCHLIST=o.WATCHLIST; if(Array.isArray(o.PMLOG))PMLOG=o.PMLOG; return true; }
 function cloudStatus(msg, bad){ var e=document.getElementById('cloudStatus'); if(e){ e.textContent=msg||''; e.className=bad?'down':'mut'; } }
 async function cloudPull(){ var s=cloudSecret(); if(!s) throw new Error('not connected'); var r=await fetch(BASE+'?portfolio=read',{headers:{'Authorization':'Bearer '+s},cache:'no-store'}); if(r.status===401||r.status===403) throw new Error('wrong secret'); if(!r.ok) throw new Error('HTTP '+r.status); return await r.json(); }
 async function cloudPush(){ var s=cloudSecret(); if(!s) throw new Error('not connected'); var r=await fetch(BASE+'?portfolio=write',{method:'POST',headers:{'Authorization':'Bearer '+s,'Content-Type':'application/json'},body:JSON.stringify(buildBlob())}); if(r.status===401||r.status===403) throw new Error('wrong secret'); if(!r.ok) throw new Error('HTTP '+r.status); return await r.json(); }
 var _cloudT=null;
 function cloudAutoPush(){ if(!cloudEnabled())return; if(_cloudT)clearTimeout(_cloudT); _cloudT=setTimeout(function(){ cloudPush().then(function(){ cloudStatus('☁ synced '+new Date().toLocaleTimeString()); }).catch(function(e){ cloudStatus('cloud push failed: '+e.message,true); }); },1500); }
-function cloudInitPull(){ if(!cloudEnabled())return; cloudStatus('☁ pulling…'); cloudPull().then(function(o){ if(o&&applyBlob(o)){ clearSampleFlag(); save(); computeCards(); syncBenchTop(); cloudStatus('☁ loaded from cloud '+new Date().toLocaleTimeString()); refresh(); } else { cloudStatus('☁ cloud empty — Push to start syncing this device'); } }).catch(function(e){ cloudStatus('cloud pull failed: '+e.message+' — using local data',true); }); }
-function cloudConnect(secret, done){ cloudSetSecret(secret); if(!secret){ cloudStatus('disconnected'); if(done)done(); return; } cloudStatus('☁ connecting…'); cloudPull().then(function(o){ if(o&&applyBlob(o)){ clearSampleFlag(); save(); computeCards(); syncBenchTop(); cloudStatus('☁ connected — loaded your book '+new Date().toLocaleTimeString()); refresh(); } else { cloudStatus('☁ connected — cloud is empty. Push your current book to start syncing.'); } if(done)done(true); }).catch(function(e){ cloudStatus('connect failed: '+e.message,true); cloudSetSecret(''); if(done)done(false); }); }
+function cloudInitPull(){ if(!cloudEnabled())return; cloudStatus('☁ pulling…'); cloudPull().then(function(o){ if(cloudShouldApply(o)&&applyBlob(o)){ clearSampleFlag(); save(); computeCards(); syncBenchTop(); cloudStatus('☁ loaded from cloud '+new Date().toLocaleTimeString()); refresh(); } else if(HOLDINGS&&HOLDINGS.length){ cloudStatus('☁ local book is current (newer than cloud) — keeping it'); } else { cloudStatus('☁ cloud empty — Push to start syncing this device'); } }).catch(function(e){ cloudStatus('cloud pull failed: '+e.message+' — using local data',true); }); }
+// audit fix: NEVER let a stale/empty cloud blob overwrite newer local data (last-write-wins by _savedAt; empty HOLDINGS never applies)
+function cloudShouldApply(o){
+  if(!o||typeof o!=='object') return false;
+  if(!Array.isArray(o.HOLDINGS)||!o.HOLDINGS.length) return false;
+  var localAt=null; try{ localAt=localStorage.getItem('pa_saved_at'); }catch(e){}
+  if(localAt&&o._savedAt&&HOLDINGS&&HOLDINGS.length&&new Date(o._savedAt)<=new Date(localAt)) return false;
+  return true;
+}
+function cloudConnect(secret, done){ cloudSetSecret(secret); if(!secret){ cloudStatus('disconnected'); if(done)done(); return; } cloudStatus('☁ connecting…'); cloudPull().then(function(o){ if(cloudShouldApply(o)&&applyBlob(o)){ clearSampleFlag(); save(); computeCards(); syncBenchTop(); cloudStatus('☁ connected — loaded your book '+new Date().toLocaleTimeString()); refresh(); } else if(HOLDINGS&&HOLDINGS.length){ cloudStatus('☁ connected — local book is newer; pushing it to cloud.'); cloudPush().then(function(){ cloudStatus('☁ connected — local book pushed '+new Date().toLocaleTimeString()); }).catch(function(e){ cloudStatus('push failed: '+e.message,true); }); } else { cloudStatus('☁ connected — cloud is empty. Push your current book to start syncing.'); } if(done)done(true); }).catch(function(e){ cloudStatus('connect failed: '+e.message,true); cloudSetSecret(''); if(done)done(false); }); }
 function renderCloudPanel(el){
   var hint=el.querySelector('#cloudHint'), ctl=el.querySelector('#cloudControls'); if(!hint||!ctl)return;
-  if(location.protocol==='file:'){ hint.innerHTML='Cloud sync runs on the hosted copy (<b>bpleon.com/admin/portfolio</b>) and syncs your book across devices via your private Worker. On this local file, use Export/Import backup above.'; ctl.innerHTML=''; return; }
+  // works from file:// too — the Worker is CORS-open and the secret lives only in sessionStorage
   if(cloudSecret()){
     hint.innerHTML='Connected — your book auto-syncs to your private Worker (KV, gated by your ADMIN_SECRET). Edits push automatically; this device pulls on load.';
     ctl.innerHTML='<button id="cloudPull">⤓ Pull from cloud</button> <button id="cloudPush">⤒ Push to cloud</button> <button id="cloudDisc" class="danger">Disconnect</button>';
@@ -307,7 +318,7 @@ async function refresh(){
   st.innerHTML='<span class="dot load"></span>Fetching live data…';
   const tks=[...new Set(HOLDINGS.map(h=>h.ticker.toUpperCase()).filter(Boolean))];
   const bench=SETTINGS.benchmark;
-  const all=[...new Set([...tks,bench,'^TNX','SMH',...WATCHLIST.map(w=>w.ticker.toUpperCase())])];
+  const all=[...new Set([...tks,bench,'^TNX','SMH','QQQ','SPY',...WATCHLIST.map(w=>w.ticker.toUpperCase())])];
   try{
     const metricSyms=[...new Set([...tks, ...WATCHLIST.map(w=>w.ticker.toUpperCase())])];
     const [q,m,sp] = await Promise.all([ fetchQuotes(all), fetchMetrics(metricSyms), fetchSpark(all) ]);
@@ -558,12 +569,186 @@ function guideHTML(){
    +'<div class="muted-box" style="margin-top:10px"><b>Your 2-minute morning loop:</b> Overview (P&amp;L + action board) → Signals (any trim rung due?) → Momentum (is semis still leading + accelerating?) → Deploy Cash (dry powder working?).</div>'
    +'</details>';
 }
+/* ---- PM COCKPIT: synthesizes the quant engine into a one-glance risk brief ---- */
+var BRIEF_CATALYSTS=[
+  {d:'2026-07-15', ev:'ASML Q2 (bookings — the tell)'},
+  {d:'2026-07-22', ev:'Hyperscaler capex wave begins'},
+  {d:'2026-07-28', ev:'MSFT FQ4 (FCF inflection)'},
+  {d:'2026-08-27', ev:'CRM cRPO (SW-bear adjudicator)'}
+];
+function nextCatalyst(){
+  var now=new Date(), best=null;
+  BRIEF_CATALYSTS.forEach(function(c){ var t=new Date(c.d+'T12:00:00'); var days=Math.ceil((t-now)/86400000); if(days>=0&&(!best||days<best.days)) best={ev:c.ev,days:days,d:c.d}; });
+  return best;
+}
+function nearestDisciplineLine(){
+  if(!DERIVED||typeof RISK_LINES==='undefined') return null;
+  var best=null;
+  DERIVED.rows.forEach(function(r){ var L=RISK_LINES[(r.tk||'').toUpperCase()]; if(!L||r.price==null)return;
+    L.forEach(function(x){ var raw=(r.price-x.px)/x.px, breached=raw<0;  // audit fix: BREACHED lines must surface, not vanish
+      var cand={tk:r.tk,price:r.price,px:x.px,label:x.label,dist:Math.abs(raw),breached:breached,kind:x.kind};
+      if(!best) best=cand;
+      else if(breached&&!best.breached) best=cand;
+      else if(breached===best.breached&&cand.dist<best.dist) best=cand;
+    }); });
+  return best;
+}
+function execBriefHTML(){
+  var d=DERIVED; if(!d) return '';
+  var fm=(typeof computeFactorModel==='function')?computeFactorModel():null;
+  var mc=null; try{ mc=(typeof monteCarloVaR==='function')?monteCarloVaR(21):null; }catch(e){}
+  var cat=null; try{ cat=(typeof computeCatalystScenarios==='function')?computeCatalystScenarios():null; }catch(e){}
+  var eq=d.equity||d.total, worst=cat?cat.scen[0]:null, nc=nextCatalyst(), dl=nearestDisciplineLine();
+  var semisShare=fm?fm.semisShare:null;
+  var posture = semisShare!=null ? (semisShare>=0.7?'ONE CONCENTRATED BET':(semisShare>=0.5?'heavily tilted':'diversified')) : '—';
+  var pc = semisShare!=null&&semisShare>=0.7 ? '#F0656B' : '#C79A3B';
+  var h='<div class="panel" style="border:1px solid '+pc+';border-left:5px solid '+pc+'"><h3>Executive risk brief <span class="pill">PM cockpit · live</span></h3>';
+  // headline line
+  h+='<div style="font-family:Georgia,serif;font-size:15px;line-height:1.5;margin:2px 0 8px">'+
+     '<b>'+fmtUSD(d.total)+'</b> book · beta <b>'+fmtNum(d.bottomBeta,2)+'</b>'+
+     (fm?' · <b style="color:'+pc+'">'+fmtPctRaw(fm.semisShare*100,0)+' of risk is the semis factor</b> → <b style="color:'+pc+'">'+posture+'</b>':'')+
+     (fm?' · '+fmtPctRaw(fm.annVol*100,0)+' annualized vol':'')+'</div>';
+  // metric strip
+  h+='<div class="grid kpis">'+
+    kpi('1-mo VaR 95%', mc?fmtUSD(mc.var95):'—', mc?fmtPctRaw(mc.var95/eq*100,1)+' of book':'', 'down')+
+    kpi('Worst catalyst', worst?fmtUSD(worst.pnl):'—', worst?worst.name.split(' — ')[0]:'', 'down')+
+    kpi('Systematic risk', fm?fmtPctRaw((1-fm.idioShare)*100,0):'—', 'factor-driven')+
+    kpi('Next catalyst', nc?('in '+nc.days+'d'):'—', nc?nc.ev:'')+
+    '</div>';
+  // the two things a PM acts on: the dominant risk + the nearest pre-committed line
+  h+='<div class="two" style="margin-top:8px">';
+  h+='<div class="muted-box" style="border-left:3px solid '+pc+'"><b>Dominant risk:</b> '+(worst?('a '+worst.name.split(' — ')[0]+' would cost <b>'+fmtUSD(worst.pnl)+'</b> ('+fmtPctRaw(worst.pct*100,1)+'). '):'')+(semisShare!=null&&semisShare>=0.7?'Because ~'+fmtPctRaw(semisShare*100,0)+' of variance is one factor, nearly every scenario moves the book together — real diversification means a return stream that pays when semis <i>fall</i> (see the Risk tab’s hedging desk for the collar).':'')+'</div>';
+  h+='<div class="muted-box"'+(dl&&dl.breached?' style="border-left:3px solid #F0656B"':'')+'>'+(dl?(dl.breached?('<b style="color:#b3402f">⚠ LINE BREACHED:</b> '+dl.tk+' '+dl.label+' at '+fmtUSD(dl.px,0)+' — now '+fmtUSD(dl.price,2)+' ('+fmtPctRaw(dl.dist*100,1)+' below). Execute or consciously override.'):('<b>Nearest discipline line:</b> '+dl.tk+' '+dl.label+' at '+fmtUSD(dl.px,0)+' — <b>'+fmtPctRaw(dl.dist*100,1)+' away</b> (now '+fmtUSD(dl.price,2)+'). Pre-committed; you execute.')):'<b>Discipline lines:</b> none of your names are near a pre-set trigger.')+'</div>';
+  h+='</div>';
+  h+='<div class="mut" style="font-size:11px;margin-top:6px">Synthesized live from the factor model + Monte-Carlo + catalyst engine below. This is the one-glance read; the Risk tab has the full decomposition.</div></div>';
+  return h;
+}
+/* ---- SELF-LEARNING PM: advice engine + graded track record ----
+   Synthesizes factor model + discipline lines + catalyst clock + deployment
+   plan into ranked advice. Every directional call is LOGGED with entry price
+   and later GRADED against realized prices — the engine keeps its own score. */
+var PM_BANDS=[ // pre-researched entry bands from the reconciled deployment plan
+  {tk:'CRM', lo:158, hi:160, label:'CRM starter band (T1b — cRPO-adjudicated, ~Aug 27)'},
+  {tk:'VST', lo:145, hi:152, label:'VST add zone (T1 diversifier; hard stop $133)'},
+  {tk:'SNPS', lo:420, hi:440, label:'SNPS entry zone (T1 defensive semi anchor)'}
+];
+function pmAdviceItems(q){
+  var items=[], d=DERIVED; if(!d) return items;
+  var fm=null; try{ fm=computeFactorModel(); }catch(e){}
+  var nc=(typeof nextCatalyst==='function')?nextCatalyst():null;
+  var dl=(typeof nearestDisciplineLine==='function')?nearestDisciplineLine():null;
+  if(dl&&dl.breached) items.push({key:'lineBREACH-'+dl.tk+'-'+dl.px, pri:3, cat:'Discipline', tk:dl.tk, dir:'trim', px:dl.price,
+    title:'⚠ LINE BREACHED: '+dl.tk+' is '+fmtPctRaw(dl.dist*100,1)+' BELOW your pre-committed line ('+fmtUSD(dl.px,0)+' — '+dl.label+')',
+    why:'The trigger has fired. Execute or consciously override — but decide now; drifting past a breached line is how discipline dies.'});
+  else if(dl&&dl.dist<=0.05) items.push({key:'line-'+dl.tk+'-'+dl.px, pri:3, cat:'Discipline', tk:dl.tk, dir:'trim', px:dl.price,
+    title:dl.tk+' is '+fmtPctRaw(dl.dist*100,1)+' from your pre-committed line ('+fmtUSD(dl.px,0)+' — '+dl.label+')',
+    why:'You set this rung in advance for a reason — decide before the tape decides for you.'});
+  if(nc&&nc.days<=5&&fm&&fm.semisShare>=0.6)
+    items.push({key:'hedge-'+nc.d, pri:3, cat:'Hedge', tk:'SMH', dir:'hedge', px:null,
+      title:'Unhedged into '+nc.ev+' (in '+nc.days+'d) with '+fmtPctRaw(fm.semisShare*100,0)+'% of risk on one factor',
+      why:'A ~5% OTM SMH put (~0.3% of book/mo at last check) floors the factor through the event — Income tab → Hedging desk prices it live.'});
+  PM_BANDS.forEach(function(b){ var p=q[b.tk]&&q[b.tk].price; if(p==null) return;
+    if(p>=b.lo&&p<=b.hi) items.push({key:'band-'+b.tk, pri:3, cat:'Deploy', tk:b.tk, dir:'add', px:p,
+      title:b.tk+' is IN your entry band at '+fmtUSD(p,2)+' — '+b.label,
+      why:'Pre-researched T1 entry. Run it through the Reallocate tab’s pre-trade panel to see the factor/VaR impact before committing.'});
+    else if(p>b.hi&&p<=b.hi*1.035) items.push({key:'near-'+b.tk+'-'+Math.round(p), pri:2, cat:'Deploy', tk:b.tk, dir:'watch', px:p,
+      title:b.tk+' '+fmtUSD(p,2)+' — within ~3% of your '+fmtUSD(b.hi,0)+' band top',
+      why:'Set the limit/alert now so the entry isn’t improvised when it hits.'});
+  });
+  if(fm&&fm.semisShare>=0.75)
+    items.push({key:'factor-high', pri:2, cat:'Factor', tk:null, dir:null, px:null,
+      title:fmtPctRaw(fm.semisShare*100,0)+'% of book variance is the semis factor — T1-size diversifiers won’t cut it',
+      why:'Engine-verified on your real book: only semis trims, the SMH hedge, or 2-3× diversifier sizing move this number.'});
+  var nw=(d.equity||0)+(CARDD?CARDD.value:0)+(CASH||0), cw=nw>0?(CASH||0)/nw:0;
+  if(cw>0.12) items.push({key:'cash-plan', pri:1, cat:'Plan', tk:null, dir:null, px:null,
+    title:fmtPctRaw(cw*100,0)+'% cash — per plan, the bulk waits for the Jul 22–31 hyperscaler capex prints',
+    why:'T1 diversifiers are deployable now on their bands; T2 (MSFT/GOOGL) is explicitly gated on the capex read.'});
+  return items;
+}
+function pmLogUpsert(items){
+  var seen={}; PMLOG.forEach(function(x){ seen[x.key]=1; });
+  var added=0;
+  items.forEach(function(it){ if((it.dir==='trim'||it.dir==='add')&&it.tk&&it.px!=null&&!seen[it.key]){ PMLOG.push({key:it.key,cat:it.cat,title:it.title,tk:it.tk,dir:it.dir,date:todayStr(),px:it.px}); added++; } });
+  if(added){ try{ save(); }catch(e){} }
+}
+function gradePMLog(q){
+  var graded=[], pending=0, dirty=false;
+  PMLOG.forEach(function(x){
+    if(x.dir!=='trim'&&x.dir!=='add'){ pending++; return; }
+    var now=(q&&q[x.tk]&&q[x.tk].price!=null)?q[x.tk].price:((typeof MKT!=='undefined'&&MKT[x.tk]&&MKT[x.tk].price!=null)?MKT[x.tk].price:null);
+    var days=(new Date()-new Date(x.date+'T12:00:00'))/86400000;
+    // audit fix: FREEZE the grade at a 21-day horizon so the track record is a fixed-window score, not a forever-drifting one
+    if(x.gpx==null&&now!=null&&days>=21){ x.gpx=now; x.gAt=todayStr(); dirty=true; }
+    var ref=(x.gpx!=null)?x.gpx:now;
+    if(ref==null||days<5){ pending++; return; }
+    var chg=(ref-x.px)/x.px;
+    graded.push({dir:x.dir, tk:x.tk, hit:(x.dir==='trim'?chg<0:chg>0), chg:chg, days:Math.round(days), frozen:x.gpx!=null});
+  });
+  if(dirty){ try{ save(); }catch(e){} }
+  var byDir={}; graded.forEach(function(g){ if(!byDir[g.dir])byDir[g.dir]={n:0,hits:0}; byDir[g.dir].n++; if(g.hit)byDir[g.dir].hits++; });
+  return {graded:graded, pending:pending, byDir:byDir};
+}
+/* AUTO-PILOT: the PM refreshes itself during market hours and alerts on new P3 calls */
+function pmMarketOpenET(){
+  try{
+    var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+    var wd=p.find(function(x){return x.type==='weekday';}).value, mins=(+p.find(function(x){return x.type==='hour';}).value)*60+(+p.find(function(x){return x.type==='minute';}).value);
+    return ['Mon','Tue','Wed','Thu','Fri'].indexOf(wd)>=0 && mins>=570 && mins<960;
+  }catch(e){ return false; }
+}
+function pmBeep(){ try{ var c=new (window.AudioContext||window.webkitAudioContext)(); var o=c.createOscillator(),g=c.createGain(); o.connect(g); g.connect(c.destination); o.frequency.value=880; g.gain.value=.12; o.start(); setTimeout(function(){o.stop();c.close();},320); }catch(e){} }
+var _pmSeenP3=null; // null = first render (baseline, no alert)
+function pmAlertNewCalls(items){
+  var p3=items.filter(function(it){return it.pri>=3;}).map(function(it){return it.key;});
+  if(_pmSeenP3===null){ _pmSeenP3={}; p3.forEach(function(k){_pmSeenP3[k]=1;}); return; }
+  var fresh=p3.filter(function(k){return !_pmSeenP3[k];});
+  if(fresh.length){ pmBeep(); document.title='🔔 PM ALERT — Portfolio Analyzer'; setTimeout(function(){ document.title='Portfolio Analyzer'; },60000); }
+  p3.forEach(function(k){_pmSeenP3[k]=1;});
+}
+var _pmAuto=null;
+function pmAutopilotStart(){
+  if(_pmAuto) return;
+  _pmAuto=setInterval(function(){
+    if(document.hidden) return;               // don't hammer in background tabs
+    if(!pmMarketOpenET()) return;             // market closed = nothing changes
+    try{ refresh(); }catch(e){}               // full pipeline: quotes -> engine -> advice (advice re-render alerts on new P3s)
+  }, 300000); // 5 min
+}
+async function renderPMAdvice(){
+  var host=document.getElementById('pmAdvice'); if(!host||!DERIVED) return;
+  var q={}; try{ q=(await fetchQuotes(PM_BANDS.map(function(b){return b.tk;})))||{}; }catch(e){}
+  var items=pmAdviceItems(q);
+  pmLogUpsert(items);
+  pmAlertNewCalls(items);
+  pmAutopilotStart();
+  var g=gradePMLog(q);
+  items.sort(function(a,b){ return b.pri-a.pri; });
+  var dirs=Object.keys(g.byDir), rec;
+  if(dirs.length) rec=dirs.map(function(k){ var s=g.byDir[k]; return '<b>'+k.toUpperCase()+' calls: '+s.hits+'/'+s.n+' right</b>'; }).join(' · ')+(g.pending?' · '+g.pending+' pending':'');
+  else rec=g.pending? g.pending+' call(s) logged — grading starts once each is 5+ days old':'ledger starts now — every directional call below gets logged and scored';
+  var h='<div class="panel" style="border:1px solid var(--gold,#C79A3B)"><h3>PM advice <span class="pill">self-learning · '+items.length+'</span> <span class="pill" style="background:'+(pmMarketOpenET()?'#2f7d4f;color:#eafff2':'#8aa4b8')+'">'+(pmMarketOpenET()?'● autopilot 5-min':'autopilot idle — market closed')+'</span></h3>';
+  h+='<div class="hint">Synthesized from the factor model, discipline lines, catalyst clock, and your deployment plan. <b>Every directional call is logged with its price and graded later</b> — the engine keeps its own score so you know how much to trust it. Data + your rules; you execute.</div>';
+  h+='<div class="muted-box" style="margin:4px 0 8px">📊 <b>Engine track record:</b> '+rec+'</div>';
+  if(!items.length) h+='<div class="muted-box">Nothing actionable — levels away from triggers, no imminent catalyst. A valid state; the watch continues.</div>';
+  items.forEach(function(it){ h+='<div style="margin:7px 0;padding:8px 11px;border-left:3px solid '+(it.pri>=3?'#b3402f':(it.pri===2?'#C79A3B':'#8aa4b8'))+';border-radius:6px;background:rgba(199,154,59,.06)"><span class="chip '+(it.pri>=3?'trim':(it.pri===2?'watch':'hold'))+'">'+it.cat+'</span> <b>'+it.title+'</b><br><span class="mut" style="font-size:12px">'+it.why+'</span></div>'; });
+  h+='</div>';
+  host.innerHTML=h;
+}
 function renderOverview(){
   const d=DERIVED; const el=document.getElementById("overview");
   if(!d||!d.rows.length){ el.innerHTML=emptyState(); return; }
   const r=d.realized;
+  // Print-brief header stamp: as-of date + one-line factor/concentration posture (MD headline).
+  (function(){ var bs=document.getElementById('briefStamp'); if(!bs) return;
+    var asof=new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+    var fx=factorExposure(d);
+    var line='As of '+asof+' · '+fmtUSD(d.total)+' book · beta '+fmtNum(d.bottomBeta,2)+' · top-5 '+fmtPctRaw(d.top5*100,0);
+    if(fx.ok){ line+=' · AI-capex factor <b>'+fmtPctRaw(fx.aiPct*100,0)+'</b>'+(fx.aiPct>=0.85?' — <b>one concentrated bet</b>':'')+' · '+fmtNum(fx.effThemes,1)+' effective themes'; }
+    bs.innerHTML=line;
+  })();
   const benchTxt = r&&r.benchRet!=null? `${SETTINGS.benchmark} ${fmtPct(r.benchRet)}` : SETTINGS.benchmark;
-  let html=guideHTML()+actionsHTML();
+  let html=execBriefHTML()+'<div id="pmAdvice"></div>'+guideHTML()+actionsHTML();
+  setTimeout(function(){ try{ renderPMAdvice(); }catch(e){ if(window.console)console.warn('pm advice',e); } },0);
   html+=`<div class="grid kpis">
     ${kpi("Total Value", fmtUSD(d.total), `${fmtUSD(d.equity)} equity · ${fmtUSD(d.cash)} cash`)}
     ${kpi("Unrealized P/L", fmtUSD(d.upl), fmtPct(d.uplPct)+" on cost", cls(d.upl))}
@@ -571,6 +756,7 @@ function renderOverview(){
     ${kpi("Portfolio Beta", fmtNum(d.bottomBeta,2), (r&&r.beta!=null)?("realized "+fmtNum(r.beta,2)+" vs "+SETTINGS.benchmark):"bottom-up")}
     ${kpi("Positions", d.count, `${(d.effN!=null?fmtNum(d.effN,1):"—")} effective (HHI)`)}
     ${kpi("Top-5 Concentration", fmtPctRaw(d.top5*100,0), d.top5>0.6?"⚠ concentrated":"")}
+    ${(function(){var fx=factorExposure(d); return fx.ok?kpi("AI-capex factor", fmtPctRaw(fx.aiPct*100,0), fx.aiPct>=0.85?"⚠ one bet · see Risk":(fx.aiPct>=0.6?"heavy — see Risk":"balanced"), fx.aiPct>=0.85?"down":""):kpi("AI-capex factor","—","");})()}
     ${kpi("Beta-adj exposure", fmtUSD(d.bottomBeta!=null?d.bottomBeta*d.equity:null), "effective market $")}
     ${kpi("Dry powder", fmtUSD(d.cash), fmtPctRaw(d.total>0?d.cash/d.total*100:0,1)+" of book")}
   </div>`;
@@ -680,6 +866,36 @@ function renderAllocation(){
   el.innerHTML=html;
 }
 
+/* PERFORMANCE ATTRIBUTION — what actually drove the P&L (weight × return) */
+function attributionHTML(d){
+  var rows=d.rows.filter(function(r){ return r.mv!=null&&r.mv>0&&r.weight!=null; });
+  if(!rows.length) return '';
+  function contrib(r,per){ var ret=r[per]; return ret!=null?r.weight*ret:null; }
+  var a=rows.map(function(r){ return {tk:r.tk, w:r.weight, r1m:r.r1m, r3m:r.r3m, r1y:r.r1y,
+    c1m:contrib(r,'r1m'), c3m:contrib(r,'r3m'), c1y:contrib(r,'r1y')}; })
+    .sort(function(x,y){ return (y.c3m||0)-(x.c3m||0); });
+  var tot1m=0,tot3m=0,tot1y=0; a.forEach(function(x){ tot1m+=x.c1m||0; tot3m+=x.c3m||0; tot1y+=x.c1y||0; });
+  var top=a[0], bot=a[a.length-1];
+  var h='<div class="panel"><h3>Performance attribution <span class="pill">weight × return</span></h3>';
+  h+='<div class="hint">The first question a PM asks: <b>what drove it?</b> Each name’s contribution = its weight × its return, so the column sums ≈ the book’s return for that window. Current weights (end-weight approximation) — direction and ranking are what matter.</div>';
+  h+='<div class="grid kpis">'
+    +kpi('Top contributor (3M)', top?top.tk:'—', top&&top.c3m!=null?fmtPct(top.c3m)+' of book return':'', 'up')
+    +kpi('Top detractor (3M)', (bot&&(bot.c3m||0)<0)?bot.tk:'none', (bot&&(bot.c3m||0)<0)?fmtPct(bot.c3m)+' drag':'all positive', (bot&&(bot.c3m||0)<0)?'down':'up')
+    +kpi('Book 3M (attributed)', fmtPct(tot3m), 'Σ contributions', cls(tot3m))
+    +kpi('Book 1Y (attributed)', fmtPct(tot1y), 'Σ contributions', cls(tot1y))
+    +'</div>';
+  h+='<div style="margin-top:8px">'+svgBars(a.map(function(x){ return {label:x.tk, value:(x.c3m||0)*100, color:(x.c3m||0)>=0?'var(--up,#3FBF6A)':'var(--down,#b3402f)'}; }),{fmt:function(v){return v.toFixed(1)+'pp';}})+'</div>';
+  h+='<div class="scroll"><table class="tight"><thead><tr><th>Ticker</th><th>Weight</th><th>1M ret</th><th>1M contrib</th><th>3M ret</th><th>3M contrib</th><th>1Y ret</th><th>1Y contrib</th></tr></thead><tbody>';
+  a.forEach(function(x){ h+='<tr><td class="tk">'+x.tk+'</td><td>'+fmtPctRaw(x.w*100,1)+'</td>'
+    +'<td class="'+cls(x.r1m)+'">'+fmtPct(x.r1m)+'</td><td class="'+cls(x.c1m)+'">'+fmtPct(x.c1m)+'</td>'
+    +'<td class="'+cls(x.r3m)+'">'+fmtPct(x.r3m)+'</td><td class="'+cls(x.c3m)+'"><b>'+fmtPct(x.c3m)+'</b></td>'
+    +'<td class="'+cls(x.r1y)+'">'+fmtPct(x.r1y)+'</td><td class="'+cls(x.c1y)+'">'+fmtPct(x.c1y)+'</td></tr>'; });
+  var wSum=a.reduce(function(s,x){return s+(x.w||0);},0);
+  h+='<tr style="border-top:2px solid var(--line,#ccc)"><td class="tk">BOOK (equities)</td><td>'+fmtPctRaw(wSum*100,1)+'</td><td></td><td class="'+cls(tot1m)+'"><b>'+fmtPct(tot1m)+'</b></td><td></td><td class="'+cls(tot3m)+'"><b>'+fmtPct(tot3m)+'</b></td><td></td><td class="'+cls(tot1y)+'"><b>'+fmtPct(tot1y)+'</b></td></tr>';
+  if(wSum<0.995) h+='<tr><td class="tk mut">CASH/CARDS</td><td class="mut">'+fmtPctRaw((1-wSum)*100,1)+'</td><td></td><td class="mut">0.0%</td><td></td><td class="mut">0.0%</td><td></td><td class="mut">0.0%</td></tr>';
+  h+='</tbody></table></div></div>';
+  return h;
+}
 function renderPerformance(){
   const d=DERIVED; const el=document.getElementById("performance");
   if(!d||!d.rows.length){ el.innerHTML=emptyState(); return; }
@@ -708,6 +924,7 @@ function renderPerformance(){
       svgLine([{vals:ddSeries(p.port),color:"#b3402f",width:1.6}],{h:120,fmtY:v=>v.toFixed(0)+"%"})+`</div>`;
   } else html+=`<div class="muted-box">No history.</div>`;
   html+=`</div>`;
+  html+=attributionHTML(d);
   // measured snapshots
   html+=`<div class="panel"><h3>Measured snapshots <span class="pill">${SNAPS.length} day${SNAPS.length===1?"":"s"}</span></h3>`;
   if(SNAPS.length>=2){
@@ -728,6 +945,332 @@ function renderPerformance(){
 }
 function ddSeries(vals){ let peak=vals[0]; return vals.map(v=>{ if(v>peak)peak=v; return (v/peak-1)*100; }); }
 
+/* ---------- factor / theme concentration (the correlation-budget spine) ---------- */
+var THEME_DEFS={
+  memory:{label:'Memory cycle',ai:true,color:'#C79A3B'},
+  aihw:{label:'AI compute / accelerators',ai:true,color:'#3BB2C9'},
+  semicap:{label:'Semicap / EDA tools',ai:true,color:'#6699CC'},
+  quantum:{label:'Quantum (speculative)',ai:true,color:'#9B7BD4'},
+  software:{label:'Enterprise software',ai:false,color:'#3FBF6A'},
+  power:{label:'Power / grid infra',ai:false,color:'#E0A64B'},
+  other:{label:'Other / uncorrelated',ai:false,color:'#9FB2CC'}
+};
+function classifyTheme(tk,sector){
+  tk=(tk||'').toUpperCase(); sector=(sector||'').toLowerCase();
+  var M={MU:'memory',DRAM:'memory',STX:'memory',WDC:'memory',SNDK:'memory',
+    NVDA:'aihw',AMD:'aihw',AVGO:'aihw',MRVL:'aihw',SMCI:'aihw',COHR:'aihw',ALAB:'aihw',CRDO:'aihw',TSM:'aihw',ARM:'aihw',SMH:'aihw',
+    ASML:'semicap',SNPS:'semicap',CDNS:'semicap',KLAC:'semicap',LRCX:'semicap',AMAT:'semicap',
+    MSFT:'software',CRM:'software',GOOGL:'software',GOOG:'software',NOW:'software',ORCL:'software',PLTR:'software',
+    VST:'power',CEG:'power',GEV:'power',VRT:'power',TLN:'power',NRG:'power',
+    QNT:'quantum',IONQ:'quantum',QBTS:'quantum',RGTI:'quantum',QUBT:'quantum',LAES:'quantum',ARQQ:'quantum'};
+  if(M[tk]) return M[tk];
+  if(/memory/.test(sector)) return 'memory';
+  if(/semicap|equipment|eda/.test(sector)) return 'semicap';
+  if(/semi|semiconductor/.test(sector)) return 'aihw';
+  if(/software|internet|saas/.test(sector)) return 'software';
+  if(/power|utilit|energy|grid/.test(sector)) return 'power';
+  return 'other';
+}
+// live discipline lines from the deployment research (7/05 re-underwrite)
+var RISK_LINES={
+  MU:[{px:900,label:'trim rung — scale ~5sh',kind:'trim'},{px:520,label:'200dma — cut to core',kind:'alarm'}],
+  DRAM:[{px:55,label:'thesis-break line',kind:'alarm'}],
+  VST:[{px:140,label:'warn',kind:'warn'},{px:133,label:'hard stop',kind:'alarm'}],
+  SNPS:[{px:376,label:'Sep-25 low retest',kind:'warn'}],
+  CRM:[{px:146,label:'52wk-low break',kind:'warn'}]
+};
+function factorExposure(d){
+  var rows=(d&&d.rows)||[];
+  var eqTotal=0; rows.forEach(function(r){ if(r.mv>0) eqTotal+=r.mv; });
+  if(eqTotal<=0) return {ok:false};
+  var byTheme={}, aiMv=0, memMv=0, divMv=0;
+  rows.forEach(function(r){
+    if(!(r.mv>0)) return;
+    var th=classifyTheme(r.tk,(r.h&&r.h.sector));
+    if(!byTheme[th]) byTheme[th]={mv:0,names:[]};
+    byTheme[th].mv+=r.mv; byTheme[th].names.push(r.tk);
+    if(THEME_DEFS[th].ai) aiMv+=r.mv; else if(th!=='other') divMv+=r.mv;
+    if(th==='memory') memMv+=r.mv;
+  });
+  var hhi=0; Object.keys(byTheme).forEach(function(k){ var w=byTheme[k].mv/eqTotal; hhi+=w*w; });
+  return {ok:true, eqTotal:eqTotal, byTheme:byTheme,
+    aiPct:aiMv/eqTotal, memPct:memMv/eqTotal, divPct:divMv/eqTotal,
+    hhi:hhi, effThemes:hhi>0?(1/hhi):0};
+}
+function factorConcentrationHTML(d){
+  var fx=factorExposure(d); if(!fx.ok) return '';
+  var byTheme=fx.byTheme, eqTotal=fx.eqTotal, aiPct=fx.aiPct, memPct=fx.memPct, divPct=fx.divPct, effThemes=fx.effThemes;
+  var h='<div class="panel"><h3>Factor &amp; theme concentration <span class="pill">correlation budget</span></h3>'+
+    '<div class="hint">The book\'s real risk isn\'t 12 names — it\'s how many <i>bets</i> they collapse into. Memory / accelerators / semicap / quantum all draw on the same hyperscaler-AI-capex cycle and draw down together. This is the spine of the deployment thesis.</div>';
+  // three headline gauges
+  h+='<div class="grid kpis" style="margin-top:8px">'+
+     kpi('AI-capex factor', fmtPctRaw(aiPct*100,0), aiPct>=0.85?'⚠ one concentrated bet':(aiPct>=0.6?'heavy':'balanced'), aiPct>=0.85?'down':'')+
+     kpi('Memory-driver sub-bet', fmtPctRaw(memPct*100,0), memPct>=0.4?'⚠ MU + DRAM stacked':'', memPct>=0.4?'down':'')+
+     kpi('Diversifiers owned', fmtPctRaw(divPct*100,0), divPct<0.15?'thin — correlation budget spent':'', divPct<0.15?'down':'')+
+     kpi('Effective # of themes', fmtNum(effThemes,1), '1/HHI · '+Object.keys(byTheme).length+' present')+
+     '</div>';
+  // stacked theme bar
+  var order=['memory','aihw','semicap','quantum','software','power','other'].filter(function(k){return byTheme[k];});
+  h+='<div style="display:flex;height:22px;border-radius:5px;overflow:hidden;margin:10px 0 6px;border:1px solid var(--line)">';
+  order.forEach(function(k){ var w=byTheme[k].mv/eqTotal; if(w<=0) return;
+    h+='<div title="'+THEME_DEFS[k].label+' '+fmtPctRaw(w*100,0)+'" style="width:'+(w*100).toFixed(1)+'%;background:'+THEME_DEFS[k].color+'"></div>'; });
+  h+='</div><div class="hint" style="margin-bottom:10px">';
+  h+=order.map(function(k){ return '<span style="display:inline-block;margin-right:10px"><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:'+THEME_DEFS[k].color+';margin-right:3px"></span>'+THEME_DEFS[k].label+' '+fmtPctRaw((byTheme[k].mv/eqTotal)*100,0)+(THEME_DEFS[k].ai?'':' ·div')+'</span>'; }).join('');
+  h+='</div>';
+  // theme table
+  h+='<div class="scroll"><table class="tight"><thead><tr><th style="text-align:left">Theme</th><th>Role</th><th>Weight</th><th style="text-align:left">Names</th></tr></thead><tbody>';
+  order.forEach(function(k){ var t=byTheme[k], w=t.mv/eqTotal;
+    h+='<tr><td style="text-align:left"><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:'+THEME_DEFS[k].color+';margin-right:5px"></span>'+THEME_DEFS[k].label+'</td>'+
+       '<td>'+(THEME_DEFS[k].ai?'<span class="down">AI-capex</span>':(k==='other'?'—':'<span class="up">diversifier</span>'))+'</td>'+
+       '<td>'+fmtPctRaw(w*100,1)+'</td><td class="mut" style="text-align:left">'+t.names.join(', ')+'</td></tr>'; });
+  h+='</tbody></table></div>';
+  // live discipline lines
+  var lineRows=[];
+  d.rows.forEach(function(r){ var L=RISK_LINES[(r.tk||'').toUpperCase()]; if(!L||r.price==null) return;
+    L.forEach(function(x){ var dist=(r.price-x.px)/x.px; var hit=r.price<=x.px;
+      lineRows.push({tk:r.tk,price:r.price,px:x.px,label:x.label,kind:x.kind,dist:dist,hit:hit}); }); });
+  if(lineRows.length){
+    lineRows.sort(function(a,b){ return a.dist-b.dist; });
+    h+='<h3 style="margin-top:16px">Live discipline lines <span class="pill">from the 7/05 re-underwrite</span></h3>'+
+       '<div class="hint">Pre-committed downside rungs on the concentrated names — distance = how far price must fall to trigger. Brandon executes.</div>';
+    h+='<div class="scroll"><table class="tight"><thead><tr><th>Name</th><th>Price</th><th>Line</th><th style="text-align:left">Trigger</th><th>Distance</th><th>Status</th></tr></thead><tbody>';
+    lineRows.forEach(function(x){ var kc=x.kind==='alarm'?'down':(x.kind==='trim'?'':'mut');
+      h+='<tr><td class="tk">'+x.tk+'</td><td>'+fmtUSD(x.price,2)+'</td><td>'+fmtUSD(x.px,0)+'</td>'+
+         '<td style="text-align:left" class="'+kc+'">'+x.label+'</td>'+
+         '<td class="'+(x.hit?'down':'')+'">'+(x.hit?'—':fmtPctRaw(x.dist*100,1))+'</td>'+
+         '<td>'+(x.hit?'<span class="chip trim">&#9679; TRIGGERED</span>':'<span class="chip hold" style="opacity:.7">'+fmtPctRaw(x.dist*100,0)+' away</span>')+'</td></tr>'; });
+    h+='</tbody></table></div>';
+  }
+  h+='</div>';
+  return h;
+}
+/* ============================================================
+   INSTITUTIONAL QUANT ENGINE — multi-factor model + Monte-Carlo VaR
+   Real regression + correlated simulation on live return history.
+   ============================================================ */
+function matInv(A){ var n=A.length, M=A.map(function(row,i){ return row.concat(Array.from({length:n},function(_,j){return i===j?1:0;})); });
+  for(var c=0;c<n;c++){ var piv=c; for(var r=c+1;r<n;r++) if(Math.abs(M[r][c])>Math.abs(M[piv][c])) piv=r;
+    if(Math.abs(M[piv][c])<1e-12) return null; var tmp=M[c];M[c]=M[piv];M[piv]=tmp;
+    var dv=M[c][c]; for(var j=0;j<2*n;j++) M[c][j]/=dv;
+    for(var r2=0;r2<n;r2++){ if(r2===c)continue; var f=M[r2][c]; for(var j2=0;j2<2*n;j2++) M[r2][j2]-=f*M[c][j2]; } }
+  return M.map(function(row){return row.slice(n);}); }
+function cholesky(A){ var n=A.length, L=Array.from({length:n},function(){return new Array(n).fill(0);});
+  for(var i=0;i<n;i++){ for(var j=0;j<=i;j++){ var s=0; for(var k=0;k<j;k++) s+=L[i][k]*L[j][k];
+    if(i===j){ var v=A[i][i]-s; L[i][j]=Math.sqrt(v>1e-14?v:1e-14); } else L[i][j]=(A[i][j]-s)/(L[j][j]||1e-9); } }
+  return L; }
+var _qS=0x2545F491; function _qu(){ _qS^=_qS<<13;_qS^=_qS>>>17;_qS^=_qS<<5;_qS>>>=0; return (_qS%1e7)/1e7||1e-7; }
+function randN(){ var u1=_qu(),u2=_qu(); return Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2); }
+function alignedFactorReturns(rowsIn){
+  var ROWS=rowsIn||(DERIVED?DERIVED.rows:null); if(!ROWS||!ROWS.length) return null;
+  // dedupe: multi-lot positions must appear ONCE (audit fix — dupes double-counted exposure)
+  var held=[]; ROWS.forEach(function(r){ if(r.mv!=null&&r.mv>0&&SPARK[r.tk]&&SPARK[r.tk].values&&SPARK[r.tk].timestamps&&held.indexOf(r.tk)<0) held.push(r.tk); });
+  if(held.length<1) return null;
+  var fac={SMH:SPARK['SMH'], MKT:SPARK['QQQ']||SPARK['SPY']||SPARK[SETTINGS.benchmark], TNX:SPARK['^TNX']};
+  if(!fac.SMH||!fac.MKT) return null;
+  var series=held.map(function(t){return SPARK[t];}).concat([fac.SMH,fac.MKT].concat(fac.TNX?[fac.TNX]:[]));
+  var dset={}; series.forEach(function(s){ for(var i=0;i<s.timestamps.length;i++){ if(s.timestamps[i]!=null&&s.values[i]!=null) dset[s.timestamps[i]]=1; } });
+  var axis=Object.keys(dset).map(Number).sort(function(a,b){return a-b;}); if(axis.length<8) return null;
+  // trim to the latest first-observation across series (audit fix — leading zero-fill understated vol/cov for short-history names)
+  var maxFirst=0; series.forEach(function(s){ for(var i=0;i<s.timestamps.length;i++){ if(s.timestamps[i]!=null&&s.values[i]!=null){ if(s.timestamps[i]>maxFirst) maxFirst=s.timestamps[i]; break; } } });
+  axis=axis.filter(function(ts){ return ts>=maxFirst; }); if(axis.length<8) return null;
+  function align(s){ var m={}; for(var i=0;i<s.timestamps.length;i++){ if(s.timestamps[i]!=null&&s.values[i]!=null)m[s.timestamps[i]]=s.values[i]; } var last=null,out=[]; axis.forEach(function(ts){ if(m[ts]!=null)last=m[ts]; out.push(last); }); return out; }
+  function rr(arr){ var r=[]; for(var k=1;k<arr.length;k++) r.push(arr[k-1]>0?(arr[k]/arr[k-1]-1):0); return r; }
+  var Rh={}; held.forEach(function(t){ Rh[t]=rr(align(SPARK[t])); });
+  var smhA=align(fac.SMH), mktA=align(fac.MKT), tnxA=fac.TNX?align(fac.TNX):null;
+  var SMH=rr(smhA), MKT=rr(mktA), RATE=[]; if(tnxA){ for(var k=1;k<tnxA.length;k++) RATE.push((tnxA[k]-tnxA[k-1])||0); } else { for(var k2=1;k2<axis.length;k2++)RATE.push(0); }
+  var mv={},tot=0; ROWS.forEach(function(r){ if(held.indexOf(r.tk)>=0&&r.mv!=null){ mv[r.tk]=(mv[r.tk]||0)+r.mv; tot+=r.mv; } });
+  var w={}; held.forEach(function(t){ w[t]=tot>0?mv[t]/tot:0; });
+  var n=Rh[held[0]].length, book=[]; for(var i=0;i<n;i++){ var s=0; held.forEach(function(t){ s+=w[t]*(Rh[t][i]||0); }); book.push(s); }
+  return { held:held, w:w, Rh:Rh, book:book, SMH:SMH, MKT:MKT, RATE:RATE, ppy:periodsPerYear(axis), total:tot, mvTotal:(rowsIn?tot:((DERIVED&&DERIVED.equity)||tot)) };
+}
+function computeFactorModel(rowsIn){
+  var A=alignedFactorReturns(rowsIn); if(!A||A.book.length<8) return null;
+  var n=A.book.length;
+  var bMkt=cov(A.MKT,A.SMH)/(cov(A.SMH,A.SMH)||1e-9);
+  var MKTo=A.MKT.map(function(v,i){return v-bMkt*A.SMH[i];}); // market beyond semis
+  var ones=new Array(n).fill(1);
+  var F=[A.SMH,MKTo,A.RATE,ones], k=4, XtX=[],Xty=[];   // intercept column (audit fix) — residuals now covariance-orthogonal to factors
+  for(var a=0;a<k;a++){ XtX[a]=[]; for(var b=0;b<k;b++){ var s=0; for(var i=0;i<n;i++)s+=F[a][i]*F[b][i]; XtX[a][b]=s; } var sy=0; for(var i2=0;i2<n;i2++)sy+=F[a][i2]*A.book[i2]; Xty[a]=sy; }
+  var inv=matInv(XtX); if(!inv) return null;
+  var beta=inv.map(function(row){ var s=0; for(var b2=0;b2<k;b2++)s+=row[b2]*Xty[b2]; return s; });
+  var resid=[],ssTot=0,ssRes=0,mb=mean(A.book);
+  for(var i3=0;i3<n;i3++){ var fit=beta[0]*F[0][i3]+beta[1]*F[1][i3]+beta[2]*F[2][i3]+beta[3]; var e=A.book[i3]-fit; resid.push(e); ssRes+=e*e; ssTot+=(A.book[i3]-mb)*(A.book[i3]-mb); }
+  var r2=ssTot>0?Math.max(0,Math.min(1,1-ssRes/ssTot)):0, vb=cov(A.book,A.book);
+  var cSemis=vb>0?beta[0]*cov(F[0],A.book)/vb:0, cMkt=vb>0?beta[1]*cov(F[1],A.book)/vb:0, cRate=vb>0?beta[2]*cov(F[2],A.book)/vb:0, idio=vb>0?cov(resid,resid)/vb:0;
+  return { n:n, ppy:A.ppy, r2:r2, semisBeta:beta[0], mktBeta:beta[1], rateBeta:beta[2],
+    semisShare:cSemis, mktShare:cMkt, rateShare:cRate, idioShare:idio,
+    annVol:Math.sqrt(vb*A.ppy), residVol:Math.sqrt(cov(resid,resid)*A.ppy) };
+}
+function monteCarloVaR(days,rowsIn){
+  var A=alignedFactorReturns(rowsIn); if(!A) return null;
+  var tks=A.held, m=tks.length; if(m<1) return null;
+  var H=days||21, N=6000, R=tks.map(function(t){return A.Rh[t];}), mu=R.map(function(r){return mean(r);});
+  // audit fix: one sample step != one trading day on down-sampled sparks — scale steps so the sim covers H TRADING DAYS
+  var steps=Math.max(1,Math.round(H*(A.ppy||252)/252));
+  var C=[]; for(var i=0;i<m;i++){ C[i]=[]; for(var j=0;j<m;j++) C[i][j]=cov(R[i],R[j]); }
+  var L=cholesky(C), w=tks.map(function(t){return A.w[t];}), V=A.mvTotal||A.total;
+  _qS=0x9E3779B9; var term=[], dds=[];
+  for(var s=0;s<N;s++){ var cum=0,peak=0,dd=0;
+    for(var d=0;d<steps;d++){ var z=new Array(m); for(var i4=0;i4<m;i4++) z[i4]=randN(); var br=0;
+      for(var i5=0;i5<m;i5++){ var ri=mu[i5]; for(var j5=0;j5<=i5;j5++) ri+=L[i5][j5]*z[j5]; br+=w[i5]*ri; }
+      cum=(1+cum)*(1+br)-1; if(cum>peak)peak=cum; var cd=(cum-peak)/(1+peak); if(cd<dd)dd=cd; }
+    term.push(cum*V); dds.push(dd); }
+  term.sort(function(a,b){return a-b;}); dds.sort(function(a,b){return a-b;});
+  function q(arr,p){ return arr[Math.max(0,Math.min(arr.length-1,Math.floor(p*arr.length)))]; }
+  var v95=q(term,0.05), v99=q(term,0.01), cs=0,cn=0; for(var kk=0;kk<term.length;kk++){ if(term[kk]<=v95){cs+=term[kk];cn++;} }
+  return { H:H, N:N, V:V, var95:v95, var99:v99, cvar95:cn?cs/cn:v95, worstDD:dds[0], medDD:q(dds,0.5),
+    probDD10:dds.filter(function(x){return x<=-0.10;}).length/dds.length, probLoss:term.filter(function(x){return x<0;}).length/term.length,
+    p05ret:q(term,0.05)/V, mean:mean(term), dist:term };
+}
+function factorModelHTML(){
+  var fm=computeFactorModel();
+  if(!fm) return '<div class="panel"><h3>Factor model <span class="pill">regression</span></h3><div class="muted-box">Need ≥8 periods of overlapping return history for your holdings + SMH/QQQ. Hit Refresh once prices load.</div></div>';
+  var sys=1-fm.idioShare;
+  function bar(label,share,beta,col){ var pct=Math.max(0,share*100); return '<tr><td class="tk" style="text-align:left">'+label+'</td><td>'+(beta!=null?fmtNum(beta,2):'—')+'</td><td>'+fmtPctRaw(share*100,0)+'</td><td style="width:38%"><div style="background:#1a2b44;border-radius:4px;height:14px;overflow:hidden"><div style="width:'+Math.min(100,pct)+'%;height:100%;background:'+col+'"></div></div></td></tr>'; }
+  var oneBet = fm.semisShare>=0.7;
+  var verdict = oneBet ? '<b style="color:#F0656B">'+fmtPctRaw(fm.semisShare*100,0)+' of your book’s variance is a SINGLE factor — the semis/AI-hardware cycle (SMH).</b> This is the number behind “one concentrated bet”: diversification here means adding return streams that load on a <i>different</i> factor, not more names inside SMH.' : 'The semis factor drives '+fmtPctRaw(fm.semisShare*100,0)+' of variance; the rest is spread across market + rates + idiosyncratic.';
+  var h='<div class="panel"><h3>Multi-factor risk model <span class="pill">OLS regression · R² '+fmtNum(fm.r2,2)+'</span></h3>';
+  h+='<div class="hint">Your book’s daily returns regressed on three orthogonal factors (n='+fm.n+' obs). <b>Beta</b> = book move per 1% factor move; <b>variance share</b> = how much of your risk each factor explains (β·cov/var — sums to 100% with idiosyncratic). This is what a risk desk means by “factor exposure.”</div>';
+  h+='<div class="grid kpis" style="margin-top:2px">'+kpi('Systematic risk', fmtPctRaw(sys*100,0), 'factor-driven', sys>0.85?'down':'')+kpi('Idiosyncratic', fmtPctRaw(fm.idioShare*100,0), 'stock-specific')+kpi('Model annualized vol', fmtPctRaw(fm.annVol*100,0), 'from regression')+kpi('Residual vol', fmtPctRaw(fm.residVol*100,0), 'diversifiable slice')+'</div>';
+  h+='<div class="scroll" style="margin-top:8px"><table class="tight"><thead><tr><th style="text-align:left">Factor</th><th>Beta</th><th>Var share</th><th style="text-align:left">Contribution</th></tr></thead><tbody>';
+  h+=bar('Semis / AI-hardware (SMH)', fm.semisShare, fm.semisBeta, '#C79A3B');
+  h+=bar('Broad market (QQQ, ex-semis)', fm.mktShare, fm.mktBeta, '#3BB2C9');
+  h+=bar('Rates (10Y Δ)', fm.rateShare, null, '#8A7CD6');
+  h+=bar('Idiosyncratic (stock-specific)', fm.idioShare, null, '#3FBF6A');
+  h+='</tbody></table></div>';
+  h+='<div class="muted-box" style="margin-top:8px;border-left:3px solid '+(oneBet?'#F0656B':'#3FBF6A')+'">'+verdict+'</div></div>';
+  return h;
+}
+function mcHistSVG(dist,v95,v99,V){
+  if(!dist||!dist.length) return '';
+  var lo=dist[0], hi=dist[dist.length-1], bins=41, w=560, h=120, bw=w/bins, cts=new Array(bins).fill(0);
+  for(var i=0;i<dist.length;i++){ var b=Math.floor((dist[i]-lo)/((hi-lo)||1)*(bins-1)); cts[Math.max(0,Math.min(bins-1,b))]++; }
+  var mx=Math.max.apply(null,cts)||1;
+  var s='<svg viewBox="0 0 '+w+' '+(h+22)+'" style="width:100%;max-width:620px">';
+  for(var j=0;j<bins;j++){ var val=lo+(j+0.5)/bins*(hi-lo); var col=val<0?'#8a3b3f':'#2f6d4a'; if(val<=v95)col='#F0656B'; var bh=cts[j]/mx*h; s+='<rect x="'+(j*bw).toFixed(1)+'" y="'+(h-bh).toFixed(1)+'" width="'+(bw-0.6).toFixed(1)+'" height="'+bh.toFixed(1)+'" fill="'+col+'"/>'; }
+  function xof(val){ return ((val-lo)/((hi-lo)||1)*w); }
+  var zx=xof(0); s+='<line x1="'+zx.toFixed(1)+'" y1="0" x2="'+zx.toFixed(1)+'" y2="'+h+'" stroke="#9FB2CC" stroke-dasharray="2,2"/>';
+  var v95x=xof(v95); s+='<line x1="'+v95x.toFixed(1)+'" y1="0" x2="'+v95x.toFixed(1)+'" y2="'+h+'" stroke="#F0656B" stroke-width="1.5"/>';
+  s+='<text x="'+Math.min(w-70,v95x+3).toFixed(1)+'" y="12" fill="#F0656B" font-size="10">VaR95</text>';
+  s+='<text x="4" y="'+(h+16)+'" fill="#9FB2CC" font-size="10">'+fmtUSD(lo)+'</text>';
+  s+='<text x="'+(w-4)+'" y="'+(h+16)+'" fill="#9FB2CC" font-size="10" text-anchor="end">'+fmtUSD(hi)+'</text>';
+  s+='</svg>';
+  return s;
+}
+function monteCarloHTML(){
+  var mc=monteCarloVaR(21);
+  if(!mc) return '<div class="panel"><h3>Monte-Carlo VaR <span class="pill">simulation</span></h3><div class="muted-box">Need overlapping return history across your holdings. Hit Refresh.</div></div>';
+  var h='<div class="panel"><h3>Monte-Carlo simulation <span class="pill">'+mc.N.toLocaleString()+' paths · '+mc.H+'-day</span></h3>';
+  h+='<div class="hint">'+mc.N.toLocaleString()+' correlated '+mc.H+'-trading-day paths, drawn from your holdings’ real covariance matrix (Cholesky). This models how your positions move <i>together</i> — the tail a single-name VaR misses. Distribution of book P&L below; red = the worst 5%.</div>';
+  h+='<div class="grid kpis" style="margin-top:2px">'+
+    kpi(mc.H+'-day VaR 95%', fmtUSD(mc.var95), fmtPctRaw(mc.var95/mc.V*100,1)+' of book','down')+
+    kpi(mc.H+'-day VaR 99%', fmtUSD(mc.var99), 'worst 1% path','down')+
+    kpi('Expected shortfall', fmtUSD(mc.cvar95), 'avg of the worst 5%','down')+
+    kpi('P(&ge;10% drawdown)', fmtPctRaw(mc.probDD10*100,0), 'intra-path, over '+mc.H+'d', mc.probDD10>0.15?'down':'')+
+    '</div>';
+  h+='<div style="margin-top:8px">'+mcHistSVG(mc.dist,mc.var95,mc.var99,mc.V)+'</div>';
+  h+='<div class="muted-box" style="margin-top:6px"><b>Read:</b> over the next month, a 1-in-20 bad stretch costs about <b>'+fmtUSD(-mc.var95)+'</b> ('+fmtPctRaw(-mc.var95/mc.V*100,1)+'); a 1-in-100 stretch about <b>'+fmtUSD(-mc.var99)+'</b>. There’s a <b>'+fmtPctRaw(mc.probDD10*100,0)+'</b> chance of touching a &ge;10% drawdown at some point in the month. Median worst-drawdown per path: '+fmtPctRaw(mc.medDD*100,1)+'.</div>';
+  h+='</div>';
+  return h;
+}
+/* ---- Catalyst scenario P&L: real events → position-level impact via factor betas ---- */
+function nameSemisBetas(){
+  var out={}, smh=SPARK['SMH']; if(!smh||!smh.values) return out;
+  function sr(s){ var ts=[],v=[]; for(var i=0;i<s.timestamps.length;i++){ if(s.timestamps[i]!=null&&s.values[i]!=null){ts.push(s.timestamps[i]);v.push(s.values[i]);} } var r=[],rt=[]; for(var k=1;k<v.length;k++){ if(v[k-1]>0){ r.push(v[k]/v[k-1]-1); rt.push(ts[k]); } } return {t:rt,r:r}; }
+  var S=sr(smh), sm={}; for(var i=0;i<S.t.length;i++) sm[S.t[i]]=S.r[i];
+  (DERIVED?DERIVED.rows:[]).forEach(function(row){ var s=SPARK[row.tk]; if(!s||!s.values) return; var N=sr(s), xs=[],ys=[]; for(var j=0;j<N.t.length;j++){ if(sm[N.t[j]]!=null){ xs.push(sm[N.t[j]]); ys.push(N.r[j]); } } if(xs.length>=6){ out[row.tk]=cov(xs,ys)/(cov(xs,xs)||1e-9); } });
+  return out;
+}
+var CATALYST_SCENARIOS=[
+  {name:'ASML soft bookings — Jul 15', prob:0.30, note:'Q2 orders miss → the 42× cyclical de-rates; semis sympathy', shocks:{SMH:-0.04,MEM:0}, ov:{ASML:-0.12}},
+  {name:'Hyperscaler capex BEAT — Jul 22-31', prob:0.45, note:'MSFT/GOOG/META/AMZN raise capex → whole AI-hardware book bid', shocks:{SMH:0.06,MEM:0.05}},
+  {name:'Hyperscaler capex MISS — Jul 22-31', prob:0.20, note:'Capex-digestion signal — the book’s single core risk', shocks:{SMH:-0.09,MEM:-0.10}},
+  {name:'MSFT FCF disappoints — Jul 28', prob:0.30, note:'Azure FCF drag from memory inflation', shocks:{SMH:-0.02}, ov:{MSFT:-0.08}},
+  {name:'Memory glut re-rate (2018 analog)', prob:0.20, note:'DRAM contract prices roll → MU/DRAM crack', shocks:{SMH:-0.08,MEM:-0.15}},
+  {name:'DeepSeek-style capex scare (Jan-25 analog)', prob:0.15, note:'“AI capex is inflated” narrative shock', shocks:{SMH:-0.15,MEM:-0.10}},
+  {name:'Rate shock +50bp', prob:0.20, note:'Long-end sells off → high-beta growth de-rates', shocks:{SMH:-0.05,RATE:0.5}},
+  {name:'Soft-landing risk-on', prob:0.35, note:'Broad melt-up, semis lead', shocks:{SMH:0.10,MEM:0.06}}
+];
+function computeCatalystScenarios(){
+  if(!DERIVED) return null;
+  var betas=nameSemisBetas(), rows=DERIVED.rows.filter(function(r){return r.mv!=null&&r.mv>0;});
+  if(!rows.length) return null;
+  var eq=DERIVED.equity||rows.reduce(function(a,r){return a+r.mv;},0);
+  var rbk=(DERIVED.realized&&DERIVED.realized.rateBeta!=null)?DERIVED.realized.rateBeta:0;
+  var scen=CATALYST_SCENARIOS.map(function(sc){
+    var pnl=0, per=[];
+    rows.forEach(function(r){ var tk=(r.tk||'').toUpperCase(), ret;
+      if(sc.ov&&sc.ov[tk]!=null){ ret=sc.ov[tk]; }
+      else { var sb=betas[tk]!=null?betas[tk]:(r.beta!=null?r.beta:1); var isMem=/^(MU|DRAM)$/.test(tk)||/memory/i.test(r.sector||''); ret=sb*(sc.shocks.SMH||0)+(isMem?(sc.shocks.MEM||0):0); }
+      var dol=ret*r.mv; pnl+=dol; per.push({tk:tk,ret:ret,dol:dol}); });
+    if(sc.shocks.RATE){ pnl+=rbk*sc.shocks.RATE*eq; }
+    per.sort(function(a,b){return a.dol-b.dol;});
+    return {name:sc.name, note:sc.note, prob:sc.prob, pnl:pnl, pct:eq>0?pnl/eq:0, drivers:per.slice(0,2)};
+  });
+  scen.sort(function(a,b){return a.pnl-b.pnl;});
+  return {scen:scen, eq:eq};
+}
+function catalystScenarioHTML(){
+  var C=computeCatalystScenarios();
+  if(!C) return '';
+  var worst=C.scen[0], best=C.scen[C.scen.length-1];
+  var h='<div class="panel"><h3>Catalyst scenario P&amp;L <span class="pill">event-driven stress</span></h3>';
+  h+='<div class="hint">Each upcoming catalyst mapped to a factor shock, then run through <b>every position’s regression beta to SMH</b> (memory names take an extra memory shock; ASML/MSFT use event-specific moves). This is the book’s P&amp;L <i>if</i> each event breaks the stated way — the question a PM asks before a print. Probabilities are illustrative and overlap; not additive.</div>';
+  h+='<div class="grid kpis" style="margin-top:2px">'+
+    kpi('Worst catalyst', fmtUSD(worst.pnl), worst.name.split(' — ')[0], 'down')+
+    kpi('Worst-case % book', fmtPctRaw(worst.pct*100,1), 'single-event drawdown','down')+
+    kpi('Best catalyst', fmtUSD(best.pnl), best.name.split(' — ')[0], 'up')+
+    kpi('Up/down skew', (Math.abs(best.pnl)/Math.max(1,Math.abs(worst.pnl))).toFixed(2)+'x', 'best vs worst $')+
+    '</div>';
+  h+='<div class="scroll" style="margin-top:8px"><table class="tight"><thead><tr><th style="text-align:left">Catalyst</th><th>Illus. prob</th><th>Book P&amp;L</th><th>% book</th><th style="text-align:left">Biggest drag</th></tr></thead><tbody>';
+  C.scen.forEach(function(s){ var col=s.pnl<0?'down':'up';
+    h+='<tr><td style="text-align:left"><b>'+s.name+'</b><br><span class="mut" style="font-size:11px">'+s.note+'</span></td>'+
+       '<td>'+fmtPctRaw(s.prob*100,0)+'</td>'+
+       '<td class="'+col+'">'+fmtUSD(s.pnl)+'</td>'+
+       '<td class="'+col+'">'+fmtPctRaw(s.pct*100,1)+'</td>'+
+       '<td style="text-align:left" class="mut">'+s.drivers.map(function(d){return d.tk+' '+fmtUSD(d.dol);}).join(' · ')+'</td></tr>'; });
+  h+='</tbody></table></div>';
+  h+='<div class="muted-box" style="margin-top:6px"><b>Read:</b> your worst single-event case is <b>'+worst.name.split(' — ')[0]+'</b> at <b>'+fmtUSD(worst.pnl)+' ('+fmtPctRaw(worst.pct*100,1)+')</b>; the biggest upside is <b>'+best.name.split(' — ')[0]+'</b> at <b>+'+fmtUSD(best.pnl).replace('$','$')+'</b>. Because the book loads ~79% on the semis factor, most scenarios move it the same direction — the diversification job is to add a scenario that pays when semis <i>fall</i>.</div>';
+  h+='</div>';
+  return h;
+}
+/* MODEL DIAGNOSTICS — the engine validates its own math (model-risk control).
+   Every invariant a risk desk would demand before trusting the numbers. */
+function modelDiagnosticsHTML(d){
+  var checks=[];
+  function chk(name, ok, detail){ checks.push({name:name, ok:!!ok, detail:detail}); }
+  try{
+    var w=0; d.rows.forEach(function(r){ if(r.weight!=null) w+=r.weight; });
+    var eqShare=(d.total>0)?(d.equity/d.total):1;
+    chk('Σ position weights = equity share of book', Math.abs(w-eqShare)<0.02, fmtPctRaw(w*100,1)+' vs equity '+fmtPctRaw(eqShare*100,1)+' (cash/cards are the rest)');
+    var fm=computeFactorModel();
+    if(fm){
+      var s=fm.semisShare+fm.mktShare+fm.rateShare+fm.idioShare;
+      chk('Factor variance shares sum to 100%', Math.abs(s-1)<0.03, fmtPctRaw(s*100,1)+' (semis+mkt+rates+idio)');
+      chk('Regression R² in [0,1]', fm.r2>=0&&fm.r2<=1, fmtNum(fm.r2,2));
+      chk('Model vol positive & sane', fm.annVol>0&&fm.annVol<3, fmtPctRaw(fm.annVol*100,0)+' annualized');
+    } else chk('Factor model computes', false, 'insufficient overlapping history');
+    var mc1=monteCarloVaR(21), mc2=monteCarloVaR(21);
+    if(mc1&&mc2){
+      chk('MC reproducible (seeded)', mc1.var95===mc2.var95, 'same seed → identical VaR');
+      chk('VaR99 ≥ VaR95 in severity', mc1.var99<=mc1.var95, fmtUSD(mc1.var99)+' vs '+fmtUSD(mc1.var95));
+      chk('Expected shortfall ≥ VaR95', mc1.cvar95<=mc1.var95, fmtUSD(mc1.cvar95));
+      var r=d.realized;
+      if(r&&r.var95){
+        var scaled=-r.var95*Math.sqrt(21), ratio=Math.abs(mc1.var95)/Math.abs(scaled);
+        chk('MC vs parametric √t-scaling within 3×', ratio>0.33&&ratio<3, 'ratio '+ratio.toFixed(2)+' (drift + fat tails explain divergence)');
+      }
+      chk('Cholesky decomposition valid (cov PSD)', isFinite(mc1.var95), 'simulation ran on the full covariance matrix');
+    } else chk('Monte-Carlo computes', false, 'insufficient history');
+  }catch(e){ chk('Diagnostics ran without error', false, e.message); }
+  var fails=checks.filter(function(c){return !c.ok;}).length;
+  var h='<div class="panel"><h3>Model diagnostics <span class="pill">'+(fails?fails+' FAIL':'all pass')+'</span></h3>';
+  h+='<div class="hint">Model-risk control — the invariants a risk desk checks before trusting any engine. These run live on every render; a FAIL means treat that model’s output with suspicion (and tell the desk).</div>';
+  h+='<div class="scroll"><table class="tight"><thead><tr><th style="text-align:left">Invariant</th><th>Status</th><th style="text-align:left">Value</th></tr></thead><tbody>';
+  checks.forEach(function(c){ h+='<tr><td style="text-align:left">'+c.name+'</td><td>'+(c.ok?'<span class="chip buy">PASS</span>':'<span class="chip trim">FAIL</span>')+'</td><td style="text-align:left" class="mut">'+c.detail+'</td></tr>'; });
+  h+='</tbody></table></div></div>';
+  return h;
+}
 function renderRisk(){
   const d=DERIVED; const el=document.getElementById("risk"); const r=d&&d.realized;
   if(!d||!d.rows.length){ el.innerHTML=emptyState(); return; }
@@ -742,6 +1285,7 @@ function renderRisk(){
     ${kpi("Current Drawdown", fmtPctRaw(r?r.curDD*100:null,1), "from 1Y peak","down")}
     ${kpi("Rate beta (10Y)", fmtNum(r?r.rateBeta:null,2), "book return per +1.00 in 10Y yield")}
   </div>`;
+  html+=factorConcentrationHTML(d);
   // beta contribution bars
   const bc=d.rows.filter(r=>r.betaContrib!=null).slice().sort((a,b)=>b.betaContrib-a.betaContrib);
   html+=`<div class="two"><div class="panel"><h3>Beta contribution</h3><div class="hint">weight × beta — who drives your market risk</div>`+
@@ -757,7 +1301,11 @@ function renderRisk(){
       <td>${row.vol!=null?fmtPctRaw(row.vol*100,0):"—"}</td><td class="${cls(row.r1m)}">${fmtPct(row.r1m)}</td><td class="${cls(row.r3m)}">${fmtPct(row.r3m)}</td>
       <td class="${cls(row.r1y)}">${fmtPct(row.r1y)}</td><td class="down">${fmtUSD(nameVar!=null?-nameVar:null)}</td></tr>`; }
   html+=`</tbody></table></div></div>`;
+  html+=factorModelHTML();
+  html+=monteCarloHTML();
+  html+=catalystScenarioHTML();
   html+=riskDecompHTML();
+  html+=modelDiagnosticsHTML(d);
   el.innerHTML=html;
 }
 
@@ -885,7 +1433,15 @@ function renderData(){
 
   html+=`<div class="two">
     <div class="panel"><h3>Import from Schwab</h3>
-      <div class="hint">In Schwab: <b>Positions</b> → <b>Export</b> (CSV). Then choose the file or paste the contents below. I parse symbol, shares, and cost basis automatically.</div>
+      <div style="border:1px solid var(--line,#334155);border-radius:8px;padding:10px 12px;margin-bottom:12px">
+        <b>⚡ Live sync (Schwab API)</b>
+        <div class="hint" style="margin:4px 0 8px">Pulls your real positions + cash straight from Schwab (read-only). Merges by ticker — your theses, ladders and sectors are preserved. Requires Cloud sync connected (its secret authorizes the read) and the Schwab token wired (SCHWAB-SETUP.bat).</div>
+        <div class="inline"><button id="schwabSync" class="primary">Sync from Schwab now</button>
+          <label class="inline" style="gap:4px"><input type="radio" name="ssmode" value="merge" checked> Merge</label>
+          <label class="inline" style="gap:4px"><input type="radio" name="ssmode" value="replace"> Replace</label></div>
+        <div id="schwabSyncMsg" class="mut" style="margin-top:6px"></div>
+      </div>
+      <div class="hint">Manual fallback — in Schwab: <b>Positions</b> → <b>Export</b> (CSV). Then choose the file or paste the contents below. I parse symbol, shares, and cost basis automatically.</div>
       <input type="file" id="csvFile" accept=".csv,text/csv"><br><br>
       <textarea id="csvPaste" rows="6" style="width:100%" placeholder="…or paste Schwab Positions CSV text here"></textarea>
       <div class="inline" style="margin-top:8px"><button id="parseCsv" class="primary">Parse & import</button>
@@ -993,12 +1549,43 @@ function wireData(el){
   el.querySelector("#saveSet").onclick=()=>{ SETTINGS.benchmark=bs2.value; SETTINGS.riskFree=parseFloat(el.querySelector("#rfIn").value)||SETTINGS.riskFree; SETTINGS.targetCash=parseFloat(el.querySelector("#ctIn").value)||SETTINGS.targetCash; SETTINGS.maxName=parseFloat(el.querySelector("#mnIn").value)||SETTINGS.maxName; save(); syncBenchTop(); refresh(); };
   // csv
   el.querySelector("#csvFile").onchange=e=>{ const f=e.target.files[0]; if(!f)return; const rd=new FileReader(); rd.onload=()=>{ el.querySelector("#csvPaste").value=rd.result; }; rd.readAsText(f); };
+  var ssBtn=el.querySelector("#schwabSync");
+  if(ssBtn) ssBtn.onclick=async function(){
+    var msg=el.querySelector("#schwabSyncMsg");
+    function say(t){ if(msg) msg.textContent=t; }
+    var sec=cloudSecret();
+    if(!sec){ say("Connect Cloud sync first (below) — its secret authorizes the account read."); return; }
+    say("Pulling positions from Schwab…");
+    var r;
+    try{ r=await fetch(BASE+'?schwab=positions',{headers:{'Authorization':'Bearer '+sec},cache:'no-store'}); }
+    catch(e){ say("Network error — try again."); return; }
+    if(r.status===401||r.status===403){ say("Wrong cloud secret — reconnect Cloud sync."); return; }
+    var d=null; try{ d=await r.json(); }catch(e){}
+    if(!r.ok||!d){ say("HTTP "+r.status+" — try again."); return; }
+    if(d.error==='schwab-not-configured'){ say("Schwab token not wired yet — double-click SCHWAB-SETUP.bat in C:\\Dev\\bpleone-quotes-worker, then retry."); return; }
+    var pos=(d.positions||[]).filter(function(p){ return p.qty>0 && (!p.assetType || /EQUITY|ETF|COLLECTIVE|MUTUAL|INDEX/i.test(p.assetType)); });
+    if(!pos.length){ say("Schwab returned no equity positions."); return; }
+    var mode=(el.querySelector('input[name="ssmode"]:checked')||{}).value||'merge';
+    var byTk={}; HOLDINGS.forEach(function(h){ byTk[(h.ticker||'').toUpperCase()]=h; });
+    var next=[], added=0, updated=0, kept=0;
+    pos.forEach(function(p){
+      var tk=(p.symbol||'').toUpperCase(); if(!tk) return;
+      var prev=byTk[tk];
+      if(prev){ next.push(Object.assign({},prev,{shares:p.qty,avgCost:(p.avgCost||prev.avgCost)})); updated++; delete byTk[tk]; }
+      else { next.push({ticker:tk,shares:p.qty,avgCost:(p.avgCost||null),sector:"",account:"Schwab"}); added++; }
+    });
+    if(mode==='merge'){ Object.keys(byTk).forEach(function(tk){ next.push(byTk[tk]); kept++; }); }
+    HOLDINGS=next;
+    if(typeof d.cash==='number'&&isFinite(d.cash)&&d.cash>=0) CASH=Math.round(d.cash*100)/100;  // audit fix: broker cash of $0 is real data
+    save(); renderData(); refresh();
+    say("✔ Synced "+pos.length+" positions ("+updated+" updated, "+added+" new"+(mode==='merge'?(", "+kept+" kept"):", replaced")+") · cash $"+(CASH||0).toLocaleString()+" · real cost bases now in.");
+  };
   el.querySelector("#parseCsv").onclick=()=>{ const txt=el.querySelector("#csvPaste").value; const mode=el.querySelector("input[name=impmode]:checked").value; importCSV(txt,mode,el); };
   // backup
-  el.querySelector("#exportJson").onclick=()=>{ const blob=new Blob([JSON.stringify({HOLDINGS,CASH,SETTINGS,SNAPS,CARDS,CARDMETA,JOURNAL,WATCHLIST},null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="portfolio-backup-"+todayStr()+".json"; a.click(); };
+  el.querySelector("#exportJson").onclick=()=>{ const blob=new Blob([JSON.stringify(buildBlob(),null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="portfolio-backup-"+todayStr()+".json"; a.click(); };
   var ec=el.querySelector("#exportCsv"); if(ec) ec.onclick=()=>{ var rows=[["Ticker","Shares","AvgCost","Sector","Price","MktValue","CostBasis","UnrealPL","UnrealPLpct","WeightPct"]]; (DERIVED?DERIVED.rows:[]).forEach(function(r){ rows.push([r.tk,r.shares,r.h.avgCost,r.sector,r.price,r.mv,r.cost,r.upl,r.uplPct!=null?(r.uplPct*100).toFixed(2):"",(r.weight*100).toFixed(2)]); }); var csv=rows.map(function(row){return row.map(function(c){return c==null?"":'"'+String(c).replace(/"/g,'""')+'"';}).join(",");}).join("\n"); var blob=new Blob([csv],{type:"text/csv"}); var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="holdings-"+todayStr()+".csv"; a.click(); };
   el.querySelector("#importJsonBtn").onclick=()=>el.querySelector("#importJson").click();
-  el.querySelector("#importJson").onchange=e=>{ const f=e.target.files[0]; if(!f)return; const rd=new FileReader(); rd.onload=()=>{ try{ const o=JSON.parse(rd.result); if(o.HOLDINGS)HOLDINGS=o.HOLDINGS; if(o.CASH!=null)CASH=o.CASH; if(o.SETTINGS)SETTINGS={...SETTINGS,...o.SETTINGS}; if(o.SNAPS)SNAPS=o.SNAPS; if(o.CARDS)CARDS=o.CARDS; if(o.CARDMETA)CARDMETA=o.CARDMETA; if(o.JOURNAL)JOURNAL=o.JOURNAL; if(o.WATCHLIST)WATCHLIST=o.WATCHLIST; clearSampleFlag(); save(); computeCards(); syncBenchTop(); refresh(); alert("Backup imported."); }catch(err){ alert("Bad JSON: "+err.message); } }; rd.readAsText(f); };
+  el.querySelector("#importJson").onchange=e=>{ const f=e.target.files[0]; if(!f)return; const rd=new FileReader(); rd.onload=()=>{ try{ const o=JSON.parse(rd.result); if(o.HOLDINGS)HOLDINGS=o.HOLDINGS; if(o.CASH!=null)CASH=o.CASH; if(o.SETTINGS)SETTINGS={...SETTINGS,...o.SETTINGS}; if(o.SNAPS)SNAPS=o.SNAPS; if(o.CARDS)CARDS=o.CARDS; if(o.CARDMETA)CARDMETA=o.CARDMETA; if(o.JOURNAL)JOURNAL=o.JOURNAL; if(o.WATCHLIST)WATCHLIST=o.WATCHLIST; if(Array.isArray(o.PMLOG))PMLOG=o.PMLOG; clearSampleFlag(); save(); computeCards(); syncBenchTop(); refresh(); alert("Backup imported."); }catch(err){ alert("Bad JSON: "+err.message); } }; rd.readAsText(f); };
   el.querySelector("#snapNow").onclick=()=>{ maybeSnapshot(); renderData(); alert("Snapshot saved for "+todayStr()); };
   el.querySelector("#wipeAll").onclick=()=>{ if(confirm("Erase all holdings, settings, and snapshot history?")){ localStorage.clear(); location.reload(); } };
   // cards
@@ -1255,6 +1842,19 @@ function renderPMReview(){
   html+='<div class="panel"><h3>Policy compliance <span class="pill">'+(breaches?breaches+' breach'+(breaches>1?'es':''):'all clear')+'</span></h3><div class="scroll"><table class="tight"><thead><tr><th>Rule</th><th>Actual</th><th>Limit/Target</th><th style="text-align:left">Status</th></tr></thead><tbody>';
   d.checks.forEach(function(c){ html+='<tr><td class="tk" style="text-align:left">'+c.label+'</td><td>'+fmtPctRaw(c.actual*100,1)+'</td><td>'+fmtPctRaw(c.limit*100,0)+'</td><td style="text-align:left">'+(c.ok?'<span class="chip buy">OK</span>':'<span class="chip trim">BREACH</span>')+' <span class="mut">'+c.detail+'</span></td></tr>'; });
   html+='</tbody></table></div></div>';
+  (function(){ var fx=factorExposure(DERIVED); if(!fx.ok) return;
+    var verdict = fx.aiPct>=0.85 ? 'The book is effectively <b>one bet</b> on the hyperscaler-AI-capex cycle. Single-name and sector caps pass, but the <i>factor</i> is uncapped — this is the risk to manage.'
+      : fx.aiPct>=0.6 ? 'Heavily tilted to the AI-capex factor; some diversification present but the theme dominates.'
+      : 'Factor exposure is reasonably spread across drivers.';
+    var vc = fx.aiPct>=0.85?'#b3402f':(fx.aiPct>=0.6?'var(--gold)':'var(--up)');
+    html+='<div class="panel"><h3>Factor &amp; correlation-budget read <span class="pill">what name/sector caps miss</span></h3>'+
+      '<div class="grid kpis" style="margin-top:2px">'+
+      kpi('AI-capex factor', fmtPctRaw(fx.aiPct*100,0), fx.aiPct>=0.85?'⚠ one concentrated bet':'', fx.aiPct>=0.85?'down':'')+
+      kpi('Memory sub-bet', fmtPctRaw(fx.memPct*100,0), fx.memPct>=0.4?'⚠ MU + DRAM stacked':'', fx.memPct>=0.4?'down':'')+
+      kpi('Diversifiers', fmtPctRaw(fx.divPct*100,0), fx.divPct<0.15?'thin':'')+
+      kpi('Effective themes', fmtNum(fx.effThemes,1), '1/HHI')+
+      '</div><div class="muted-box" style="border-left:3px solid '+vc+'">'+verdict+' <span class="mut">Full theme breakdown + live discipline lines in the <b>Risk</b> tab.</span></div></div>';
+  })();
   html+='<div class="panel"><h3>Rebalancing to policy</h3><div class="hint">Mechanical trades to cure breaches of <i>your</i> IPS — arithmetic, not a recommendation. Tax est. on realized gain (assumes long-term; add buy dates in Tax for the exact split).</div>';
   if(d.trades.length){ var totTax=0; html+='<div class="scroll"><table class="tight"><thead><tr><th>Action</th><th style="text-align:left">Detail</th><th>Proceeds</th><th>Shares</th><th>Est. gain</th><th>Est. tax</th></tr></thead><tbody>';
     d.trades.forEach(function(t){ totTax+=t.tax; html+='<tr><td class="tk" style="text-align:left">'+t.action+'</td><td style="text-align:left" class="mut">'+t.detail+'</td><td>'+fmtUSD(t.amount)+'</td><td>'+fmtNum(t.shares,1)+'</td><td class="'+cls(t.gain)+'">'+fmtUSD(t.gain)+'</td><td class="down">'+fmtUSD(t.tax)+'</td></tr>'; });
@@ -1428,11 +2028,13 @@ async function raRiskImpact(el, cand, trimByTk){
   var ppy=periodsPerYear(axis);
   function alignTo(s){ if(!s||!s.values||!s.timestamps)return null; var m={},k; for(k=0;k<s.timestamps.length;k++){ if(s.timestamps[k]!=null&&s.values[k]!=null)m[s.timestamps[k]]=s.values[k]; } var last=null,px=[]; axis.forEach(function(ts){ if(m[ts]!=null)last=m[ts]; px.push(last); }); var fv=null; for(k=0;k<px.length;k++){ if(px[k]!=null){fv=px[k];break;} } if(fv==null)return null; for(k=0;k<px.length;k++){ if(px[k]==null)px[k]=fv; } var r=[]; for(k=1;k<px.length;k++) r.push(px[k-1]>0?px[k]/px[k-1]-1:0); return r; }
   var sp; try{ sp=await fetchSpark(cand.map(function(c){return c.tk;})); }catch(e){ out.innerHTML='<div class="muted-box">Couldn’t fetch candidate history — try again.</div>'; return; }
+  for(var mk in sp){ if(sp[mk]&&sp[mk].values&&!SPARK[mk]) SPARK[mk]=sp[mk]; }  // let the factor/VaR engine see candidates
   var R={}; heldTks.forEach(function(t){ R[t]=alignTo(SPARK[t]); });
   var candOk=[]; cand.forEach(function(c){ var rr=alignTo(sp[c.tk]); if(rr&&!R[c.tk]){ R[c.tk]=rr; candOk.push(c); } });
   if(!candOk.length){ out.innerHTML='<div class="muted-box">Couldn’t get price history for your candidate(s), so the risk impact is unavailable — the allocation &amp; IPS analysis above still holds.</div>'; return; }
   var curTks=heldTks.filter(function(t){return R[t]&&R[t].length;});
-  var mvCur={},totCur=0; DERIVED.rows.forEach(function(r){ if(r.mv!=null&&curTks.indexOf(r.tk)>=0){ mvCur[r.tk]=r.mv; totCur+=r.mv; } });
+  curTks=curTks.filter(function(t,i){ return curTks.indexOf(t)===i; });  // audit fix: dedupe multi-lot tickers
+  var mvCur={},totCur=0; DERIVED.rows.forEach(function(r){ if(r.mv!=null&&curTks.indexOf(r.tk)>=0){ mvCur[r.tk]=(mvCur[r.tk]||0)+r.mv; totCur+=r.mv; } });
   var mvPost={}; curTks.forEach(function(t){ mvPost[t]=(mvCur[t]||0)-(trimByTk[t]||0); }); candOk.forEach(function(c){ mvPost[c.tk]=(mvPost[c.tk]||0)+c.amt; });
   var postTks=Object.keys(mvPost).filter(function(t){return mvPost[t]>0&&R[t];});
   var totPost=postTks.reduce(function(a,t){return a+mvPost[t];},0);
@@ -1451,6 +2053,25 @@ async function raRiskImpact(el, cand, trimByTk){
   candOk.forEach(function(c){ var cv=Math.sqrt(Math.max(0,cov(R[c.tk],R[c.tk])*ppy)); var cr=corrOf(R[c.tk],bookSer); h+='<tr><td class="tk">'+c.tk+'</td><td>'+fmtPctRaw(cv*100,0)+'</td><td class="'+(cr<0.4?'up':(cr>0.7?'down':''))+'">'+fmtNum(cr,2)+'</td><td style="text-align:left" class="mut">'+(cr<0.3?'strong diversifier':(cr<0.6?'moderate':'moves with your book — little diversification'))+'</td></tr>'; });
   h+='</tbody></table></div>';
   h+='<div class="muted-box" style="margin-top:8px">'+(dv<=0?'This rotation <b>lowers</b> your equity-sleeve vol':'This rotation <b>raises</b> your equity-sleeve vol')+(topName?', and takes '+topName+'’s risk share '+((shA[topName]||0)<(shB[topName]||0)?'down':'up'):'')+'. Low correlation = genuine diversification; a high-corr name just relocates the same risk. Modeled on history — not a forecast.</div></div>';
+  // FACTOR + VaR IMPACT — the correlation-budget decision, quantified before you trade
+  try{
+    var modRows=postTks.map(function(t){ return {tk:t, mv:mvPost[t]}; });
+    var fmB=computeFactorModel(), fmA=computeFactorModel(modRows);
+    var mcB=monteCarloVaR(21), mcA=monteCarloVaR(21,modRows);
+    if(fmB&&fmA){
+      var dSemis=fmA.semisShare-fmB.semisShare, good=dSemis<0;
+      var h2='<div class="panel" style="margin-top:8px;border:1px solid '+(good?'#3FBF6A':'#C79A3B')+'"><h3 style="font-size:14px">Pre-trade factor &amp; VaR impact <span class="pill">correlation budget</span></h3>';
+      h2+='<div class="hint">The institutional test your allocation view can’t show: does this trade actually cut your <b>single-factor concentration</b> and tail risk — or just move names around inside the same bet? Recomputed by re-running the regression + Monte-Carlo on the <i>post-trade</i> book.</div>';
+      h2+='<div class="grid kpis" style="margin-top:2px">'+
+        kpi('Semis-factor share', fmtPctRaw(fmB.semisShare*100,0)+' → '+fmtPctRaw(fmA.semisShare*100,0), (good?'cuts':'raises')+' the one-bet risk '+(dSemis>=0?'+':'')+fmtPctRaw(dSemis*100,0)+'pp', good?'up':'down')+
+        kpi('Systematic risk', fmtPctRaw((1-fmB.idioShare)*100,0)+' → '+fmtPctRaw((1-fmA.idioShare)*100,0), 'factor-driven share')+
+        (mcB&&mcA? kpi('1-mo VaR 95%', fmtUSD(mcB.var95)+' → '+fmtUSD(mcA.var95), ((mcA.var95>mcB.var95)?'reduces':'increases')+' tail loss', (mcA.var95>mcB.var95)?'up':'down') : '')+
+        kpi('Model vol', fmtPctRaw(fmB.annVol*100,0)+' → '+fmtPctRaw(fmA.annVol*100,0), 'annualized')+
+        '</div>';
+      h2+='<div class="muted-box" style="margin-top:8px;border-left:3px solid '+(good?'#3FBF6A':'#C79A3B')+'"><b>Verdict:</b> this deployment '+(good? '<b style="color:#3FBF6A">genuinely diversifies</b> — it cuts the semis factor’s grip on your book by '+fmtPctRaw(-dSemis*100,0)+'pp (from '+fmtPctRaw(fmB.semisShare*100,0)+' to '+fmtPctRaw(fmA.semisShare*100,0)+'), spending correlation budget the right way.' : '<b style="color:#C79A3B">deepens the same bet</b> — the semis factor’s share of your risk '+(Math.abs(dSemis)<0.005?'barely moves':'actually rises')+', so you’re adding exposure, not diversification. A true diversifier here would load on a <i>different</i> factor.')+'</div></div>';
+      h+=h2;
+    }
+  }catch(e){}
   out.innerHTML=h;
 }
 
@@ -1551,6 +2172,51 @@ function renderModeledIncome(el){
   if(cap)h+='<div class="muted-box" style="margin-top:8px">'+cap+'</div>';
   out.innerHTML=h;
 }
+// Live-premium enrichment: pulls REAL Schwab chains for actionable income names
+// (covered calls on 100-sh lots you own + cash-secured puts that fit your cash)
+// and ranks by real premium/delta/IV. Fulfills the screener's "upgrades to live
+// greeks once connected" promise. Bounded to <=6 tickers to limit worker calls.
+async function enrichLiveIncome(el){
+  var out=el.querySelector('#miLiveOut'); if(!out||!DERIVED)return;
+  var gv=function(id,dflt){ var v=parseFloat((el.querySelector('#'+id)||{}).value); return isFinite(v)?v:dflt; };
+  var otm=gv('miOTM',5)/100, dteWanted=Math.max(1,gv('miDTE',30));
+  var cash=(typeof CASH!=='undefined'&&CASH>0)?CASH:0;
+  var rows=DERIVED.rows.filter(function(r){return r.shares>0&&r.price>0;});
+  var names={};
+  rows.forEach(function(r){
+    var ccReady=r.shares>=100;
+    var cspFits=cash>0&&(roundStrike(r.price*(1-otm))*100)<=cash;
+    if(ccReady||cspFits) names[r.tk]={tk:r.tk,shares:r.shares,ccReady:ccReady,cspFits:cspFits};
+  });
+  var list=Object.keys(names).slice(0,6);
+  if(!list.length){ out.innerHTML='<div class="muted-box">No live-actionable income names: you hold &lt;100 sh of every underlying (no covered calls writable) and no ~'+Math.round(otm*100)+'% OTM put lot fits your '+fmtUSD(cash)+' cash. Use the single-name <b>Live option chain</b> tool below for any ticker&rsquo;s real Schwab greeks.</div>'; return; }
+  out.innerHTML='<div class="hint">Pulling live Schwab chains for '+list.join(', ')+'…</div>';
+  var mid=function(o){ var b=o.bid||0,a=o.ask||0; return (b>0&&a>0)?(b+a)/2:(o.last||0); };
+  var results=[];
+  for(var i=0;i<list.length;i++){
+    var tk=list[i];
+    var d=null; try{ d=await fetchOptions(tk); }catch(e){}
+    if(!d||!d.price){ results.push({tk:tk,err:'no live chain'}); continue; }
+    var px=d.price, exp=d.expiration?new Date(d.expiration*1000):null;
+    var dte=exp?Math.max(1,Math.round((exp-new Date())/86400000)):dteWanted;
+    var callT=px*(1+otm), putT=px*(1-otm);
+    var calls=(d.calls||[]).filter(function(o){return o.strike>=px;}).sort(function(a,b){return Math.abs(a.strike-callT)-Math.abs(b.strike-callT);});
+    var puts=(d.puts||[]).filter(function(o){return o.strike<=px;}).sort(function(a,b){return Math.abs(a.strike-putT)-Math.abs(b.strike-putT);});
+    results.push({tk:tk,live:d.source==='schwab',px:px,dte:dte,call:calls[0],put:puts[0],meta:names[tk]});
+  }
+  var anyLive=results.some(function(r){return r.live;});
+  var h='<div class="panel" style="border:1px solid '+(anyLive?'#0E7490':'var(--line,#334155)')+'"><h3 style="font-size:14px">Live Schwab premiums <span class="pill">'+(anyLive?'● real greeks':'delayed fallback')+'</span></h3>';
+  h+='<div class="hint">Nearest ~'+Math.round(otm*100)+'% OTM strike from the actual chain. <b>CC</b> = income on a 100-sh lot you own; <b>CSP</b> = cash-secured put that fits your '+fmtUSD(cash)+'. &Delta; = real assignment prob; premium = live mid (bid+ask)/2.</div>';
+  h+='<div class="scroll"><table class="tight"><thead><tr><th>Ticker</th><th>Spot</th><th>DTE</th><th>Type</th><th>Strike</th><th>Mid</th><th>&Delta;</th><th>IV</th><th>Ann. yield</th><th style="text-align:left">Income / Secured</th></tr></thead><tbody>';
+  results.forEach(function(r){
+    if(r.err){ h+='<tr><td class="tk">'+r.tk+'</td><td colspan="9" class="mut" style="text-align:left">'+r.err+'</td></tr>'; return; }
+    var tag=r.live?' <span class="chip buy" style="font-size:9px">live</span>':' <span class="chip watch" style="font-size:9px">delayed</span>';
+    if(r.meta.ccReady&&r.call){ var m=mid(r.call), y=r.px>0?(m/r.px)*(365/r.dte):0, lots=Math.floor(r.meta.shares/100); h+='<tr><td class="tk">'+r.tk+tag+'</td><td>'+fmtUSD(r.px,2)+'</td><td>'+r.dte+'</td><td>CC</td><td>'+fmtUSD(r.call.strike,0)+'</td><td class="up">'+fmtUSD(m,2)+'</td><td>'+(r.call.delta!=null?fmtNum(r.call.delta,2):'—')+'</td><td>'+(r.call.iv!=null?fmtPctRaw(r.call.iv*100,0):'—')+'</td><td class="up">'+fmtPctRaw(y*100,1)+'</td><td style="text-align:left">'+lots+' lot'+(lots>1?'s':'')+' &rarr; '+fmtUSD(m*100*lots)+'</td></tr>'; }
+    if(r.meta.cspFits&&r.put){ var mp=mid(r.put), yp=r.put.strike>0?(mp/r.put.strike)*(365/r.dte):0, lot=r.put.strike*100; h+='<tr><td class="tk">'+r.tk+tag+'</td><td>'+fmtUSD(r.px,2)+'</td><td>'+r.dte+'</td><td>CSP</td><td>'+fmtUSD(r.put.strike,0)+'</td><td class="up">'+fmtUSD(mp,2)+'</td><td>'+(r.put.delta!=null?fmtNum(Math.abs(r.put.delta),2):'—')+'</td><td>'+(r.put.iv!=null?fmtPctRaw(r.put.iv*100,0):'—')+'</td><td class="up">'+fmtPctRaw(yp*100,1)+'</td><td style="text-align:left">'+fmtUSD(lot)+' secured</td></tr>'; }
+  });
+  h+='</tbody></table></div></div>';
+  out.innerHTML=h;
+}
 function modeledChainHtml(r){
   var rf=(SETTINGS&&SETTINGS.riskFree)||0.04, dte=30, T=dte/365, px=r.price, sig=r.vol, offs=[0.02,0.05,0.08,0.12,0.18];
   var h='<div class="hint" style="margin-top:6px"><b>MODELED</b> (no live chain) — '+r.tk+' @ '+fmtUSD(px,2)+', &sigma; '+fmtPctRaw(sig*100,0)+', '+dte+'d Black-Scholes. Real IV usually richer &rarr; live premiums tend to be &ge; these.</div><div class="two">';
@@ -1587,16 +2253,77 @@ function renderIncome(){
    +ocalcRow('ccStrike','Strike $','')+ocalcRow('ccPrem','Premium $/sh','')+ocalcRow('ccDTE','Days to expiry','30')+ocalcRow('ccPx','Current price $','')
    +'<button class="primary" id="ccGo" style="margin-top:8px">Compute</button><div id="ccOut" style="margin-top:8px"></div></div></div>';
   html+='<div class="panel"><h3>Modeled income screener <span class="pill">Black-Scholes</span></h3>'
-   +'<div class="hint">Live chains are auth-walled on Cloudflare IPs until your Schwab app clears — so these premiums are <b>modeled from live spot &times; your historical vol (&sigma;)</b>, not quoted. Real IV usually runs richer, so live premiums tend to be <i>&ge;</i> these (a conservative bias for a seller). &Delta; &asymp; assignment probability; <b>POP</b> = chance it expires worthless and you keep the full premium; <b>&theta;/day</b> = premium decay you collect per contract per day (your income drip). Bump <b>Vol &times;</b> if you know a name&rsquo;s IV runs hot. Auto-upgrades to live Schwab greeks once connected.</div>'
-   +'<div class="inline" style="margin-top:6px;gap:12px;flex-wrap:wrap">'+ocalcRow('miOTM','% OTM','5')+ocalcRow('miDTE','Days','30')+ocalcRow('miVM','Vol &times;','1')+'<button class="primary" id="miGo">Recompute</button></div>'
+   +'<div class="hint">These premiums are <b>modeled from live spot &times; your historical vol (&sigma;)</b> across your whole book — a conservative floor (real IV usually runs richer, so live premiums tend to be <i>&ge;</i> these). &Delta; &asymp; assignment probability; <b>POP</b> = chance it expires worthless and you keep the premium; <b>&theta;/day</b> = decay you collect per contract per day. Bump <b>Vol &times;</b> if a name&rsquo;s IV runs hot. <b>Now that Schwab is connected, hit <span style="color:#3BB2C9">⚡ Live Schwab premiums</span></b> for REAL quoted premiums + greeks on your actionable income names (covered calls on lots you own, CSPs that fit your cash).</div>'
+   +'<div class="inline" style="margin-top:6px;gap:12px;flex-wrap:wrap">'+ocalcRow('miOTM','% OTM','5')+ocalcRow('miDTE','Days','30')+ocalcRow('miVM','Vol &times;','1')+'<button class="primary" id="miGo">Recompute</button> <button id="miLive" style="background:#0E7490;color:#eaf5f8;border:none;border-radius:7px;padding:8px 14px;font-weight:700;cursor:pointer">⚡ Live Schwab premiums</button></div>'
+   +'<div id="miLiveOut" style="margin-top:8px"></div>'
    +'<div id="miOut" style="margin-top:8px"></div></div>';
+  html+='<div class="panel" style="border:1px solid #0E7490"><h3>🛡 Hedging desk <span class="pill">live greeks</span></h3><div class="hint">The other side of the book: what it costs to <b>insure</b> your downside vs. what an <b>overlay</b> pays you. Sizes a protective SMH put hedge to your book’s real semis-beta, and totals covered-call income on your ≥100-sh lots — both on live Schwab premiums.</div><div class="inline" style="margin-top:6px;gap:12px;flex-wrap:wrap">'+ocalcRow('hgOTM','Put % OTM','7')+ocalcRow('hgDTE','Target days','30')+'<button id="hgGo" style="background:#0E7490;color:#eaf5f8;border:none;border-radius:7px;padding:8px 14px;font-weight:700;cursor:pointer">🛡 Run hedging desk</button></div><div id="hgOut" style="margin-top:8px"></div></div>';
   var fh=(HOLDINGS&&HOLDINGS[0])?HOLDINGS[0].ticker:'';
   html+='<div class="panel"><h3>Live option chain <span class="pill">real premiums</span></h3><div class="hint">Pull the actual nearest-expiry chain and rank OTM calls/puts by annualized yield — real premiums, not manual entry.</div><div class="inline" style="margin-top:6px"><input type="text" id="ocTk" class="tk-in" value="'+fh+'" placeholder="TICKER"> <button class="primary" id="ocGo">Load chain</button></div><div id="ocOut" style="margin-top:8px"></div></div>';
   el.innerHTML=html;
   el.querySelector('#cspGo').onclick=function(){ ocalcCSP(el); };
   el.querySelector('#ccGo').onclick=function(){ ocalcCC(el); };
   renderModeledIncome(el); var mg=el.querySelector('#miGo'); if(mg) mg.onclick=function(){ renderModeledIncome(el); };
+  var ml=el.querySelector('#miLive'); if(ml) ml.onclick=function(){ enrichLiveIncome(el); };
+  var hg=el.querySelector('#hgGo'); if(hg) hg.onclick=function(){ renderHedgingDesk(el); };
   var og=el.querySelector('#ocGo'); if(og) og.onclick=function(){ loadChain(el); };
+}
+// HEDGING DESK — protective-put cost sized to semis-beta + covered-call overlay income, on live greeks
+async function renderHedgingDesk(el){
+  var out=el.querySelector('#hgOut'); if(!out||!DERIVED)return;
+  var gv=function(id,d){ var v=parseFloat((el.querySelector('#'+id)||{}).value); return isFinite(v)?v:d; };
+  var otm=gv('hgOTM',7)/100, dteW=Math.max(1,gv('hgDTE',30));
+  var eq=DERIVED.equity||DERIVED.rows.reduce(function(a,r){return a+(r.mv||0);},0);
+  var fm=(typeof computeFactorModel==='function')?computeFactorModel():null;
+  var semisBeta=fm?fm.semisBeta:(DERIVED.bottomBeta||1);
+  out.innerHTML='<div class="hint">Pulling live SMH + covered-call chains…</div>';
+  var mid=function(o){ var b=o.bid||0,a=o.ask||0; return (b>0&&a>0)?(b+a)/2:(o.last||0); };
+  // 1) protective put on SMH sized to semis-beta notional
+  var smh=null; try{ smh=await fetchOptions('SMH'); }catch(e){}
+  var hedge=null;
+  if(smh&&smh.price&&smh.puts&&smh.puts.length){
+    var betaNotional=eq*semisBeta;                     // $ of SMH-equivalent exposure
+    var rawC=betaNotional/(smh.price*100), contracts=Math.round(rawC);   // audit fix: no forced 1-contract floor
+    var target=smh.price*(1-otm);
+    var put=smh.puts.filter(function(o){return o.strike<=smh.price;}).sort(function(a,b){return Math.abs(a.strike-target)-Math.abs(b.strike-target);})[0];
+    if(put&&contracts<1){ hedge={tooSmall:true, betaNotional:betaNotional, oneContract:smh.price*100, smh:smh.price}; }
+    else if(put){
+      // BUY leg pricing: mid when both sides live, else ask — never stale `last` (audit fix)
+      var prem=(put.bid>0&&put.ask>0)?(put.bid+put.ask)/2:((put.ask>0)?put.ask:null);
+      if(prem!=null){ var cost=prem*contracts*100, exp=smh.expiration?new Date(smh.expiration*1000):null, dte=exp?Math.max(1,Math.round((exp-new Date())/86400000)):dteW;
+        hedge={live:smh.source==='schwab',contracts:contracts,strike:put.strike,prem:prem,cost:cost,pctBook:cost/eq,dte:dte,betaNotional:betaNotional,smh:smh.price,otmActual:(1-put.strike/smh.price),iv:put.iv,delta:put.delta,annCost:(cost/eq)*(365/dte),coverage:contracts*smh.price*100/betaNotional}; }
+    }
+  }
+  // 2) covered-call overlay income on CC-ready lots (>=100 sh)
+  var ccReady=DERIVED.rows.filter(function(r){return r.shares>=100&&r.mv>0;});
+  var ccList=ccReady.slice(0,6), ccRows=[], ccIncome=0;
+  var ccDteSum=0;
+  for(var i=0;i<ccList.length;i++){ var r=ccList[i], d=null; try{ d=await fetchOptions(r.tk); }catch(e){}
+    if(d&&d.price&&d.calls){ var t=d.price*(1+otm), c=d.calls.filter(function(o){return o.strike>=d.price;}).sort(function(a,b){return Math.abs(a.strike-t)-Math.abs(b.strike-t);})[0];
+      // SELL leg pricing: mid when both sides live, else bid — never stale `last` (audit fix); no bid = no collectible premium
+      if(c){ var m=(c.bid>0&&c.ask>0)?(c.bid+c.ask)/2:((c.bid>0)?c.bid:null);
+        if(m!=null){ var lots=Math.floor(r.shares/100), inc=m*100*lots, exp2=d.expiration?new Date(d.expiration*1000):null, dte2=exp2?Math.max(1,Math.round((exp2-new Date())/86400000)):dteW;
+          ccIncome+=inc; ccDteSum+=dte2; ccRows.push({tk:r.tk,live:d.source==='schwab',strike:c.strike,prem:m,lots:lots,inc:inc,dte:dte2,annPct:(m/d.price)*(365/dte2),delta:c.delta}); } } } }
+  var ccDteAvg=ccRows.length?Math.round(ccDteSum/ccRows.length):dteW;
+  // render
+  var h='';
+  var hedgeOk=hedge&&!hedge.tooSmall;
+  var net30=(hedgeOk&&ccRows.length)?(ccIncome*30/ccDteAvg - hedge.cost*30/hedge.dte):null;   // audit fix: per-30d normalization across mismatched DTEs
+  h+='<div class="grid kpis">'+
+    kpi('Book long delta', fmtUSD(eq), '100% long, semis β '+fmtNum(semisBeta,2))+
+    kpi(hedgeOk?('Hedge cost ('+hedge.dte+'d)'):'Hedge cost', hedgeOk?fmtUSD(hedge.cost):'—', hedgeOk?fmtPctRaw(hedge.pctBook*100,1)+' of book':(hedge&&hedge.tooSmall?'book too small for 1 contract':'no SMH chain'),'down')+
+    kpi(ccRows.length?('Overlay income ('+ccDteAvg+'d)'):'Overlay income', ccRows.length?fmtUSD(ccIncome):'—', ccRows.length?fmtPctRaw(ccIncome/eq*100,2)+' of book':'no ≥100-sh lots','up')+
+    kpi('Net carry /30d', net30!=null?fmtUSD(net30):(hedgeOk?fmtUSD(-hedge.cost*30/hedge.dte):'—'), 'normalized — legs have different expiries')+
+    '</div>';
+  if(hedgeOk){ h+='<div class="panel" style="margin-top:8px"><h3 style="font-size:14px">Protective hedge — SMH puts '+(hedge.live?'<span class="chip buy" style="font-size:9px">live</span>':'<span class="chip watch" style="font-size:9px">delayed</span>')+'</h3>'+
+    '<div class="hint">To offset your book’s semis-factor exposure ('+fmtUSD(hedge.betaNotional)+' SMH-equivalent = book × β), buy <b>'+hedge.contracts+' SMH '+fmtUSD(hedge.strike,0)+' puts</b> ('+fmtPctRaw(hedge.otmActual*100,0)+' OTM, '+hedge.dte+'d). <b>Coverage: '+fmtPctRaw(hedge.coverage*100,0)+'</b> of the factor notional'+(hedge.coverage>1.15?' — OVER-hedged (1 contract is chunky vs this book)':(hedge.coverage<0.85?' — UNDER-hedged':''))+'. Cost <b>'+fmtUSD(hedge.cost)+'</b> = '+fmtPctRaw(hedge.pctBook*100,1)+' of book ('+fmtPctRaw(hedge.annCost*100,0)+'/yr if rolled). Δ '+fmtNum(hedge.delta,2)+', IV '+(hedge.iv!=null?fmtPctRaw(hedge.iv*100,0):'—')+'. Below SMH '+fmtUSD(hedge.strike,0)+' your semis losses are offset — a hard floor on the '+fmtPctRaw((fm?fm.semisShare:0.79)*100,0)+'-of-variance factor.</div></div>'; }
+  else if(hedge&&hedge.tooSmall){ h+='<div class="muted-box" style="margin-top:8px"><b>Book too small for a listed hedge:</b> one SMH contract covers '+fmtUSD(hedge.oneContract)+' of notional vs your '+fmtUSD(hedge.betaNotional)+' factor exposure — buying it would massively over-hedge. Alternatives: hedge with the trim ladder instead, or use a smaller-notional proxy.</div>'; }
+  if(ccRows.length){ h+='<div class="panel" style="margin-top:8px"><h3 style="font-size:14px">Covered-call overlay income</h3><div class="scroll"><table class="tight"><thead><tr><th>Ticker</th><th>Strike</th><th>Prem</th><th>Δ</th><th>Lots</th><th>Income/mo</th><th>Ann.</th></tr></thead><tbody>';
+    ccRows.forEach(function(c){ h+='<tr><td class="tk">'+c.tk+(c.live?' <span class="chip buy" style="font-size:9px">live</span>':'')+'</td><td>'+fmtUSD(c.strike,0)+'</td><td class="up">'+fmtUSD(c.prem,2)+'</td><td>'+(c.delta!=null?fmtNum(c.delta,2):'—')+'</td><td>'+c.lots+'</td><td class="up">'+fmtUSD(c.inc)+'</td><td class="up">'+fmtPctRaw(c.annPct*100,0)+'</td></tr>'; });
+    h+='</tbody></table></div><div class="mut" style="margin-top:4px;font-size:11px">Writing these caps upside above each strike — income for giving up the tail.</div></div>'; }
+  else { h+='<div class="muted-box" style="margin-top:8px">No ≥100-sh lots → no covered-call overlay available (you\'d need a 100-sh position to write 1 contract). The protective-put hedge above still works — it\'s sized to your whole book\'s factor exposure, lot sizes irrelevant.</div>'; }
+  if(hedgeOk&&ccRows.length){ var net=net30; h+='<div class="muted-box" style="margin-top:6px;border-left:3px solid '+(net>=0?'#3FBF6A':'#C79A3B')+'"><b>Collar read (per 30d, DTE-normalized):</b> overlay income ~'+fmtUSD(ccIncome*30/ccDteAvg)+'/30d '+(net>=0?'more than covers':'offsets part of')+' the hedge cost ~'+fmtUSD(hedge.cost*30/hedge.dte)+'/30d → a '+(net>=0?'net-credit':'low-cost')+' collar that caps your '+fmtPctRaw((fm?fm.semisShare:0.79)*100,0)+'%-factor downside for ~'+(net>=0?'free':fmtUSD(-net)+'/30d')+'. Legs expire on different dates ('+ccDteAvg+'d vs '+hedge.dte+'d) — roll to align. Institutional move on a concentrated book you won’t trim.</div>'; }
+  out.innerHTML=h;
 }
 function ocalcCSP(el){
   var g=function(id){return parseFloat((el.querySelector('#'+id)||{}).value);};
@@ -1751,9 +2478,59 @@ function renderJournal(){
     html+='</tbody></table></div>';
   } else html+='<div class="muted-box">No trades logged yet. Log your trims/buys to build a track record + win-rate by decision.</div>';
   html+='</div>';
+  html+='<div id="jScore"></div>';
   el.innerHTML=html;
   var add=el.querySelector('#jAdd'); if(add) add.onclick=function(){ var tk=(el.querySelector('#jTk').value||'').toUpperCase().trim(); if(!tk)return; JOURNAL.push({ id:'j'+Date.now()+'_'+JOURNAL.length, date:el.querySelector('#jDate').value||todayStr(), ticker:tk, action:el.querySelector('#jAct').value, shares:parseFloat(el.querySelector('#jSh').value)||null, price:parseFloat(el.querySelector('#jPx').value)||null, note:el.querySelector('#jNote').value||'' }); save(); renderJournal(); };
   el.querySelectorAll('button[data-jdel]').forEach(function(b){ b.onclick=function(){ var id=b.getAttribute('data-jdel'); JOURNAL=JOURNAL.filter(function(x){return String(x.id)!==String(id);}); save(); renderJournal(); }; });
+  var js=el.querySelector('#jScore'); if(js){ enrichJournalScores(el); }
+}
+/* DECISION SCORECARD — the PM grades YOUR timing, same as it grades its own calls.
+   BUY/ADD graded by price appreciation since; SELL/TRIM graded as money-saved
+   (positive if the price is lower now than where you sold). +7d/+30d from history. */
+async function enrichJournalScores(el){
+  var host=el.querySelector('#jScore'); if(!host) return;
+  var entries=JOURNAL.filter(function(e){ return e.ticker&&e.price!=null&&e.date; });
+  if(!entries.length){ host.innerHTML='<div class="panel"><h3>Decision scorecard <span class="pill">your timing, graded</span></h3><div class="muted-box">Log your trades above (date · ticker · action · shares · price) and the PM grades your timing — the same way it grades its own calls in the Overview\'s advice ledger.</div></div>'; return; }
+  host.innerHTML='<div class="panel"><h3>Decision scorecard</h3><div class="hint">Grading your timing…</div></div>';
+  var tks=[]; entries.forEach(function(e){ var t=e.ticker.toUpperCase(); if(tks.indexOf(t)<0) tks.push(t); });
+  var missing=tks.filter(function(t){ return !SPARK[t]||!SPARK[t].values; });
+  if(missing.length){ try{ var sp=await fetchSpark(missing); for(var k in sp){ if(sp[k]&&sp[k].values&&!SPARK[k]) SPARK[k]=sp[k]; } }catch(e){} }
+  var mq={}; try{ mq=(await fetchQuotes(tks))||{}; }catch(e){}
+  function pxNow(t){ if(mq[t]&&mq[t].price!=null)return mq[t].price; if(typeof MKT!=='undefined'&&MKT[t]&&MKT[t].price!=null)return MKT[t].price; var s=SPARK[t]; if(s&&s.values){ for(var i=s.values.length-1;i>=0;i--){ if(s.values[i]!=null)return s.values[i]; } } return null; }
+  function pxAt(t,dateStr,plusDays){ var s=SPARK[t]; if(!s||!s.timestamps)return null; var target=(new Date(dateStr+'T12:00:00').getTime()/1000)+plusDays*86400; var best=null,bd=1e18; for(var i=0;i<s.timestamps.length;i++){ var ts=s.timestamps[i]; if(ts==null||s.values[i]==null)continue; if(ts<target-43200)continue; var d=ts-target; if(d<bd){bd=d;best=s.values[i];} } return (bd<7*86400)?best:null; }
+  var rows=[], alpha=0, graded=0, wins=0, best=null, worst=null;
+  entries.forEach(function(e){
+    var t=e.ticker.toUpperCase(), now=pxNow(t);
+    if(now==null){ rows.push({e:e,na:true}); return; }
+    var isBuy=(e.action==='BUY'||e.action==='ADD'), sh=e.shares||0;
+    var pnl=isBuy?(now-e.price)*sh:(e.price-now)*sh;      // trims: money saved by selling there
+    var pct=isBuy?(now/e.price-1):(1-now/e.price);
+    var p7=pxAt(t,e.date,7), p30=pxAt(t,e.date,30);
+    var r7=p7!=null?(isBuy?(p7/e.price-1):(1-p7/e.price)):null;
+    var r30=p30!=null?(isBuy?(p30/e.price-1):(1-p30/e.price)):null;
+    alpha+=pnl; graded++; if(pnl>0)wins++;
+    var row={e:e,now:now,pnl:pnl,pct:pct,r7:r7,r30:r30,isBuy:isBuy};
+    if(best===null||pnl>best.pnl)best=row; if(worst===null||pnl<worst.pnl)worst=row;
+    rows.push(row);
+  });
+  var h='<div class="panel"><h3>Decision scorecard <span class="pill">your timing, graded · '+graded+'</span></h3>';
+  h+='<div class="hint">The same standard the engine holds itself to, applied to <b>your</b> trades. BUY/ADD = gain since your fill; SELL/TRIM = money the exit <i>saved</i> vs today (positive = the price fell after you sold). +7d/+30d show whether the call was right quickly or eventually. Pre-tax, vs your logged fills.</div>';
+  h+='<div class="grid kpis">'
+    +kpi('Timing alpha', fmtUSD(alpha), 'all logged decisions vs today', cls(alpha))
+    +kpi('Decision win rate', graded?fmtPctRaw(wins/graded*100,0):'—', wins+'/'+graded+' right so far')
+    +(best&&best.pnl>0? kpi('Best call', best.e.action+' '+best.e.ticker, fmtUSD(best.pnl)+' · '+fmtPctRaw(best.pct*100,1),'up'):'')
+    +(worst&&worst.pnl<0? kpi('Worst call', worst.e.action+' '+worst.e.ticker, fmtUSD(worst.pnl)+' · '+fmtPctRaw(worst.pct*100,1),'down'):'')
+    +'</div>';
+  h+='<div class="scroll" style="margin-top:8px"><table class="tight"><thead><tr><th>Date</th><th>Action</th><th>Ticker</th><th>Your px</th><th>Now</th><th>+7d</th><th>+30d</th><th>Timing P&L</th><th style="text-align:left">Verdict</th></tr></thead><tbody>';
+  rows.forEach(function(r){ if(r.na){ h+='<tr><td class="mut">'+r.e.date+'</td><td>'+r.e.action+'</td><td class="tk">'+r.e.ticker+'</td><td>'+fmtUSD(r.e.price,2)+'</td><td colspan="5" class="mut">no price history for this ticker</td></tr>'; return; }
+    var v = r.pct>0.02?'<span class="chip buy">right</span>':(r.pct<-0.02?'<span class="chip trim">wrong so far</span>':'<span class="chip hold">≈flat</span>');
+    h+='<tr><td class="mut">'+r.e.date+'</td><td>'+r.e.action+'</td><td class="tk">'+r.e.ticker+'</td><td>'+fmtUSD(r.e.price,2)+'</td><td>'+fmtUSD(r.now,2)+'</td>'
+      +'<td class="'+(r.r7!=null?cls(r.r7):'mut')+'">'+(r.r7!=null?fmtPct(r.r7):'—')+'</td>'
+      +'<td class="'+(r.r30!=null?cls(r.r30):'mut')+'">'+(r.r30!=null?fmtPct(r.r30):'—')+'</td>'
+      +'<td class="'+cls(r.pnl)+'">'+fmtUSD(r.pnl)+'</td><td style="text-align:left">'+v+' <span class="mut" style="font-size:11px">'+(r.e.note||'')+'</span></td></tr>'; });
+  h+='</tbody></table></div>';
+  h+='<div class="mut" style="font-size:11px;margin-top:6px">Add your 6/28 MU trims and GLD sale (with fills) to complete the record — only broker-confirmed fills are pre-seeded.</div></div>';
+  host.innerHTML=h;
 }
 
 /* ============================================================
@@ -1929,6 +2706,40 @@ async function loadSemiLeaders(el){
 }
 
 /* ============================================================
+   NEWS & CATALYSTS — recent headlines across the book via the Worker
+   ============================================================ */
+function renderNews(){
+  var el=document.getElementById('news'); if(!el)return;
+  if(!DERIVED){ el.innerHTML=emptyState(); return; }
+  var n=(DERIVED.rows||[]).filter(function(r){return r.mv!=null;}).length;
+  el.innerHTML='<div class="panel"><h3>News &amp; catalysts <span class="pill">your book</span></h3>'
+    +'<div class="hint">Recent headlines across your '+n+' holdings — <i>why</i> your names are moving, newest first. On-demand so it never slows the app. Headlines via news RSS through your Worker; click to read the source.</div>'
+    +'<div class="inline" style="margin-top:6px"><button class="primary" id="newsGo">Load headlines</button></div>'
+    +'<div id="newsOut" style="margin-top:8px"></div></div>';
+  var b=el.querySelector('#newsGo'); if(b) b.onclick=function(){ loadNews(el); };
+}
+async function loadNews(el){
+  var out=el.querySelector('#newsOut'); if(!out)return; out.innerHTML='<span class="mut">Fetching headlines for your book…</span>';
+  var tks=(DERIVED?DERIVED.rows:[]).filter(function(r){return r.mv!=null;}).map(function(r){return r.tk;});
+  if(!tks.length){ out.innerHTML='<div class="muted-box">No holdings to fetch news for.</div>'; return; }
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function when(t){ if(!t)return ''; var d=new Date(t), diff=(Date.now()-t)/1000; if(diff<3600)return Math.max(1,Math.round(diff/60))+'m'; if(diff<86400)return Math.round(diff/3600)+'h'; if(diff<604800)return Math.round(diff/86400)+'d'; return (d.getMonth()+1)+'/'+d.getDate(); }
+  var results;
+  try{ results=await Promise.all(tks.map(function(tk){ return jget(BASE+'?headlines='+encodeURIComponent(tk)).then(function(d){ return {tk:tk, items:(d&&d.items)?d.items:[]}; }).catch(function(){ return {tk:tk, items:[]}; }); })); }
+  catch(e){ out.innerHTML='<div class="muted-box">Couldn’t fetch headlines — try again.</div>'; return; }
+  var all=[]; results.forEach(function(r){ r.items.forEach(function(it){ all.push({tk:r.tk, title:it.title, link:it.link, t:Date.parse(it.pubDate)||0}); }); });
+  var seen={}; all=all.filter(function(it){ var k=(it.title||'').slice(0,80); if(seen[k])return false; seen[k]=1; return true; });
+  all.sort(function(a,b){return b.t-a.t;});
+  if(!all.length){ out.innerHTML='<div class="muted-box">No headlines returned right now — try again in a moment.</div>'; return; }
+  var counts=tks.map(function(tk){ var c=all.filter(function(it){return it.tk===tk;}).length; return tk+' '+c; }).join(' · ');
+  var h='<div class="hint" style="margin-bottom:6px">'+all.length+' headlines · '+counts+'</div>';
+  h+='<div class="scroll"><table class="tight"><thead><tr><th>When</th><th>Name</th><th style="text-align:left">Headline</th></tr></thead><tbody>';
+  all.slice(0,60).forEach(function(it){ h+='<tr><td class="mut" style="white-space:nowrap">'+when(it.t)+'</td><td class="tk">'+esc(it.tk)+'</td><td style="text-align:left"><a href="'+esc(it.link)+'" target="_blank" rel="noopener noreferrer">'+esc(it.title)+'</a></td></tr>'; });
+  h+='</tbody></table></div>';
+  out.innerHTML=h;
+}
+
+/* ============================================================
    LIVE OPTION CHAIN — real CC/CSP candidates from Yahoo via Worker
    ============================================================ */
 async function fetchOptions(sym){ try{ return await jget(BASE+'?options='+encodeURIComponent(sym)); }catch(e){ return null; } }
@@ -1942,7 +2753,8 @@ async function loadChain(el){
   function mid(o){ var b=o.bid||0,a=o.ask||0; return (b>0&&a>0)?(b+a)/2:(o.last||0); }
   var calls=(d.calls||[]).filter(function(o){return o.strike>px&&o.strike<px*1.25;}).slice(0,6);
   var puts=(d.puts||[]).filter(function(o){return o.strike<px&&o.strike>px*0.75;}).sort(function(a,b){return b.strike-a.strike;}).slice(0,6);
-  var h='<div class="hint" style="margin-top:6px">'+tk+' @ '+fmtUSD(px,2)+' · nearest expiry '+(exp?exp.toISOString().slice(0,10):'—')+' ('+dte+'d). Mid = (bid+ask)/2; yield annualized; Δ ≈ probability of assignment (real greeks when on Schwab).</div><div class="two">';
+  var srcTag = d.source==='schwab' ? ' · <b style="color:var(--up,#3FBF6A)">&#9679; LIVE Schwab greeks</b>' : ' · <span class="mut">Yahoo fallback (modeled &Delta;)</span>';
+  var h='<div class="hint" style="margin-top:6px">'+tk+' @ '+fmtUSD(px,2)+' · nearest expiry '+(exp?exp.toISOString().slice(0,10):'—')+' ('+dte+'d). Mid = (bid+ask)/2; yield annualized; Δ ≈ probability of assignment'+srcTag+'</div><div class="two">';
   h+='<div><h3 style="font-size:14px">Covered calls (sell OTM call)</h3><div class="scroll"><table class="tight"><thead><tr><th>Strike</th><th>%OTM</th><th>Δ</th><th>Mid</th><th>Ann. yield</th><th>IV</th></tr></thead><tbody>';
   calls.forEach(function(o){ var m=mid(o), y=px>0?(m/px)*(365/dte):null; h+='<tr><td class="tk">'+fmtUSD(o.strike,0)+'</td><td>'+fmtPctRaw((o.strike/px-1)*100,1)+'</td><td>'+(o.delta!=null?fmtNum(o.delta,2):'—')+'</td><td>'+fmtUSD(m,2)+'</td><td class="up">'+fmtPctRaw(y*100,1)+'</td><td>'+(o.iv!=null?fmtPctRaw(o.iv*100,0):'—')+'</td></tr>'; });
   h+='</tbody></table></div></div>';
@@ -1956,7 +2768,7 @@ async function loadChain(el){
 function emptyState(){ return `<div class="panel"><h3>No holdings yet</h3><div class="muted-box">Add positions or import a Schwab CSV in the <b>Data</b> tab, then hit Refresh.</div></div>`; }
 function renderAll(){
   try{ computeCards(); }catch(e){ if(window.console)console.error('computeCards',e); }
-  var rs=[renderOverview,renderHoldings,renderAllocation,renderPerformance,renderQuant,renderRisk,renderMomentum,renderSignals,renderTax,renderIncome,renderCards,renderNetWorth,renderPMReview,renderWatchlist,renderReallocate,renderJournal,renderData];
+  var rs=[renderOverview,renderHoldings,renderAllocation,renderPerformance,renderQuant,renderRisk,renderMomentum,renderNews,renderSignals,renderTax,renderIncome,renderCards,renderNetWorth,renderPMReview,renderWatchlist,renderReallocate,renderJournal,renderData];
   for(var i=0;i<rs.length;i++){ try{ rs[i](); }catch(e){ if(window.console)console.error('render error: '+(rs[i].name||i),e); try{ var sec=document.getElementById((rs[i].name||'').replace('render','').toLowerCase()); if(sec) sec.innerHTML='<div class="panel"><h3>View error</h3><div class="muted-box">This tab hit an error and was skipped — the rest of the app is unaffected. Details are in the browser console.</div></div>'; }catch(_){} } }
 }
 function syncBenchTop(){ const t=document.getElementById("benchSel"); t.value=SETTINGS.benchmark; }
