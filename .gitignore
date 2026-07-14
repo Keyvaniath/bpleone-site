@@ -49,6 +49,12 @@ SPACEX-VERIFIED-DATA-REFERENCE.md
 SPACEX-RESEARCH-HANDOFF.md
 SPACEX-HANDOFF*.md
 
+# Claude-facing project scaffolding + repo readme — internal, not visitor-facing.
+# (Both were tracked before this convention and were live at bpleon.com/CLAUDE.md
+# and /README.md; untracked 2026-07 so they 404.)
+CLAUDE.md
+README.md
+
 # Future-proof: any single-name truth table / research handoff is local-only.
 *-VERIFIED-DATA-REFERENCE.md
 *-RESEARCH-HANDOFF.md
