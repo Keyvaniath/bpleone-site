@@ -801,6 +801,10 @@ main.prose.center {
   box-shadow: 0 6px 18px rgba(181, 106, 63, 0.22);
   color: #fff;
 }
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(181, 106, 63, 0.18);
+}
 .btn-ghost {
   background: transparent;
   color: var(--ink);
@@ -815,23 +819,41 @@ main.prose.center {
 }
 
 /* Sections ------------------------------------------------------------------ */
-.section { margin: 3rem 0; }
+.section { margin: 4.25rem 0; }
 .section-head {
+  position: relative;
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.4rem;
   padding-bottom: .6rem;
   border-bottom: 1px solid var(--rule);
 }
-.section-head h2 { margin: 0; font-size: 1.25rem; }
+/* Short terracotta bar over the hairline — quiet editorial marker. */
+.section-head::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 3.25rem;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+.section-head h2 {
+  margin: 0;
+  font-size: clamp(1.4rem, 1.1vw + 1rem, 1.65rem);
+  letter-spacing: -0.015em;
+}
 .more {
+  display: inline-block;
   font-size: .9rem;
   color: var(--muted);
   text-decoration: none;
+  transition: color .18s var(--ease), transform .18s var(--ease);
 }
-.more:hover { color: var(--accent); }
+.more:hover { color: var(--accent); transform: translateX(3px); }
 
 /* Project list (homepage teasers) ------------------------------------------- */
 .project-list {
@@ -879,10 +901,14 @@ main.prose.center {
   gap: 1rem;
   padding: .9rem 0;
   text-decoration: none;
+  transition: padding-left .18s var(--ease);
 }
+.writing-list a:hover { padding-left: .4rem; }
+.writing-list a:hover .post-title { color: var(--accent); }
 .writing-list .post-title {
   font-family: var(--serif);
   font-size: 1.05rem;
+  transition: color .18s var(--ease);
 }
 .writing-list .post-date { color: var(--muted); font-size: .85rem; white-space: nowrap; }
 
