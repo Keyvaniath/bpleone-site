@@ -8,6 +8,30 @@
     <atom:link href="https://bpleon.com/feed.xml" rel="self" type="application/rss+xml" />
 
     <item>
+      <title>Micron closed below $900. Our rule said sell. We didn’t.</title>
+      <link>https://bpleon.com/mu-stop-2026-07-21.html</link>
+      <guid isPermaLink="true">https://bpleon.com/mu-stop-2026-07-21.html</guid>
+      <pubDate>Tue, 21 Jul 2026 09:00:00 -0700</pubDate>
+      <description>The stop fired July 16. We didn't sell — and today Micron ripped 12.2%. The violation is ahead of the rule tonight. Ahead is not the same as right: the process failure, graded in public, with the tighter line that replaces it.</description>
+    </item>
+
+    <item>
+      <title>Week Ahead — July 20, 2026</title>
+      <link>https://bpleon.com/weekly-outlook-2026-07-20.html</link>
+      <guid isPermaLink="true">https://bpleon.com/weekly-outlook-2026-07-20.html</guid>
+      <pubDate>Mon, 20 Jul 2026 09:00:00 -0700</pubDate>
+      <description>The graded ledger: a cool CPI the note pre-answered, a toolmaker paid and a spender punished, memory in a bear market, and a $900 exit rule that fired into a 12% bounce — which was gone by the close. Now the capex gate opens: Alphabet Wednesday.</description>
+    </item>
+
+    <item>
+      <title>ASML — Initiation. Paid by Both Sides of the Memory War.</title>
+      <link>https://bpleon.com/asml-initiation-2026-07-15.html</link>
+      <guid isPermaLink="true">https://bpleon.com/asml-initiation-2026-07-15.html</guid>
+      <pubDate>Wed, 15 Jul 2026 09:00:00 -0700</pubDate>
+      <description>We waited for the air-pocket, bought the crash at $1,752.87, and this morning's Q2 print proved it: a beat above the top of guidance and the third full-year raise in six months, to 43-45 billion euros. Initiating at ACCUMULATE, PW target ~$2,000. Add-zone $1,550-1,650 — do not chase.</description>
+    </item>
+
+    <item>
       <title>Micron round-tripped again. KeyBanc raised its target to $1,750. We didn’t.</title>
       <link>https://bpleon.com/mu-rollercoaster-2026-07-14.html</link>
       <guid isPermaLink="true">https://bpleon.com/mu-rollercoaster-2026-07-14.html</guid>
@@ -181,22 +205,6 @@
       <guid isPermaLink="true">https://bpleon.com/mu-note-2026-05-05.html</guid>
       <pubDate>Tue, 05 May 2026 09:00:00 -0700</pubDate>
       <description>Why I'm pulling the price target on Micron pending the full through-cycle pitch. Discipline beats chasing the tape.</description>
-    </item>
-
-    <item>
-      <title>Weekly Market Outlook — Week of May 4, 2026</title>
-      <link>https://bpleon.com/weekly-outlook-2026-05-04.html</link>
-      <guid isPermaLink="true">https://bpleon.com/weekly-outlook-2026-05-04.html</guid>
-      <pubDate>Mon, 04 May 2026 09:00:00 -0700</pubDate>
-      <description>Soft-landing narrative meets sticky inflation, a concentrated AI rally, and an increasingly structural geopolitical tape.</description>
-    </item>
-
-    <item>
-      <title>The Fed After Powell</title>
-      <link>https://bpleon.com/fed-april-2026.html</link>
-      <guid isPermaLink="true">https://bpleon.com/fed-april-2026.html</guid>
-      <pubDate>Wed, 29 Apr 2026 09:00:00 -0700</pubDate>
-      <description>Notes on the April 29, 2026 FOMC meeting. The market is watching the rate path; it should be watching the institution.</description>
     </item>
 
   </channel>
