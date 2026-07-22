@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-07-22",
   "fileCount": 157,
-  "totalBytes": 10729756,
+  "totalBytes": 10730485,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,7 +28,7 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 37433,
+      "size": 37435,
       "sizeText": "36.6 KB",
       "modified": "2026-07-22",
       "ext": ".json",
@@ -442,9 +442,9 @@
     {
       "path": "index.html",
       "name": "index.html",
-      "size": 29233,
-      "sizeText": "28.5 KB",
-      "modified": "2026-07-15",
+      "size": 29288,
+      "sizeText": "28.6 KB",
+      "modified": "2026-07-22",
       "ext": ".html",
       "category": "pages"
     },
@@ -901,8 +901,8 @@
     {
       "path": "weekly-outlook-2026-07-20.html",
       "name": "weekly-outlook-2026-07-20.html",
-      "size": 52522,
-      "sizeText": "51.3 KB",
+      "size": 52033,
+      "sizeText": "50.8 KB",
       "modified": "2026-07-22",
       "ext": ".html",
       "category": "pages"
@@ -910,9 +910,9 @@
     {
       "path": "writing.html",
       "name": "writing.html",
-      "size": 30462,
-      "sizeText": "29.7 KB",
-      "modified": "2026-07-21",
+      "size": 31623,
+      "sizeText": "30.9 KB",
+      "modified": "2026-07-22",
       "ext": ".html",
       "category": "pages"
     },
