@@ -34,6 +34,12 @@
   <style>
     .pitch-meta { display: flex; gap: 1.5rem; flex-wrap: wrap; font-family: var(--sans); font-size: .85rem; color: var(--muted); letter-spacing: .04em; margin: .25rem 0 1.75rem; }
     .pitch-meta span strong { color: var(--ink-soft); font-weight: 500; margin-right: .35em; letter-spacing: .04em; }
+    .position-summary { margin: 1.25rem 0 1.5rem; padding: 1.1rem 1.35rem; border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 10px; font-family: var(--sans); font-size: .9rem; line-height: 1.55; color: var(--ink-soft); }
+    .position-summary-label { display: block; font-family: var(--sans); font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 .55em; }
+    .position-summary ul { list-style: none; margin: 0; padding: 0; }
+    .position-summary li { padding: .28rem 0; border-bottom: 1px dashed var(--rule); }
+    .position-summary li:last-child { border-bottom: none; }
+    .position-summary strong { color: var(--ink); font-weight: 600; }
     .pitch-thesis { padding: 1.6rem 1.85rem; background: var(--bg-soft); border-left: 3px solid var(--accent-2); border-radius: 12px; margin: 1.25rem 0 2.75rem; font-family: var(--serif); font-size: 1.16rem; line-height: 1.6; color: var(--ink); }
     .pitch-thesis p { margin: 0 0 1em; }
     .pitch-thesis p:last-child { margin: 0; }
@@ -111,6 +117,17 @@
           <span><strong>Author</strong> Brandon Leon</span>
           <span><strong>Coverage</strong> Memory &middot; DRAM/HBM &middot; AI infrastructure</span>
         </p>
+
+        <div class="position-summary" aria-label="Position at a glance">
+          <span class="position-summary-label">Position at a glance</span>
+          <ul>
+            <li><strong>The call:</strong> long Micron from ~$668 (coverage began May 6) &mdash; week ten</li>
+            <li><strong>Realized:</strong> ~60% booked into the $950&ndash;$1,200 scale-out (avg ~$1,100) &mdash; <strong>+65%</strong>, banked</li>
+            <li><strong>Runner:</strong> ~40% (15 shares) still open at $970.82 (+45% paper) &mdash; <strong>held in violation of the $900 stop that fired July 16</strong>; graded F on process below</li>
+            <li><strong>The line:</strong> any close below <strong>$848.95</strong> &rarr; runner sold at the next open, in full, no override</li>
+            <li><strong>Decision dates:</strong> hyperscaler capex prints <strong>Jul 22&ndash;31</strong> (MSFT Jul 28) &mdash; publish a re-underwritten hold case or exit regardless &middot; MU FQ4 ~late Sept</li>
+          </ul>
+        </div>
 
         <div class="pitch-thesis">
           <span class="pitch-thesis-label">The stop</span>
