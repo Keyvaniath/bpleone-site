@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-07-22",
   "fileCount": 157,
-  "totalBytes": 10731070,
+  "totalBytes": 10731575,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -334,9 +334,9 @@
     {
       "path": "asml-initiation-2026-07-15.html",
       "name": "asml-initiation-2026-07-15.html",
-      "size": 35254,
-      "sizeText": "34.4 KB",
-      "modified": "2026-07-21",
+      "size": 35759,
+      "sizeText": "34.9 KB",
+      "modified": "2026-07-22",
       "ext": ".html",
       "category": "pages"
     },
