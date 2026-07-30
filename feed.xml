@@ -8,6 +8,22 @@
     <atom:link href="https://bpleon.com/feed.xml" rel="self" type="application/rss+xml" />
 
     <item>
+      <title>Week Ahead — August 3, 2026</title>
+      <link>https://bpleon.com/weekly-outlook-2026-08-03.html</link>
+      <guid isPermaLink="true">https://bpleon.com/weekly-outlook-2026-08-03.html</guid>
+      <pubDate>Mon, 03 Aug 2026 09:00:00 -0700</pubDate>
+      <description>A 9-3 hawkish hold, the 30-year's first close above 5.2% since 2007, a capex week that paid Microsoft and punished everyone else — and the Micron exit that finally executed itself: ~+53% blended, twelve weeks, ledger closed. The wires reset for jobs, the minutes, and the war-oil CPI.</description>
+    </item>
+
+    <item>
+      <title>Micron broke $900 again. This time the order was already there.</title>
+      <link>https://bpleon.com/mu-close-2026-07-30.html</link>
+      <guid isPermaLink="true">https://bpleon.com/mu-close-2026-07-30.html</guid>
+      <pubDate>Thu, 30 Jul 2026 09:00:00 -0700</pubDate>
+      <description>CXMT debuted +466%, the complex shed $1T, Micron touched $705 — and the broker stop placed after the confession had already sold the runner at ~$900. The call closes at ~+53%: the exact floor the system promised. Final ledger inside.</description>
+    </item>
+
+    <item>
       <title>Micron closed below $900. Our rule said sell. We didn’t.</title>
       <link>https://bpleon.com/mu-stop-2026-07-21.html</link>
       <guid isPermaLink="true">https://bpleon.com/mu-stop-2026-07-21.html</guid>
@@ -189,22 +205,6 @@
       <guid isPermaLink="true">https://bpleon.com/weekly-outlook-2026-05-15.html</guid>
       <pubDate>Fri, 15 May 2026 09:00:00 -0700</pubDate>
       <description>Hot CPI, soft retail, record-low Michigan sentiment, no Fed cuts. The S&amp;P made a new all-time high anyway. The AI cycle is doing all the work.</description>
-    </item>
-
-    <item>
-      <title>The Market Is Cooling Under the Semis</title>
-      <link>https://bpleon.com/cooling-under-semis-2026-05-08.html</link>
-      <guid isPermaLink="true">https://bpleon.com/cooling-under-semis-2026-05-08.html</guid>
-      <pubDate>Fri, 08 May 2026 09:00:00 -0700</pubDate>
-      <description>The market is not pumping because everything is fine. It is holding up because one powerful part of the market is still telling a better story than the economy.</description>
-    </item>
-
-    <item>
-      <title>MU — A note on today's move</title>
-      <link>https://bpleon.com/mu-note-2026-05-05.html</link>
-      <guid isPermaLink="true">https://bpleon.com/mu-note-2026-05-05.html</guid>
-      <pubDate>Tue, 05 May 2026 09:00:00 -0700</pubDate>
-      <description>Why I'm pulling the price target on Micron pending the full through-cycle pitch. Discipline beats chasing the tape.</description>
     </item>
 
   </channel>
