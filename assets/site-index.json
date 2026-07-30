@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-07-30",
   "fileCount": 162,
-  "totalBytes": 11192685,
+  "totalBytes": 11195505,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,9 +28,9 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 37435,
-      "sizeText": "36.6 KB",
-      "modified": "2026-07-22",
+      "size": 38680,
+      "sizeText": "37.8 KB",
+      "modified": "2026-07-30",
       "ext": ".json",
       "category": "assets"
     },
@@ -442,9 +442,9 @@
     {
       "path": "index.html",
       "name": "index.html",
-      "size": 29341,
-      "sizeText": "28.7 KB",
-      "modified": "2026-07-22",
+      "size": 29309,
+      "sizeText": "28.6 KB",
+      "modified": "2026-07-30",
       "ext": ".html",
       "category": "pages"
     },
@@ -514,7 +514,7 @@
     {
       "path": "mu-close-2026-07-30.html",
       "name": "mu-close-2026-07-30.html",
-      "size": 37058,
+      "size": 37053,
       "sizeText": "36.2 KB",
       "modified": "2026-07-30",
       "ext": ".html",
@@ -919,8 +919,8 @@
     {
       "path": "weekly-outlook-2026-08-03.html",
       "name": "weekly-outlook-2026-08-03.html",
-      "size": 59759,
-      "sizeText": "58.4 KB",
+      "size": 59690,
+      "sizeText": "58.3 KB",
       "modified": "2026-07-30",
       "ext": ".html",
       "category": "pages"
@@ -928,8 +928,8 @@
     {
       "path": "writing.html",
       "name": "writing.html",
-      "size": 32992,
-      "sizeText": "32.2 KB",
+      "size": 34055,
+      "sizeText": "33.3 KB",
       "modified": "2026-07-30",
       "ext": ".html",
       "category": "pages"
@@ -1324,9 +1324,9 @@
     {
       "path": "feed.xml",
       "name": "feed.xml",
-      "size": 14233,
-      "sizeText": "13.9 KB",
-      "modified": "2026-07-22",
+      "size": 14497,
+      "sizeText": "14.2 KB",
+      "modified": "2026-07-30",
       "ext": ".xml",
       "category": "site-meta"
     },
@@ -1342,9 +1342,9 @@
     {
       "path": "sitemap.xml",
       "name": "sitemap.xml",
-      "size": 10203,
-      "sizeText": "10.0 KB",
-      "modified": "2026-07-22",
+      "size": 10557,
+      "sizeText": "10.3 KB",
+      "modified": "2026-07-30",
       "ext": ".xml",
       "category": "site-meta"
     },
