@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Where the Next Dollar Goes &mdash; Deployment Series No. 1 &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="The Micron exit returned the largest cash pile this book has held since May &mdash; into a 5.2% thirty-year, a Fed with three dissents for a hike, and an equity market priced with almost no cushion over Treasuries. This opens the deployment series: the mandate, the hurdle, the correlation budget, the self-funded-capex axis, the five lanes, and the dated gates that decide when cash actually moves." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/next-dollar-01-2026-07-31.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/next-dollar-01-2026-07-31.html" />
+  <meta property="og:title" content="Where the next dollar goes. And why it hasn't gone yet." />
+  <meta property="og:description" content="The exit funded a question. This note opens the deployment series: the hurdle (cash yields 4% and the equity cushion is roughly zero), the framework (correlation budget + the self-funded-capex axis), five lanes surveyed honestly, and the dated gates that decide when money moves." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="article:published_time" content="2026-07-31" />
+  <meta property="article:author" content="Brandon Leon" />
+  <meta property="article:section" content="Deployment series" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=50" />
+
+  <style>
+    .pitch-meta { display: flex; gap: .5rem 1.5rem; flex-wrap: wrap; font-family: var(--sans); font-size: .85rem; color: var(--muted); letter-spacing: .04em; margin: .6rem 0 1.75rem; line-height: 1.5; }
+    .pitch-meta span strong { color: var(--ink-soft); font-weight: 500; margin-right: .35em; letter-spacing: .04em; }
+    .pitch-thesis { padding: 1.6rem 1.85rem; background: var(--bg-soft); border-left: 3px solid var(--accent-2); border-radius: 12px; margin: 1.25rem 0 2.75rem; font-family: var(--serif); font-size: 1.16rem; line-height: 1.6; color: var(--ink); }
+    .pitch-thesis p { margin: 0 0 1em; }
+    .pitch-thesis p:last-child { margin: 0; }
+    .pitch-thesis-label { display: block; font-family: var(--sans); font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-2); margin: 0 0 .65em; }
+    .pitch-section { margin: 3rem 0; padding-top: 1.75rem; border-top: 1px solid var(--rule); }
+    .pitch-section:first-of-type { border-top: 0; padding-top: 0; }
+    .pitch-section h2 { margin: 0 0 .9rem; font-size: 1.85rem; font-weight: 700; letter-spacing: -0.015em; color: var(--ink); border-bottom: 2px solid var(--accent); padding-bottom: .4rem; line-height: 1.2; }
+    .pitch-section h3 { font-size: 1.3rem; font-weight: 600; margin-top: 2em; color: var(--ink); letter-spacing: -0.01em; }
+    .article-chart { margin: 2rem 0; padding: 1.5rem; background: var(--bg-soft); border-left: 3px solid var(--accent); border-radius: 8px; }
+    .article-chart .chart-title { font-family: var(--sans); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.4rem; }
+    .article-chart .chart-headline { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--ink); margin: 0 0 1.2rem; line-height: 1.4; }
+    .article-chart .chart-svg { width: 100%; height: auto; max-width: 720px; display: block; margin: 0 auto; }
+    .article-chart .chart-caption { font-family: var(--sans); font-size: .82rem; color: var(--ink-soft); margin: 1rem 0 0; line-height: 1.5; font-style: italic; }
+    sup.fn-ref { font-family: var(--sans); font-size: .72em; font-weight: 500; vertical-align: super; line-height: 0; margin-left: .12em; }
+    sup.fn-ref a { text-decoration: none; color: var(--accent); }
+    sup.fn-ref a:hover { color: var(--ink); }
+    .sources-list { font-family: var(--sans); font-size: .88rem; color: var(--ink-soft); padding-left: 1.5rem; margin: .5rem 0 0; }
+    .sources-list li { margin: .35rem 0; line-height: 1.5; }
+    .simply-recap { margin: 1.75rem 0 0; padding: 1rem 1.25rem; background: rgba(91, 127, 107, 0.10); border-left: 3px solid #5b7f6b; border-radius: 6px; font-family: var(--sans); font-size: 0.95rem; color: var(--ink); line-height: 1.55; }
+    .simply-recap strong { color: #4a6a58; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.82rem; margin-right: .4em; }
+    .wrong-card { margin: 1rem 0; padding: 1.1rem 1.25rem; background: rgba(181, 106, 63, 0.06); border-left: 3px solid #b56a3f; border-radius: 6px; }
+    .wrong-card .wc-label { display: block; font-family: var(--sans); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #b56a3f; margin: 0 0 .55em; }
+    .wrong-card .wc-headline { font-family: var(--serif); font-size: 1.08rem; font-weight: 600; color: var(--ink); margin: 0 0 .55em; line-height: 1.4; }
+    .wrong-card .wc-body { margin: 0; color: var(--ink-soft); line-height: 1.55; }
+    .nc-item { padding: 1.1rem 1.25rem; margin-bottom: 1rem; background: var(--bg-soft); border-left: 3px solid #5b7f6b; border-radius: 6px; }
+    .nc-label { display: block; font-family: var(--sans); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #4a6a58; margin: 0 0 .55em; }
+    .nc-body { margin: 0; color: var(--ink-soft); line-height: 1.55; }
+    .new-idea { border-left: 3px solid #c9a961; background: rgba(201,169,97,0.08); }
+    .new-idea .nc-label { color: #a08440; }
+    .pitch-cta { margin: 3rem 0 1rem; padding-top: 2rem; border-top: 1px solid var(--rule); }
+    .disclosure { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-family: var(--sans); font-size: .82rem; line-height: 1.55; color: var(--muted); font-style: italic; }
+    table.gate-table { width: 100%; border-collapse: collapse; margin: 1.25rem 0 1.75rem; font-family: var(--sans); font-size: .88rem; }
+    table.gate-table th { background: var(--bg-soft); color: var(--ink); font-weight: 600; letter-spacing: .04em; padding: .6rem .8rem; text-align: left; border-bottom: 2px solid var(--rule); }
+    table.gate-table td { padding: .6rem .8rem; border-bottom: 1px solid var(--rule); color: var(--ink-soft); vertical-align: top; }
+    table.gate-table td strong { color: var(--ink); }
+  </style>
+
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon &mdash; Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html" aria-current="page">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose wide">
+
+    <header class="page-head">
+      <p class="eyebrow">Deployment series &middot; No. 1 &middot; the framework &middot; July 31, 2026</p>
+      <h1>Where the next dollar goes. And why it hasn't gone yet.</h1>
+
+      <p class="pitch-meta">
+        <span><strong>Author</strong> Brandon Leon</span>
+        <span><strong>Posted</strong> 2026-07-31 (figures as of the July 30 close)</span>
+        <span><strong>Coverage</strong> Deployment &middot; the correlation budget &middot; power &middot; big tech &middot; the cash hurdle</span>
+      </p>
+
+      <div class="simply-recap" style="margin:0 0 1.75rem;">
+        <strong>TL;DR:</strong> The Micron exit returned the largest cash position this portfolio has carried since coverage began in May &mdash; roughly a quarter of the book &mdash; and the temptation is to spend it fast. We're not going to, and this note explains the machine that decides when we do. The hurdle is real: six-month bills pay just above 4% while the equity market's cushion over Treasuries sits near zero. The 30-year just closed above 5.2% for the first time since 2007, and the Fed produced three dissents <em>for</em> a hike. The framework is a correlation budget &mdash; every candidate is scored on how little it moves with what we already own &mdash; plus the axis this earnings week just handed us: <strong>the market pays self-funded AI capex and discounts externally-funded AI capex.</strong> Five lanes surveyed inside: power (the lead candidate, with an honest new finding about which name actually diversifies), Alphabet (wait-for-price, with an alert level), the memory basket we already hold (thesis survives China's arrival &mdash; with named tripwires), two software cases that inverted, and cash itself. Every lane gets a dated gate. Nothing moves before its gate.
+      </div>
+
+      <div class="pitch-thesis">
+        <span class="pitch-thesis-label">The setup</span>
+        <p>Twelve weeks of Micron coverage ended <a href="mu-close-2026-07-30.html">last night</a> with a broker stop doing what we once failed to do ourselves, and the ledger closed at roughly +53% &mdash; all realized, all cash. That cash now sits next to a book that is, by design and by confession, one bet expressed several ways: a memory basket, a lithography toolmaker, and a venture-sized quantum sleeve, every one of them a supplier to the same AI buildout. The exit didn't just return capital. It returned a question we've spent a month researching and never once answering with money: <em>where does the next dollar go, when everything you own already points the same direction?</em></p>
+        <p>This note opens the deployment series that answers it &mdash; in public, with the same discipline the Micron saga beat into us. One underwrite per note. Falsifiable theses, named kill-shots, pre-committed levels. And a rule we're adopting from the start: <strong>the research decides the list; the calendar decides the timing.</strong> We've already watched this cash's first temptation come and go inside a single week &mdash; the power names fell double digits into the Fed shock and bounced 4% the next day; a software name touched our old buy level for two sessions and then ripped 21% away. Chasing either would have been a mood. The gates below are the alternative to moods.<sup class="fn-ref"><a href="#fn1" id="fnref1a">1</a></sup></p>
+      </div>
+    </header>
+
+    <section class="pitch-section" id="hurdle">
+      <h2>1. The hurdle: cash is a position now</h2>
+      <p>Every deployment argument starts with what doing nothing pays, and right now doing nothing pays more than it has in the life of this book. Six-month Treasury bills yield just above 4% &mdash; and the bill curve's own upward tilt says the market expects the Fed's next move to be a hike, not a cut. September hike odds sit near 60% after Wednesday's 9&ndash;3 hold with Hammack, Kashkari, and Logan all dissenting for a quarter point. The 30-year closed at 5.20%, its first close above that level since July 2007, after twelve straight sessions above 5%.<sup class="fn-ref"><a href="#fn1" id="fnref1b">1</a></sup></p>
+      <p>Against that, the S&amp;P 500 trades near 21 times forward earnings &mdash; an earnings yield in the high fours &mdash; which puts the classic equity risk premium at roughly <strong>zero</strong>: stocks, in aggregate, no longer pay you a cushion for equity risk over what the Treasury pays you for none. That is not a forecast of a crash; markets have run on thin cushions before. It is a statement about the <em>price of impatience</em>. Every dollar we deploy has to clear a real 4% and justify equity risk on top of it in a regime where the long bond is competing for capital &mdash; and where the supply of long-dated paper keeps growing: Treasury borrows roughly $671 billion this quarter, and the hyperscalers themselves have become long-end issuers, with the big AI spenders carrying a combined half-trillion dollars of bonds outstanding. The AI buildout is now competing with the Treasury market for the same duration dollars, including ours.<sup class="fn-ref"><a href="#fn1" id="fnref1c">1</a></sup></p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 2 &mdash; The hurdle, drawn to scale</p>
+        <p class="chart-headline">Riskless pays four. The whole equity market earns high-fours. The reward for taking equity risk is the sliver between the bars.</p>
+        <svg class="chart-svg" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" aria-label="Bar chart comparing yields: six-month Treasury bill about 4.07 percent, ten-year Treasury about 4.70 percent, and the S and P 500 forward earnings yield about 4.8 percent. The near-equal heights show the equity risk premium is roughly zero.">
+          <text x="360" y="30" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">What a dollar earns (%): riskless vs. the equity market</text>
+          <line x1="70" y1="290" x2="650" y2="290" stroke="#0B1F3A" stroke-width="0.75" opacity="0.35"/>
+          <!-- scale: 42px per 1%, baseline y=290 -->
+          <rect x="130" y="119" width="120" height="171" fill="#c9a961" rx="3"/>
+          <rect x="300" y="93" width="120" height="197" fill="#0B1F3A" opacity="0.45" rx="3"/>
+          <rect x="470" y="90" width="120" height="200" fill="#b56a3f" rx="3"/>
+          <text x="190" y="107" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#a08440" text-anchor="middle">4.07%</text>
+          <text x="360" y="81" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">~4.70%</text>
+          <text x="530" y="78" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#b56a3f" text-anchor="middle">~4.8%</text>
+          <text x="190" y="310" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#6B7280" text-anchor="middle">6-month T-bill</text>
+          <text x="360" y="310" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#6B7280" text-anchor="middle">10-year Treasury</text>
+          <text x="530" y="310" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#6B7280" text-anchor="middle">S&amp;P 500 forward earnings yield</text>
+          <text x="360" y="330" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Earnings yield &asymp; 1 &divide; 21x forward. The gap between the terracotta bar and the others is the entire reward for equity risk.</text>
+        </svg>
+        <p class="chart-caption">Six-month bill ~4.07%, 10-year Treasury ~4.70%, S&amp;P 500 forward earnings yield ~4.8% (the inverse of ~21x forward earnings). The classic equity risk premium &mdash; terracotta minus navy &mdash; is roughly zero. Sources as footnoted.<sup class="fn-ref"><a href="#fn1" id="fnref1d">1</a></sup></p>
+      </figure>
+      <p>So the first deployment decision is already made, and it's the least glamorous one in this note: <strong>the un-deployed balance goes to work in bills</strong>, not in a money-market afterthought. Four percent riskless is the bar every idea below gets measured against &mdash; and per the discipline published in <a href="weekly-outlook-2026-08-03.html">this week's outlook</a>, at least half the cash doesn't move at all until the August 12 CPI, the first inflation print carrying the war's oil premium, tells us which Fed we're dealing with in September.</p>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Safe government bills now pay about 4%, and stocks as a whole are priced so richly that they offer almost no extra reward for taking equity risk instead. That means sitting in cash isn't laziness &mdash; it's a real investment position with a real return. Anything we buy has to beat it convincingly. Half the cash stays parked until mid-August inflation data regardless.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="framework">
+      <h2>2. The framework: a correlation budget and a new axis</h2>
+      <p>This portfolio's problem was never a shortage of ideas. It was that every idea we love is secretly the same idea. The published book &mdash; the DRAM basket, ASML, the quantum sleeve &mdash; is a supplier-side bet on hyperscaler AI capex, and the July tape kept demonstrating that when that one factor sneezes, everything we own catches it together. So the mandate for new money is scored on one feature above all: <strong>correlation to what we already hold, where lower is the thing we're buying.</strong> A cheap stock that falls on the same days as our book isn't diversification at any price; it's the same bet wearing a different ticker. We call this the correlation budget, and this week &mdash; usefully, brutally &mdash; the market ran the experiment for us.</p>
+      <p>On Wednesday July 29, the Fed held with three hawkish dissents and the 30-year closed above 5.2% for the first time in nineteen years. That session was a stress test no backtest could improve on: it told us, name by name, who actually trades on something other than our factor. Salesforce rose 3.8% <em>through</em> the shock. Constellation Energy barely moved. Vistra fell almost 4% &mdash; on top of an 11% bleed the three sessions prior. Synopsys, supposedly a defensive toll-booth, fell 2.6%, right with the semis. One afternoon graded a month of our candidate list.<sup class="fn-ref"><a href="#fn2" id="fnref2a">2</a></sup></p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 1 &mdash; The correlation test we didn't have to pay for</p>
+        <p class="chart-headline">Decision day, July 29: the Fed holds 9&ndash;3, the 30-year closes above 5.2% for the first time since 2007 &mdash; and the candidate list sorts itself.</p>
+        <svg class="chart-svg" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" aria-label="Bar chart of July 29, 2026 single-day returns: Salesforce up 3.8 percent, Constellation Energy down 0.7 percent, the S and P 500 down 1.5 percent, Synopsys down 2.6 percent, Vistra down 3.9 percent. Names that fell with the market share the book's factor; Salesforce rose through the shock.">
+          <text x="360" y="30" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">July 29 single-day return (%) &mdash; the 5.2% thirty-year close</text>
+          <line x1="390" y1="55" x2="390" y2="290" stroke="#0B1F3A" stroke-width="1" opacity="0.4"/>
+          <!-- scale: 60px per 1%; zero at x=390 -->
+          <rect x="390" y="70" width="228" height="30" fill="#5b7f6b" rx="3"/>
+          <rect x="348" y="115" width="42" height="30" fill="#c9a961" rx="3"/>
+          <rect x="300" y="160" width="90" height="30" fill="#0B1F3A" opacity="0.45" rx="3"/>
+          <rect x="234" y="205" width="156" height="30" fill="#b56a3f" rx="3"/>
+          <rect x="156" y="250" width="234" height="30" fill="#b56a3f" rx="3"/>
+          <text x="384" y="90" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="end">CRM</text>
+          <text x="624" y="90" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#4a6a58" text-anchor="start">+3.8%</text>
+          <text x="396" y="135" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="start">CEG</text>
+          <text x="342" y="135" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#a08440" text-anchor="end">&minus;0.7%</text>
+          <text x="396" y="180" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="start">S&amp;P 500</text>
+          <text x="294" y="180" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#0B1F3A" text-anchor="end">&minus;1.5%</text>
+          <text x="396" y="225" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="start">SNPS</text>
+          <text x="228" y="225" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#b56a3f" text-anchor="end">&minus;2.6%</text>
+          <text x="396" y="270" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#0B1F3A" text-anchor="start">VST</text>
+          <text x="150" y="270" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#b56a3f" text-anchor="end">&minus;3.9%</text>
+          <text x="360" y="315" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Green = rose through the shock. Gold = held its ground. Terracotta = fell with the book's factor. One session is evidence, not proof &mdash; but it's the evidence we'd pay for.</text>
+        </svg>
+        <p class="chart-caption">Single-session moves, Tuesday July 29, 2026 &mdash; the FOMC's 9&ndash;3 hold and the 30-year's first close above 5.2% since July 2007. Salesforce +3.8%, Constellation &minus;0.7%, S&amp;P 500 &minus;1.5%, Synopsys &minus;2.6%, Vistra &minus;3.9%. Sources: verified exchange closes.<sup class="fn-ref"><a href="#fn2" id="fnref2b">2</a></sup></p>
+      </figure>
+
+      <p>The second half of the framework arrived the same week, from the capex prints themselves. We wrote on Sunday that the market now pays capex <em>with proof attached</em> and sells capex on faith. Microsoft and Amazon then refined the axis for us, because Amazon raised its 2026 capex guide to roughly $220 billion &mdash; the biggest number of the five &mdash; and was paid 9% after hours for it, while Alphabet's raise to $195&ndash;205 billion got sold for a week. The difference isn't the size of the check. It's who writes it. <strong>Microsoft and Amazon fund the buildout from their own cash flow; Alphabet just executed its first major equity raise in more than twenty years, paused buybacks, roughly doubled its debt inside six months, and will start selling $40 billion of stock at-the-market this quarter.</strong> The market's rule, restated: self-funded capex plus monetization gets paid; externally-funded capex gets discounted &mdash; whatever the revenue proof looks like. And note what the market forgave: Amazon's actual Q3 revenue guide came in <em>below</em> consensus, and the stock ripped anyway &mdash; AWS reaccelerating outweighed a soft guide, because the funding is internal. That axis matters to every lane below, because it tells us which customers of our supplier book are load-bearing and which are leaning on the capital markets in a year when the capital markets have a 5.2% alternative.<sup class="fn-ref"><a href="#fn3" id="fnref3a">3</a></sup></p>
+      <p>One footnote on earnings quality that belongs in the open, because it now spans two of the five: the AI boom has begun marking <em>itself</em> to market through megacap income statements. Alphabet's headline quarter carried a ~$99 billion unrealized gain on equity stakes, chiefly SpaceX; Amazon's carried a <strong>$53.4 billion non-operating gain, primarily its Anthropic investment</strong> &mdash; nearly two-thirds of its reported net income. Both core quarters were strong on their own operating lines; neither headline EPS number means what a screen says it means. When private AI valuations flow through public earnings at this scale, trailing multiples across the complex quietly stop being comparable &mdash; one more reason this series underwrites operating lines and cash flows, not headline prints.<sup class="fn-ref"><a href="#fn3" id="fnref3c">3</a></sup></p>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Two rules govern every purchase in this series. First: new money must buy things that <em>don't move together</em> with what we already own &mdash; and this week's Fed shock conveniently showed us exactly which candidates pass that test. Second: among the AI giants, the market now rewards companies that pay for their AI buildout from their own profits (Microsoft, Amazon) and punishes the one borrowing and selling stock to do it (Google). We'll use both rules on every idea.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="lanes">
+      <h2>3. The five lanes, surveyed honestly</h2>
+
+      <h3>Lane one: power &mdash; the lead candidate, with a finding we didn't expect</h3>
+      <p>The cleanest supplier trade left in the AI complex may not be silicon at all. Every dollar of the roughly $700-billion-plus the big four will spend this year needs electrons, and the grid is the one bottleneck China cannot flood: nobody imports American grid capacity. The physical scarcity is not a thesis, it's a filing &mdash; PJM's latest capacity auction cleared at its price cap for the fourth straight year, procured $16.4 billion of capacity, attracted just 525 megawatts of new generation, and left the entire footprint 6,831 megawatts short of its reliability requirement for the second consecutive year. Meanwhile the two names we've tracked all summer &mdash; Vistra and Constellation &mdash; sit 32% and 36% below their 52-week highs, both reporting next week.<sup class="fn-ref"><a href="#fn4" id="fnref4a">4</a></sup></p>
+      <p>Here's the honest finding, and it cost us a week of watching to learn it: <strong>the cheap one and the diversifying one are not the same stock.</strong> Vistra &mdash; the value name, roughly 16 times forward earnings, consensus targets some 50% above the price &mdash; fell 15.5% across the four sessions into the Fed shock. It is AI-demand beta <em>plus</em> rate beta: the very things our book already suffers from, with a new one added. Constellation &mdash; the premium nuclear operator at roughly 23 times &mdash; fell 6.4% over the same stretch and less than one percent on the shock day itself. On the correlation budget, the expensive stock is the cheaper diversifier. Two caveats keep this from being a table-pounding setup: the capacity-price lever is politically capped (the auction cap itself <em>fell</em> 2.5%, by design), so the bull case runs through energy margins and long-dated datacenter contracts rather than auction prints; and both names bounced only when Microsoft's print lit the AI tape &mdash; they are lower-correlation, not un-correlated. The gate, in one sentence: <strong>Constellation reports Thursday August 6 before the open and Vistra Friday August 7; if guidance holds and prices sit at or below this week's levels after the prints, Constellation buys first and Vistra stages behind it, with full size waiting for the August 12 CPI.</strong> If a hot CPI puts September firmly in play and the prints merely hold, we pass: the book already owns this macro bet three ways.<sup class="fn-ref"><a href="#fn4" id="fnref4b">4</a></sup></p>
+
+      <h3>Lane two: Alphabet &mdash; the right company at the wrong price, with an alert set</h3>
+      <p>Alphabet is the most interesting <em>argument</em> in the market right now: Cloud grew 82% with a $514 billion signed backlog growing $50 billion a quarter, which is the best capex-to-revenue proof any hyperscaler has printed &mdash; and the stock still can't get paid for it, because of how the buildout is funded. The trailing valuation that screens cheap is an illusion: last quarter's headline earnings carried a $99 billion unrealized mark on equity stakes &mdash; chiefly SpaceX, marked up on its June IPO &mdash; worth $6.26 of the $9.11 in reported EPS. Strip it and the core quarter was simply in line, leaving the stock at roughly 25 times forward earnings: a <em>premium</em> to Microsoft's 20, for the messiest capital story in the group &mdash; $811 billion of purchase commitments (up half a trillion dollars in a single quarter), a $40 billion at-the-market program that begins selling into every rally this quarter, and management's own promise that 2027 spending rises &ldquo;significantly&rdquo; again. We are not sellers of the business; we are refusers of the price. <strong>The alert sits near $318 per share</strong> &mdash; the post-earnings low, where the discount to Microsoft is restored &mdash; and the decision print is October 27. Until one of those arrives, Alphabet is a watch, not a buy. It would also flunk the correlation budget anyway: it's the payer side of the exact factor our suppliers monetize.<sup class="fn-ref"><a href="#fn3" id="fnref3b">3</a></sup></p>
+
+      <h3>Lane three: the memory basket we already own &mdash; held, and now properly underwritten</h3>
+      <p>The scariest position in the book after the CXMT shock was the DRAM basket, and we owed it a real underwrite rather than a hope. Here's the verdict: <strong>the thesis survives, because China's champion is fenced out of the exact segment where the shortage lives.</strong> CXMT's own IPO prospectus contains no HBM project. Its HBM3 remains sampling-only &mdash; one research house estimates yields near 25% &mdash; with mass production slipping, no EUV access, and U.S. controls that specifically choke the tooling HBM requires. Its commodity DDR5 bits absorb domestically, and &mdash; the tell that matters most &mdash; its server memory reportedly prices <em>above</em> Samsung's in China: a price-taker sheltering under the shortage umbrella, not an undercutter collapsing it. That is precisely how Samsung can report a record quarter and say, the same day, that the shortage gets <em>more severe</em> in 2027 and runs through 2028 while locking 60&ndash;70% of capacity into five-year contracts. And last night the demand side testified in person. On his final earnings call as Apple's CEO, Tim Cook described memory costs as rising at a pace he called a <strong>&ldquo;100-year flood,&rdquo;</strong> pressuring Apple's margins into the September quarter. That is the world's most capital-light hyperscaler confirming the shortage from the buyer's side of the table &mdash; in precisely the advanced segments where China's entrant cannot yet compete. The basket's drawdown is the market repricing a 2028 tail, not the next four quarters. We hold &mdash; and we publish the tripwires so you can hold us to them:</p>
+      <ul style="font-family:var(--serif); line-height:1.6; margin:0 0 1em;">
+        <li><strong>The early warning:</strong> CXMT-versus-Samsung server-DRAM pricing in China's spot market flipping from a premium to a discount.</li>
+        <li><strong>The kill headline:</strong> verified volume HBM3 shipments to Huawei at workable yields.</li>
+      </ul>
+      <p>Either one reopens this thesis in public.<sup class="fn-ref"><a href="#fn5" id="fnref5a">5</a></sup></p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 3 &mdash; Two different markets wearing one ticker tape</p>
+        <p class="chart-headline">Why a $488 billion Chinese debut and a &ldquo;worsening shortage&rdquo; can both be true at once.</p>
+        <svg class="chart-svg" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" aria-label="Two-column comparison. Left, CXMT the entrant: commodity DDR5 and LPDDR5X bits, sells almost entirely into China, prices above Samsung as a price-taker, no HBM project in its prospectus, HBM3 samples only at roughly 25 percent estimated yields, no EUV access and HBM tooling export-blocked. Right, Samsung the incumbent: HBM and advanced server DRAM, global qualified customers, 60 to 70 percent of capacity locked in five-year contracts, and guidance that the shortage grows more severe in 2027 and continues into 2028.">
+          <rect x="70" y="55" width="280" height="235" fill="rgba(181,106,63,0.06)" stroke="#b56a3f" stroke-width="1.5" rx="10"/>
+          <rect x="370" y="55" width="280" height="235" fill="rgba(11,31,58,0.05)" stroke="#0B1F3A" stroke-width="1.5" rx="10"/>
+          <text x="210" y="82" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#b56a3f" text-anchor="middle">CXMT &mdash; the entrant</text>
+          <text x="510" y="82" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#0B1F3A" text-anchor="middle">Samsung &mdash; the incumbent</text>
+          <text x="90" y="112" font-family="Inter,sans-serif" font-size="10.5" fill="#1c1a16">&bull; Commodity DDR5 / LPDDR5X bits</text>
+          <text x="90" y="140" font-family="Inter,sans-serif" font-size="10.5" fill="#1c1a16">&bull; Sells almost entirely into China</text>
+          <text x="90" y="168" font-family="Inter,sans-serif" font-size="10.5" fill="#1c1a16">&bull; Prices ABOVE Samsung &mdash; a price-taker</text>
+          <text x="90" y="196" font-family="Inter,sans-serif" font-size="10.5" fill="#1c1a16">&bull; No HBM project in its own prospectus</text>
+          <text x="90" y="224" font-family="Inter,sans-serif" font-size="10.5" fill="#1c1a16">&bull; HBM3: samples only, ~25% est. yields</text>
+          <text x="90" y="252" font-family="Inter,sans-serif" font-size="10.5" fill="#1c1a16">&bull; No EUV; HBM tooling export-blocked</text>
+          <text x="390" y="112" font-family="Inter,sans-serif" font-size="10.5" fill="#1c1a16">&bull; HBM + advanced server DRAM</text>
+          <text x="390" y="140" font-family="Inter,sans-serif" font-size="10.5" fill="#1c1a16">&bull; Global, qualified customer base</text>
+          <text x="390" y="168" font-family="Inter,sans-serif" font-size="10.5" fill="#1c1a16">&bull; 60&ndash;70% of capacity in 5-year contracts</text>
+          <text x="390" y="196" font-family="Inter,sans-serif" font-size="10.5" fill="#1c1a16">&bull; Shortage &ldquo;more severe&rdquo; in 2027&hellip;</text>
+          <text x="390" y="224" font-family="Inter,sans-serif" font-size="10.5" fill="#1c1a16">&bull; &hellip;continuing into 2028</text>
+          <text x="390" y="252" font-family="Inter,sans-serif" font-size="10.5" font-weight="600" fill="#0B1F3A">&bull; Where the shortage actually lives</text>
+          <text x="360" y="320" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">The basket owns the right column. The tripwires above watch for the day the left column stops being true.</text>
+        </svg>
+        <p class="chart-caption">CXMT's own IPO prospectus contains no HBM project; its HBM3 remains sampling-only with mass production slipping; U.S. controls specifically cover HBM tooling. Samsung locked 60&ndash;70% of capacity into five-year agreements and guided the shortage worsening through 2028. Sources as footnoted.<sup class="fn-ref"><a href="#fn5" id="fnref5b">5</a></sup></p>
+      </figure>
+
+      <h3>Lane four: the two software cases that traded places</h3>
+      <p>A month ago our software shortlist was Synopsys (the defensive anchor) and Salesforce (the contrarian). July inverted them. Synopsys is now the cheap one &mdash; 43% off its high, twelve percent <em>below</em> the entry band we once set &mdash; and disqualified anyway, twice over: it spent the month trading like a high-beta semi (falling with our book on every bad day, including 2.6% on decision day), and it acquired a genuine moat question when a Chinese AI lab demonstrated a chip designed end-to-end on open-source design tools, a scare that hit its rival Cadence the same day. Management's answer &mdash; agentic-design partnerships with Intel, Microsoft, and Nvidia announced last week &mdash; is the right answer; whether it's sufficient is an August 26 earnings and September investor-day question, not a today question. Salesforce ran the opposite path: it touched our old band for barely two sessions in late July, V-bottomed 21% on a $1.6 billion federal contract and Agentforce momentum &mdash; and, decisively for this framework, <em>rose</em> through the Fed shock while everything AI-adjacent fell. It is the one candidate that has now demonstrated the low correlation against our current book that we're shopping for &mdash; at a price 13% above where we'd pay for it. The agents-versus-seats bear case gets adjudicated September 2, when contracted revenue growth either holds its low-teens rate or doesn't. A retest of the low $160s before then, and the band discipline buys it; otherwise we wait for the print.<sup class="fn-ref"><a href="#fn6" id="fnref6a">6</a></sup></p>
+
+      <h3>Lane five: cash &mdash; already deployed, by definition</h3>
+      <p>Covered in Section 1, listed here for completeness because the framework demands it: bills above 4% are a lane, not a waiting room. The balance that hasn't cleared a gate earns the hurdle rate while the calendar works. In a market with no equity cushion, patience is currently the highest-conviction position we own.</p>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Five options for the money. Power companies (the favorite &mdash; AI needs electricity and the grid is genuinely short, but we learned this week the cheap one moves with everything we own, so the steadier one buys first, after next week's earnings). Google (great business, wrong price, funding itself in ways the market rightly distrusts &mdash; we have an alarm set lower). Our existing memory fund (we checked the China threat properly: it can't yet make the advanced chips where the shortage is &mdash; we hold). Two software stocks that swapped roles (the cheap one stopped diversifying; the diversifying one got expensive). And cash itself at 4%, which everything else has to beat.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="gates">
+      <h2>4. The gates: the calendar decides, not the mood</h2>
+      <p>Every lane above terminates in a dated event with a pre-committed response. This is the whole lesson of the Micron ledger, applied to buying instead of selling: the plan is written <em>before</em> the tape moves, and the tape is only allowed to answer questions we asked in advance.</p>
+
+      <p style="font-family:var(--sans); font-size:.78rem; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:1.5rem 0 .25rem;">Gates for the next dollar</p>
+      <table class="gate-table">
+        <thead><tr><th>Date</th><th>Event</th><th>What it decides</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Aug 5</strong></td><td>Treasury quarterly refunding</td><td>Whether long-end supply pressure escalates; the backdrop for every duration-sensitive lane</td></tr>
+          <tr><td><strong>Aug 6</strong></td><td>Constellation Q2, pre-open</td><td>Gate one for the power tranche: guidance intact + price at-or-below this week = CEG buys first</td></tr>
+          <tr><td><strong>Aug 7</strong></td><td>Vistra Q2 + the July jobs report</td><td>Gate two: VST joins staged, stop pre-set below the July low; a hot jobs print that re-arms September freezes the lane</td></tr>
+          <tr><td><strong>Aug 12</strong></td><td>July CPI &mdash; the war-oil basket</td><td>Releases (or withholds) the second half of any tranche; decides which Fed we get in September</td></tr>
+          <tr><td><strong>Aug 26</strong></td><td>Synopsys FQ3 + Sept investor day</td><td>Whether the open-source-EDA scare gets an answer worth underwriting</td></tr>
+          <tr><td><strong>Sep 2</strong></td><td>Salesforce FQ2 &mdash; cRPO print</td><td>The agents-versus-seats adjudicator; low-teens contracted growth keeps the diversifier case alive</td></tr>
+          <tr><td><strong>Oct 27</strong></td><td>Alphabet Q3</td><td>The proof print: Cloud &ge;75%, backlog growth, cash flow &mdash; or the $318 alert does the work first</td></tr>
+          <tr><td><strong>Weekly</strong></td><td>China DRAM spot vs. Samsung</td><td>The basket's early-warning tripwire &mdash; premium flipping to discount reopens the memory thesis</td></tr>
+        </tbody>
+      </table>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 4 &mdash; The road the money walks</p>
+        <p class="chart-headline">August 5 to October 27: every purchase in this series sits behind one of these dates.</p>
+        <svg class="chart-svg" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" aria-label="Timeline from August 5 to October 27, 2026. Markers: August 5 Treasury refunding; August 6 Constellation earnings; August 7 Vistra earnings plus the jobs report; August 12 CPI; August 26 Synopsys earnings; September 2 Salesforce earnings; September 15 to 16 FOMC; October 27 Alphabet earnings. Terracotta markers are deployment gates, gold are decision prints, navy are macro context.">
+          <line x1="80" y1="140" x2="648" y2="140" stroke="#0B1F3A" stroke-width="2" opacity="0.5"/>
+          <!-- x = 80 + days-from-Aug5 * 6.85 -->
+          <circle cx="80" cy="140" r="5" fill="#0B1F3A" opacity="0.55"/>
+          <circle cx="87" cy="140" r="6" fill="#b56a3f"/>
+          <circle cx="94" cy="140" r="6" fill="#b56a3f"/>
+          <circle cx="128" cy="140" r="7" fill="#b56a3f"/>
+          <circle cx="224" cy="140" r="6" fill="#c9a961"/>
+          <circle cx="272" cy="140" r="6" fill="#c9a961"/>
+          <circle cx="368" cy="140" r="5" fill="#0B1F3A" opacity="0.55"/>
+          <circle cx="643" cy="140" r="6" fill="#c9a961"/>
+          <text x="76" y="100" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#0B1F3A" text-anchor="end">Aug 5 &middot; refunding</text>
+          <line x1="80" y1="106" x2="80" y2="132" stroke="#0B1F3A" stroke-width="0.75" opacity="0.3"/>
+          <text x="90" y="185" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#b56a3f" text-anchor="middle">Aug 6 &middot; CEG</text>
+          <line x1="87" y1="148" x2="87" y2="172" stroke="#b56a3f" stroke-width="0.75" opacity="0.4"/>
+          <text x="106" y="100" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#b56a3f" text-anchor="start">Aug 7 &middot; VST + jobs</text>
+          <line x1="94" y1="106" x2="94" y2="132" stroke="#b56a3f" stroke-width="0.75" opacity="0.4"/>
+          <text x="140" y="215" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#b56a3f" text-anchor="middle">Aug 12 &middot; the war-oil CPI</text>
+          <line x1="128" y1="148" x2="128" y2="202" stroke="#b56a3f" stroke-width="0.75" opacity="0.4"/>
+          <text x="224" y="100" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#a08440" text-anchor="middle">Aug 26 &middot; SNPS</text>
+          <line x1="224" y1="106" x2="224" y2="132" stroke="#c9a961" stroke-width="0.75" opacity="0.5"/>
+          <text x="272" y="185" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#a08440" text-anchor="middle">Sep 2 &middot; CRM</text>
+          <line x1="272" y1="148" x2="272" y2="172" stroke="#c9a961" stroke-width="0.75" opacity="0.5"/>
+          <text x="368" y="100" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#0B1F3A" text-anchor="middle">Sep 15&ndash;16 &middot; FOMC</text>
+          <line x1="368" y1="106" x2="368" y2="132" stroke="#0B1F3A" stroke-width="0.75" opacity="0.3"/>
+          <text x="640" y="185" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#a08440" text-anchor="end">Oct 27 &middot; GOOGL</text>
+          <line x1="643" y1="148" x2="643" y2="172" stroke="#c9a961" stroke-width="0.75" opacity="0.5"/>
+          <text x="360" y="245" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Terracotta = deployment gates. Gold = decision prints. Navy = the macro backdrop they trade against. The weekly China-spot tripwire runs continuously underneath.</text>
+        </svg>
+        <p class="chart-caption">The deployment calendar as published: power's gates cluster in the first week of August, the CPI releases full sizing, the software and Alphabet decisions stretch into fall. Dates per company IR and official calendars, as footnoted.</p>
+      </figure>
+
+      <div class="wrong-card">
+        <span class="wc-label">What makes this framework wrong</span>
+        <p class="wc-headline">Patience is also a position, and it can also lose. Three ways this note ages badly:</p>
+        <p class="wc-body">(1) <strong>The melt-up resumes without us</strong> &mdash; if the capex verdict plus a cool CPI reignites the AI tape, our gates will have kept us in bills at 4% while the lanes we correctly identified run 20% without us. Gated discipline caps upside; that's its price, and we're paying it knowingly. (2) <strong>The correlation evidence is one week old</strong> &mdash; Salesforce's shock-day strength and Constellation's calm are single-week findings that a different macro tape could reverse; we're treating them as evidence, not law. (3) <strong>The hurdle cuts both ways</strong> &mdash; if the Fed's hawkish turn breaks something and yields fall hard, cash's 4% evaporates and the duration-sensitive names we're being patient with will have re-rated before our gates open. A wire is a response plan, not immunity &mdash; and that includes the wires we've aimed at ourselves.</p>
+      </div>
+
+      <div class="nc-item new-idea">
+        <span class="nc-label">What this series will deliver</span>
+        <p class="nc-body">One underwrite per note, in the order the calendar makes them decision-ready: the power pair first (post-print, next week), then whichever of Alphabet, Salesforce, or the memory-tripwire review the gates summon. Each note ships with the same equipment the Micron coverage earned its scars proving out: a falsifiable thesis, named kill-shots, pre-committed entry and exit levels &mdash; and, where discretion has ever failed us before, a standing order instead of a promise. The ledger gets graded in the weeklies, as always. We are okay with being wrong. We are not okay with being vague.</p>
+      </div>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Every possible purchase now has a specific date and a specific test. Earnings next week decide the power stocks. Mid-August inflation decides how much gets spent at all. September and October events decide the software names and Google. Until a test is passed, the money waits in 4% bills. We wrote the plan down before the market could tempt us out of it &mdash; because the one time we relied on willpower instead of rules, it cost us, and we published the receipts.
+      </div>
+    </section>
+
+    <div class="pitch-cta">
+      <a class="btn" href="https://bpleon.substack.com/subscribe" target="_blank" rel="noopener">Get the next note by email &rarr;</a>
+      &nbsp;
+      <a class="btn btn-ghost" href="writing.html">All writing</a>
+    </div>
+
+    <section class="pitch-section" id="sources">
+      <h2>Sources &amp; footnotes</h2>
+      <ol class="sources-list">
+        <li id="fn1">Rates &amp; the hurdle: FOMC July 28&ndash;29 statement, 9&ndash;3 with Hammack/Kashkari/Logan dissenting for +25bp (Federal Reserve); 30-year closed 5.20% July 29, first close above 5.2% since July 2007, twelfth straight session above 5% (CNBC/Bloomberg); September hike odds ~57&ndash;60% post-decision (CME FedWatch as reported); 3-month bill ~3.90%, 6-month ~4.07% (Treasury constant-maturity data as reported); SGOV 30-day SEC yield ~3.55% (iShares, most recent declaration). Equity-risk-premium framing: S&amp;P ~21x forward vs a ~4.70% 10-year &mdash; classic ERP roughly zero (derivation; Damodaran's cash-flow-implied July ERP of 4.45% is the alternative methodology). Treasury Q3 privately-held net marketable borrowing ~$671B (May QRA projection); combined major-hyperscaler bonds outstanding ~$500B as reported (Bloomberg/strategist commentary). The July 30 power-name candidates' bounce and prior four-session declines: verified exchange closes. <a href="#fnref1a">&#x21A9;</a></li>
+        <li id="fn2">Chart 1 closes, all July 29, 2026: CRM $188.38 (+3.8%), CEG $257.95 (&minus;0.72%), S&amp;P 500 7,316.15 (&minus;1.52%), SNPS $373.69 (&minus;2.6%), VST $142.81 (&minus;3.92%). Verified exchange closes. <a href="#fnref2a">&#x21A9;</a></li>
+        <li id="fn3">The capex axis: Amazon Q2 (July 30 AMC): net sales $200.6B (+20%), AWS $42.2B (+36.7%, fastest in 18 quarters; ~$169B run-rate), operating income $27.5B (+43%), 2026 capex guidance raised to ~$220B (CNBC), Q3 revenue guided $197&ndash;202B vs ~$204B consensus (below), stock +9% after hours; GAAP net income $62.6B included a $53.4B non-operating pre-tax gain primarily from the Anthropic investment (company release; Variety/Yahoo coverage) &mdash; diluted EPS $5.75 is not comparable to the ~$1.82 operating consensus. Apple FQ3 (July 30 AMC): revenue $109.4B (+16%, record June quarter), EPS $2.02 (+29%), iPhone +22% and Mac +29% records, Services record; September-quarter guide +9&ndash;11% revenue, 47&ndash;48% gross margin including ~1pt of tariff-refund benefit ($0.11/share of tariff rebates in FQ3); supply constraints expected to "increase significantly" (advanced-node availability); memory-cost inflation described by Tim Cook as a &ldquo;100-year flood&rdquo; on his final call as CEO (John Ternus takes over September 1); shares faded ~2% after hours (Investing.com transcript; BigGo/CNBC coverage). Microsoft FQ4 (July 29): Azure +43% crossing $100B annual, +16.9% next day &mdash; ~$490B single-session market-cap record. Alphabet Q2 (July 22): revenue $119.8B (+24%), Cloud $24.8B (+82%), backlog $514B (+$50B q/q); FY26 capex guide raised to $195&ndash;205B (second raise); Q2 FCF &minus;$5.9B (first negative quarter since the 2004 IPO); buybacks $0; June equity offering $84.75B including a $10B Berkshire Hathaway placement and a $40B at-the-market program beginning Q3; total purchase commitments $811B (+~$500B q/q); GAAP EPS $9.11 including a disclosed ~$99B unrealized gain on equity securities (chiefly SpaceX), $6.26/share &mdash; core ~$2.85 vs ~$2.88 consensus. Forward multiples: GOOGL ~25x vs MSFT ~20x (stockanalysis.com). Company releases; CNBC/Bloomberg/Yahoo Finance coverage; verified closes. <a href="#fnref3a">&#x21A9;</a></li>
+        <li id="fn4">Power lane: PJM 2028/29 Base Residual Auction (results July 14): cleared at the $325/MW-day cap footprint-wide (fourth consecutive auction at cap; the cap declined 2.5% from $333.44), 138,318 MW procured, ~$16.4B, 525 MW of new generation, RTO 6,831 MW short of its reliability requirement &mdash; the second consecutive RTO-wide shortfall (PJM releases). Tapes July 24&ndash;30 (verified closes): VST $168.98 &rarr; $142.81 (&minus;15.5% over four sessions; &minus;3.92% on decision day) &rarr; $148.62 (+4.1% July 30); CEG &minus;6.4% over the same four sessions, &minus;0.72% decision day, $263.56 (+2.2%) July 30. Valuations: VST ~16.1x forward, CEG ~22.9x (stockanalysis.com); VST consensus PT ~$223&ndash;225 (S&amp;P Global averages). Earnings: CEG Thursday Aug 6 pre-open (company IR); VST Friday Aug 7 (company 8-K). Both names 32&ndash;36% below 52-week highs. Cogentrix close still pending regulatory approvals ("mid-to-late 2026"). <a href="#fnref4a">&#x21A9;</a></li>
+        <li id="fn5">China-memory: CXMT listed July 27 (Shanghai STAR), +466% day one, ~$488B &mdash; China's most valuable onshore-listed company; no HBM project in the IPO prospectus (Tom's Hardware); HBM3 sampling-only with mass production slipping (Korean trade press via industry reports), estimated ~25% HBM3 stack yields (SemiAnalysis estimate); no EUV access; December 2024 U.S. controls cover HBM manufacturing/packaging tooling; CXMT server DDR5 reportedly priced above Samsung's in China (DigiTimes). Samsung Q2 call (July 30): DRAM shortage "more severe" in 2027, persisting through 2028; 60&ndash;70% of capacity into five-year supply agreements. Capitol Hill: bipartisan letters seeking a national-security probe of the IPO as reported. Basket marks: DRAM ETF $59.73 basis, $52.34 July 30 close. <a href="#fnref5a">&#x21A9;</a></li>
+        <li id="fn6">Software pair: SNPS $372.33 July 30, 43% off its high; July 17 crash catalysts: broad semi selloff + Moonshot AI's Kimi K3 open-source-EDA chip-design demonstration (as reported; Cadence fell in sympathy); Elliott cooperation agreement settled May 27 (Jesse Cohn seated June 1, standstill terms); agentic-EDA partnerships with Intel/Microsoft/Nvidia announced July 27 (+4.2%); FQ3 earnings Aug 26, investor day September. CRM $180.71 July 30; band touch July 23&ndash;24 (low $155.15), +21% V-bottom on the ~$1.6B VA modernization award and Agentforce ARR $1.2B (+205%); +3.8% on decision day; FQ1 cRPO $33.6B (+14%); FQ2 report September 2. BofA Underperform ($160) and Morgan Stanley Equal-Weight represent the bear side; Evercore top-four software pick July 30 the bull. Company releases and coverage as cited. <a href="#fnref6a">&#x21A9;</a></li>
+      </ol>
+
+      <p class="muted small" style="margin-top:1.5rem;"><strong>Methodology &amp; definitions:</strong> The &ldquo;correlation budget&rdquo; scores candidates on observed co-movement with the existing published book (the DRAM basket, ASML, the quantum sleeve), with single-event stress sessions weighted as evidence, not proof. &ldquo;Self-funded vs. externally-funded capex&rdquo; classifies hyperscalers by whether the current buildout is financed from operating cash flow or from net new equity/debt issuance. Position marks are the most recent settled closes. Entry bands, stops, and gates are pre-committed in writing before the events that test them; deployments execute only after their named gate clears, and are graded in the weekly ledger against the wording as published. Single-source figures are attributed inline to their source. Nothing here is a price target; individual underwrite notes in this series will carry their own published frameworks.</p>
+
+      <p class="muted small" style="margin-top:1rem;">Nothing on this page is investment advice. We work in scenarios and trip-wires, not predictions &mdash; everything above is for thought and process, not for trading. Forward-looking statements are scenarios, not promises. See <a href="disclaimer.html">disclaimer</a>.</p>
+
+      <p class="disclosure">
+        Disclosure: I/we have beneficial long positions in the shares of ASML, a memory-sector ETF (ticker DRAM), and a diversified quantum-computing ETF (QTUM) through stock ownership. I/we have no position in Micron, Vistra, Constellation Energy, Alphabet, Microsoft, Amazon, Apple, Synopsys, Salesforce, or Cadence, and no plans to initiate any position before the published gates described above clear. I wrote this article myself, and it expresses my own opinions. I am not receiving compensation for it. I have no business relationship with any company whose stock is mentioned. This commentary is for informational and educational purposes only and does not constitute investment, tax, or legal advice or a solicitation to buy or sell any security. Past performance is not indicative of future results. Readers should conduct their own research and consult a qualified financial professional before making investment decisions.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script src="script.js?v=50" defer></script>
+</body>
+</html>
