@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Soft Data, Hard Prices &mdash; Week of August 17 &middot; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="Jobs, inflation, retail spending, and sentiment all weakened. Long yields, oil, and near-term inflation expectations did not. Five wires graded, an open gate with no order in it, Berkshire's new Alphabet stake vs. our $318 alert, and the week the retailers cross-examine the retail print. Every number sourced." />
+  <meta name="author" content="Brandon Leon" />
+  <link rel="canonical" href="https://bpleon.com/weekly-outlook-2026-08-17.html" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://bpleon.com/weekly-outlook-2026-08-17.html" />
+  <meta property="og:title" content="Soft Data, Hard Prices" />
+  <meta property="og:description" content="Jobs, inflation, retail spending, and sentiment all weakened. Long yields, oil, and near-term inflation expectations did not. Five wires graded, the open gate still unbought, and the retailers cross-examine the retail print. Charts inside." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="article:published_time" content="2026-08-17" />
+  <meta property="article:author" content="Brandon Leon" />
+  <meta property="article:section" content="Weekly outlook" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=50" />
+
+  <style>
+    .pitch-meta { display: flex; gap: .5rem 1.5rem; flex-wrap: wrap; font-family: var(--sans); font-size: .85rem; color: var(--muted); letter-spacing: .04em; margin: .6rem 0 1.75rem; line-height: 1.5; }
+    .pitch-meta span strong { color: var(--ink-soft); font-weight: 500; margin-right: .35em; letter-spacing: .04em; }
+    .pitch-section { margin: 3rem 0; padding-top: 1.75rem; border-top: 1px solid var(--rule); }
+    .pitch-section:first-of-type { border-top: 0; padding-top: 0; }
+    .pitch-section h2 { margin: 0 0 .9rem; font-size: 1.85rem; font-weight: 700; letter-spacing: -0.015em; color: var(--ink); border-bottom: 2px solid var(--accent); padding-bottom: .4rem; line-height: 1.2; }
+    .article-chart { margin: 2rem 0; padding: 1.5rem; background: var(--bg-soft); border-left: 3px solid var(--accent); border-radius: 8px; }
+    .article-chart .chart-title { font-family: var(--sans); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 0.4rem; }
+    .article-chart .chart-headline { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--ink); margin: 0 0 1.2rem; line-height: 1.4; }
+    .article-chart .chart-svg { width: 100%; height: auto; max-width: 720px; display: block; margin: 0 auto; }
+    .article-chart .chart-caption { font-family: var(--sans); font-size: .82rem; color: var(--ink-soft); margin: 1rem 0 0; line-height: 1.5; font-style: italic; }
+    sup.fn-ref { font-family: var(--sans); font-size: .72em; font-weight: 500; vertical-align: super; line-height: 0; margin-left: .12em; }
+    sup.fn-ref a { text-decoration: none; color: var(--accent); }
+    sup.fn-ref a:hover { color: var(--ink); }
+    .sources-list { font-family: var(--sans); font-size: .88rem; color: var(--ink-soft); padding-left: 1.5rem; margin: .5rem 0 0; }
+    .sources-list li { margin: .35rem 0; line-height: 1.5; }
+    .simply-recap { margin: 1.75rem 0 0; padding: 1rem 1.25rem; background: rgba(91, 127, 107, 0.10); border-left: 3px solid #5b7f6b; border-radius: 6px; font-family: var(--sans); font-size: 0.95rem; color: var(--ink); line-height: 1.55; }
+    .simply-recap strong { color: #4a6a58; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-size: 0.82rem; margin-right: .4em; }
+    .wrong-card { margin: 1rem 0; padding: 1.1rem 1.25rem; background: rgba(181, 106, 63, 0.06); border-left: 3px solid #b56a3f; border-radius: 6px; }
+    .wrong-card .wc-label { display: block; font-family: var(--sans); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #b56a3f; margin: 0 0 .55em; }
+    .wrong-card .wc-body { margin: 0; color: var(--ink-soft); line-height: 1.55; }
+    .wire-card { margin: 1rem 0; padding: 1.1rem 1.25rem; background: rgba(201, 169, 97, 0.10); border-left: 3px solid #c9a961; border-radius: 6px; }
+    .wire-card .wr-label { display: block; font-family: var(--sans); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #a08440; margin: 0 0 .55em; }
+    .wire-card .wr-body { margin: 0; color: var(--ink-soft); line-height: 1.55; }
+    .pitch-cta { margin: 3rem 0 1rem; padding-top: 2rem; border-top: 1px solid var(--rule); }
+    .disclosure { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-family: var(--sans); font-size: .82rem; line-height: 1.55; color: var(--muted); font-style: italic; }
+  </style>
+
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon &mdash; Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="markets.html">Markets</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="reports.html">Reports</a>
+      <a href="research.html">Research</a>
+      <a href="projects.html">Projects</a>
+      <a href="writing.html" aria-current="page">Writing</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="prose">
+    <article>
+
+    <header class="page-head">
+      <p class="eyebrow">Weekly outlook &middot; week of August 17, 2026</p>
+      <h1>Soft Data, Hard Prices</h1>
+
+      <p class="pitch-meta">
+        <span><strong>Author</strong> Brandon Leon</span>
+        <span><strong>Posted</strong> Monday, August 17, 2026 &middot; market data through Friday, August 14</span>
+        <span><strong>Coverage</strong> The grade sheet &middot; the oil problem &middot; the open gate &middot; the retailers &middot; open questions</span>
+      </p>
+
+      <div class="simply-recap" style="margin:0 0 1.75rem;">
+        <strong>TL;DR:</strong> Every scheduled test came in soft last week. Core CPI rose 2.5% year over year, its slowest pace since March 2021. Retail sales fell 0.6%, the largest monthly decline in more than a year, while Michigan sentiment dropped to 51. The framework responded as written: the cool branch fired, the auction alarm remained silent, and the below-benchmark duration stance was retired on schedule. But the market prices that matter did not cooperate: the 30-year Treasury yield rose above Thursday's record-setting auction stop to close Friday at 5.267%, Brent gained 5% to more than $88 on Strait of Hormuz pressure, and consumers' one-year inflation expectations reached 4.3%. Cooling data alongside firming prices is September's central setup. And the part we owe you straight: the authorized Vistra starter &mdash; the initial position our published rules cleared for purchase &mdash; remains unbought, with the promised resting order not yet entered and the stock closing inside the buy range. This week the consumer testifies: Home Depot Tuesday; Target, Lowe's, and the Fed minutes Wednesday; Walmart Thursday.
+      </div>
+    </header>
+
+    <section class="pitch-section" id="grades">
+      <h2>1. The grade sheet</h2>
+      <p>The week-of-August-10 outlook published five wires. All five reached a verdict.<sup class="fn-ref"><a href="#fn1" id="fnref1a">1</a></sup> The CPI wire fired on the exact threshold: core CPI rose 0.2% month over month, precisely matching the line. The auction wire stayed silent: demand was adequate, with a bid-to-cover ratio near 2.4 and no meaningful tail reported in contemporaneous coverage, even as the 5.216% stop yield made it the costliest 30-year sale since 2001. Constellation never came near the $264 ceiling; the second refusal stands with the stock at $276.21. Vistra's gate opened and the buy went untaken &mdash; <a href="next-dollar-02-2026-08-14.html">Friday's note</a> owns that in full, and section 3 carries it forward. Which leaves the oil wire, the one where our rule was incomplete.</p>
+      <p>We watched for Brent below $80 &mdash; the benign case, in which energy pressure drains from the inflation math. Instead, Brent rose 5% and finished Friday above $88 as Washington tightened sanctions intended to pressure Iran to reopen the Strait of Hormuz.<sup class="fn-ref"><a href="#fn3" id="fnref3a">3</a></sup> The rule did not fail mechanically; it was incomplete. We specified the benign downside case but left the hostile upside case without a trigger, despite <a href="weekly-outlook-2026-07-13.html">an earlier summer episode</a> that exposed the same asymmetry. This week, the hostile branch receives an explicit trigger.</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 1 &mdash; Five wires, five verdicts</p>
+        <p class="chart-headline">Graded against the wording as written &mdash; including the one aimed at the wrong door.</p>
+        <svg class="chart-svg" viewBox="0 0 720 330" xmlns="http://www.w3.org/2000/svg" aria-label="Grade sheet of the five published wires: core CPI at or under 0.2 percent fired cool; the 30-year auction alarm stayed silent as the sale cleared at 5.216 percent; Constellation never reached the 264 dollar ceiling; Vistra's gate opened but the buy went untaken; and the Brent under-80 wire was wrong-footed as oil rose five percent to 88 dollars.">
+          <text x="360" y="26" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">The Aug-10 wires, resolved</text>
+          <line x1="40" y1="44" x2="680" y2="44" stroke="#0B1F3A" stroke-width="0.75" opacity="0.3"/>
+          <text x="40" y="76" font-family="Inter,sans-serif" font-size="11.5" fill="#1c1a16">Core CPI &le; 0.2% m/m &mdash; the cool branch</text>
+          <rect x="490" y="58" width="196" height="26" rx="13" fill="#5b7f6b"/>
+          <text x="588" y="75" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#fbf7ef" text-anchor="middle">FIRED &mdash; 0.2%, core 2.5% y/y</text>
+          <text x="40" y="128" font-family="Inter,sans-serif" font-size="11.5" fill="#1c1a16">30-yr auction tails &gt;~3bp &mdash; the alarm</text>
+          <rect x="490" y="110" width="196" height="26" rx="13" fill="none" stroke="#5b7f6b" stroke-width="2"/>
+          <text x="588" y="127" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#4a6a58" text-anchor="middle">SILENT &mdash; cleared at 5.216%</text>
+          <text x="40" y="180" font-family="Inter,sans-serif" font-size="11.5" fill="#1c1a16">Constellation under ~$264 &mdash; the gate</text>
+          <rect x="490" y="162" width="196" height="26" rx="13" fill="none" stroke="#6B7280" stroke-width="1.5"/>
+          <text x="588" y="179" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#6B7280" text-anchor="middle">NOT REACHED &mdash; $276.21</text>
+          <text x="40" y="232" font-family="Inter,sans-serif" font-size="11.5" fill="#1c1a16">Vistra gate: &le; $148.62, guidance intact</text>
+          <rect x="490" y="214" width="196" height="26" rx="13" fill="#c9a961"/>
+          <text x="588" y="231" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#0B1F3A" text-anchor="middle">OPEN &mdash; BUY UNTAKEN</text>
+          <text x="40" y="284" font-family="Inter,sans-serif" font-size="11.5" fill="#1c1a16">Brent under $80 &mdash; energy tail-off</text>
+          <rect x="490" y="266" width="196" height="26" rx="13" fill="#b56a3f"/>
+          <text x="588" y="283" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#fbf7ef" text-anchor="middle">WRONG WAY &mdash; $88, +5%</text>
+          <text x="360" y="320" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Wires as published in the week-of-Aug-10 outlook; graded against the wording as written.</text>
+        </svg>
+        <p class="chart-caption">Wire wording per <a href="weekly-outlook-2026-08-10.html">the Aug-10 outlook</a>; CPI, auction, and retail resolutions documented with sources in <a href="next-dollar-02-2026-08-14.html">Friday's deployment note</a>.<sup class="fn-ref"><a href="#fn1" id="fnref1b">1</a></sup></p>
+      </figure>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Last week we had five if-then rules on the books. Four resolved the way the rules anticipated: mild inflation, a passable bond auction, and a stock we refused to overpay for staying expensive. One rule watched for cheaper oil &mdash; and oil jumped 5% instead, because of the standoff over the Strait of Hormuz. We're rewriting that rule to watch the dangerous direction, not the comfortable one.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="tension">
+      <h2>2. Soft data, hard prices</h2>
+      <p>Consider the eight-day sequence. August 7: payrolls fall by 23,000, the first monthly payroll decline of the current expansion. August 12: core CPI rises 2.5% year over year, its slowest pace in more than five years. August 14: retail sales drop 0.6%, the sharpest decline in more than a year; that same morning, Michigan consumer sentiment falls 8% to 51.0, well below the 55.0 estimate.<sup class="fn-ref"><a href="#fn4" id="fnref4a">4</a></sup> Labor, inflation, spending, mood. Four different instruments, one direction. The S&P 500 heard all of it, set a record close on CPI day, and finished its third straight up week at 7,785.76.<sup class="fn-ref"><a href="#fn2" id="fnref2a">2</a></sup> The tape is priced for the gentle version of this story.</p>
+      <p>Now look at what refused to go along. Thursday's 30-year auction stopped at 5.216%; by Friday's close the yield stood at 5.267% &mdash; long-duration Treasuries absorbed the weakest retail print in more than a year and still cheapened, with the 10-year up at 4.696%.<sup class="fn-ref"><a href="#fn3" id="fnref3b">3</a></sup> Brent rose 5% on the Hormuz standoff. And inside that gloomy Michigan survey sits the number that connects them: consumers expect 4.3% inflation over the next year, and only 8% expect their income to keep up.<sup class="fn-ref"><a href="#fn4" id="fnref4b">4</a></sup> The economy's temperature is falling while long-term borrowing costs and oil prices remain firm. That pairing has an ugly name, and one week of it is far too little to invoke the word. But it is exactly the tension September's CPI has to resolve.</p>
+      <p>On our own book, the duration decision executed Friday as pre-committed: the below-benchmark stance was retired. Rebuilding toward neutral duration after further long-bond cheapening improves the entry point, and the pace stays deliberate precisely because of the oil column. The road back to defense was named Friday: a hot August CPI, a failed auction, or a hawkish Jackson Hole. Section 4 adds the fourth condition, with a number on it.</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 2 &mdash; Eight days of cooling</p>
+        <p class="chart-headline">Four instruments, one direction &mdash; under a tape that kept climbing.</p>
+        <svg class="chart-svg" viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" aria-label="Timeline from August 7 to August 14: payrolls at negative 23,000 on the 7th; core CPI at 2.5 percent with an S&P record close on the 12th; retail sales down 0.6 percent and Michigan sentiment at 51.0 on the 14th. The S&P finished the week up 0.4 percent at 7,785.76, its third straight weekly gain.">
+          <text x="360" y="26" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">Aug 7 &ndash; Aug 14: the data vs. the tape</text>
+          <text x="360" y="70" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#0B1F3A" text-anchor="middle">S&amp;P 500: record close Wed &middot; week +0.4% (third straight gain) &middot; Fri 7,785.76</text>
+          <line x1="90" y1="82" x2="630" y2="82" stroke="#0B1F3A" stroke-width="1.5" opacity="0.35"/>
+          <line x1="90" y1="150" x2="630" y2="150" stroke="#0B1F3A" stroke-width="2" opacity="0.55"/>
+          <circle cx="150" cy="150" r="7" fill="#b56a3f"/>
+          <text x="150" y="128" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#0B1F3A" text-anchor="middle">Aug 7</text>
+          <text x="150" y="178" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#b56a3f" text-anchor="middle">payrolls &minus;23K</text>
+          <text x="150" y="192" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">first negative month</text>
+          <circle cx="360" cy="150" r="7" fill="#5b7f6b"/>
+          <text x="360" y="128" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#0B1F3A" text-anchor="middle">Aug 12</text>
+          <text x="360" y="178" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#4a6a58" text-anchor="middle">core CPI 2.5% y/y</text>
+          <text x="360" y="192" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">slowest since Mar 2021</text>
+          <circle cx="570" cy="150" r="7" fill="#b56a3f"/>
+          <text x="570" y="128" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#0B1F3A" text-anchor="middle">Aug 14</text>
+          <text x="570" y="178" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#b56a3f" text-anchor="middle">retail &minus;0.6% &middot; UMich 51.0</text>
+          <text x="570" y="192" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">largest in more than a year &middot; 1-yr inflation exp. 4.3%</text>
+          <text x="360" y="240" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#b56a3f" text-anchor="middle">Meanwhile: 30-yr yield 5.267% Fri (rose on soft-retail day) &middot; Brent +5% to $88</text>
+          <text x="360" y="270" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Soft data above the line the market watches; hard prices below it.</text>
+        </svg>
+        <p class="chart-caption">BLS payrolls (Aug 7) and CPI (Aug 12); Census retail sales and University of Michigan preliminary August sentiment (Aug 14); index and yield closes per Yahoo Finance and CNBC.<sup class="fn-ref"><a href="#fn2" id="fnref2b">2</a></sup></p>
+      </figure>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 3 &mdash; The wire aimed at the wrong door</p>
+        <p class="chart-headline">We watched for Brent under $80. The week went up 5% instead.</p>
+        <svg class="chart-svg" viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" aria-label="Line chart of Brent crude: from roughly 84 dollars a week earlier to 87.47 on Thursday and above 88 by Friday, a five percent weekly gain. A dashed line at 80 dollars marks the published wire, which pointed the other way.">
+          <text x="360" y="26" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">Brent crude, week of Aug 10 ($/bbl)</text>
+          <line x1="90" y1="235" x2="650" y2="235" stroke="#0B1F3A" stroke-width="0.75" opacity="0.35"/>
+          <!-- scale: $78 at y=235, $90 at y=65 => ~14.2px per $ -->
+          <line x1="90" y1="207" x2="650" y2="207" stroke="#b56a3f" stroke-width="1.5" stroke-dasharray="6 5"/>
+          <text x="96" y="200" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#b56a3f">the wire: Brent &lt; $80</text>
+          <polyline points="160,150 430,101 570,92" fill="none" stroke="#0B1F3A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="160" cy="150" r="4" fill="#0B1F3A" opacity="0.55"/>
+          <circle cx="430" cy="101" r="4" fill="#0B1F3A"/>
+          <circle cx="570" cy="92" r="6" fill="#b56a3f"/>
+          <text x="160" y="172" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#6B7280" text-anchor="middle">&asymp;$84 wk earlier</text>
+          <text x="430" y="90" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#0B1F3A" text-anchor="middle">$87.47 Thu</text>
+          <text x="583" y="72" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#b56a3f" text-anchor="middle">&gt;$88 Fri (+5% wk)</text>
+          <text x="360" y="262" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Driver: US sanctions pressure on Iran to reopen the Strait of Hormuz. Week-earlier level derived from the reported 5% gain.</text>
+        </svg>
+        <p class="chart-caption">Thursday level per Forbes; weekly gain and Friday level per Trading Economics; Hormuz sanctions context per CNBC.<sup class="fn-ref"><a href="#fn3" id="fnref3c">3</a></sup></p>
+      </figure>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Four different measures of the economy cooled in eight days: jobs, inflation, shopping, and mood. Normally that pulls interest rates and oil prices down too. Last week it didn't &mdash; long-term rates edged up and oil jumped on the Iran standoff, and consumers still expect over 4% inflation next year. A cooling economy with stubborn prices is the uncomfortable combination, and next month's inflation report is where the two stories collide.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="book">
+      <h2>3. The open gate and the absent order</h2>
+      <p>The position status is simple. Vistra closed Friday at $146.64, below the published $148.62 reference and $13.64 above the published $133 stop.<sup class="fn-ref"><a href="#fn6" id="fnref6a">6</a></sup> The closing price remains inside the stated buy range, but the resting order promised in <a href="next-dollar-02-2026-08-14.html">Friday's note</a> has not been entered as of Monday morning. That is a second execution failure on the same trade, and the corrective action is now itself a graded commitment: next Sunday, the update will state whether the order exists.</p>
+      <p>The rest of the book needs less ink. Constellation at $276.21 sits 4.6% over the ceiling we've now enforced twice; the refusal stands, and the position now requires a re-underwrite &mdash; we are not assigning an artificial deadline. Alphabet at $343.14 remains about 8% above the $318 alert; the alert stands through the October 27 print, and section 5 takes up Friday's complication. The memory basket marks at $61.35 against the $59.73 fill, ASML at $1,882.50 against $1,752.87, the quantum sleeve at $159, and the cash keeps collecting from Treasury bills yielding roughly 4% while all of this gets decided.<sup class="fn-ref"><a href="#fn6" id="fnref6b">6</a></sup></p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 4 &mdash; The gate, to scale</p>
+        <p class="chart-headline">Friday's close sits inside the published buy range. The only thing missing is the order.</p>
+        <svg class="chart-svg" viewBox="0 0 720 210" xmlns="http://www.w3.org/2000/svg" aria-label="A horizontal price scale for Vistra from 130 to 152 dollars. The published stop at 133 marks the left edge, the published reference at 148.62 the right edge, with the band between them shaded. Friday's close of 146.64 sits inside the band, near the reference.">
+          <text x="360" y="26" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">VST vs. the published terms ($)</text>
+          <rect x="156" y="88" width="398" height="24" rx="4" fill="rgba(201,169,97,0.18)"/>
+          <line x1="80" y1="100" x2="640" y2="100" stroke="#0B1F3A" stroke-width="1.5" opacity="0.4"/>
+          <line x1="156" y1="76" x2="156" y2="124" stroke="#b56a3f" stroke-width="2.5"/>
+          <text x="156" y="66" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#b56a3f" text-anchor="middle">stop $133</text>
+          <line x1="554" y1="76" x2="554" y2="124" stroke="#c9a961" stroke-width="2.5" stroke-dasharray="5 4"/>
+          <text x="554" y="66" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#a08440" text-anchor="middle">reference $148.62</text>
+          <circle cx="503" cy="100" r="7" fill="#0B1F3A"/>
+          <text x="503" y="145" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#0B1F3A" text-anchor="middle">Friday close $146.64</text>
+          <text x="355" y="106" font-family="Inter,sans-serif" font-size="9.5" font-weight="600" fill="#a08440" text-anchor="middle">the buy range</text>
+          <text x="360" y="185" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">In range. The order isn't in.</text>
+        </svg>
+        <p class="chart-caption">Terms as published in <a href="next-dollar-01-2026-07-31.html">the series opener</a> and carried through <a href="next-dollar-02-2026-08-14.html">Friday's note</a>; Friday, Aug 14 market close, cross-checked against the day's index closes.<sup class="fn-ref"><a href="#fn6" id="fnref6c">6</a></sup></p>
+      </figure>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> The stock we've been waiting to buy is finally at a price our own rules approve, and has been since Wednesday. We still haven't placed the order &mdash; not for any market reason, we just haven't done it. We said that plainly on Friday and we're saying it again today, because next week's note will report whether the order finally exists. Everything else in the portfolio is unchanged: the expensive stock stays refused, the holdings are up from where we bought them, and the cash earns roughly 4% in Treasury bills while it waits.
+      </div>
+    </section>
+
+    <section class="pitch-section" id="week-ahead">
+      <h2>4. The consumer takes the stand</h2>
+      <p>Friday's retail print was one month of Census data. This week, the people who ring the registers file their own reports. Home Depot opens Tuesday, with the street at roughly $47.2 billion in revenue, up 4.2%.<sup class="fn-ref"><a href="#fn5" id="fnref5a">5</a></sup> Target and Lowe's follow Wednesday. Walmart closes it Thursday, alongside jobless claims and the Philadelphia Fed survey &mdash; and Walmart is the witness that matters, because it sells groceries to every income bracket in the country. A retailer quarter can contradict a Census month, and this one gets the chance to.</p>
+      <p>Wednesday at 2:00 p.m. brings the minutes of the July 28&ndash;29 FOMC meeting, when three officials dissented in favor of a hike &mdash; nine days before payrolls turned negative.<sup class="fn-ref"><a href="#fn5" id="fnref5b">5</a></sup> Read them for the reasoning, not the policy conclusion; it is three weeks stale by construction. The relevant question is breadth: did the case for a hike stop with the three dissenters, or did it run more widely through the room? Futures imply roughly a 60% probability of no September move. A hike camp broader than its dissents is how that pricing turns out complacent &mdash; and Jackson Hole, August 27&ndash;29, is where Fed Chair Kevin Warsh would say so out loud.</p>
+
+      <figure class="article-chart">
+        <p class="chart-title">Chart 5 &mdash; The week's docket</p>
+        <p class="chart-headline">Four retailers and one set of minutes, in order of appearance.</p>
+        <svg class="chart-svg" viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" aria-label="Calendar timeline for the week of August 17: Home Depot reports Tuesday the 18th; Target, Lowe's, and the FOMC minutes land Wednesday the 19th; Walmart, jobless claims, and the Philadelphia Fed survey come Thursday the 20th; Jackson Hole follows the next week, August 27 through 29.">
+          <text x="360" y="26" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">Week of Aug 17 &mdash; the docket</text>
+          <line x1="60" y1="120" x2="600" y2="120" stroke="#0B1F3A" stroke-width="2" opacity="0.5"/>
+          <circle cx="140" cy="120" r="6" fill="#0B1F3A"/>
+          <text x="140" y="94" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#0B1F3A" text-anchor="middle">Tuesday, Aug. 18</text>
+          <text x="140" y="150" font-family="Inter,sans-serif" font-size="10" font-weight="600" fill="#1c1a16" text-anchor="middle">Home Depot</text>
+          <text x="140" y="164" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">street ~$47.2B, +4.2%</text>
+          <circle cx="330" cy="120" r="8" fill="#c9a961"/>
+          <text x="330" y="94" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#a08440" text-anchor="middle">Wednesday, Aug. 19</text>
+          <text x="330" y="150" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#1c1a16" text-anchor="middle">FOMC minutes, 2pm</text>
+          <text x="330" y="164" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">how wide was the hike camp?</text>
+          <text x="330" y="178" font-family="Inter,sans-serif" font-size="9.5" font-weight="600" fill="#1c1a16" text-anchor="middle">+ Target &middot; Lowe's</text>
+          <circle cx="520" cy="120" r="6" fill="#0B1F3A"/>
+          <text x="520" y="94" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#0B1F3A" text-anchor="middle">Thursday, Aug. 20</text>
+          <text x="520" y="150" font-family="Inter,sans-serif" font-size="10" font-weight="700" fill="#1c1a16" text-anchor="middle">Walmart &mdash; the adjudicator</text>
+          <text x="520" y="164" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">+ jobless claims &middot; Philly Fed</text>
+          <line x1="600" y1="120" x2="656" y2="120" stroke="#0B1F3A" stroke-width="2" opacity="0.5" stroke-dasharray="4 4"/>
+          <text x="628" y="94" font-family="Inter,sans-serif" font-size="9.5" font-weight="600" fill="#6B7280" text-anchor="middle">next wk</text>
+          <text x="628" y="150" font-family="Inter,sans-serif" font-size="9.5" font-weight="600" fill="#6B7280" text-anchor="middle">Jackson Hole</text>
+          <text x="628" y="163" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Aug 27&ndash;29 &middot; Warsh</text>
+          <text x="360" y="225" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="middle">Friday's &minus;0.6% retail print was the accusation. The witnesses report Tuesday through Thursday.</text>
+        </svg>
+        <p class="chart-caption">Calendar per AP and FXEmpire week-ahead coverage; Home Depot consensus per FXEmpire; minutes timing per the Federal Reserve's three-week convention.<sup class="fn-ref"><a href="#fn5" id="fnref5c">5</a></sup></p>
+      </figure>
+
+      <div class="wire-card">
+        <span class="wr-label">This week's wires &mdash; set before the events</span>
+        <p class="wr-body"><strong>1. Minutes breadth (Wed):</strong> if the minutes show hike sympathy beyond the three dissenters &mdash; "several" or "a number of" participants arguing the case &mdash; we treat the ~60% September-hold pricing as complacent and Jackson Hole as live risk. <strong>2. Walmart (Thu):</strong> guidance built on softening traffic or units confirms the retail crack as real demand weakness; a raise built on share gains reads Friday's &minus;0.6% as mix, not a break. <strong>3. Brent (standing):</strong> a weekly close above $95 puts the war-oil echo back into the September CPI math and reopens the defensive-duration case &mdash; the hostile-side number the old wire lacked. <strong>4. The order (standing):</strong> binary. Next Sunday reports whether the Vistra resting order exists.</p>
+      </div>
+
+      <div class="wrong-card">
+        <span class="wc-label">What makes this note wrong</span>
+        <p class="wc-body">The minutes are three weeks stale &mdash; treating them as current policy is a category error, which is why we read them only for breadth. Each soft print is one month of data; each could revise away. Oil headlines reverse as fast as they arrive, and a durable Hormuz resolution could ease near-term oil pressure and weaken one important source of upside risk to the 4.3% expectations reading. And the honest risk closest to home: a framework that keeps publishing the same unexercised authorization is describing itself, not the market. That gets fixed with an order ticket, not another paragraph.</p>
+      </div>
+    </section>
+
+    <section class="pitch-section" id="thinking">
+      <h2>5. What we're thinking about</h2>
+      <p>Not calls &mdash; the open questions sitting on the desk this week, in the order they nag.</p>
+      <p><strong>Berkshire's Friday filing.</strong> Berkshire Hathaway's second-quarter 13F, filed after Friday's close, showed Alphabet as its third-largest holding &mdash; $36.6 billion, 9.4% of the reported portfolio &mdash; in a quarter where the firm turned net buyer of nearly $20 billion in stock after fourteen straight quarters of selling.<sup class="fn-ref"><a href="#fn7" id="fnref7a">7</a></sup> Our Alphabet rule is an alert at $318, set on valuation and the funding story. An investor of that size on the other side of the trade doesn't change our arithmetic; it changes the odds the alert ever fills. Whether a price rule should bend because the world's most watched investor disagrees is exactly the kind of question this series exists to answer in public. For now: no. The alert stands through the October 27 print.</p>
+      <p><strong>What earns Constellation a higher ceiling.</strong> Raised guidance, Calpine closed, capacity prices at the PJM cap &mdash; the re-underwrite has real material to work with. If the work finds our $264 ceiling was set for a company that no longer exists, we will raise it with numbers and say the old number was wrong. If it doesn't, the discipline becomes part of the track record.</p>
+      <p><strong>Synopsys, August 26.</strong> This summer's open-source chip-design demonstrations raised a moat question the market has not fully answered. Bookings and guidance language next week will tell us whether a duopoly priced like a duopoly still deserves to be.</p>
+      <p><strong>The memory tripwire, checked.</strong> The basket's kill condition is specific: CXMT pricing at a discount to Samsung inside China. This week's check found the opposite still true &mdash; CXMT's 64GB DDR5 server modules list <em>above</em> the Samsung equivalent on Chinese retail, and the company has reportedly refused discount demands from Huawei and Apple.<sup class="fn-ref"><a href="#fn8" id="fnref8a">8</a></sup> Nothing tripped. The hold holds.</p>
+      <p style="font-style: italic; color: var(--ink-soft);">Off the desk: Jackson Hole hosts the Fed next week, and the reason is trout. In 1982 the Kansas City Fed wanted Paul Volcker at its sleepy agricultural symposium and knew one thing about him for certain &mdash; the man loved to fly-fish &mdash; so it moved the whole conference to the foot of the Tetons, a short cast from the Snake River. Volcker came, arriving at the opening dinner late and still in his fishing gear, and the world's most consequential economics meeting has convened beside a trout stream ever since.<sup class="fn-ref"><a href="#fn9" id="fnref9a">9</a></sup> Whatever Warsh says there next week will move trillions. The venue was picked by the fish.</p>
+      <p>If there's something you want this desk to dig into, reply to the email &mdash; everything gets read.</p>
+
+      <div class="simply-recap">
+        <strong>Simply:</strong> Four questions we're working on, not acting on: whether Warren Buffett's new Alphabet stake should change our patience on the stock (no &mdash; our price alert stands), whether Constellation has earned a higher price ceiling (we're doing that work), whether AI code generators threaten Synopsys's franchise (next week's earnings will help answer), and whether Chinese memory chips are undercutting Samsung yet (they're not &mdash; they still sell at a premium, which supports our holding). Plus the true story of why the Fed meets in Wyoming: the 1982 organizers picked the venue to lure Paul Volcker with fly-fishing.
+      </div>
+    </section>
+
+    <div class="pitch-cta">
+      <a class="btn" href="https://bpleon.substack.com/subscribe" target="_blank" rel="noopener">Get the next note by email &rarr;</a>
+      &nbsp;
+      <a class="btn btn-ghost" href="writing.html">All writing</a>
+    </div>
+
+    <section class="pitch-section" id="sources">
+      <h2>Sources &amp; footnotes</h2>
+      <ol class="sources-list">
+        <li id="fn1">Wire wording per <a href="weekly-outlook-2026-08-10.html">the week-of-Aug-10 outlook</a>. Resolutions: July core CPI +0.2% m/m / 2.5% y/y (<a href="https://www.bls.gov/news.release/cpi.nr0.htm" rel="noopener">BLS, Aug 12</a>; <a href="https://www.bloomberg.com/news/articles/2026-08-12/us-core-inflation-was-subdued-in-july-easing-pressure-on-fed" rel="noopener">Bloomberg</a>); 30-year auction stop 5.216%, highest since 2001, decent demand (<a href="https://www.bloomberg.com/news/articles/2026-08-13/us-braces-for-30-year-bond-auction-at-highest-yield-since-2001" rel="noopener">Bloomberg, Aug 13</a>; <a href="https://seekingalpha.com/news/4632700-u-s-sells-30-year-t-bonds-at-highest-yield-since-2001" rel="noopener">Seeking Alpha</a>), bid-to-cover ~2.39 computed from the <a href="https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R_20260813_3.pdf" rel="noopener">official results</a> ($59.8B tendered vs. $25B accepted; the when-issued tail was not in the public results); July retail sales &minus;0.6% m/m (<a href="https://www.census.gov/retail/marts/www/marts_current.pdf" rel="noopener">Census, Aug 14</a>; <a href="https://www.bloomberg.com/news/articles/2026-08-14/us-retail-sales-fall-by-most-in-more-than-a-year" rel="noopener">Bloomberg</a>). Vistra and Constellation resolutions per <a href="next-dollar-02-2026-08-14.html">Friday's note</a>. <a href="#fnref1a">&#x21A9;</a></li>
+        <li id="fn2">Index closes, Friday Aug 14: S&amp;P 500 &minus;0.2% to 7,785.76, Nasdaq &minus;0.3% to 26,729.16, Dow &minus;0.2% to 53,732.41; S&amp;P +0.4% on the week, third straight weekly gain; record close Wednesday on the CPI print (<a href="https://finance.yahoo.com/markets/live/stock-market-today-friday-august-14-dow-sp-500-nasdaq-102635519.html" rel="noopener">Yahoo Finance, Aug 14</a>; <a href="https://www.cnbc.com/2026/08/12/stock-market-today-live-updates.html" rel="noopener">CNBC, Aug 12</a>). <a href="#fnref2a">&#x21A9;</a></li>
+        <li id="fn3">Yields, Friday Aug 14: 10-year +5bp to 4.696%, 30-year +6bp to 5.267%, with markets watching US&ndash;Iran sanctions pressure over the Strait of Hormuz (<a href="https://www.cnbc.com/2026/08/14/treasury-yields-us-iran-economic-sanctions.html" rel="noopener">CNBC, Aug 14</a>). Brent: $87.47 Thursday (<a href="https://www.forbes.com/advisor/investing/oil-prices-today/" rel="noopener">Forbes, Aug 14</a>); above $88 Friday, +5% on the week (<a href="https://tradingeconomics.com/commodity/brent-crude-oil" rel="noopener">Trading Economics</a>). <a href="#fnref3a">&#x21A9;</a></li>
+        <li id="fn4">University of Michigan Surveys of Consumers, August preliminary (Aug 14): sentiment 51.0, down ~8%, vs. 55.0 expected; current conditions 51.8, expectations 50.6; 1-year inflation expectations 4.3%, 5&ndash;10-year 3.3%; 8% of consumers expect income growth to outpace inflation (<a href="https://www.sca.isr.umich.edu/" rel="noopener">UMich Surveys of Consumers</a>; <a href="https://finance.yahoo.com/economy/article/us-consumers-sour-on-economy-as-inflation-concerns-remain-in-focus-umich-survey-says-144047259.html" rel="noopener">Yahoo Finance</a>). <a href="#fnref4a">&#x21A9;</a></li>
+        <li id="fn5">The July 28&ndash;29 FOMC vote was 9&ndash;3, with Lorie Logan, Beth Hammack, and Neel Kashkari dissenting in favor of a quarter-point hike &mdash; the first three-dissent meeting in a unified direction since September 2016 (<a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm" rel="noopener">Federal Reserve statement, Jul 29</a>; <a href="https://www.cnbc.com/2026/07/29/fed-rate-decision-july-2026.html" rel="noopener">CNBC</a>). Week-ahead calendar: FOMC minutes Wednesday Aug 19, 2:00 p.m. ET; Home Depot Tuesday, Target and Lowe's Wednesday, Walmart Thursday with jobless claims and the Philadelphia Fed index (<a href="https://mynews13.com/fl/orlando/ap-top-news/2026/08/16/wall-street-week-ahead-home-depot-and-walmart-report-earnings-minutes-of-fed-meeting-are-released" rel="noopener">AP, Aug 16</a>; <a href="https://www.fxempire.com/forecasts/article/the-week-ahead-stock-market-investors-eye-fed-minutes-home-depot-and-walmart-earnings-1617037" rel="noopener">FXEmpire</a>). Home Depot consensus ~$47.2B revenue, +4.2% y/y, per FXEmpire. September hold pricing ~60% per <a href="https://www.fool.com/investing/2026/08/12/july-inflation-data-came-in-as-expected-lowering-the-odds-of-a-fed-hike-in-september-yet-again/" rel="noopener">Motley Fool, Aug 12</a>. Jackson Hole Aug 27&ndash;29 (Kansas City Fed). <a href="#fnref5a">&#x21A9;</a></li>
+        <li id="fn6">Book marks, Friday Aug 14 market closes (levels cross-checked against the day's published index closes): VST $146.64 &middot; CEG $276.21 &middot; GOOGL $343.14 &middot; DRAM $61.35 &middot; ASML $1,882.50 &middot; QTUM $159.00. Fills as published: DRAM 100sh @ $59.73, ASML 1sh @ $1,752.87. Gate terms per <a href="next-dollar-01-2026-07-31.html">the series opener (Jul 31)</a>; the untaken authorization and the resting-order commitment per <a href="next-dollar-02-2026-08-14.html">Friday's note</a>. Executions this week: none; the order status is as stated in section 3. <a href="#fnref6a">&#x21A9;</a></li>
+        <li id="fn7">Berkshire Hathaway Q2 2026 13F, filed Friday Aug 14 after the close: Alphabet third-largest holding at $36.6B, ~9.4% of the $299.3B reported portfolio; net purchases of ~$19.8B, the first net-buying quarter in fourteen (<a href="https://www.morningstar.com/stocks/berkshire-hathaway-13f-purchases-outweighed-sales-alphabet-most-traded-q2" rel="noopener">Morningstar</a>; <a href="https://www.forbes.com/sites/bill_stone/2026/08/15/berkshire-hathaway-turns-buyer-as-buffett-backs-alphabet/" rel="noopener">Forbes, Aug 15</a>). <a href="#fnref7a">&#x21A9;</a></li>
+        <li id="fn8">China memory-price check: CXMT-based 64GB DDR5-5600 RDIMMs listed at &yen;18,999 vs. &yen;18,595 for the Samsung/SK&nbsp;Hynix equivalent on JD.com (<a href="https://www.tomshardware.com/pc-components/dram/chinese-cxmt-dram-doesnt-look-like-the-budget-savior-many-were-expecting-new-modules-enter-the-market-but-prices-still-track-the-big-three" rel="noopener">Tom's Hardware</a>); CXMT reportedly priced above Samsung on server memory and refused discount demands from Huawei (<a href="https://www.techpowerup.com/351063/cxmt-reportedly-outprices-samsung-for-ddr5-server-memory-amid-surging-demand" rel="noopener">TechPowerUp</a>) and Apple (<a href="https://macdailynews.com/2026/08/06/chinas-cxmt-rejects-apples-price-cut-demands-for-dram-boosting-samsung-and-sk-hynixs-pricing-power-amid-global-shortage/" rel="noopener">MacDailyNews, Aug 6</a>). Tripwire terms per <a href="china-memory-2026-08-04.html">the CXMT underwrite</a>. <a href="#fnref8a">&#x21A9;</a></li>
+        <li id="fn9">The 1982 relocation of the Kansas City Fed's symposium to Jackson Hole, chosen to draw Paul Volcker with the promise of fly-fishing &mdash; including the fishing-gear dinner story, per former KC Fed president Tom Hoenig (<a href="https://www.kansascityfed.org/ten/looking-back-how-the-economic-policy-symposium-came-to-jackson-hole/" rel="noopener">Kansas City Fed history</a>; <a href="https://www.marketplace.org/story/2022/08/24/the-lure-of-fishing-a-federal-reserve-chair-and-jackson-hole" rel="noopener">Marketplace</a>). <a href="#fnref9a">&#x21A9;</a></li>
+      </ol>
+
+      <p class="muted small" style="margin-top:1.5rem;"><strong>Methodology:</strong> wires are graded against their published wording; fills are disclosed only when real and confirmed; responses execute as pre-committed or the failure is named. Nothing here is a price target.</p>
+
+      <p class="muted small" style="margin-top:1rem;">Nothing on this page is investment advice. We work in scenarios and trip-wires, not predictions. See <a href="disclaimer.html">disclaimer</a>.</p>
+
+      <p class="disclosure">
+        Disclosure: I/we have beneficial long positions in a memory-sector ETF (ticker DRAM), ASML, and a diversified quantum-computing ETF (QTUM) through stock ownership. I/we have no position in Vistra, Constellation Energy, Alphabet, Micron, Home Depot, Target, Lowe's, or Walmart. I wrote this article myself, and it expresses my own opinions. I am not receiving compensation for it. This commentary is for informational and educational purposes only and does not constitute investment, tax, or legal advice. Past performance is not indicative of future results. See <a href="disclaimer.html">disclaimer</a>.
+      </p>
+    </section>
+
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+  <script src="script.js?v=50" defer></script>
+</body>
+</html>
