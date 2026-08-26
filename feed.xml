@@ -8,6 +8,22 @@
     <atom:link href="https://bpleon.com/feed.xml" rel="self" type="application/rss+xml" />
 
     <item>
+      <title>The Next Guide Sets the Grade</title>
+      <link>https://bpleon.com/nvda-eve-2026-08-26.html</link>
+      <guid isPermaLink="true">https://bpleon.com/nvda-eve-2026-08-26.html</guid>
+      <pubDate>Wed, 26 Aug 2026 09:00:00 -0700</pubDate>
+      <description>Nvidia reports after the close. We're publishing our pass/fail test before the release — the next-quarter guide vs. $100B and $95B — so it can be graded in public either way. Plus the $105B OpenAI lease guarantee and our first Nvidia disclosure.</description>
+    </item>
+
+    <item>
+      <title>The Hawks Were Counted</title>
+      <link>https://bpleon.com/friday-open-2026-08-21.html</link>
+      <guid isPermaLink="true">https://bpleon.com/friday-open-2026-08-21.html</guid>
+      <pubDate>Fri, 21 Aug 2026 09:00:00 -0700</pubDate>
+      <description>The Fed minutes showed broader rate-hike sympathy than the 9–3 vote implied. Retail earnings split the consumer story — and Walmart decides whether that's category mix or broader demand. One week before Warsh's first Jackson Hole speech.</description>
+    </item>
+
+    <item>
       <title>Soft Data, Hard Prices — Week of August 17</title>
       <link>https://bpleon.com/weekly-outlook-2026-08-17.html</link>
       <guid isPermaLink="true">https://bpleon.com/weekly-outlook-2026-08-17.html</guid>
@@ -189,22 +205,6 @@
       <guid isPermaLink="true">https://bpleon.com/dell-initiation-2026-06-09.html</guid>
       <pubDate>Tue, 09 Jun 2026 09:00:00 -0700</pubDate>
       <description>The re-rate ran 9× to 24× before the earnings did the work. Initiating at HOLD, accumulation ladder $320 / $285 / $250, PW reference ~$340. The Street's $484 average PT is our bull case.</description>
-    </item>
-
-    <item>
-      <title>Week Recap — June 1–5, 2026</title>
-      <link>https://bpleon.com/weekly-outlook-2026-06-08.html</link>
-      <guid isPermaLink="true">https://bpleon.com/weekly-outlook-2026-06-08.html</guid>
-      <pubDate>Mon, 08 Jun 2026 09:00:00 -0700</pubDate>
-      <description>Broadcom's outlook + a hot 172K NFP cracked the rally. S&amp;P closed Friday at 7,383.74, down 2.6% on the week. NVDA -13% from peak. Dell tested the bottom of our consolidation zone. Iran reignites today. CPI Wednesday is the next gate.</description>
-    </item>
-
-    <item>
-      <title>June Is When Micron Has to Do the Work</title>
-      <link>https://bpleon.com/mu-june-outlook-2026-05-31.html</link>
-      <guid isPermaLink="true">https://bpleon.com/mu-june-outlook-2026-05-31.html</guid>
-      <pubDate>Sun, 31 May 2026 09:00:00 -0700</pubDate>
-      <description>MU ran 38% in 17 trading days. June stops being about narrative and starts being about numbers. FQ3 prints June 24 — $33.5B / 81% GM / $19.15 EPS. PT stays at $1,100. Trim ladder continues.</description>
     </item>
 
   </channel>
