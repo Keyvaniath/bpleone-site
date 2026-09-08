@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://bpleon.com/</loc>
-    <lastmod>2026-08-26</lastmod>
+    <lastmod>2026-09-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -64,12 +64,6 @@
   <url>
     <loc>https://bpleon.com/fed-april-2026.html</loc>
     <lastmod>2026-04-29</lastmod>
-    <changefreq>never</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://bpleon.com/friday-open-2026-08-21.html</loc>
-    <lastmod>2026-08-21</lastmod>
     <changefreq>never</changefreq>
     <priority>0.8</priority>
   </url>
@@ -276,6 +270,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://bpleon.com/weekly-outlook-2026-09-08.html</loc>
+    <lastmod>2026-09-08</lastmod>
+    <changefreq>never</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://bpleon.com/accretion-dilution.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -287,11 +287,6 @@
   </url>
   <url>
     <loc>https://bpleon.com/comps.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://bpleon.com/coverage.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
