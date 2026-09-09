@@ -375,12 +375,12 @@
   // =========================================================================
   var WATCHLIST_FALLBACK = [
     {
-      sym: 'MU',
-      name: 'Micron Technology',
-      target: null, // PT under review pending full pitch (publishes Fri May 8). Set to null to render "Under review" in the card. Restore a number when the model-defended PT lands.
-      thesis: 'HBM share gains + DRAM cycle bottoming. Directional view from late April playing out faster than expected; full pitch lands May 8.',
-      posted: '2026-05-05',
-      note_url: 'mu-note-2026-05-05.html'
+      sym: 'BE',
+      name: 'Bloom Energy',
+      target: 235,
+      thesis: 'Initiated HOLD Sep 9. The AI-power bottleneck is real and revenue is doubling; at roughly 103x guided earnings the price already assumes it. Target is a 12-18mo probability-weighted value, not a buy call.',
+      posted: '2026-09-09',
+      note_url: 'be-initiation-2026-09-09.html'
     }
   ];
   // Mutable; replaced by loadWatchlist() if the KV read succeeds.
