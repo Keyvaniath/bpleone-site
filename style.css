@@ -1729,3 +1729,12 @@ main.prose.center {
   /* Document-end colophon so a saved PDF is attributable */
   body::after { content: "Brandon Leon · bpleon.com"; display: block; margin-top: 2em; padding-top: 0.5em; border-top: 1px solid #bbb; font-family: var(--sans); font-size: 9pt; color: #666; text-align: center; }
 }
+
+/* TradingView widgets (2026-09-30): third-party quotes, free with TradingView branding */
+.ticker-wrap.tv-ticker { height: auto; min-height: 44px; cursor: default; }
+.tv-embed .tradingview-widget-copyright { font: 10px/1.5 Arial, sans-serif; text-align: right; padding: 0 10px 2px; opacity: .75; }
+.tv-embed .tradingview-widget-copyright a { color: inherit; text-decoration: none; }
+.lp-spark.tv-lp { height: auto; min-height: 220px; }
+.hero-chart-wrap.tv-hero { height: auto; min-height: 300px; }
+.rc-spark.tv-rc { height: auto; min-height: 150px; }
+.price-grid.tv-grid { display: block; }

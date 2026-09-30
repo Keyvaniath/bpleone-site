@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-09-30",
   "fileCount": 171,
-  "totalBytes": 10543033,
+  "totalBytes": 10521461,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -415,7 +415,7 @@
     {
       "path": "index.html",
       "name": "index.html",
-      "size": 29980,
+      "size": 29987,
       "sizeText": "29.3 KB",
       "modified": "2026-09-30",
       "ext": ".html",
@@ -451,8 +451,8 @@
     {
       "path": "markets.html",
       "name": "markets.html",
-      "size": 17260,
-      "sizeText": "16.9 KB",
+      "size": 8521,
+      "sizeText": "8.3 KB",
       "modified": "2026-09-30",
       "ext": ".html",
       "category": "pages"
@@ -748,7 +748,7 @@
     {
       "path": "research.html",
       "name": "research.html",
-      "size": 70258,
+      "size": 70272,
       "sizeText": "68.6 KB",
       "modified": "2026-09-30",
       "ext": ".html",
@@ -1387,8 +1387,8 @@
     {
       "path": "script.js",
       "name": "script.js",
-      "size": 71987,
-      "sizeText": "70.3 KB",
+      "size": 58540,
+      "sizeText": "57.2 KB",
       "modified": "2026-09-30",
       "ext": ".js",
       "category": "site-code"
@@ -1396,8 +1396,8 @@
     {
       "path": "style.css",
       "name": "style.css",
-      "size": 45151,
-      "sizeText": "44.1 KB",
+      "size": 45744,
+      "sizeText": "44.7 KB",
       "modified": "2026-09-30",
       "ext": ".css",
       "category": "site-code"

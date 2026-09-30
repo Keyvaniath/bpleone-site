@@ -1,14 +1,11 @@
 // =============================================================================
 // bpleon.com -- progressive enhancements
-// Self-hosted ticker tape using free, CORS-friendly APIs:
-//   - CoinGecko        (crypto + gold-backed token PAXG)
-//   - currency-api     (FX rates, no key, CORS via jsDelivr CDN)
-//                      https://github.com/fawazahmed0/exchange-api
-//   - bpleon-quotes    (Cloudflare Worker proxying Yahoo Finance for the
-//                      10Y Treasury yield + US ETFs + global indexes)
-//                      Worker source lives in Cloudflare dashboard.
-// No third-party widgets, no API keys, no public dependency we don't control.
-// Falls back gracefully if any API call fails.
+// Market data on the public pages comes from TradingView's embeddable widgets,
+// which are free with TradingView branding (tradingview.com/widget, read
+// 2026-09-30). Until 2026-09-30 the ticker and cards drew Yahoo Finance,
+// Finnhub and CoinGecko data through the bpleon-quotes Worker; those licenses
+// cover personal use only, so the public pages no longer use them. The Worker
+// still serves the admin watchlist and the private tools.
 // =============================================================================
 
 (function () {
@@ -17,344 +14,76 @@
   var y = document.getElementById('year');
   if (y) y.textContent = new Date().getFullYear();
 
+  // --- TradingView widgets ------------------------------------------------
+  // Yahoo-style symbols used in the page markup, mapped to TradingView symbols
+  // the free widgets can display (each checked 2026-09-30). Equities pass
+  // through unchanged: TradingView resolves bare tickers.
+  var TV_SYMBOLS = {
+    '^GSPC': 'FOREXCOM:SPXUSD', '^TNX': 'FRED:DGS10', '^TYX': 'FRED:DGS30',
+    '^IRX': 'FRED:DTB3', '^FVX': 'FRED:DGS5', 'DX-Y.NYB': 'CAPITALCOM:DXY',
+    'EURUSD=X': 'FX_IDC:EURUSD', 'USDJPY=X': 'FX_IDC:USDJPY',
+    '^VIX': 'CAPITALCOM:VIX', 'HYG': 'AMEX:HYG'
+  };
+  function tvSym(s) { return TV_SYMBOLS[s] || s; }
+  // Mount one TradingView widget into el, keeping TradingView's default credit
+  // link: the widgets are free on condition that the branding stays.
+  function tvEmbed(el, widget, config) {
+    if (!el) return;
+    el.innerHTML = '';
+    var box = document.createElement('div');
+    box.className = 'tradingview-widget-container tv-embed';
+    var inner = document.createElement('div');
+    inner.className = 'tradingview-widget-container__widget';
+    box.appendChild(inner);
+    var credit = document.createElement('div');
+    credit.className = 'tradingview-widget-copyright';
+    credit.innerHTML = '<a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">Track all markets on TradingView</a>';
+    box.appendChild(credit);
+    var s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.async = true;
+    s.src = 'https://s3.tradingview.com/external-embedding/embed-widget-' + widget + '.js';
+    s.innerHTML = JSON.stringify(config);
+    box.appendChild(s);
+    el.appendChild(box);
+  }
+  window.bpleonTV = { embed: tvEmbed, sym: tvSym };
+
   var mount = document.getElementById('ticker-tape');
   if (!mount) return;
 
-  // --- Symbols ------------------------------------------------------------
-  // Edit these arrays to change what scrolls in the ticker.
-  var CRYPTO = [
-    { id: 'bitcoin',  label: 'BTC' },
-    { id: 'ethereum', label: 'ETH' },
-    { id: 'solana',   label: 'SOL' },
-    { id: 'pax-gold', label: 'GOLD' }   // PAXG -- 1 token = 1 oz gold
-  ];
-  var FX = ['EUR', 'GBP', 'JPY'];
+  var WORKER_URL = 'https://bpleon-quotes.brandonpleone.workers.dev/';  // admin watchlist (KV) only
 
-  // Yahoo Finance symbols routed through the Cloudflare Worker proxy.
-  // 'fmt' controls how the price renders:
-  //   'yield' -> 4.35% with basis-point change (e.g. +5bp)
-  //   'price' -> $512.34 with percent change
-  //   'index' -> 8,456.78 with percent change (no $ -- index points)
-  var INDEXES = [
-    { sym: '^TNX',   label: '10Y',    fmt: 'yield' },   // 10-Year Treasury
-    { sym: '^VIX',   label: 'VIX',    fmt: 'index' },   // CBOE Volatility Index
-    { sym: 'SPY',    label: 'SPY',    fmt: 'price' },   // S&P 500 ETF
-    { sym: 'QQQ',    label: 'QQQ',    fmt: 'price' },   // Nasdaq-100 ETF
-    { sym: 'IWV',    label: 'IWV',    fmt: 'price' },   // Russell 3000 ETF
-    { sym: '^FTSE',  label: 'FTSE',   fmt: 'index' },   // FTSE 100 (UK)
-    { sym: '^GDAXI', label: 'DAX',    fmt: 'index' },   // DAX (Germany)
-    { sym: '^N225',  label: 'NIKKEI', fmt: 'index' },   // Nikkei 225 (Japan)
-    { sym: '^HSI',   label: 'HANG',   fmt: 'index' }    // Hang Seng (HK)
-  ];
-  var WORKER_URL = 'https://bpleon-quotes.brandonpleone.workers.dev/';
-
-  // --- Formatting ---------------------------------------------------------
-  function fmtPrice(p) {
-    if (!isFinite(p)) return '—';
-    if (p >= 1000) return '$' + Math.round(p).toLocaleString();
-    if (p >= 1)    return '$' + p.toFixed(2);
-    return '$' + p.toFixed(4);
-  }
-  function fmtPct(c) {
-    if (!isFinite(c)) return '';
-    var sign = c >= 0 ? '+' : '';
-    return sign + c.toFixed(2) + '%';
-  }
-  function fmtFx(p, ccy) {
-    if (!isFinite(p)) return '—';
-    return p.toFixed(ccy === 'JPY' || ccy === 'CNY' ? 2 : 4);
-  }
-
-  // --- Source links -------------------------------------------------------
-  // Each ticker item links to the canonical "read more" page for that symbol.
-  function coingeckoLink(id) {
-    return 'https://www.coingecko.com/en/coins/' + id;
-  }
-  function yahooLink(sym) {
-    return 'https://finance.yahoo.com/quote/' + encodeURIComponent(sym) + '/';
-  }
-  // Yahoo Finance forex pair convention: stronger currency goes first.
-  // EUR & GBP trade as ccyUSD=X; JPY/CNY/etc. trade as USDccy=X.
-  var FX_YAHOO = {
-    EUR: 'EURUSD=X',
-    GBP: 'GBPUSD=X',
-    JPY: 'USDJPY=X',
-    CHF: 'USDCHF=X',
-    CAD: 'USDCAD=X',
-    AUD: 'AUDUSD=X',
-    CNY: 'USDCNY=X'
-  };
-  function fxLink(ccy) {
-    var sym = FX_YAHOO[ccy] || ('USD' + ccy + '=X');
-    return yahooLink(sym);
-  }
-
-  // --- Render -------------------------------------------------------------
   function escapeAttr(s) {
     return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   }
-  function item(label, price, change, link) {
-    var dirClass = '';
-    if (change && change.length) {
-      dirClass = (change.charAt(0) === '-') ? ' down' : ' up';
-    }
-    var openTag, closeTag;
-    if (link) {
-      openTag = '<a class="ticker-item" href="' + escapeAttr(link) +
-                '" target="_blank" rel="noopener noreferrer">';
-      closeTag = '</a>';
-    } else {
-      openTag = '<span class="ticker-item">';
-      closeTag = '</span>';
-    }
-    return (
-      openTag +
-        '<span class="ticker-label">' + label + '</span>' +
-        '<span class="ticker-price">' + price + '</span>' +
-        (change ? '<span class="ticker-change' + dirClass + '">' + change + '</span>' : '') +
-      closeTag
-    );
-  }
 
-  // Show a status line in the ticker bar (loading / error / fallback).
-  function showStatus(msg) {
-    mount.style.display = '';
-    mount.innerHTML =
-      '<div class="ticker-track" style="animation:none;padding-left:24px;">' +
-        '<span class="ticker-item"><span class="ticker-label">' + msg + '</span></span>' +
-      '</div>';
-  }
-
-  function render(items) {
-    if (!items.length) {
-      console.log('[ticker] no items returned -- showing fallback message');
-      showStatus('Markets data temporarily unavailable');
-      return;
-    }
-    console.log('[ticker] rendering ' + items.length + ' items');
-    // Duplicate items so the marquee can loop seamlessly.
-    var html = items.join('') + items.join('');
-    mount.innerHTML = '<div class="ticker-track">' + html + '</div>';
-  }
-
-  // Show immediate loading state so the bar is never blank on first paint.
-  showStatus('Loading market data…');
-
-  // --- Fetch + render -----------------------------------------------------
-  function fetchAll() {
-    console.log('[ticker] fetchAll() starting at ' + new Date().toISOString());
-    var items = [];
-
-    var cryptoIds = CRYPTO.map(function (c) { return c.id; }).join(',');
-    // CoinGecko started blocking CORS for browser requests in 2026 (same
-    // pattern as the Yahoo /v7 lockdown). Proxy through the Worker, which
-    // returns CoinGecko's exact response shape so the parser is unchanged.
-    var cgUrl = WORKER_URL + '?coingecko=' + encodeURIComponent(cryptoIds);
-    // currency-api -- USD as the base; lowercase ISO codes in the response.
-    var fxUrl = 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json';
-    // Cloudflare Worker proxy -- one round-trip for 10Y + ETFs + global indexes.
-    var ixSymbols = INDEXES.map(function (x) { return x.sym; }).join(',');
-    var ixUrl = WORKER_URL + '?symbols=' + encodeURIComponent(ixSymbols);
-
-    var cgPromise = fetch(cgUrl)
-      .then(function (r) {
-        console.log('[ticker] CoinGecko response: HTTP ' + r.status);
-        return r.ok ? r.json() : null;
-      })
-      .catch(function (e) {
-        console.warn('[ticker] CoinGecko fetch failed:', e && e.message);
-        return null;
-      });
-
-    var fxPromise = fetch(fxUrl)
-      .then(function (r) {
-        console.log('[ticker] currency-api response: HTTP ' + r.status);
-        return r.ok ? r.json() : null;
-      })
-      .catch(function (e) {
-        console.warn('[ticker] currency-api fetch failed:', e && e.message);
-        return null;
-      });
-
-    var ixPromise = fetch(ixUrl)
-      .then(function (r) {
-        console.log('[ticker] Worker response: HTTP ' + r.status);
-        return r.ok ? r.json() : null;
-      })
-      .catch(function (e) {
-        console.warn('[ticker] Worker fetch failed:', e && e.message);
-        return null;
-      });
-
-    Promise.all([cgPromise, fxPromise, ixPromise]).then(function (results) {
-      var cg = results[0], fx = results[1], ix = results[2];
-      console.log('[ticker] CoinGecko data:', cg);
-      console.log('[ticker] currency-api data:', fx);
-      console.log('[ticker] Worker (Yahoo) data:', ix);
-
-      if (cg) {
-        CRYPTO.forEach(function (c) {
-          var d = cg[c.id];
-          if (d && isFinite(d.usd)) {
-            items.push(item(
-              c.label,
-              fmtPrice(d.usd),
-              fmtPct(d.usd_24h_change),
-              coingeckoLink(c.id)
-            ));
-          } else {
-            console.warn('[ticker] missing CoinGecko data for ' + c.id);
-          }
-        });
-      } else {
-        console.warn('[ticker] no CoinGecko payload');
-      }
-
-      // Indexes (10Y -> US ETFs -> global) render between crypto and FX.
-      if (ix && ix.quoteResponse && ix.quoteResponse.result) {
-        var bySym = {};
-        ix.quoteResponse.result.forEach(function (q) { bySym[q.symbol] = q; });
-
-        INDEXES.forEach(function (x) {
-          var q = bySym[x.sym];
-          if (!q || !isFinite(q.regularMarketPrice)) {
-            console.warn('[ticker] missing Yahoo data for ' + x.sym);
-            return;
-          }
-          var price = q.regularMarketPrice;
-          var changePct = q.regularMarketChangePercent;
-          var changeAbs = q.regularMarketChange;
-          var priceStr, changeStr;
-
-          if (x.fmt === 'yield') {
-            // 10Y: show yield with basis-point change (1bp = 0.01%).
-            priceStr = price.toFixed(2) + '%';
-            if (isFinite(changeAbs)) {
-              var bp = Math.round(changeAbs * 100);
-              changeStr = (bp >= 0 ? '+' : '') + bp + 'bp';
-            } else {
-              changeStr = '';
-            }
-          } else if (x.fmt === 'index') {
-            // Global indexes: thousands-separated, no $.
-            priceStr = price.toLocaleString(undefined, { maximumFractionDigits: 2 });
-            changeStr = isFinite(changePct) ? fmtPct(changePct) : '';
-          } else {
-            // Default: $-prefixed price (US ETFs).
-            priceStr = fmtPrice(price);
-            changeStr = isFinite(changePct) ? fmtPct(changePct) : '';
-          }
-
-          items.push(item(x.label, priceStr, changeStr, yahooLink(x.sym)));
-        });
-      } else {
-        console.warn('[ticker] no Worker payload');
-      }
-
-      if (fx && fx.usd) {
-        FX.forEach(function (ccy) {
-          var rate = fx.usd[ccy.toLowerCase()];
-          if (rate) {
-            items.push(item('USD/' + ccy, fmtFx(rate, ccy), '', fxLink(ccy)));
-          } else {
-            console.warn('[ticker] missing currency-api rate for ' + ccy);
-          }
-        });
-      } else {
-        console.warn('[ticker] no currency-api payload');
-      }
-
-      render(items);
-    }).catch(function (e) {
-      console.error('[ticker] unexpected error:', e);
-      showStatus('Markets data temporarily unavailable');
-    });
-  }
-
-  fetchAll();
-  setInterval(fetchAll, 60 * 1000);   // refresh every 60 seconds
-
-  // --- Drag-to-scrub ------------------------------------------------------
-  // Lets the reader pause/scroll the marquee with mouse or finger, and click
-  // an item to follow its source link. Clicks are suppressed if the pointer
-  // moved more than CLICK_THRESHOLD pixels (so a drag doesn't accidentally
-  // open a tab).
-  (function setupDrag() {
-    var CLICK_THRESHOLD = 5;  // pixels
-    var drag = {
-      active: false, startX: 0, startOffset: 0, moved: 0, track: null
-    };
-
-    function getTransformX(el) {
-      var t = window.getComputedStyle(el).transform;
-      if (!t || t === 'none') return 0;
-      var m = t.match(/matrix.*\(([^)]+)\)/);
-      if (!m) return 0;
-      var p = m[1].split(',').map(parseFloat);
-      return p.length === 6 ? p[4] : (p.length === 16 ? p[12] : 0);
-    }
-    function pointerX(e) {
-      if (e.touches && e.touches[0]) return e.touches[0].clientX;
-      return e.clientX;
-    }
-
-    function onDown(e) {
-      // Don't start a drag if the user clicked something else (e.g. nav).
-      var track = mount.querySelector('.ticker-track');
-      if (!track) return;
-      drag.active = true;
-      drag.startX = pointerX(e);
-      drag.startOffset = getTransformX(track);
-      drag.moved = 0;
-      drag.track = track;
-      track.style.animationPlayState = 'paused';
-      mount.classList.add('dragging');
-    }
-    function onMove(e) {
-      if (!drag.active || !drag.track) return;
-      var dx = pointerX(e) - drag.startX;
-      drag.moved = Math.max(drag.moved, Math.abs(dx));
-      drag.track.style.transform = 'translateX(' + (drag.startOffset + dx) + 'px)';
-      if (drag.moved > CLICK_THRESHOLD && e.cancelable) e.preventDefault();
-    }
-    function onUp() {
-      if (!drag.active) return;
-      drag.active = false;
-      // Track stays paused at dragged position. Animation resumes only when
-      // the cursor leaves the ticker entirely (see onLeave below) -- gives
-      // the reader time to see/click the symbol they dragged to.
-    }
-    function onLeave() {
-      if (drag.active) return;
-      if (drag.track) {
-        drag.track.style.transform = '';
-        drag.track.style.animationPlayState = '';
-        drag.track = null;
-      }
-      mount.classList.remove('dragging');
-    }
-
-    // Suppress an immediate click if the user actually dragged.
-    function onClickCapture(e) {
-      if (drag.moved > CLICK_THRESHOLD) {
-        e.preventDefault();
-        e.stopPropagation();
-        drag.moved = 0;  // reset so the next real click works
-      }
-    }
-
-    mount.addEventListener('mousedown', onDown);
-    mount.addEventListener('touchstart', onDown, { passive: true });
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('touchmove', onMove, { passive: false });
-    window.addEventListener('mouseup', onUp);
-    window.addEventListener('touchend', onUp);
-    mount.addEventListener('mouseleave', onLeave);
-    mount.addEventListener('click', onClickCapture, true);
-  })();
-
-  // Expose for /markets to reuse the same fetched data.
-  window.__bpleon_ticker = { CRYPTO: CRYPTO, FX: FX, INDEXES: INDEXES };
+  // --- Ticker tape (TradingView, 2026-09-30) -----------------------------
+  // Edit TV_TICKER to change what scrolls. Index CFDs keep their own names
+  // (UK 100, JAPAN 225, HK 50): they track the indexes but are not them.
+  var TV_TICKER = [
+    { proName: 'FRED:DGS10',      title: '10Y' },
+    { proName: 'CAPITALCOM:VIX',  title: 'VIX' },
+    { proName: 'AMEX:SPY',        title: 'SPY' },
+    { proName: 'NASDAQ:QQQ',      title: 'QQQ' },
+    { proName: 'AMEX:IWV',        title: 'IWV' },
+    { proName: 'FOREXCOM:UKXGBP', title: 'UK 100' },
+    { proName: 'XETR:DAX',        title: 'DAX' },
+    { proName: 'FOREXCOM:JPXJPY', title: 'JAPAN 225' },
+    { proName: 'FOREXCOM:HKXHKD', title: 'HK 50' },
+    { proName: 'BITSTAMP:BTCUSD', title: 'BTC' },
+    { proName: 'BITSTAMP:ETHUSD', title: 'ETH' },
+    { proName: 'COINBASE:SOLUSD', title: 'SOL' },
+    { proName: 'OANDA:XAUUSD',    title: 'GOLD' },
+    { proName: 'FX_IDC:EURUSD',   title: 'EUR/USD' },
+    { proName: 'FX_IDC:GBPUSD',   title: 'GBP/USD' },
+    { proName: 'FX_IDC:USDJPY',   title: 'USD/JPY' }
+  ];
+  mount.classList.add('tv-ticker');
+  tvEmbed(mount, 'ticker-tape', {
+    symbols: TV_TICKER, showSymbolLogo: false, isTransparent: true,
+    displayMode: 'compact', colorTheme: 'light', locale: 'en'
+  });
 
   // =========================================================================
   // Watchlist (homepage "What I'm watching" widget)
@@ -440,67 +169,36 @@
     if (postedEl) postedEl.textContent = first.posted || '';
     if (linkEl)   linkEl.href = 'https://finance.yahoo.com/quote/' + encodeURIComponent(first.sym) + '/';
 
-    // Live price + change + to-target via Worker
-    var symbols = WATCHLIST.map(function (w) { return w.sym; }).join(',');
-    fetch(WORKER_URL + '?symbols=' + encodeURIComponent(symbols))
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (data) {
-        var result = data && data.quoteResponse && data.quoteResponse.result;
-        if (!result) return;
-        var bySym = {};
-        result.forEach(function (q) { bySym[q.symbol] = q; });
-        var q = bySym[first.sym];
-        if (!q || !isFinite(q.regularMarketPrice)) return;
-
-        var price = q.regularMarketPrice;
-        // Cache the latest quote so loadLeadPickSpark can compute today's
-        // day-over-day change correctly (price minus yesterday's close).
-        // For range='1d', spark data starts at today's open, so first/last
-        // would only give intraday change — that's not what visitors mean
-        // by "today's change" on a finance site.
-        latestLeadPickQuote = {
-          price: price,
-          previousClose: q.regularMarketPreviousClose
-        };
-        var priceEl = document.getElementById('lp-price');
-        var ttEl = document.getElementById('lp-totarget');
-
-        if (priceEl) priceEl.textContent = '$' + price.toFixed(2);
-        // If the spark fetch already painted a "+X today" using stale spark
-        // data (range='1d' default), refresh it now with the correct
-        // previousClose-based number.
-        refreshLeadPickChange();
-        // NOTE: do NOT write the change percent here. The change label is owned
-        // exclusively by loadLeadPickSpark() so it stays in sync with whichever
-        // sparkline range is active (1D -> "today", 1M -> "1m", etc). Writing
-        // it here too would race with the spark fetch on initial load and
-        // intermittently leave stale "today" labels next to period values.
-        if (ttEl) {
-          // Only render a "to target" % when a numeric target is set; while
-          // the PT is under review, show an em-dash rather than a misleading
-          // number. Reset the className so prior up/down coloring doesn't
-          // linger across renders.
-          if (first.target != null && isFinite(first.target)) {
-            var toTarget = ((first.target - price) / price) * 100;
-            if (isFinite(toTarget)) {
-              ttEl.textContent = (toTarget >= 0 ? '+' : '') + toTarget.toFixed(1) + '%';
-              ttEl.className = 'lp-tt ' + (toTarget >= 0 ? 'up' : 'down');
-            }
-          } else {
-            ttEl.textContent = '—'; // em-dash
-            ttEl.className = 'lp-tt';
-          }
-        }
-      })
-      .catch(function () { /* lead-pick keeps placeholders */ });
-
-    // Stats grid + sparkline + headlines load in parallel; decoupled so
-    // they never block the price update. The sparkline uses whichever range
-    // the user last selected via the period toggles (default 1M).
-    loadHeadlinesForFirstPick();
-    loadSnapshotForFirstPick();
-    loadLeadPickSpark();
-    loadLeadPickPreviousClose();
+    // Live price, chart and news: TradingView widgets (2026-09-30). The Yahoo
+    // quote, stats grid, sparkline and headline feeds are retired, and so is
+    // the "to target" figure, which needed a live price.
+    var tvS = tvSym(first.sym);
+    var sparkEl = document.getElementById('lp-spark');
+    if (sparkEl && sparkEl.getAttribute('data-tv') !== tvS) {
+      sparkEl.setAttribute('data-tv', tvS);
+      sparkEl.classList.add('tv-lp');
+      sparkEl.removeAttribute('aria-hidden');
+      tvEmbed(sparkEl, 'mini-symbol-overview', {
+        symbol: tvS, width: '100%', height: 220, locale: 'en', dateRange: '1M',
+        colorTheme: 'light', isTransparent: true, autosize: false, largeChartUrl: ''
+      });
+    }
+    ['.lp-priceblock', '.lp-spark-periods', '#lp-stats', '.lp-section-label'].forEach(function (q) {
+      var el = leadEl.querySelector(q);
+      if (el) el.style.display = 'none';
+    });
+    var ttCell = document.getElementById('lp-totarget');
+    if (ttCell && ttCell.parentNode) ttCell.parentNode.style.display = 'none';
+    var hl = document.getElementById('headlines-list');
+    if (hl && hl.getAttribute('data-tv') !== tvS) {
+      hl.setAttribute('data-tv', tvS);
+      tvEmbed(hl, 'timeline', {
+        feedMode: 'symbol', symbol: tvS, isTransparent: true, displayMode: 'regular',
+        width: '100%', height: 460, colorTheme: 'light', locale: 'en'
+      });
+    }
+    var hlTitle = document.getElementById('headlines-title');
+    if (hlTitle) hlTitle.textContent = 'On the wire \u2014 ' + first.name;
   }
 
   // -----------------------------------------------------------------------
@@ -1069,10 +767,8 @@
   }
 
   if (document.getElementById('lead-pick')) {
-    setupLeadPickSparkTabs();
     loadWatchlist(function () {
-      renderWatchlist();
-      setInterval(renderWatchlist, 60 * 1000);
+      renderWatchlist();  // TradingView widgets refresh themselves
     });
   }
 
@@ -1552,99 +1248,44 @@
     });
   }
 
-  if (document.getElementById('hero-chart-line')) {
-    loadHeroChart('1y');
-    setupHeroChartTabs();
+  // Hero chart: TradingView symbol overview (2026-09-30). US 500 is a CFD that
+  // tracks the S&P 500; the official index feed is licensed separately.
+  var heroWrap = document.querySelector('.hero-chart-wrap');
+  if (heroWrap && document.getElementById('hero-chart')) {
+    heroWrap.classList.add('tv-hero');
+    var oldPeriods = document.querySelector('.hero-chart-periods');  // the widget has its own range buttons
+    if (oldPeriods) oldPeriods.style.display = 'none';
+    tvEmbed(heroWrap, 'symbol-overview', {
+      symbols: [['US 500 (S&P 500 CFD)', 'FOREXCOM:SPXUSD|12M']],
+      chartOnly: false, width: '100%', height: 300, locale: 'en', colorTheme: 'light',
+      autosize: false, showVolume: false, hideDateRanges: false, hideSymbolLogo: true,
+      scalePosition: 'right', scaleMode: 'Normal', chartType: 'area',
+      lineColor: 'rgba(181, 106, 63, 1)', topColor: 'rgba(181, 106, 63, 0.22)',
+      bottomColor: 'rgba(181, 106, 63, 0.02)', lineWidth: 2,
+      dateRanges: ['1d|1', '1m|30', '6m|120', '12m|1D', '60m|1W', 'all|1M']
+    });
   }
 
   // ---------------------------------------------------------------------------
   // Research page -- live rates & FX strip
   // ---------------------------------------------------------------------------
-  // Lights up the .rates-strip block on research.html. Pulls ~1y daily history
-  // from the bpleon-quotes worker for each .rc-spark[data-sym] card, renders a
-  // sparkline via sparklineSvg(), and writes the latest reading + change into
-  // the .rc-foot cells. Yield symbols (^TNX, ^TYX, ^IRX) render as percentages
-  // with a basis-point change; everything else renders as a numeric level with
-  // a percent change vs. the first value in the spark window.
+  // Lights up the .rates-strip block on research.html with one TradingView mini
+  // chart per card (2026-09-30). Treasury yields are FRED's daily series.
   // ---------------------------------------------------------------------------
   if (document.getElementById('rates-live-strip')) {
-    var rcCards = document.querySelectorAll('#rates-live-strip .rates-card');
-    if (rcCards.length) {
-      var rcSyms = [];
-      rcCards.forEach(function (card) {
-        var spark = card.querySelector('.rc-spark[data-sym]');
-        if (spark) {
-          var s = spark.getAttribute('data-sym');
-          if (s && rcSyms.indexOf(s) === -1) rcSyms.push(s);
-        }
+    document.querySelectorAll('#rates-live-strip .rates-card').forEach(function (card) {
+      var spark = card.querySelector('.rc-spark[data-sym]');
+      if (!spark) return;
+      spark.classList.remove('loading');
+      spark.classList.add('tv-rc');
+      tvEmbed(spark, 'mini-symbol-overview', {
+        symbol: tvSym(spark.getAttribute('data-sym')), width: '100%', height: 150,
+        locale: 'en', dateRange: '12M', colorTheme: 'light', isTransparent: true,
+        autosize: false, largeChartUrl: '', noTimeScale: true
       });
-
-      function fmtRcLevel(sym, v) {
-        if (!isFinite(v)) return '—';
-        if (sym === '^TNX' || sym === '^TYX' || sym === '^IRX' || sym === '^FVX') {
-          return v.toFixed(2) + '%';
-        }
-        if (sym.indexOf('USD') !== -1 && sym.indexOf('=X') !== -1) {
-          // FX pairs: 4-decimal precision below 10, 2 above.
-          return v >= 10 ? v.toFixed(2) : v.toFixed(4);
-        }
-        if (Math.abs(v) >= 1000) return v.toLocaleString(undefined, { maximumFractionDigits: 0 });
-        if (Math.abs(v) >= 100)  return v.toFixed(2);
-        if (Math.abs(v) >= 10)   return v.toFixed(2);
-        return v.toFixed(2);
-      }
-      function fmtRcChange(sym, first, last) {
-        if (!isFinite(first) || !isFinite(last)) return { text: '', cls: 'flat' };
-        var isYield = (sym === '^TNX' || sym === '^TYX' || sym === '^IRX' || sym === '^FVX');
-        if (isYield) {
-          var bp = Math.round((last - first) * 100); // yields are in pct points; *100 => bp
-          var sign = bp > 0 ? '+' : (bp < 0 ? '' : '');
-          var clsY = bp > 0 ? 'up' : (bp < 0 ? 'down' : 'flat');
-          return { text: sign + bp + 'bp 1y', cls: clsY };
-        }
-        var pct = ((last / first) - 1) * 100;
-        var signp = pct > 0 ? '+' : (pct < 0 ? '' : '');
-        var clsP = pct > 0.05 ? 'up' : (pct < -0.05 ? 'down' : 'flat');
-        return { text: signp + pct.toFixed(1) + '% 1y', cls: clsP };
-      }
-
-      if (rcSyms.length) {
-        fetch(WORKER_URL + '?spark=' + encodeURIComponent(rcSyms.join(',')))
-          .then(function (r) { return r.ok ? r.json() : null; })
-          .then(function (data) {
-            if (!data) return;
-            rcCards.forEach(function (card) {
-              var spark = card.querySelector('.rc-spark[data-sym]');
-              if (!spark) return;
-              var sym = spark.getAttribute('data-sym');
-              var values = data[sym];
-              if (!values || !values.length) {
-                spark.classList.remove('loading');
-                spark.innerHTML = '<span style="font-size:.72rem;color:var(--muted);">unavailable</span>';
-                return;
-              }
-              spark.classList.remove('loading');
-              spark.innerHTML = sparklineSvg(values, { width: 280, height: 32, padding: 2 });
-              var lastEl = card.querySelector('[data-rates-last]');
-              var chgEl  = card.querySelector('[data-rates-chg]');
-              var first = values[0], last = values[values.length - 1];
-              if (lastEl) lastEl.textContent = fmtRcLevel(sym, last);
-              if (chgEl) {
-                var c = fmtRcChange(sym, first, last);
-                chgEl.textContent = c.text;
-                chgEl.className = 'rc-chg ' + c.cls;
-              }
-            });
-          })
-          .catch(function () {
-            // Silent fail — leave skeleton; the rest of the page still works.
-            rcCards.forEach(function (card) {
-              var spark = card.querySelector('.rc-spark[data-sym]');
-              if (spark) spark.classList.remove('loading');
-            });
-          });
-      }
-    }
+      var foot = card.querySelector('.rc-foot');
+      if (foot) foot.style.display = 'none';
+    });
   }
 
 })();
