@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-10-19",
   "fileCount": 179,
-  "totalBytes": 12074750,
+  "totalBytes": 12074390,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,8 +28,8 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 43303,
-      "sizeText": "42.3 KB",
+      "size": 42859,
+      "sizeText": "41.9 KB",
       "modified": "2026-10-19",
       "ext": ".json",
       "category": "assets"
@@ -559,8 +559,8 @@
     {
       "path": "mu-fq4-preview-2026-09-28.html",
       "name": "mu-fq4-preview-2026-09-28.html",
-      "size": 20022,
-      "sizeText": "19.6 KB",
+      "size": 20833,
+      "sizeText": "20.3 KB",
       "modified": "2026-10-19",
       "ext": ".html",
       "category": "pages"
@@ -1027,8 +1027,8 @@
     {
       "path": "writing.html",
       "name": "writing.html",
-      "size": 45368,
-      "sizeText": "44.3 KB",
+      "size": 44931,
+      "sizeText": "43.9 KB",
       "modified": "2026-10-19",
       "ext": ".html",
       "category": "pages"
@@ -1477,7 +1477,7 @@
     {
       "path": "feed.xml",
       "name": "feed.xml",
-      "size": 15011,
+      "size": 15032,
       "sizeText": "14.7 KB",
       "modified": "2026-10-19",
       "ext": ".xml",
@@ -1495,8 +1495,8 @@
     {
       "path": "sitemap.xml",
       "name": "sitemap.xml",
-      "size": 12838,
-      "sizeText": "12.5 KB",
+      "size": 12527,
+      "sizeText": "12.2 KB",
       "modified": "2026-10-19",
       "ext": ".xml",
       "category": "site-meta"
