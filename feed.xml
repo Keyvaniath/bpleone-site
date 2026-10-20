@@ -8,6 +8,14 @@
     <atom:link href="https://bpleon.com/feed.xml" rel="self" type="application/rss+xml" />
 
     <item>
+      <title>Sold Out Through 2028 — ASML coverage update</title>
+      <link>https://bpleon.com/asml-q3-update-2026-10-19.html</link>
+      <guid isPermaLink="true">https://bpleon.com/asml-q3-update-2026-10-19.html</guid>
+      <pubDate>Mon, 19 Oct 2026 09:00:00 -0700</pubDate>
+      <description>ASML cleared the top of its margin guidance, raised the year, and told the market it cannot build enough machines before 2029. The stock fell into the add zone we published in July. Accumulate reaffirmed, target about $2,000.</description>
+    </item>
+
+    <item>
       <title>Micron’s Best Quarter Ever Wasn’t Enough</title>
       <link>https://bpleon.com/mu-fq4-update-2026-10-19.html</link>
       <guid isPermaLink="true">https://bpleon.com/mu-fq4-update-2026-10-19.html</guid>
@@ -197,14 +205,6 @@
       <guid isPermaLink="true">https://bpleon.com/weekly-outlook-2026-06-29.html</guid>
       <pubDate>Mon, 29 Jun 2026 09:00:00 -0700</pubDate>
       <description>MU printed a record $41.5B with a $50B next-quarter guide and $100B of contracted demand. It ripped while megacap tech sagged on AI costs. The supplier-vs-spender split, the jobs print Thursday under a hawkish Fed, and a first look at quantum.</description>
-    </item>
-
-    <item>
-      <title>Micron didn’t fade. It ripped 16%. What we got wrong — and the contract that rewrote the thesis.</title>
-      <link>https://bpleon.com/mu-fq3-reaction-2026-06-28.html</link>
-      <guid isPermaLink="true">https://bpleon.com/mu-fq3-reaction-2026-06-28.html</guid>
-      <pubDate>Sun, 28 Jun 2026 09:00:00 -0700</pubDate>
-      <description>We said priced-and-likely-to-fade. It ripped 16% to a record. What we got wrong, why the scale-out still won, and the SCA collar that re-rates the thesis from $1,100 toward $1,500.</description>
     </item>
 
   </channel>
