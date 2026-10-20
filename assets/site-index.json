@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-10-20",
   "fileCount": 181,
-  "totalBytes": 12140002,
+  "totalBytes": 12142840,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,8 +28,8 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 43098,
-      "sizeText": "42.1 KB",
+      "size": 43337,
+      "sizeText": "42.3 KB",
       "modified": "2026-10-20",
       "ext": ".json",
       "category": "assets"
@@ -343,8 +343,8 @@
     {
       "path": "asml-q3-update-2026-10-19.html",
       "name": "asml-q3-update-2026-10-19.html",
-      "size": 27795,
-      "sizeText": "27.1 KB",
+      "size": 28303,
+      "sizeText": "27.6 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
@@ -577,8 +577,8 @@
     {
       "path": "mu-fq4-update-2026-10-19.html",
       "name": "mu-fq4-update-2026-10-19.html",
-      "size": 36515,
-      "sizeText": "35.7 KB",
+      "size": 37722,
+      "sizeText": "36.8 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
@@ -1036,8 +1036,8 @@
     {
       "path": "weekly-outlook-2026-10-19.html",
       "name": "weekly-outlook-2026-10-19.html",
-      "size": 33085,
-      "sizeText": "32.3 KB",
+      "size": 33793,
+      "sizeText": "33.0 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
@@ -1045,7 +1045,7 @@
     {
       "path": "writing.html",
       "name": "writing.html",
-      "size": 47242,
+      "size": 47249,
       "sizeText": "46.1 KB",
       "modified": "2026-10-20",
       "ext": ".html",
@@ -1495,7 +1495,7 @@
     {
       "path": "feed.xml",
       "name": "feed.xml",
-      "size": 15031,
+      "size": 15020,
       "sizeText": "14.7 KB",
       "modified": "2026-10-20",
       "ext": ".xml",
@@ -1513,8 +1513,8 @@
     {
       "path": "sitemap.xml",
       "name": "sitemap.xml",
-      "size": 12707,
-      "sizeText": "12.4 KB",
+      "size": 12887,
+      "sizeText": "12.6 KB",
       "modified": "2026-10-20",
       "ext": ".xml",
       "category": "site-meta"
