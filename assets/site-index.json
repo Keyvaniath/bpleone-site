@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-10-20",
   "fileCount": 181,
-  "totalBytes": 12142840,
+  "totalBytes": 12142010,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -343,8 +343,8 @@
     {
       "path": "asml-q3-update-2026-10-19.html",
       "name": "asml-q3-update-2026-10-19.html",
-      "size": 28303,
-      "sizeText": "27.6 KB",
+      "size": 27988,
+      "sizeText": "27.3 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
@@ -577,8 +577,8 @@
     {
       "path": "mu-fq4-update-2026-10-19.html",
       "name": "mu-fq4-update-2026-10-19.html",
-      "size": 37722,
-      "sizeText": "36.8 KB",
+      "size": 37752,
+      "sizeText": "36.9 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
@@ -1036,8 +1036,8 @@
     {
       "path": "weekly-outlook-2026-10-19.html",
       "name": "weekly-outlook-2026-10-19.html",
-      "size": 33793,
-      "sizeText": "33.0 KB",
+      "size": 33239,
+      "sizeText": "32.5 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
@@ -1495,7 +1495,7 @@
     {
       "path": "feed.xml",
       "name": "feed.xml",
-      "size": 15020,
+      "size": 15029,
       "sizeText": "14.7 KB",
       "modified": "2026-10-20",
       "ext": ".xml",
