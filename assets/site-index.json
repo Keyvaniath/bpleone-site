@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-10-20",
   "fileCount": 179,
-  "totalBytes": 12076723,
+  "totalBytes": 12077009,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -30,7 +30,7 @@
       "name": "site-index.json",
       "size": 42859,
       "sizeText": "41.9 KB",
-      "modified": "2026-10-19",
+      "modified": "2026-10-20",
       "ext": ".json",
       "category": "assets"
     },
@@ -568,8 +568,8 @@
     {
       "path": "mu-fq4-update-2026-10-19.html",
       "name": "mu-fq4-update-2026-10-19.html",
-      "size": 36498,
-      "sizeText": "35.6 KB",
+      "size": 36784,
+      "sizeText": "35.9 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
@@ -1479,7 +1479,7 @@
       "name": "feed.xml",
       "size": 15032,
       "sizeText": "14.7 KB",
-      "modified": "2026-10-19",
+      "modified": "2026-10-20",
       "ext": ".xml",
       "category": "site-meta"
     },
@@ -1497,7 +1497,7 @@
       "name": "sitemap.xml",
       "size": 12527,
       "sizeText": "12.2 KB",
-      "modified": "2026-10-19",
+      "modified": "2026-10-20",
       "ext": ".xml",
       "category": "site-meta"
     },
