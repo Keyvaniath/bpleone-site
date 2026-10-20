@@ -11,6 +11,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const SITE = 'https://bpleon.com';
@@ -91,9 +92,37 @@ function rfc822(iso){
   return `${DOW[dt.getUTCDay()]}, ${String(d).padStart(2,'0')} ${MON3[m-1]} ${y} 09:00:00 -0700`;
 }
 
+
+// Drop anything git actually ignores. The pre-commit hook rebuilds these files
+// from the WORKING TREE, so an untracked or gitignored page at the repo root
+// would otherwise be advertised in the public sitemap and 404 for anyone who
+// followed it. build-site-index.js has always done this; this builder did not.
+function dropIgnored(files){
+  if (!files.length) return files;
+  let out = '';
+  try {
+    out = execFileSync('git', ['-C', ROOT, 'check-ignore', '--stdin'],
+      { input: files.join('\n'), encoding: 'utf8' });
+  } catch (e) {
+    if (e && e.status === 1) {
+      out = (e.stdout || '');                 // exit 1 = nothing ignored, not an error
+    } else {
+      console.warn('  [warn] git check-ignore unavailable - sitemap not filtered');
+      return files;
+    }
+  }
+  const ignored = new Set(out.split('\n').map(x => x.trim()).filter(Boolean));
+  const kept = files.filter(f => !ignored.has(f));
+  const n = files.length - kept.length;
+  if (n) console.log(`  [sitemap] excluded ${n} gitignored page(s): ${[...ignored].join(', ')}`);
+  return kept;
+}
+
 function main(){
-  const recs = fs.readdirSync(ROOT)
-    .filter(f => f.endsWith('.html') && !EXCLUDE.has(f))
+  const htmlFiles = dropIgnored(
+    fs.readdirSync(ROOT).filter(f => f.endsWith('.html') && !EXCLUDE.has(f))
+  );
+  const recs = htmlFiles
     .map(f => readMeta(f, fs.readFileSync(path.join(ROOT, f), 'utf8')));
 
   const prio = r => parseFloat((CORE[r.file] && CORE[r.file][0]) || (r.isArticle ? '0.8' : '0.7'));
