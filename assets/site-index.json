@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-10-20",
   "fileCount": 180,
-  "totalBytes": 12111677,
+  "totalBytes": 12111326,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -460,8 +460,8 @@
     {
       "path": "index.html",
       "name": "index.html",
-      "size": 30292,
-      "sizeText": "29.6 KB",
+      "size": 29941,
+      "sizeText": "29.2 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
