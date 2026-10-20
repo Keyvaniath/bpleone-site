@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-10-20",
   "fileCount": 173,
-  "totalBytes": 10543137,
+  "totalBytes": 10543798,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -280,8 +280,8 @@
     {
       "path": "asml-q3-update-2026-10-22.html",
       "name": "asml-q3-update-2026-10-22.html",
-      "size": 28555,
-      "sizeText": "27.9 KB",
+      "size": 28303,
+      "sizeText": "27.6 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
@@ -406,8 +406,8 @@
     {
       "path": "index.html",
       "name": "index.html",
-      "size": 29941,
-      "sizeText": "29.2 KB",
+      "size": 29419,
+      "sizeText": "28.7 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
@@ -514,8 +514,8 @@
     {
       "path": "mu-fq4-update-2026-10-19.html",
       "name": "mu-fq4-update-2026-10-19.html",
-      "size": 37932,
-      "sizeText": "37.0 KB",
+      "size": 37637,
+      "sizeText": "36.8 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
@@ -802,8 +802,8 @@
     {
       "path": "vst-initiation-2026-10-03.html",
       "name": "vst-initiation-2026-10-03.html",
-      "size": 56271,
-      "sizeText": "55.0 KB",
+      "size": 58734,
+      "sizeText": "57.4 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
@@ -973,8 +973,8 @@
     {
       "path": "weekly-outlook-2026-10-20.html",
       "name": "weekly-outlook-2026-10-20.html",
-      "size": 33362,
-      "sizeText": "32.6 KB",
+      "size": 33076,
+      "sizeText": "32.3 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
@@ -982,8 +982,8 @@
     {
       "path": "writing.html",
       "name": "writing.html",
-      "size": 47249,
-      "sizeText": "46.1 KB",
+      "size": 46802,
+      "sizeText": "45.7 KB",
       "modified": "2026-10-20",
       "ext": ".html",
       "category": "pages"
