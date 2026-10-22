@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-10-22",
   "fileCount": 173,
-  "totalBytes": 10563551,
+  "totalBytes": 10563496,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -280,8 +280,8 @@
     {
       "path": "asml-q3-update-2026-10-22.html",
       "name": "asml-q3-update-2026-10-22.html",
-      "size": 51544,
-      "sizeText": "50.3 KB",
+      "size": 51455,
+      "sizeText": "50.2 KB",
       "modified": "2026-10-22",
       "ext": ".html",
       "category": "pages"
@@ -1423,7 +1423,7 @@
     {
       "path": "feed.xml",
       "name": "feed.xml",
-      "size": 15029,
+      "size": 15063,
       "sizeText": "14.7 KB",
       "modified": "2026-10-22",
       "ext": ".xml",
