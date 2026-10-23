@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Coverage &mdash; Brandon Leon</title>
+  <meta name="color-scheme" content="light only" />
+  <meta name="theme-color" content="#fbf7ef" />
+  <meta name="supported-color-schemes" content="light" />
+  <meta name="description" content="Every covered name with its current rating, price target, live price and distance to target, read from the latest published note. Plus the full rating history per ticker." />
+  <link rel="canonical" href="https://bpleon.com/coverage.html" />
+  <link rel="alternate" type="application/rss+xml" title="Brandon Leon — Research" href="feed.xml" />
+  <meta property="og:title" content="Coverage — Brandon Leon" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bpleon.com/coverage.html" />
+  <meta property="og:description" content="Every covered name with its current rating, target, live price and distance to target, read from the latest published note." />
+  <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
+  <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=51" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <a href="writing.html">Research</a>
+      <a href="coverage.html" aria-current="page">Coverage</a>
+      <a href="toolkit.html">Toolkit</a>
+      <a href="markets.html">Markets</a>
+      <a href="about.html">About</a>
+      <a class="nav-subscribe" href="https://bpleon.substack.com/subscribe">Subscribe</a>
+    </nav>
+  </header>
+
+  <main id="main" class="prose prose-wide">
+    <header class="page-head">
+      <p class="eyebrow">Coverage &middot; read from the latest note on each name</p>
+      <h1>What we cover, and where each call stands.</h1>
+      <p class="section-sub">The rating and target in this table come from the most recent published note on that ticker, so the table cannot say one thing while the note says another. Prices are live and change all day; ratings and targets change only when a note publishes. A target below the price is a view, not a prediction &mdash; see how we grade in the <a href="track-record.html">track record</a>.</p>
+    </header>
+
+    <div data-bp="coverage" aria-live="polite">
+      <noscript><p class="muted">This table is rendered from <a href="data/content.json">data/content.json</a>. Enable JavaScript, or read the index directly.</p></noscript>
+    </div>
+
+    <section class="pitch-section" id="history">
+      <h2>Rating and target history</h2>
+      <p class="section-sub">Every published rating and target by name, oldest to newest, with the note that set it. Superseded calls stay on the record.</p>
+      <div data-bp="history"></div>
+    </section>
+
+    <p class="disclosure muted small">Not investment advice. Brandon Leon is a publisher, not a registered investment adviser. Positions are disclosed on every note; nothing here is a recommendation to buy or sell any security. <a href="disclaimer.html">Full disclaimer.</a></p>
+    <p class="muted small" data-bp-generated></p>
+  </main>
+
+  <footer class="site-footer"><div class="footer-inner">
+    <p>&copy; 2026 Brandon Leon &middot; <a href="now.html">Now</a> &middot; <a href="reading-list.html">Reading list</a> &middot; <a href="research.html">Data sources</a> &middot; <a href="track-record.html">Track record</a> &middot; <a href="contact.html">Contact</a> &middot; <a href="disclaimer.html">Disclaimer</a> &middot; <a href="feed.xml">RSS</a></p>
+    <p class="muted small">Independent research, not investment advice. Positions are disclosed on every note.</p>
+  </div></footer>
+
+  <script src="data/content.js" data-root="."></script>
+</body>
+</html>

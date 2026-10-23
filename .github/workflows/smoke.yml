@@ -58,17 +58,17 @@ jobs:
               performance.getEntriesByType('resource').some(r => /script\.js/.test(r.name)));
             if (!scriptLoaded) fails.push('script.js was never loaded by the page');
 
-            // 2) hero chart: script.js must have swapped the placeholder SVG for the
-            //    TradingView symbol-overview widget (an iframe inside .hero-chart-wrap)
+            // 2) content index: since 2026-10-23 the homepage renders from data/content.json via
+            //    data/content.js. The newest article must land as the large card, and the
+            //    coverage table must have rows. (The hero chart was removed in the same change.)
             try {
               await page.waitForFunction(() => {
-                const w = document.querySelector('.hero-chart-wrap');
-                if (!w || !w.classList.contains('tv-hero')) return false;
-                const f = w.querySelector('iframe');
-                return !!(f && /symbol-overview/.test(f.getAttribute('src') || '')) && !w.querySelector('#hero-chart');
+                const t = document.querySelector('[data-bp="latest"] .card-large .card-title a');
+                const rows = document.querySelectorAll('[data-bp="coverage"] tbody tr').length;
+                return !!(t && t.textContent.trim()) && rows > 0;
               }, { timeout: 20000 });
-              console.log('OK  hero chart: TradingView symbol-overview mounted, placeholder SVG replaced');
-            } catch { fails.push('hero chart never mounted (no TradingView symbol-overview iframe in .hero-chart-wrap)'); }
+              console.log('OK  content index: latest article card + coverage rows rendered from data/content.json');
+            } catch { fails.push('content index never rendered (no latest card / coverage rows from data/content.json)'); }
 
             // 3) ticker tape: the TradingView ticker-tape widget must be mounted
             try {
@@ -89,7 +89,7 @@ jobs:
               console.error('\nSMOKE TEST FAILED:\n - ' + fails.join('\n - '));
               process.exit(1);
             }
-            console.log('\nSmoke test passed: homepage mounts its TradingView chart + ticker, script.js loaded, no JS errors.');
+            console.log('\nSmoke test passed: homepage renders its content index + TradingView ticker, script.js loaded, no JS errors.');
           })().catch(e => { console.error(e); process.exit(1); });
           EOF
           node smoke.js

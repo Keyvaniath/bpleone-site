@@ -3,16 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Writing &mdash; Brandon Leon</title>
+  <title>Research &mdash; Brandon Leon</title>
   <meta name="color-scheme" content="light only" />
   <meta name="theme-color" content="#fbf7ef" />
   <meta name="supported-color-schemes" content="light" />
-  <meta name="description" content="Long-form equity research and notes by Brandon Leon. Single-name pitches, sector primers, and methodology pieces across semis and AI, energy, and commodities." />
+  <meta name="description" content="Every coverage note, initiation, weekly outlook and essay from Brandon Leon in one archive. Filter by type, sector or ticker, or search." />
   <link rel="canonical" href="https://bpleon.com/writing.html" />
-  <link rel="alternate" type="application/rss+xml" title="Brandon Leon — Writing" href="feed.xml" />
-  <meta property="og:title" content="Writing — Brandon Leon" />
+  <link rel="alternate" type="application/rss+xml" title="Brandon Leon — Research" href="feed.xml" />
+  <meta property="og:title" content="Research — Brandon Leon" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://bpleon.com/writing.html" />
+  <meta property="og:description" content="Every coverage note, initiation, weekly outlook and essay in one archive. Filter by type, sector or ticker, or search." />
   <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
@@ -21,432 +22,43 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=50" />
-  <style>
-    .writing-tag {
-      display: inline-block;
-      padding: .15rem .55rem;
-      border-radius: 999px;
-      font-family: var(--sans);
-      font-size: .72rem;
-      font-weight: 500;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      vertical-align: middle;
-      margin-left: .5rem;
-      position: relative;
-      top: -.18em;
-      background: var(--accent);
-      color: #fff;
-    }
-    .writing-section-head {
-      margin: 2.5rem 0 .75rem;
-      padding-bottom: .55rem;
-      border-bottom: 2px solid var(--ink);
-      font-family: var(--sans);
-      font-size: .85rem;
-      font-weight: 600;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--ink);
-    }
-    .writing-index {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .writing-index li {
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--rule);
-    }
-    .writing-index li:last-child { border-bottom: none; }
-    .writing-index time {
-      display: block;
-      font-family: var(--sans);
-      font-size: .8rem;
-      letter-spacing: .08em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: .35em;
-    }
-    .writing-index h2 {
-      margin: 0 0 .35em;
-      font-size: 1.4rem;
-      font-family: var(--serif);
-    }
-    .writing-index p {
-      margin: 0;
-      color: var(--ink-soft);
-    }
-    .writing-empty-state {
-      padding: 1.75rem 2rem;
-      background: var(--bg-soft);
-      border-radius: 12px;
-      border-left: 3px solid var(--accent-2);
-      margin: 1rem 0 2rem;
-    }
-    .writing-empty-state p { margin: 0; color: var(--ink-soft); }
-    .writing-empty-state strong { font-family: var(--serif); }
-  </style>
-  <!-- Cloudflare Web Analytics -->
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
+  <link rel="stylesheet" href="style.css?v=51" />
 </head>
-<body style="background:#fbf7ef;color:#1c1a16;">
-  <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
-    <nav class="site-nav" aria-label="Primary">
-      <a href="about.html">About</a>
-      <a href="markets.html">Markets</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <a href="writing.html" aria-current="page">Research</a>
+      <a href="coverage.html">Coverage</a>
       <a href="toolkit.html">Toolkit</a>
-      <a href="reports.html">Reports</a>
-      <a href="research.html">Research</a>
-      <a href="projects.html">Projects</a>
-      <a href="writing.html" aria-current="page">Writing</a>
-      <a href="contact.html">Contact</a>
+      <a href="markets.html">Markets</a>
+      <a href="about.html">About</a>
+      <a class="nav-subscribe" href="https://bpleon.substack.com/subscribe">Subscribe</a>
     </nav>
   </header>
 
-  <main class="prose">
+  <main id="main" class="prose prose-wide">
     <header class="page-head">
-      <p class="eyebrow">Writing</p>
-      <h1>Notes on what the market is pricing in.</h1>
-      <p class="lede">
-        Long-form pieces land on bpleon.com first, then on
-        <a href="https://bpleon.substack.com" rel="noopener">Substack</a>
-        as a newsletter. Single-name pitches, sector primers, and
-        methodology notes across semis and AI, energy, and the
-        commodities + macro layer that drives them &mdash; where
-        through-cycle work is interesting and the price often
-        disagrees with reality.
-      </p>
+      <p class="eyebrow">Research &middot; the archive</p>
+      <h1>Everything, in order.</h1>
+      <p class="section-sub">Coverage notes, initiations, weekly outlooks and essays, newest first. Filter by type, sector or ticker, or search. The rating and target on each note are as published on its date; the live view by ticker is on the <a href="coverage.html">coverage page</a>.</p>
     </header>
 
-    <div class="writing-empty-state" style="border-left-color:var(--accent); margin-top:1.5rem;">
-      <p><strong><a href="track-record.html">The Track Record</a></strong> &mdash; every call I&rsquo;ve made, graded in public: the wins, a working contrarian call, a losing call, and an owned miss, each linked to the note behind it. <a href="track-record.html">See the ledger &rarr;</a></p>
+    <div data-bp="archive" aria-live="polite">
+      <noscript><p class="muted">This archive is rendered from <a href="data/content.json">data/content.json</a>. Enable JavaScript, or read the index directly.</p></noscript>
     </div>
 
-    <h2 class="writing-section-head">Recent</h2>
-        <article>
-          <time>2026-10-23</time>
-          <h2><a href="be-q3-update-2026-10-23.html">Bloom Is Growing Faster Than It Can Bill</a> <span class="writing-tag">Coverage update</span></h2>
-          <p>Bloom delivered a better quarter than our September work allowed for: revenue more than doubled to $1.24 billion, gross margin reached 33.8% against 29.2% a year earlier, and management raised full-year guidance for the third time this year. The same quarter used $27 million of operating cash on $249 million of net income, with a $430 million increase in contract assets &mdash; revenue recognised before the contracts allow it to be billed. Before the report we set $750 million of remaining performance obligations as the level that would challenge our view of backlog conversion; the figure came in at $717.4 million, below the line and 45% above June, which moves the investment question against us even where the threshold held. Inside: the cash bridge, what the backlog measures do and do not tell you, why the $235 target goes under review, and an execution failure of sequencing rather than judgement. Rating: hold. Four charts, every figure from the filings and the call.</p>
-        </article>
-        <article>
-          <time>2026-10-22</time>
-          <h2><a href="asml-q3-update-2026-10-22.html">The Shortage Runs Through 2028</a> <span class="writing-tag">Coverage update</span></h2>
-          <p>ASML beat the top of its own gross-margin guidance at 57.5%, raised the full year to &euro;44&ndash;45 billion, guided the December quarter to a record, and said plainly that its planned supply will not meet customer demand in either 2027 or 2028. The shares fell anyway, on the same credit repricing that hit the whole AI complex. That has pushed the stock into the $1,550&ndash;1,650 range where our July initiation said we would add and would not chase &mdash; which turns a published opinion into a decision, and our recent record on exactly that transition is poor. Rating: accumulate, unchanged. Target: about $2,075, raised from $2,000 after the October 22 close. Two charts, every number sourced.</p>
-        </article>
-        <article>
-          <time>2026-10-20</time>
-          <h2><a href="weekly-outlook-2026-10-20.html">Insurance on a Company You Don&rsquo;t Own</a> <span class="writing-tag">Weekly outlook</span></h2>
-          <p>In the week ending October 16 the Nasdaq had its worst five sessions since June and the Dow finished higher. That spread is the signature of a rotation, not a liquidation, and the thing that caused it was not demand for AI hardware. It was the credit paying for it: default swaps on CoreWeave, a company most readers have never owned, reached distressed levels implying a better-than-60% chance of failure inside five years, while every capital-spending plan and order backlog in the complex held. Inside: the fortnight sorted into what changed and what did not, the financing-layer risk we named in August, and four tests into the October 28 Fed decision and the first 2027 capital-spending guides. Three charts, every number sourced.</p>
-        </article>
-        <article>
-          <time>2026-10-19</time>
-          <h2><a href="mu-fq4-update-2026-10-19.html">Micron&rsquo;s Best Quarter Ever Wasn&rsquo;t Enough</a> <span class="writing-tag">Coverage update</span></h2>
-          <p>Before the print we published one line: a fiscal-Q1 gross-margin guide at or above roughly 86% keeps our thesis intact, below 80% breaks it. Micron guided 86.25%, alongside the largest quarter in its history &mdash; $54.23 billion of revenue, an 87.0% gross margin and $33.20 billion of free cash flow in three months. The test passed, and the stock is down about 30% from its June high. Inside: every published condition graded, why the shares fell on China&rsquo;s CXMT and a patent case rather than on anything Micron did, the rating and target we owed on October 2, and four new tests written without gaps. Three charts, every number sourced.</p>
-        </article>
-        <article>
-          <time>2026-10-03</time>
-          <h2><a href="vst-initiation-2026-10-03.html">Vistra: The Street Has the Earnings. It Doesn&rsquo;t Have the Rate.</a> <span class="writing-tag">Coverage initiation</span></h2>
-          <p>Initiating Vistra at HOLD with a $140 twelve-to-eighteen-month price target. Vistra is the largest competitive power generator in the country wrapped around the largest retail book, hedged through 2027, with 20-year nuclear contracts from Amazon and Meta. We agree with consensus on 2026 and 2027 earnings to within 1%. The disagreement is the discount rate: with the 10-year Treasury at 5.26%, the Street&rsquo;s $218 average target requires about a 6.5% WACC, and even on consensus EBITDA our model reaches only $161. Inside: four valuation lenses, the 2028 hedge gap the Texas curve opens up, a steelman of the Street, and the levels we would act on. Six charts, every number sourced, and the full 18-page report, model and one-pager free to download.</p>
-        </article>
-        <article>
-          <time>2026-09-28</time>
-          <h2><a href="mu-fq4-preview-2026-09-28.html">Micron Reports Wednesday. The Margin Guide Decides Our View.</a> <span class="writing-tag">Earnings preview</span></h2>
-          <p>We resume Micron coverage ahead of its fiscal fourth-quarter report on September 30, with the tests set before the print. The next quarter&rsquo;s gross-margin guide decides the view: about 86% or better is strength, and below 80% breaks the thesis. The rating and a 12-to-18-month target follow in our update by October 2. Inside: where the four conditions we set when we closed coverage in July now stand, what the price already assumes, and the past reactions against the options-implied move. Four charts, every number sourced.</p>
-        </article>
-        <article>
-          <time>2026-09-09</time>
-          <h2><a href="be-initiation-2026-09-09.html">Bloom Energy: The Index Doesn&rsquo;t Read the 10-Q</a> <span class="writing-tag">Coverage initiation</span></h2>
-          <p>Initiating Bloom Energy at HOLD with a $235 twelve-to-eighteen-month price target, days after S&amp;P announced it joins the S&amp;P 500. The revenue doubling is real. So is the 40-to-1 gap between the $20 billion commercial backlog and the $494 million of obligations the audited filing actually reports. We decompose the 34% run to test whether we were missing something and find the earnings base never moved &mdash; consensus FY27 earnings are unchanged, only two price targets shifted and both cite index flows, and Illumina joined the same index in the same press release and fell. Inside: three valuation lenses, the physical capacity ceiling that caps the bull case, a target we revised upward after finding our own model stacked two conservatisms, and both of our process deviations on this position logged in public. Seven charts, every number sourced.</p>
-        </article>
-        <article>
-          <time>2026-09-08</time>
-          <h2><a href="weekly-outlook-2026-09-08.html">Sixty Percent, the Other Way</a> <span class="writing-tag">Week ahead</span></h2>
-          <p>Three weeks ago we called the market's 60% September-hold pricing complacent. Futures now price roughly 60% the other way &mdash; a quarter-point hike on Wednesday, September 16. Inside: the Nvidia guide graded against the thresholds we published before earnings ($108 billion vs. the $100 billion line), Dell's results scored against our own retired number, Warsh's Jackson Hole speech in his own words, the negative July payrolls print that got revised away, and Brent fighting the $95 wire with tankers burning in Hormuz. Four new tests into CPI Friday and the Fed decision, a disclosure correction owed plainly, and the last time the Navy fought a tanker war in Hormuz &mdash; oil fell. Six charts, every number sourced.</p>
-        </article>
-        <article>
-          <time>2026-08-26</time>
-          <h2><a href="nvda-eve-2026-08-26.html">Nvidia Earnings: The Next Guide Sets the Grade</a> <span class="writing-tag">Earnings eve</span></h2>
-          <p>Nvidia reports after Wednesday's close, and we're publishing our decision framework before the results so it can be graded either way: an FQ3 revenue guide of roughly $100 billion or more supports the acceleration case; below roughly $95 billion triggers a formal review of the position we hold &mdash; a review, not a sale. Neither outcome alone settles the thesis. Also inside: the residual-value guarantee &mdash; capped at $105 billion &mdash; that Nvidia filed backing OpenAI's Ohio leases, with the mechanics stated plainly; the $1 trillion Blackwell-and-Rubin claim; why Warsh's Jackson Hole keynote 36 hours later may matter as much as the print; and our first Nvidia disclosure. Five charts, every number sourced.</p>
-        </article>
-        <article>
-          <time>2026-08-17</time>
-          <h2><a href="weekly-outlook-2026-08-17.html">Soft Data, Hard Prices</a> <span class="writing-tag">Week ahead</span></h2>
-          <p>Every scheduled test came in soft &mdash; core CPI at 2.5%, the slowest since March 2021; retail down 0.6%, the largest drop in more than a year; Michigan sentiment at 51 &mdash; and the market prices that matter went the other way: the 30-year closed at 5.267%, Brent gained 5% on Hormuz pressure, and one-year inflation expectations hit 4.3%. Five wires graded, including the oil rule we admit was incomplete. The Vistra gate open with no order in it, stated plainly. Berkshire's $36.6B Alphabet stake vs. our $318 alert. And the week the retailers cross-examine the retail print: Home Depot, Target, the Fed minutes, Walmart. Five charts, every number sourced &mdash; plus the true story of why the Fed meets next to a trout stream.</p>
-        </article>
-        <article>
-          <time>2026-08-14</time>
-          <h2><a href="next-dollar-02-2026-08-14.html">The gates opened. Nobody walked through.</a> <span class="writing-tag">Deployment series</span></h2>
-          <p>Wednesday's CPI fired the cool branch our weekly pre-wrote &mdash; core at 2.5%, the slowest since March 2021 &mdash; and Thursday's 30-year auction cleared at 5.216%, the costliest long-bond sale since 2001, with decent demand. Both tests passed, the gates re-armed, the Vistra starter was authorized&hellip; and we didn't take it. No rule, no market reason &mdash; we just didn't act, and this note grades our own miss with the same pen we've used on everyone else's, then installs the repair. Also inside: the duration stance retires on schedule (a promise dated in June, kept in August), Constellation refused a second time while it runs, and Friday's retail print &mdash; the third soft data point in eight days. Two charts, every number sourced.</p>
-        </article>
-        <article>
-          <time>2026-08-09</time>
-          <h2><a href="weekly-outlook-2026-08-10.html">The labor market blinked first.</a> <span class="writing-tag">Week ahead</span></h2>
-          <p>All summer the risk had one name &mdash; then Friday, 8:30 a.m., the knock came from the other side of the house: July payrolls printed <strong>negative</strong>, the first monthly decline of this expansion, with 103,000 more revised away. September hike odds fell to ~40%. Our wires answered as written: the soft branch triggered the duration review, the power gates split (CEG priced through its ceiling; VST met its gate only by falling 9%), and we bought neither &mdash; the cash waits for Wednesday's CPI, with a $25B 30-year auction the day after. The week told as a story: five charts, every number linked to its source, and both endings for Wednesday already written.</p>
-        </article>
-        <article>
-          <time>2026-08-04</time>
-          <h2><a href="china-memory-2026-08-04.html">The most valuable company in China makes the cheapest chips in the world.</a> <span class="writing-tag">Sector deep dive</span></h2>
-          <p>CXMT went public on a Monday and displaced ICBC as China's most valuable listed company by Monday night; a trillion dollars came off global chip stocks in three sessions, and the Gang of Eight asked for a classified briefing about a DRAM company. We hold a memory basket, so we owed the fear a real underwrite. The answer: real, but early &mdash; CXMT's half-million-wafer ramp lives on the commodity floor while the shortage lives upstairs behind a fence of export controls, missing tools, and ~25% yields, and the tell is its own price list: its chips sell <em>above</em> Samsung's in China. Three charts, two public tripwires, one honest mark on the cost of our own discipline (Alphabet ran 13% without us), and the week the power gates finally open.</p>
-        </article>
-        <article>
-          <time>2026-07-31</time>
-          <h2><a href="next-dollar-01-2026-07-31.html">Where the next dollar goes. And why it hasn't gone yet.</a> <span class="writing-tag">Deployment series</span></h2>
-          <p>The Micron exit returned the largest cash position this portfolio has carried since May &mdash; roughly a quarter of the book &mdash; into a 5.2% long bond, 4% bills, and an equity market offering almost no cushion for the risk. This opens the deployment series: the correlation budget (the Fed-shock session graded every candidate for us &mdash; charted), the axis the capex prints handed us (self-funded AI capex gets paid; externally-funded gets discounted &mdash; and the AI boom now marks itself to market through two megacap income statements), five lanes surveyed honestly &mdash; power first, with the finding that the cheap name and the diversifying name are not the same stock &mdash; and a dated gate on every dollar. Nothing moves before its gate. Cook's &ldquo;100-year flood&rdquo; and the CXMT underwrite inside.</p>
-        </article>
-        <article>
-          <time>2026-07-30</time>
-          <h2><a href="weekly-outlook-2026-08-03.html">The Fed held. The line didn't.</a> <span class="writing-tag">Week ahead</span></h2>
-          <p>The Fed held 3.50&ndash;3.75% on a 9&ndash;3 vote &mdash; three dissents, all for a hike, the first triple dissent in a decade &mdash; and the bond market treated the hold as the mistake: the 30-year closed above 5.2% for the first time since 2007 and the Dow lost 1,153 points. The capex gate split the AI trade on a new axis: Alphabet's raise was sold, Meta's sold harder, and Microsoft's &mdash; Azure +43% &mdash; was paid with the largest one-day market-cap gain ever printed. Proof gets paid; faith gets sold. And Micron broke $900 in the CXMT shock &mdash; where the pre-placed stop was waiting: out at ~$900 before the published line ever fired, closing the twelve-week call at ~+53% blended on the shares sold (an older Micron lot was not sold; see the correction on that note). Four new wires for jobs, the minutes, the war-oil CPI, and the gate's last panel &mdash; Amazon and Apple print tonight.</p>
-        </article>
-        <article>
-          <time>2026-07-30</time>
-          <h2><a href="mu-close-2026-07-30.html">Micron broke $900 again. This time the order was already there.</a> <span class="writing-tag">Single-name update</span></h2>
-          <p>China&rsquo;s CXMT debuted +466% on Monday &mdash; instantly the mainland&rsquo;s most valuable company &mdash; and the chip complex shed over $1 trillion in three sessions: Micron $1,000 &rarr; $705, SanDisk &minus;37%, even ASML down into our published add-zone. <strong>Our runner never saw the bottom.</strong> The repair promised in the July 21 confession was literal &mdash; a broker stop resting at $900 &mdash; and it sold all 15 shares at ~$900 into the breakdown, no human in the loop, before the $848.95 line ever fired and nearly $200 above the low. The twelve-week call closes at <strong>~+53% blended on the shares sold</strong> (an older Micron lot was not sold; see the correction on that note) &mdash; to the digit, the &ldquo;worst case&rdquo; floor published July 8 &mdash; vs ~+31% for never selling. The full final grade (four rights, two wrongs, one repaired F), the CXMT question now under the whole complex, what remains (ASML&rsquo;s add-zone traded; the basket marked honestly), and where coverage goes next: the capex verdict, the China-memory underwrite, and the deployment series the exit just funded.</p>
-        </article>
-        <article>
-          <time>2026-07-21</time>
-          <h2><a href="mu-stop-2026-07-21.html">Micron closed below $900. Our rule said sell. We didn&rsquo;t.</a> <span class="writing-tag">Single-name update</span></h2>
-          <p>The two best prints of the cycle &mdash; ASML&rsquo;s beat-and-raise, TSMC&rsquo;s record quarter with capex hiked to $60&ndash;64B &mdash; and memory broke on both: the market bought the spenders and sold the supplied, because record tool orders <em>are</em> tomorrow&rsquo;s memory supply. On July 16 Micron closed at $853.20 &mdash; the first close below the $900 stop we published in June. The rule said out in full. <strong>We didn&rsquo;t sell</strong> &mdash; and after today&rsquo;s 12.2% rip to $970.82, the violation sits ~7 points ahead of the discipline (~+57% marked vs. ~+50% rule-honored vs. ~+45% never selling). Ahead is not the same as right: we grade the freeze an F on process, name the reasons without accepting them as excuses, and install the line with no discretion left &mdash; one close below $848.95 and the runner is gone, with the hyperscaler capex prints (MSFT Jul 29) as the hard deadline for a re-underwritten hold case or an exit regardless. Plus the ASML either/or the market answered with a third branch, and the barbell &mdash; the basket and <a href="asml-initiation-2026-07-15.html">ASML</a> &mdash; that did its job while the single name tested ours.</p>
-        </article>
-        <article>
-          <time>2026-07-15</time>
-          <h2><a href="asml-initiation-2026-07-15.html">ASML &mdash; initiation. Paid by both sides of the memory war.</a> <span class="writing-tag">Coverage initiation</span></h2>
-          <p>We refused to chase it at the $1,989 record, named a $1,550&ndash;1,700 buy zone, and the July 1&ndash;2 memory crash delivered &mdash; we initiated at <strong>$1,752.87</strong>. On print morning the Q2 numbers graded the entry: net sales &euro;9.3B <em>above the top of guidance</em>, gross margin 54.0%, and the full-year guide <strong>raised a third time in six months, to &euro;43&ndash;45B</strong> &mdash; with a committed 30% EUV capacity expansion for 2027 behind it. The only monopoly in the AI supply chain, paid by Micron, SK hynix, Samsung, and TSMC alike &mdash; whichever side wins the memory war we&rsquo;ve been writing about. Initiating at <strong>ACCUMULATE, probability-weighted target ~$2,000</strong>. The honesty clause: the market front-ran it (+2.9% Tuesday, ~+1% reaction), so the thesis got confirmed and the entry didn&rsquo;t get cheaper. Add-zone $1,550&ndash;1,650; we don&rsquo;t chase.</p>
-        </article>
-        <article>
-          <time>2026-07-20</time>
-          <h2><a href="weekly-outlook-2026-07-20.html">The wires fired. The rules answered.</a> <span class="writing-tag">Week ahead</span></h2>
-          <p>Two of last week&rsquo;s four trip-wires fired, one confirmed, one never triggered &mdash; and every response was already in writing. Micron closed $853.20 Thursday, the first close through the $900 line we published June 23, and the rule fired &mdash; and we did not sell: the runner is still held, graded F on process in the July 21 stop note, now under a zero-discretion $848.95 line. Friday morning a bullish BofA note landed, the stock ripped ~12% intraday to ~$957 &mdash; and closed at $848.95, below the firing close. CPI came in cool (the branch we pre-answered), ASML beat and raised while the market paid the toolmaker and punished the spenders, and oil re-armed the inflation trade &mdash; WTI up ~15% on the week after Iran struck Kuwaiti utilities. Now the argument gets its verdict: Alphabet opens hyperscaler capex week Wednesday &mdash; the same evening as Tesla, IBM, and ServiceNow &mdash; with Microsoft, Meta, Amazon, and Apple behind it. Four new wires are set.</p>
-        </article>
-        <article>
-          <time>2026-07-14</time>
-          <h2><a href="mu-rollercoaster-2026-07-14.html">Micron round-tripped again. KeyBanc raised its target to $1,750. We didn&rsquo;t.</a> <span class="writing-tag">Single-name update</span></h2>
-          <p>Six days after the reckoning, Micron swung from $948.80 up to $991.64, then down to a $937.00 retest, and back to $983.12 &mdash; a ~$55 range, about +3.6% net, on no company news. The bookend told the story: the July 1 crash was a Korean leveraged-ETF <em>unwind</em>; today&rsquo;s rip was US 2&times; single-stock ETFs <em>launching</em> on SK hynix (+20%), dragging the complex up &mdash; flows, not fundamentals, exactly as we said. Into the noise KeyBanc raised its target to <strong>$1,750</strong> and the Street held near $1,500 (its high is $2,000), while our ~$1,100 sits at the low end of the range &mdash; level with Goldman&rsquo;s Neutral, below every Buy &mdash; on a tape with zero Sells. The argument isn&rsquo;t demand (Micron just committed $250B to it) &mdash; it&rsquo;s what Micron <em>keeps</em>. And it gets settled tomorrow, when ASML reports and the options price a &plusmn;8% move.</p>
-        </article>
-        <article>
-          <time>2026-07-13</time>
-          <h2><a href="weekly-outlook-2026-07-13.html">The market tested every line we drew. The rules held.</a> <span class="writing-tag">Week ahead</span></h2>
-          <p>All four trip-wires got tested in five sessions. The Warsh Fed's first minutes put a June hike argument on the record; the 10-year closed through 4.50% while the $119B auction slate stopped through everywhere (we cut duration and concede the long-end argument to Schwab); Micron pierced $900 <em>intraday</em> and never on a close &mdash; then SK hynix raised $26.5B in the largest-ever US foreign listing, seven times oversubscribed, and memory rallied through it. The Iran ceasefire broke and oil turned back up. The graded ledger, plus the loaded week: CPI, five megabanks, and Warsh's debut testimony in one Tuesday morning &mdash; then ASML (our newest position) Wednesday and TSMC Thursday.</p>
-        </article>
-        <article>
-          <time>2026-07-08</time>
-          <h2><a href="mu-reckoning-2026-07-08.html">Samsung posted the biggest profit in the world. Memory made new lows. That&rsquo;s the tell.</a> <span class="writing-tag">Single-name update</span></h2>
-          <p>Samsung guided to a world-record ~$58B quarterly operating profit &mdash; the largest of any company on the planet, past Nvidia &mdash; and memory fell anyway: Micron broke to a new low of $938 while Nvidia ripped through $204 to fresh highs. The peak-out doubt got resolved with numbers, and the market sold the numbers; the AI trade split cleanly into demand (up) and memory pricing (down). We cut the Micron target a third time, to <strong>~$1,100</strong> (from $1,500 in June, ~$1,300 on July 2) &mdash; a multiple cut with the full re-underwrite behind it: Micron capped its own DRAM upside while SK hynix didn&rsquo;t, it may be losing HBM4 share, and single-digit is the cycle-top signature, not the bargain. Why we bought the memory basket and ASML into the crash instead of more Micron, and why the $900 line doesn&rsquo;t move.</p>
-        </article>
-        <article>
-          <time>2026-07-06</time>
-          <h2><a href="mu-bounce-2026-07-06.html">The bounce came with names attached. Micron&rsquo;s was the smallest. Friday is why.</a> <span class="writing-tag">Single-name update</span></h2>
-          <p>Memory bounced Monday with names attached &mdash; UBS raising Q3 DRAM forecasts to +32% (from +17%), BofA&rsquo;s &ldquo;healthy reset&rdquo; at $1,550, Citi&rsquo;s 90-day upside watch, Samsung pushing +20% contract hikes into what consensus says will be the biggest quarterly profit in its history Tuesday. Micron still bounced least in the complex &mdash; because the ~$28B SK hynix Nasdaq debut, the largest ADR offering on record, lands Friday and takes the only-US-memory scarcity premium with it. The tell, the two tests, why the pricing data never confirmed the panic &mdash; and a new position: <strong>ASML</strong>, the toolmaker that gets paid by both sides of the memory-cycle question. Initiation note upcoming.</p>
-        </article>
-        <article>
-          <time>2026-07-06</time>
-          <h2><a href="weekly-outlook-2026-07-06.html">We said suppliers reprice last. The market sold them first.</a> <span class="writing-tag">Week ahead</span></h2>
-          <p>The June jobs print came in soft and strange &mdash; +57K against ~113&ndash;115K, with unemployment &ldquo;improving&rdquo; to 4.2% only because half a million people left the labor force &mdash; and the Dow closed at a record on the relief. But the week's real event was Meta moving to sell its excess AI compute: the suppliers we're long got routed while every megacap spender finished green, and we grade the inverted split call in full. The long end led yields higher all week (our &ldquo;calmer long end&rdquo; call is leaking too). Ahead: the first minutes of the Warsh Fed Wednesday, $119B of duration auctions, and SK hynix's ~$29B Nasdaq debut Friday &mdash; the test of whether the memory unwind was flows or the cycle.</p>
-        </article>
-        <article>
-          <time>2026-07-02</time>
-          <h2><a href="mu-unwind-2026-07-02.html">Micron round-tripped the best quarter in its history. What the unwind is &mdash; and isn&rsquo;t.</a> <span class="writing-tag">Single-name update</span></h2>
-          <p>Two days took Micron from $1,154 to $975.56 &mdash; below the close the night before the best quarter in memory history, with our $900 stop 7.7% away. It wasn&rsquo;t macro: the jobs print broke dovish and the S&amp;P closed flat while SanDisk fell 23% and the whole memory complex unwound. The catalysts: $9B of Korean 2&times; leveraged ETFs de-grossing, the SK Hynix Nasdaq listing on July 10 killing Micron&rsquo;s only-US-memory scarcity premium, and a second derivative that turned in the company&rsquo;s own guidance. We hold the runner behind the pre-committed stop, cut the base target from ~$1,500 to ~$1,300 (a multiple cut, narrated), and show why even the worst case from here locks a ~+53% call.</p>
-        </article>
-        <article>
-          <time>2026-06-29</time>
-          <h2><a href="weekly-outlook-2026-06-29.html">Micron locked in $100 billion. The AI spenders got a cost problem.</a> <span class="writing-tag">Week ahead</span></h2>
-          <p>Micron&rsquo;s June 24 blowout &mdash; record $41.5B, an 84.9% margin, a $50B next-quarter guide, and $100B of contracted, prepaid demand &mdash; ripped it to a new high even as megacap AI <em>spenders</em> sagged on cost worries and the S&amp;P drifted &minus;3% on the month. The AI trade is splitting into suppliers and spenders. Into a holiday-shortened week: quarter-end, the June jobs report Thursday (first labor read under a hawkish Warsh Fed), markets closed Friday. Plus a new idea &mdash; we start looking at quantum.</p>
-        </article>
-        <article>
-          <time>2026-06-28</time>
-          <h2><a href="mu-fq3-reaction-2026-06-28.html">Micron didn&rsquo;t fade. It ripped 16%. What we got wrong &mdash; and the contract that rewrote the thesis.</a> <span class="writing-tag">Single-name update</span></h2>
-          <p>We called the FQ3 print priced and likely to fade. It ripped ~16% to a record $1,213.56 instead &mdash; we were wrong on the direction, full stop. But the scale-out still won (a ~40% runner held through the rip), and the headlines missed the real story: $100B of strategic customer agreements whose contracted <em>floor</em> margins sit above Micron&rsquo;s all-time peaks. That structural de-risk re-rates the base target from $1,100 toward ~$1,500 &mdash; while the same ceilings cap the $2,000 the Street now prints. The honest reckoning, the collar, and what we hold from here.</p>
-        </article>
-        <article>
-          <time>2026-06-23</time>
-          <h2><a href="mu-fq3-eve-2026-06-23.html">Everyone agrees on Micron now. Tomorrow it has to print.</a> <span class="writing-tag">Single-name pitch</span></h2>
-          <p>MU set a record $1,211 high on Monday, then faded into tomorrow&rsquo;s FQ3 print (Wednesday, after close). The sell-side modal target is now $1,500 &mdash; only Goldman ($900) and Morgan Stanley ($1,050) sit below the stock. But the in-quarter beat is already priced; what re-rates the tape is the FQ4 guide against a $38&ndash;42B bar, the HBM4 ASP read, and any FY27 tone. PT stays $1,100. We&rsquo;ve booked ~50% of the position in a $950&ndash;$1,150 scale-out &mdash; the book is now 25% MU / 35% AI basket / 40% cash &mdash; and hold the rest behind a hard $900 stop. Reaction piece June 25.</p>
-        </article>
-        <article>
-          <time>2026-06-19</time>
-          <h2><a href="weekly-outlook-2026-06-19.html">We said the surprise skewed up. Warsh skewed it down.</a> <span class="writing-tag">Week recap</span></h2>
-          <p>We called Warsh&rsquo;s first FOMC to underwhelm the hawks. He out-hawked the tape: the dots flipped to a 2026 hike, the 2-year ripped 16bp (the kill-switch we named), and the S&amp;P fell to 7,420. The call is dead by our own rule &mdash; we own it. The honest twist: equities shrugged it off by Thursday. The grade, the lesson, and the refreshed book into Micron&rsquo;s June 24 print.</p>
-        </article>
-        <article>
-          <time>2026-06-16</time>
-          <h2><a href="spacex-initiation-2026-06-16.html">SpaceX &mdash; initiation. A world-class moat, priced for a flawless 2030.</a> <span class="writing-tag">Coverage initiation</span></h2>
-          <p>The largest IPO in history &mdash; and the best operating business in space. Starlink compounds at ~50% on 63% segment margins while the launch moat widens in real time. The problem is arithmetic: a conglomerate that lost $4.9B last year, priced at triple-digit multiples of sales, with 82% of the votes in one founder&rsquo;s hands and the biggest supply unlock landing before Christmas. Initiating at HOLD &mdash; fair value ~$115, target $135: sell the rich premium, buy under $120. Published July 5 with the tape already 26% off the draft-date high &mdash; the update note scores the call.</p>
-        </article>
-        <article>
-          <time>2026-06-16</time>
-          <h2><a href="weekly-outlook-2026-06-16.html">Peace trumped the print. Now Warsh inherits the rally.</a> <span class="writing-tag">Week ahead</span></h2>
-          <p>May CPI hit a three-year high at 4.2%, but a soft 0.2% core and a U.S.&ndash;Iran peace deal that collapsed oil to the low $80s sent the S&amp;P to ~7,550. Wednesday, Kevin Warsh chairs his first FOMC &mdash; a hawkish hold the market has already priced. The non-consensus call: the surprise skews dovish-of-fear and the relief rally holds 7,450 through Friday. Three trip-wires refreshed; Iran flips from war risk to peace-cracking risk.</p>
-        </article>
-        <article>
-          <time>2026-06-09</time>
-          <h2><a href="dell-initiation-2026-06-09.html">Dell &mdash; initiation. Start with what we got wrong.</a> <span class="writing-tag">Coverage initiation</span></h2>
-          <p>Initiating Dell at HOLD with a ~$340 probability-weighted reference. The stock re-rated from 9&times; to 24&times; forward earnings in five months &mdash; before the earnings did the work. Our first hypothesis didn&rsquo;t survive the audit: the +33% print day was an EPS event at a flat multiple, and the market is paying mid-single-digit-margin AI servers as if the durability were already proven. The corrected math says the Street&rsquo;s $484 average target is our bull case &mdash; the initiation walks the re-rate, the collar of kill-shots (memory as the #1 backlog constraint, the pull-forward air-pocket), and exactly what 20&times;+ requires.</p>
-        </article>
-        <article>
-          <time>2026-06-08</time>
-          <h2><a href="weekly-outlook-2026-06-08.html">Streak broke at nine. The thesis hits a tougher test.</a> <span class="writing-tag">Week recap</span></h2>
-          <p>The S&amp;P broke its nine-week streak with a &minus;2.6% week to 7,383.74. Broadcom&rsquo;s record $10.8B AI quarter with a <em>maintained</em> 2027 outlook triggered the chip selloff Thursday. Friday&rsquo;s 172K NFP (vs 85K expected) killed the cut hopes; 10Y above 4.54%. Dell tested the bottom of our consolidation zone. Today: Iran/Israel exchange + WTI gap above $94. Trip-wires refreshed, CapEx-raise call still open into June 25.</p>
-        </article>
-
-        <article>
-          <time>2026-05-31</time>
-          <h2><a href="mu-june-outlook-2026-05-31.html">June is when Micron has to do the work.</a> <span class="writing-tag">Single-name pitch</span></h2>
-          <p>MU peaked at $1,079.57 on June 3 ($20 short of our second trim), then crashed 20% after Broadcom&rsquo;s Q3 total revenue guide came in light of aggressive Street and a hot May NFP. The PHLX semi index posted its worst session since April 2025 on Friday. Monday June 8, Wells Fargo and Cantor Fitzgerald both raised PTs through the drawdown ($1,220 and $1,500). MU bouncing +8% intraday around $948. The first trim looks better in hindsight. The framework still holds. FQ3 prints June 24.</p>
-        </article>
-
-        <article>
-          <time>2026-05-31</time>
-          <h2><a href="weekly-outlook-2026-05-29.html">We were wrong on the math. The thesis broadened.</a> <span class="writing-tag">Week recap</span></h2>
-          <p>The S&amp;P closed Friday at 7,580 &mdash; ninth straight up week, the longest streak since 2023. Dell put up its best single day on record at +33%. PCE came in at 3.3% Y/Y, 50bp above our hawkish scenario. The 10Y rallied 25bp from its peak. Three of our non-consensus calls broke (the mean-reversion math, the cross-asset divergence, the AI-multiples canary). What we got wrong, where the thesis still holds, and the pivot into June.</p>
-        </article>
-
-        <article>
-          <time>2026-05-28 &middot; updated May 29</time>
-          <h2><a href="mu-after-ubs-2026-05-28.html">I bought Micron at $668. Here&rsquo;s why I&rsquo;m not buying at $881.</a> <span class="writing-tag">Single-name pitch</span></h2>
-          <p>UBS tripled its PT to a Street-high $1,625. Three weeks ago I was the lone voice at $1,100; now six of eleven sell-side firms are at or above me and two are at or above my $1,500 bull case (UBS, DA Davidson). MU closed Friday at $923.52 &mdash; my first trim level fired the day after publishing. PT stays at $1,100; ladder continues at $1,100 / $1,400 / $1,500 full exit. When the variant view becomes consensus, the discipline isn&rsquo;t celebration. It&rsquo;s trim.</p>
-        </article>
-
-        <article>
-          <time>2026-05-26</time>
-          <h2><a href="weekly-outlook-2026-05-26.html">Eight weeks up. Now PCE has to confirm.</a> <span class="writing-tag">Week ahead</span></h2>
-          <p>The supercycle passed all three tests last week. NVIDIA crushed it with a $91B Q2 guide ($4B above Street). Walmart U.S. comp +4.1%. The FOMC April minutes printed the most divided meeting since October 1992. S&amp;P booked an eighth straight up week. But NVDA closed -1.77% on the print, the 10Y closed at 4.56%, and the hawks at the Fed want hikes back on the table. Friday's April core PCE decides whether the dovish framing holds or the rotation finally begins.</p>
-        </article>
-
-        <article>
-          <time>2026-05-18</time>
-          <h2><a href="weekly-outlook-2026-05-18.html">Three tests the supercycle has to pass this week.</a> <span class="writing-tag">Week ahead</span></h2>
-          <p>Wednesday May 20 is binary: FOMC minutes at 2pm (read on the most-divided April vote since 1992) and NVIDIA earnings after close (the $87B Q2 guide threshold) land in the same 8-hour window. Plus the consumer test: Home Depot Tue, TJX Wed, Walmart Thu. What to watch, what each outcome means, and the calendar that runs the week.</p>
-        </article>
-
-        <article>
-          <time>2026-05-15</time>
-          <h2><a href="weekly-outlook-2026-05-15.html">The macro broke. The market printed higher.</a> <span class="writing-tag">Weekly outlook</span></h2>
-          <p>Hot CPI (3.8%), soft retail (+0.5%), record-low Michigan sentiment (48.2), 10Y at 4.49%, Fed cut odds collapsed to 3%. S&amp;P and Nasdaq still printed new ATHs. Cisco AI orders 4&times; YoY, NVDA H200 cleared for 10 Chinese firms, Micron +38% on the week (best since Dec 2008). What we&rsquo;re watching today and into next week&rsquo;s NVDA print.</p>
-        </article>
-
-        <article>
-          <time>2026-05-08</time>
-          <h2><a href="cooling-under-semis-2026-05-08.html">The market is cooling under the semis</a> <span class="writing-tag">Market recap</span></h2>
-          <p>Markets head into Friday&rsquo;s payrolls print with the economy clearly cooling &mdash; but equities have not broken. Semiconductors and AI infrastructure are doing the heavy lifting while the rest of the cycle decelerates. Six inline charts and the full sector positioning framework.</p>
-        </article>
-
-        <article>
-          <time>2026-05-07</time>
-          <h2><a href="mu-through-cycle.html">MU &mdash; Through-cycle long</a> <span class="writing-tag">Single-name pitch</span> <span class="writing-tag" style="background:rgba(11,31,58,0.10);color:#0b1f3a;">Report</span></h2>
-          <p class="muted small" style="margin:.25rem 0 .5rem;">Filed in <a href="reports.html#rep-mu-tc">Reports</a> &middot; HTML pitch with reverse-DCF + scenarios.</p>
-          <p>Mid-cycle Micron at $750&ndash;$850; the market is pricing peak earnings at trough multiples. Reverse-DCF, the HBM mix shift, and the three observable kill-shots that would make me wrong.</p>
-        </article>
-
-            <ol class="writing-index">
-      <li id="mu-note-2026-05-05">
-        <article>
-          <time datetime="2026-05-05">May 5, 2026</time>
-          <h2><a href="mu-note-2026-05-05.html">MU &mdash; A note on today's move</a> <span class="writing-tag">Single-name note</span></h2>
-          <p>
-            Micron printed +11% on Tuesday and crossed $700&nbsp;billion in
-            market cap for the first time. A four-corner catalyst stack
-            (DA Davidson Street-high $1,000 PT, hyperscaler memory-cost
-            commentary, sold-out HBM through 2026, round-number flow) and
-            a CEO Form 4 on the same day. Pulling the price target pending
-            the full pitch on Friday May 8.
-          </p>
-        </article>
-      </li>
-      <li id="weekly-outlook-2026-05-04">
-        <article>
-          <time datetime="2026-05-04">May 4, 2026</time>
-          <h2><a href="weekly-outlook-2026-05-04.html">Weekly Market Outlook &mdash; Week of May 4, 2026</a> <span class="writing-tag">Weekly outlook</span></h2>
-          <p>
-            Soft-landing narrative meets sticky inflation, a concentrated
-            AI rally, and an increasingly structural geopolitical tape.
-            What to watch into payrolls, ISM Services, and JOLTS &mdash;
-            plus four sector ideas and four macro options structures
-            for the week.
-          </p>
-        </article>
-      </li>
-      <li id="fed-april-2026">
-        <article>
-          <time datetime="2026-04-30">April 30, 2026</time>
-          <h2><a href="fed-april-2026.html">The Fed After Powell</a> <span class="writing-tag" style="background:var(--accent-2);">Macro notes</span></h2>
-          <p>
-            Notes on the April 29 FOMC meeting. Markets are watching the
-            rate path; the more differentiated story is the institution.
-            Powell stays on the Board, four dissents, Warsh advances
-            toward confirmation, and the under-priced risk shows up in
-            term premium rather than the front-end policy path.
-          </p>
-        </article>
-      </li>
-    </ol>
-
-    <h2 class="writing-section-head">Forthcoming</h2>
-    <ol class="writing-index">
-      <li id="energy-tier-list">
-        <article>
-          <time>Timing to be confirmed</time>
-          <h2>Integrated oil &mdash; capital-allocation tier list <span class="writing-tag">Forthcoming</span></h2>
-          <p>
-            XOM, CVX, COP, SHEL, BP ranked on through-cycle capital
-            allocation discipline. Buybacks vs. project IRRs, who's
-            being rewarded for promises and who's actually earned it.
-          </p>
-        </article>
-      </li>
-      <li id="reading-10k">
-        <article>
-          <time>In progress</time>
-          <h2>Notes on reading a 10-K like you mean it <span class="writing-tag">Forthcoming</span></h2>
-          <p>
-            A methodology piece. The footnotes nobody reads, the line
-            items that actually move the story, and the checklist I've
-            built up working on cyclicals.
-          </p>
-        </article>
-      </li>
-    </ol>
-
-    <p style="margin-top:2rem;">
-      For the methodology that produces these &mdash; the workbook,
-      the pipeline, the audits &mdash; see the
-      <a href="dcf-template.html">DCF template</a>. For coverage at a
-      glance, see <a href="projects.html">/projects</a>.
-    </p>
-
-    <section class="subscribe">
-      <h2>Subscribe</h2>
-      <p>Get new posts in your inbox when they go out. No spam, unsubscribe any time.</p>
-      <iframe
-        src="https://bpleon.substack.com/embed"
-        title="Subscribe to Brandon Leon on Substack"
-        width="100%"
-        height="150"
-        style="border:1px solid var(--rule); border-radius:8px; background:var(--bg);"
-        frameborder="0"
-        scrolling="no"></iframe>
-      <p class="subscribe-fallback">
-        Or subscribe directly: <a href="https://bpleon.substack.com" rel="noopener">bpleon.substack.com</a>.
-      </p>
-    </section>
+    <p class="muted small" data-bp-generated></p>
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
-      <ul class="social">
-        <li><a href="now.html">Now</a></li>
-        <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
-        <li><a href="https://www.linkedin.com/in/brandonpleon/" rel="me noopener">LinkedIn</a></li>
-      </ul>
-    </div>
-  </footer>
+  <footer class="site-footer"><div class="footer-inner">
+    <p>&copy; 2026 Brandon Leon &middot; <a href="now.html">Now</a> &middot; <a href="reading-list.html">Reading list</a> &middot; <a href="research.html">Data sources</a> &middot; <a href="track-record.html">Track record</a> &middot; <a href="contact.html">Contact</a> &middot; <a href="disclaimer.html">Disclaimer</a> &middot; <a href="feed.xml">RSS</a></p>
+    <p class="muted small">Independent research, not investment advice. Positions are disclosed on every note.</p>
+  </div></footer>
 
-  <script src="script.js?v=50" defer></script>
+  <script src="script.js?v=51" defer></script>
+  <script src="data/content.js" data-root="."></script>
 </body>
 </html>

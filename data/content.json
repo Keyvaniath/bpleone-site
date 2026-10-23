@@ -1,0 +1,1496 @@
+{
+ "_comment": "Single source of truth for bpleon.com content. Edit this file; the pages render from it. See README-CONTENT.md.",
+ "version": 1,
+ "generated": "2026-10-23",
+ "items": [
+  {
+   "slug": "reading-a-10k",
+   "url": null,
+   "title": "Notes on reading a 10-K like you mean it",
+   "date": null,
+   "type": "Essay",
+   "tickers": [],
+   "sectors": [
+    "Other"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "A working method for the filing, not the press release.",
+   "readMin": null,
+   "status": "upcoming"
+  },
+  {
+   "slug": "oil-capital-allocation-tier-list",
+   "url": null,
+   "title": "Integrated oil: capital-allocation tier list",
+   "date": null,
+   "type": "Sector note",
+   "tickers": [
+    "XOM",
+    "CVX",
+    "COP"
+   ],
+   "sectors": [
+    "Energy"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Ranking the majors on where the next dollar of cash flow goes.",
+   "readMin": null,
+   "status": "upcoming"
+  },
+  {
+   "slug": "be-q3-update-2026-10-23",
+   "url": "be-q3-update-2026-10-23.html",
+   "title": "Bloom Is Growing Faster Than It Can Bill",
+   "date": "2026-10-23",
+   "type": "Coverage update",
+   "tickers": [
+    "BE"
+   ],
+   "sectors": [
+    "Semis/AI",
+    "Energy"
+   ],
+   "rating": "Hold",
+   "target": 235,
+   "summary": "Bloom Energy\\'s third quarter more than doubled revenue and raised guidance a third time, while using $27 million of operating cash on a $430 million contract-asset build. Hold maintained, $235 target under review.",
+   "readMin": 16,
+   "status": "published",
+   "note": "target under review; revised figure due within two weeks"
+  },
+  {
+   "slug": "asml-q3-update-2026-10-22",
+   "url": "asml-q3-update-2026-10-22.html",
+   "title": "The Shortage Runs Through 2028",
+   "date": "2026-10-22",
+   "type": "Coverage update",
+   "tickers": [
+    "ASML"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Accumulate",
+   "target": 2075,
+   "summary": "ASML cleared the top of its margin guidance, raised the year a third time and said it cannot build enough machines for 2027 or 2028. Estimates rose 9%. The stock fell 14% since our July initiation and now sits on the floor of the add range we published. Accumulate reaffirmed; target moves to about $2,075 from $2,000, and we say why.",
+   "readMin": 13,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-10-20",
+   "url": "weekly-outlook-2026-10-20.html",
+   "title": "Insurance on a Company You Don’t Own",
+   "date": "2026-10-20",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "In the same week the Dow rose 0.7% and the Nasdaq had its worst week since June. That is not a market selloff, it is a dispersion event. And the thing that broke was not demand for AI hardware but the credit financing it: CoreWeave's default swaps reached distressed levels while every capex guide stayed intact. What settles it lands in the next three weeks.",
+   "readMin": 9,
+   "status": "published"
+  },
+  {
+   "slug": "mu-fq4-update-2026-10-19",
+   "url": "mu-fq4-update-2026-10-19.html",
+   "title": "Micron’s Best Quarter Ever Wasn’t Enough",
+   "date": "2026-10-19",
+   "type": "Coverage update",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Hold",
+   "target": 1090,
+   "summary": "Micron's fiscal Q1 gross-margin guide came in at 86.25%, above the line we published before the print, so our thesis is intact. The stock is down about 30% from its June high regardless. We initiate at hold with a $1,090 target, about 24% above Friday’s close, and we explain why this note is seventeen days late.",
+   "readMin": 13,
+   "status": "published"
+  },
+  {
+   "slug": "vst-initiation-2026-10-03",
+   "url": "vst-initiation-2026-10-03.html",
+   "title": "Vistra: The Street Has the Earnings. It Doesn’t Have the Rate.",
+   "date": "2026-10-03",
+   "type": "Initiation",
+   "tickers": [
+    "VST"
+   ],
+   "sectors": [
+    "Energy"
+   ],
+   "rating": "Hold",
+   "target": 140,
+   "summary": "Initiating coverage of Vistra at HOLD with a $140 price target. The business is hedged through 2027 and the contracted nuclear is real; we agree with consensus on 2026-27 earnings. The disagreement is the discount rate: the Street's $218 average target needs a 6.5% WACC with the 10-year at 5.26%.",
+   "readMin": 15,
+   "status": "published"
+  },
+  {
+   "slug": "mu-fq4-preview-2026-09-28",
+   "url": "mu-fq4-preview-2026-09-28.html",
+   "title": "Micron reports Wednesday. The margin guide decides our view.",
+   "date": "2026-09-28",
+   "type": "Coverage update",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Not rated",
+   "target": null,
+   "summary": "Micron reports fiscal fourth-quarter results on September 30. We resume coverage with the tests set before the print; the rating and target follow the results. The next quarter's gross-margin guide decides our view.",
+   "readMin": 7,
+   "status": "published",
+   "note": "coverage resumed; rating set in the Oct 19 update"
+  },
+  {
+   "slug": "be-initiation-2026-09-09",
+   "url": "be-initiation-2026-09-09.html",
+   "title": "Bloom Energy: The Index Doesn’t Read the 10‑Q",
+   "date": "2026-09-09",
+   "type": "Initiation",
+   "tickers": [
+    "BE"
+   ],
+   "sectors": [
+    "Semis/AI",
+    "Energy"
+   ],
+   "rating": "Hold",
+   "target": 235,
+   "summary": "Initiating coverage of Bloom Energy at HOLD with a $235 price target, days after S&P announced BE joins the 500. Valued three ways: comps against the AI-power complex, a ten-year DCF, and the scenario tree behind the target, plus a decomposition of the 34% move. The revenue doubling is real. So is the 40-to-1 gap between the $20B commercial backlog and the $494M of audited obligations.",
+   "readMin": 29,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-09-08",
+   "url": "weekly-outlook-2026-09-08.html",
+   "title": "Sixty Percent, the Other Way",
+   "date": "2026-09-08",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Three weeks after markets priced a September Fed hold as the base case, they now price a rate hike. Stronger payrolls, Chair Warsh's inflation framework, and oil near $97 have shifted the burden of proof. Nvidia graded against the thresholds we published before earnings, Dell scored against our own stale number, and four new tests into CPI Friday and the Fed decision.",
+   "readMin": 21,
+   "status": "published"
+  },
+  {
+   "slug": "nvda-eve-2026-08-26",
+   "url": "nvda-eve-2026-08-26.html",
+   "title": "Nvidia Earnings: The Next Guide Sets the Grade",
+   "date": "2026-08-26",
+   "type": "Coverage update",
+   "tickers": [
+    "NVDA"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Hold",
+   "target": 250,
+   "summary": "Nvidia reports tonight. Before the release, we're publishing our test: the next-quarter revenue guide at or above $100 billion keeps the acceleration story; below $95 billion arms a formal review. On the record, graded either way. Plus the $105B OpenAI lease guarantee, the $1T Blackwell-Rubin claim, our first Nvidia disclosure, and Warsh's Jackson Hole speech 36 hours later.",
+   "readMin": 10,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-08-17",
+   "url": "weekly-outlook-2026-08-17.html",
+   "title": "Soft Data, Hard Prices",
+   "date": "2026-08-17",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Jobs, inflation, retail spending, and sentiment all weakened. Long yields, oil, and near-term inflation expectations did not. Five wires graded, an open gate with no order in it, Berkshire's new Alphabet stake vs. our $318 alert, and the week the retailers cross-examine the retail print. Every number sourced.",
+   "readMin": 14,
+   "status": "published"
+  },
+  {
+   "slug": "next-dollar-02-2026-08-14",
+   "url": "next-dollar-02-2026-08-14.html",
+   "title": "The gates opened. Nobody walked through.",
+   "date": "2026-08-14",
+   "type": "Essay",
+   "tickers": [
+    "GOOGL"
+   ],
+   "sectors": [
+    "Other"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Wednesday's CPI fired the cool branch our weekly pre-wrote: core at 2.5%, the slowest since March 2021. Thursday the 30-year auction cleared at 5.216% — the costliest since 2001 — and Friday retail sales fell the most in a year. The gates we published re-armed, the buy was authorized, and we didn't take it. The honest accounting of an unexercised gate, the duration stance retiring on schedule, and",
+   "readMin": 9,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-08-10",
+   "url": "weekly-outlook-2026-08-10.html",
+   "title": "The labor market blinked first.",
+   "date": "2026-08-09",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "The Fed spent the summer staring down inflation — and the labor market blinked instead: −23,000 jobs, the first negative print of the cycle. September hike odds fell to ~40%, our power gates split, and we kept every dollar of the cash for Wednesday's CPI, with a $25B 30-year auction the day after. The week told as a story, with five charts, every number sourced.",
+   "readMin": 11,
+   "status": "published"
+  },
+  {
+   "slug": "china-memory-2026-08-04",
+   "url": "china-memory-2026-08-04.html",
+   "title": "The most valuable company in China makes the cheapest chips in the world.",
+   "date": "2026-08-04",
+   "type": "Sector note",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "CXMT went public on a Monday and displaced ICBC as China's most valuable listed company by Monday night. A trillion dollars came off global chip stocks in three sessions, and Congress demanded briefings. We hold a memory position, so we owed the question a real answer: does China's arrival break the shortage? The underwrite — what CXMT actually makes, what it can't make yet, the tell in its own pr",
+   "readMin": 17,
+   "status": "published"
+  },
+  {
+   "slug": "next-dollar-01-2026-07-31",
+   "url": "next-dollar-01-2026-07-31.html",
+   "title": "Where the next dollar goes. And why it hasn't gone yet.",
+   "date": "2026-07-31",
+   "type": "Essay",
+   "tickers": [
+    "VST",
+    "ALAB",
+    "CRDO"
+   ],
+   "sectors": [
+    "Other"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "The Micron exit returned the largest cash pile this book has held since May — into a 5.2% thirty-year, a Fed with three dissents for a hike, and an equity market priced with almost no cushion over Treasuries. This opens the deployment series: the mandate, the hurdle, the correlation budget, the self-funded-capex axis, the five lanes, and the dated gates that decide when cash actually moves.",
+   "readMin": 22,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-08-03",
+   "url": "weekly-outlook-2026-08-03.html",
+   "title": "The Fed held. The line didn't.",
+   "date": "2026-07-30",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "The Fed held 9-3 with three dissents for a hike and the 30-year closed above 5.2% for the first time since 2007. Micron broke $900 and the pre-placed stop sold the runner before our line ever fired — the twelve-week call closes ~+53%, all realized. Microsoft's capex got paid; Alphabet's and Meta's got sold. The wires reset.",
+   "readMin": 28,
+   "status": "published"
+  },
+  {
+   "slug": "mu-close-2026-07-30",
+   "url": "mu-close-2026-07-30.html",
+   "title": "Micron broke $900 again. This time the order was already there.",
+   "date": "2026-07-30",
+   "type": "Coverage update",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Coverage closed",
+   "target": null,
+   "summary": "China's CXMT debuted at +466% and became the mainland's most valuable company; the chip complex shed over $1 trillion in three sessions; Micron fell from $1,000 to $705. Our runner never saw the bottom: the broker stop placed after the July 21 confession sold all 15 shares at ~$900 into the breakdown — no human in the loop. The twelve-week Micron call closes at ~+53% blended, the exact worst-case ",
+   "readMin": 17,
+   "status": "published"
+  },
+  {
+   "slug": "mu-stop-2026-07-21",
+   "url": "mu-stop-2026-07-21.html",
+   "title": "Micron closed below $900. Our rule said sell. We didn’t.",
+   "date": "2026-07-21",
+   "type": "Coverage update",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Hold",
+   "target": null,
+   "summary": "ASML beat and raised. TSMC printed a record and hiked capex. Memory broke on both — and on July 16 Micron closed at $853.20, the first close below the $900 stop we published in June. The rule said out in full. We didn't sell — and today the stock ripped 12.2% to $970.82, putting the violation ~7 points ahead of the discipline. Ahead is not the same as right. We grade our own process failure in pub",
+   "readMin": 17,
+   "status": "published",
+   "note": "stop level breached"
+  },
+  {
+   "slug": "weekly-outlook-2026-07-20",
+   "url": "weekly-outlook-2026-07-20.html",
+   "title": "The wires fired. The rules answered. We didn't.",
+   "date": "2026-07-20",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Semis/AI",
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Two trip-wires fired, one confirmed, one never triggered — and the $900 Micron rule fired without us following it: the runner is still held, graded F on process. CPI cooled while Hormuz stayed shut, the banks printed records, semis entered a bear market, and this week Alphabet opens the capex gate that referees everything.",
+   "readMin": 27,
+   "status": "published"
+  },
+  {
+   "slug": "asml-initiation-2026-07-15",
+   "url": "asml-initiation-2026-07-15.html",
+   "title": "ASML — initiation. Paid by both sides of the memory war.",
+   "date": "2026-07-15",
+   "type": "Initiation",
+   "tickers": [
+    "ASML"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Accumulate",
+   "target": 2000,
+   "summary": "Initiating ASML (Nasdaq: ASML) at ACCUMULATE, probability-weighted target ~$2,000. We waited for the air-pocket, bought the July 2 crash at $1,752.87, and this morning the Q2 print proved the entry: net sales of 9.3 billion euros above the top of guidance, 54% gross margin, and the third full-year guidance raise in six months — to 43-45 billion euros. The only monopoly in the AI supply chain, paid",
+   "readMin": 14,
+   "status": "published"
+  },
+  {
+   "slug": "mu-rollercoaster-2026-07-14",
+   "url": "mu-rollercoaster-2026-07-14.html",
+   "title": "Micron round-tripped again. KeyBanc raised its target to $1,750. We didn’t.",
+   "date": "2026-07-14",
+   "type": "Coverage update",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Hold",
+   "target": null,
+   "summary": "In four sessions Micron swung through a $55 range and closed less than 4% higher — pushed by fund flows, not news, exactly as we said last week. Into the noise KeyBanc raised its target to $1,750 and the Street held near $1,500, while our call sits at ~$1,100 — the low end of the range, level with Goldman's Neutral and below every Buy on a tape with zero Sells. The argument isn't demand; it's what",
+   "readMin": 15,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-07-13",
+   "url": "weekly-outlook-2026-07-13.html",
+   "title": "The market tested every line we drew. The rules held.",
+   "date": "2026-07-13",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Semis/AI",
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Every trip-wire we set got tested in five sessions: a few Fed officials argued for a June hike, the 10-year closed through 4.50%, Micron's $900 line was pierced intraday but never on a close, and SK hynix raised $26.5B while memory rallied. The graded ledger, plus CPI-and-banks Tuesday with Warsh's debut testimony.",
+   "readMin": 30,
+   "status": "published"
+  },
+  {
+   "slug": "mu-reckoning-2026-07-08",
+   "url": "mu-reckoning-2026-07-08.html",
+   "title": "Samsung posted the biggest profit in the world. Memory made new lows. That’s the tell.",
+   "date": "2026-07-08",
+   "type": "Coverage update",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Hold",
+   "target": null,
+   "summary": "Samsung printed a world-record $58.4B quarterly profit — and memory stocks fell anyway, Micron to a new low, while Nvidia and Broadcom rose. The peak-out doubt got resolved with numbers, and the market sold it. We walk the target down a third time to ~$1,100, explain the re-underwrite behind it, and show why we added the memory basket and ASML into the crash instead of more Micron.",
+   "readMin": 15,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-07-06",
+   "url": "weekly-outlook-2026-07-06.html",
+   "title": "We said suppliers reprice last. The market sold them first.",
+   "date": "2026-07-06",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Semis/AI",
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Jobs came in soft and strange, the Dow set a record, and Meta's move to sell access to AI compute it isn't fully using cratered the suppliers we're long. We grade our split thesis honestly, walk the memory unwind, and set up the first Warsh-Fed minutes, $119B of duration auctions, and SK hynix's Nasdaq debut.",
+   "readMin": 27,
+   "status": "published"
+  },
+  {
+   "slug": "mu-bounce-2026-07-06",
+   "url": "mu-bounce-2026-07-06.html",
+   "title": "The bounce came with names attached. Micron’s was the smallest. Friday is why.",
+   "date": "2026-07-06",
+   "type": "Coverage update",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Hold",
+   "target": null,
+   "summary": "Memory bounced Monday with real catalysts behind it — UBS raising Q3 DRAM forecasts to +32%, BofA calling a healthy reset at $1,550, Citi's upside watch, Samsung pushing +20% contract hikes into a record print due Tuesday. Micron still bounced least in the complex, because the ~$28B SK hynix Nasdaq debut lands Friday. The tell, the test, and why we put fresh capital in ASML — the toolmaker that ge",
+   "readMin": 10,
+   "status": "published"
+  },
+  {
+   "slug": "mu-unwind-2026-07-02",
+   "url": "mu-unwind-2026-07-02.html",
+   "title": "Micron round-tripped the best quarter in its history. What the unwind is — and isn’t.",
+   "date": "2026-07-02",
+   "type": "Coverage update",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Hold",
+   "target": null,
+   "summary": "Two days took Micron from $1,154 to $975 — below where it closed before the best quarter in memory history. The unwind was memory-shaped, not market-shaped: Korean leverage, the SK Hynix Nasdaq listing, and a second derivative that turned before the tape did. What we hold, what we re-rate, and the $900 line that does the risk management.",
+   "readMin": 15,
+   "status": "published",
+   "note": "hold the residual"
+  },
+  {
+   "slug": "weekly-outlook-2026-06-29",
+   "url": "weekly-outlook-2026-06-29.html",
+   "title": "Micron locked in $100 billion. The AI spenders got a cost problem.",
+   "date": "2026-06-29",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Semis/AI",
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Micron's blowout came with $100B of contracted, prepaid demand that lowers the cycle risk — even as megacap tech sags on AI-cost worries. The AI-infrastructure trade is splitting into suppliers and spenders. Into a holiday-shortened week with the first jobs print under a hawkish Warsh Fed. Plus: we begin looking at quantum.",
+   "readMin": 21,
+   "status": "published"
+  },
+  {
+   "slug": "mu-fq3-reaction-2026-06-28",
+   "url": "mu-fq3-reaction-2026-06-28.html",
+   "title": "Micron didn’t fade. It ripped 16%. What we got wrong — and the contract that rewrote the thesis.",
+   "date": "2026-06-28",
+   "type": "Coverage update",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Buy",
+   "target": 1500,
+   "summary": "We called the FQ3 print priced and likely to fade. Micron ripped 16% to a record instead. The honest reckoning — what we got wrong, why the discipline still won, and the strategic customer agreements that actually rewrote the thesis and re-rate the PT from $1,100 toward $1,500.",
+   "readMin": 12,
+   "status": "published",
+   "note": "base PT ~$1,500 post-FQ3"
+  },
+  {
+   "slug": "mu-fq3-eve-2026-06-23",
+   "url": "mu-fq3-eve-2026-06-23.html",
+   "title": "Everyone agrees on Micron now. Tomorrow it has to print.",
+   "date": "2026-06-23",
+   "type": "Coverage update",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Buy",
+   "target": 1100,
+   "summary": "MU goes into its FQ3 print at a record high with the Street's modal target now $1,500. The contrarian trade is over. The in-quarter beat is priced — what decides the print is the FQ4 guide against a $38–42B bar, HBM4 ASPs, and FY27 tone. PT stays $1,100; the $1,100 trim trigger hit June 18.",
+   "readMin": 22,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-06-19",
+   "url": "weekly-outlook-2026-06-19.html",
+   "title": "We said the surprise skewed up. Warsh skewed it down.",
+   "date": "2026-06-19",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "We called Warsh's debut to underwhelm the hawks. He out-hawked the tape. The dots flipped to a 2026 hike, the 2-year ripped 16bp, and our call died on the exact gauge we named. The honest scorecard, the lesson, and the refreshed book into Micron's June 24 print.",
+   "readMin": 14,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-06-16",
+   "url": "weekly-outlook-2026-06-16.html",
+   "title": "Peace trumped the print. Now Warsh inherits the rally.",
+   "date": "2026-06-16",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Energy",
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "May CPI hit a three-year high at 4.2%, but the US-Iran peace deal collapsed oil to the low $80s and the S&P rallied to ~7,550. Wednesday, Kevin Warsh delivers his first FOMC decision: a hawkish hold into a tape already braced for it. The surprise risk skews the other way.",
+   "readMin": 22,
+   "status": "published"
+  },
+  {
+   "slug": "spacex-initiation-2026-06-16",
+   "url": "spacex-initiation-2026-06-16.html",
+   "title": "SpaceX — initiation. A world-class moat, priced for a flawless 2030.",
+   "date": "2026-06-16",
+   "type": "Initiation",
+   "tickers": [
+    "SPCX"
+   ],
+   "sectors": [
+    "Other"
+   ],
+   "rating": "Hold",
+   "target": null,
+   "summary": "Initiating SpaceX (Nasdaq: SPCX) at HOLD, fair value ~$115, 12-month target $135. Drafted at a ~$214 tape; published with the tape at ~$159 after a 26% give-back that changed nothing in the file. The largest IPO in history still trades at ~111x sales on a business losing $4.9B a year. Starlink earns it, xAI burns it. How to harvest the gamma-squeeze setup instead of chasing it.",
+   "readMin": 13,
+   "status": "published"
+  },
+  {
+   "slug": "dell-initiation-2026-06-09",
+   "url": "dell-initiation-2026-06-09.html",
+   "title": "Dell — initiation. Start with what we got wrong.",
+   "date": "2026-06-09",
+   "type": "Initiation",
+   "tickers": [
+    "DELL"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Hold",
+   "target": 340,
+   "summary": "Initiating Dell at HOLD with a ~$340 probability-weighted reference. The stock re-rated from 9× to 24× forward earnings in five months — before the earnings did the work. Our first hypothesis didn't survive the audit. The corrected math says the Street's $484 average target is our bull case.",
+   "readMin": 25,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-06-08",
+   "url": "weekly-outlook-2026-06-08.html",
+   "title": "Streak broke at nine. The thesis hits a tougher test.",
+   "date": "2026-06-08",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Semis/AI",
+    "Energy",
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "The nine-week streak finally broke. A disappointing Broadcom AI outlook triggered a $1.3T chip selloff on Thursday; a 172K NFP print on Friday killed the last 2026 rate cut hopes. The base case framework held within the bounds we set. Today the Iran-Israel exchange reignites the energy leg of the inflation story.",
+   "readMin": 19,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-05-29",
+   "url": "weekly-outlook-2026-05-29.html",
+   "title": "We were wrong on the math. The thesis broadened.",
+   "date": "2026-05-31",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Semis/AI",
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "We called for an eight-week mean reversion. The market printed a ninth straight up week. We called for AI multiples to compress on great prints. Dell put up the best single day of its life. PCE came in hotter than every scenario we modeled, and the 10Y still rallied 25 basis points. Here is what we got wrong, where the thesis broadened, and the pivot into June.",
+   "readMin": 21,
+   "status": "published"
+  },
+  {
+   "slug": "mu-june-outlook-2026-05-31",
+   "url": "mu-june-outlook-2026-05-31.html",
+   "title": "June is when Micron has to do the work.",
+   "date": "2026-05-31",
+   "type": "Coverage update",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Buy",
+   "target": 1100,
+   "summary": "MU ran 38% in 17 trading days. June stops being about narrative and starts being about numbers. FQ3 prints June 24 — $33.5B revenue, 81% gross margin, $19.15 EPS. The cleanest test of the thesis we'll get.",
+   "readMin": 17,
+   "status": "published"
+  },
+  {
+   "slug": "mu-after-ubs-2026-05-28",
+   "url": "mu-after-ubs-2026-05-28.html",
+   "title": "I bought Micron at $668. Here’s why I’m not buying at $881.",
+   "date": "2026-05-28",
+   "type": "Initiation",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Buy",
+   "target": 1100,
+   "summary": "Three weeks ago Goldman was at $400 NEUTRAL on Micron and the street median sat around $549. On Tuesday UBS tripled their price target to $1,625 and the stock crossed $1 trillion. The variant view became consensus. Now comes the harder discipline.",
+   "readMin": 14,
+   "status": "published",
+   "note": "buy with trim discipline"
+  },
+  {
+   "slug": "weekly-outlook-2026-05-26",
+   "url": "weekly-outlook-2026-05-26.html",
+   "title": "Eight weeks up. Now PCE has to confirm.",
+   "date": "2026-05-26",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Semis/AI",
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "The supercycle passed all three tests last week. NVIDIA crushed it with a $91B Q2 guide, Walmart's U.S. comp confirmed the consumer at +4.1%, the FOMC April minutes printed the most divided meeting since 1992. Eight straight up weeks for the S&P. Now Friday's April PCE has to confirm or the hawks have a case.",
+   "readMin": 17,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-05-18",
+   "url": "weekly-outlook-2026-05-18.html",
+   "title": "Three tests the supercycle has to pass this week.",
+   "date": "2026-05-18",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Semis/AI",
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Three tests for the supercycle this week: the consumer (Home Depot Tue, Walmart Thu, TJX Wed), the Fed (FOMC minutes Wed 2pm — the most divided meeting since 1992), and NVIDIA (Wed after close — the print of the quarter). Wednesday is binary.",
+   "readMin": 13,
+   "status": "published"
+  },
+  {
+   "slug": "weekly-outlook-2026-05-15",
+   "url": "weekly-outlook-2026-05-15.html",
+   "title": "The macro broke. The market printed higher.",
+   "date": "2026-05-15",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Semis/AI",
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "The macro printed badly and the S&P printed higher. Weekly recap of CPI, retail sales, Michigan sentiment, the NVDA H200 China approval, Cisco's AI orders, Micron's 38% week, plus what we are watching into next week's docket.",
+   "readMin": 11,
+   "status": "published"
+  },
+  {
+   "slug": "cooling-under-semis-2026-05-08",
+   "url": "cooling-under-semis-2026-05-08.html",
+   "title": "The market is cooling under the semis.",
+   "date": "2026-05-08",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Semis/AI",
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "The market is not pumping because everything is fine. It is holding up because semiconductors, AI infrastructure, and quality earnings are offsetting a cooling economy. A market recap into Friday's payrolls report.",
+   "readMin": 14,
+   "status": "published"
+  },
+  {
+   "slug": "wdc-take-private",
+   "url": "wdc-take-private.html",
+   "title": "WDC — Post-spin take-private case.",
+   "date": "2026-05-07",
+   "type": "Essay",
+   "tickers": [
+    "WDC"
+   ],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Reverse-LBO case study on Western Digital after the SanDisk spin. NAND-only pure play, 5x leverage, sponsor IRR math, what the cycle has to do for the deal to work.",
+   "readMin": 7,
+   "status": "published"
+  },
+  {
+   "slug": "sponsor-returns-demystified",
+   "url": "posts/sponsor-returns-demystified.html",
+   "title": "Sponsor returns demystified",
+   "date": "2026-05-07",
+   "type": "Essay",
+   "tickers": [],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "",
+   "readMin": 5,
+   "status": "published"
+  },
+  {
+   "slug": "reverse-lbo-in-five-minutes",
+   "url": "posts/reverse-lbo-in-five-minutes.html",
+   "title": "Reverse-LBO in five minutes",
+   "date": "2026-05-07",
+   "type": "Essay",
+   "tickers": [],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "",
+   "readMin": 5,
+   "status": "published"
+  },
+  {
+   "slug": "mu-through-cycle",
+   "url": "mu-through-cycle.html",
+   "title": "MU — Through-cycle long.",
+   "date": "2026-05-07",
+   "type": "Initiation",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Buy",
+   "target": 895,
+   "summary": "Through-cycle long thesis on Micron Technology against a cyclical comparable. HBM contribution, mid-cycle margin normalisation, reverse-DCF, and peer comp math.",
+   "readMin": 28,
+   "status": "published",
+   "note": "initiation; base PT raised to $1,100 in v1.1 (May 8)"
+  },
+  {
+   "slug": "mu-reverse-lbo",
+   "url": "mu-reverse-lbo.html",
+   "title": "MU — Reverse-LBO worked example.",
+   "date": "2026-05-07",
+   "type": "Essay",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Worked reverse-LBO on Micron Technology — through-cycle scorecard vs AI-cycle scorecard. Max entry multiples, implied take-private prices, and what the spread between the two reads says about the cycle.",
+   "readMin": 5,
+   "status": "published"
+  },
+  {
+   "slug": "mu-note-2026-05-05",
+   "url": "mu-note-2026-05-05.html",
+   "title": "MU — A note on today's move.",
+   "date": "2026-05-05",
+   "type": "Coverage update",
+   "tickers": [
+    "MU"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Not rated",
+   "target": null,
+   "summary": "Micron printed +11% on May 5, 2026, pushing past a $700B market cap on a four-corner catalyst stack: a Street-high $1,000 PT from DA Davidson, hyperscaler memory-cost commentary, sold-out HBM capacity, and momentum chasing. Why I'm pulling the price target pending the full through-cycle pitch.",
+   "readMin": 7,
+   "status": "published",
+   "note": "placeholder PT pulled pending the model"
+  },
+  {
+   "slug": "weekly-outlook-2026-05-04",
+   "url": "weekly-outlook-2026-05-04.html",
+   "title": "Soft landing on a tighter wire.",
+   "date": "2026-05-04",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Weekly market outlook for the week of May 4, 2026 — payrolls, ISM Services, JOLTS, the geopolitical backdrop as a structural macro input, plus four sector calls and four macro options structures.",
+   "readMin": 13,
+   "status": "published"
+  },
+  {
+   "slug": "fed-april-2026",
+   "url": "fed-april-2026.html",
+   "title": "The Fed After Powell.",
+   "date": "2026-04-30",
+   "type": "Sector note",
+   "tickers": [],
+   "sectors": [
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Notes on the April 29, 2026 FOMC meeting. The market is watching the rate path; it should be watching the institution. Powell stays on the Board, four dissents, Warsh advances toward confirmation.",
+   "readMin": 9,
+   "status": "published"
+  },
+  {
+   "slug": "wacc",
+   "url": "wacc.html",
+   "title": "WACC",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Valuation"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "WACC Calculator — build a weighted average cost of capital from cost of equity (CAPM), after-tax cost of debt, and capital structure, with live sensitivity to every input.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "through-cycle-pt",
+   "url": "through-cycle-pt.html",
+   "title": "Through-Cycle Price Target",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Valuation"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Derive a cyclical's price target the through-cycle way: normalized EPS times a recovery multiple, across bear/base/bull, then probability-weighted into one blended target.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "reverse-dcf",
+   "url": "reverse-dcf.html",
+   "title": "Reverse DCF",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Valuation"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Reverse DCF: plug in price, FCF, WACC and terminal growth, and solve for the free-cash-flow growth rate the market is implicitly pricing in. The through-cycle reality check.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "position-sizing",
+   "url": "position-sizing.html",
+   "title": "Position Sizing",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Valuation"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Scenario-based Kelly position sizing: lay out the bear / base / bull cases and their odds, and solve for the bet size that maximizes long-run compounding — then apply your fraction (half-Kelly by default).",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "pe-reverse-lbo-template",
+   "url": "pe-reverse-lbo-template.html",
+   "title": "Reverse-LBO workbook",
+   "date": null,
+   "type": "Template",
+   "tickers": [],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Free 8-tab IB-grade reverse-LBO workbook with two worked cyclical examples — Micron through-cycle and Western Digital post-spin take-private. Solves backward for max entry multiple at sponsor target IRR. Python pipeline available on request.",
+   "readMin": null,
+   "status": "published",
+   "access": "gated"
+  },
+  {
+   "slug": "pe-reverse-lbo",
+   "url": "pe-reverse-lbo.html",
+   "title": "Reverse-LBO",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Browser-based reverse-LBO. Solve backward for the maximum entry multiple a sponsor would pay, then convert to an implied take-private price per share. Same engine as the 17-tab LBO/M&A workbook.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "pe-returns-waterfall",
+   "url": "pe-returns-waterfall.html",
+   "title": "Returns Waterfall",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Decompose sponsor IRR and MOIC into the three drivers that actually move the deal: EBITDA growth, multiple expansion, and debt paydown. Plus a returns bridge visualization and sensitivity heatmap.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "pe-qofe",
+   "url": "pe-qofe.html",
+   "title": "QofE Quick-Check",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Quality-of-earnings adjustments framework. Walk reported EBITDA to a defensible run-rate adjusted EBITDA via one-times, normalizations, owner adjustments, and pro-forma synergies. With aggressiveness flags.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "pe-precedents",
+   "url": "pe-precedents.html",
+   "title": "Take-private precedents",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Hand-curated database of recent take-private deals. Sponsor, sector, deal value, premium, entry multiple. Filterable, free.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "pe-distribution-waterfall",
+   "url": "pe-distribution-waterfall.html",
+   "title": "Distribution Waterfall",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "LP and GP distribution waterfall: 8% pref, 100% catch-up, 80/20 carry. American vs European mechanics. Year-by-year cash flow with IRR and MOIC for each side.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "pe-cap-table",
+   "url": "pe-cap-table.html",
+   "title": "Cap Table & Waterfall",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Pre/post-money cap table builder with options pool refresh, liquidation preferences (1x / 2x / participating), and an exit waterfall. Watch dilution work round-by-round and see who takes what at exit.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "midcycle",
+   "url": "midcycle.html",
+   "title": "Mid-Cycle EBITDA",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Valuation"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Mid-Cycle EBITDA Calculator — normalize a cyclical company's earnings to through-cycle levels. Set peak/trough margins and cycle position to get a defensible mid-cycle EBITDA for valuation.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "lbo-ma-template",
+   "url": "lbo-ma-template.html",
+   "title": "LBO & M&A workbook",
+   "date": null,
+   "type": "Template",
+   "tickers": [],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Free 17-tab IB-grade LBO / M&A workbook with two worked Micron examples (through-cycle and AI-cycle). Sources & uses, debt schedule with covenant tracking, returns attribution, reverse-LBO, peer-blended comps, sensitivity tables. Python pipeline available on request.",
+   "readMin": null,
+   "status": "published",
+   "access": "gated"
+  },
+  {
+   "slug": "lbo-ma-examples",
+   "url": "lbo-ma-examples.html",
+   "title": "LBO & M&A worked examples",
+   "date": null,
+   "type": "Template",
+   "tickers": [],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Pre-built LBO/M&A workbooks for cyclical names — Micron through-cycle and AI-cycle. Side-by-side methodology comparison.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "lbo",
+   "url": "lbo.html",
+   "title": "LBO",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Buy-side/PE"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Interactive LBO calculator. Tune entry/exit multiple, leverage, hold period — watch sponsor IRR, MOIC, and returns attribution recalculate live.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "football",
+   "url": "football.html",
+   "title": "Football Field",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Valuation"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Football Field Calculator — chart a company's valuation range across every methodology (DCF, trading comps, precedents, LBO) on one view. Tune inputs and watch the bands update live.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "epv",
+   "url": "epv.html",
+   "title": "Earnings Power Value",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Valuation"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Earnings Power Value: what a business is worth assuming zero growth. Capitalize normalized, distributable earnings at the cost of capital to get a no-growth floor — then see how much of the price is paying for growth.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "dcf-template",
+   "url": "dcf-template.html",
+   "title": "DCF workbook",
+   "date": null,
+   "type": "Template",
+   "tickers": [],
+   "sectors": [
+    "Valuation"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Free 20-tab IB-grade DCF workbook with a worked Micron example. Two-stage DCF, peer-blended multiples, three scenarios, reverse-DCF decomposition. Python pipeline available on request.",
+   "readMin": null,
+   "status": "published",
+   "access": "gated"
+  },
+  {
+   "slug": "dcf",
+   "url": "dcf.html",
+   "title": "DCF",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Valuation"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Interactive discounted cash flow calculator with sensitivity table.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "comps-template",
+   "url": "comps-template.html",
+   "title": "Trading Comps workbook",
+   "date": null,
+   "type": "Template",
+   "tickers": [],
+   "sectors": [
+    "Valuation"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "19-tab IB-grade Trading Comps workbook with a Python pipeline that pulls live data for any ticker. Cyclical adjustments, mid-cycle EBITDA, football field, mini-DCF. Demo free; Standard $79; Pro $249.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "comps",
+   "url": "comps.html",
+   "title": "Trading Comps",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Valuation"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Plug in target metrics + peer median multiples. Get implied share price across every standard methodology.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  },
+  {
+   "slug": "accretion-dilution",
+   "url": "accretion-dilution.html",
+   "title": "Accretion / Dilution",
+   "date": null,
+   "type": "Tool",
+   "tickers": [],
+   "sectors": [
+    "Valuation"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Merger accretion/dilution: combine acquirer and target, fund the deal with a cash/stock mix, and solve for pro-forma EPS, the accretion or dilution, and the synergies needed to break even.",
+   "readMin": null,
+   "status": "published",
+   "access": "free"
+  }
+ ],
+ "coverage": [
+  {
+   "ticker": "BE",
+   "company": "Bloom Energy",
+   "history": [
+    {
+     "date": "2026-09-09",
+     "rating": "Hold",
+     "target": 235,
+     "slug": "be-initiation-2026-09-09",
+     "title": "Bloom Energy: The Index Doesn’t Read the 10‑Q"
+    },
+    {
+     "date": "2026-10-23",
+     "rating": "Hold",
+     "target": 235,
+     "slug": "be-q3-update-2026-10-23",
+     "title": "Bloom Is Growing Faster Than It Can Bill"
+    }
+   ],
+   "rating": "Hold",
+   "target": 235,
+   "updated": "2026-10-23",
+   "latestSlug": "be-q3-update-2026-10-23",
+   "latestTitle": "Bloom Is Growing Faster Than It Can Bill"
+  },
+  {
+   "ticker": "ASML",
+   "company": "ASML Holding",
+   "history": [
+    {
+     "date": "2026-07-15",
+     "rating": "Accumulate",
+     "target": 2000,
+     "slug": "asml-initiation-2026-07-15",
+     "title": "ASML — initiation. Paid by both sides of the memory war."
+    },
+    {
+     "date": "2026-10-22",
+     "rating": "Accumulate",
+     "target": 2075,
+     "slug": "asml-q3-update-2026-10-22",
+     "title": "The Shortage Runs Through 2028"
+    }
+   ],
+   "rating": "Accumulate",
+   "target": 2075,
+   "updated": "2026-10-22",
+   "latestSlug": "asml-q3-update-2026-10-22",
+   "latestTitle": "The Shortage Runs Through 2028"
+  },
+  {
+   "ticker": "MU",
+   "company": "Micron Technology",
+   "history": [
+    {
+     "date": "2026-05-05",
+     "rating": "Not rated",
+     "target": null,
+     "slug": "mu-note-2026-05-05",
+     "title": "MU — A note on today's move."
+    },
+    {
+     "date": "2026-05-07",
+     "rating": "Buy",
+     "target": 895,
+     "slug": "mu-through-cycle",
+     "title": "MU — Through-cycle long."
+    },
+    {
+     "date": "2026-05-28",
+     "rating": "Buy",
+     "target": 1100,
+     "slug": "mu-after-ubs-2026-05-28",
+     "title": "I bought Micron at $668. Here’s why I’m not buying at $881."
+    },
+    {
+     "date": "2026-05-31",
+     "rating": "Buy",
+     "target": 1100,
+     "slug": "mu-june-outlook-2026-05-31",
+     "title": "June is when Micron has to do the work."
+    },
+    {
+     "date": "2026-06-23",
+     "rating": "Buy",
+     "target": 1100,
+     "slug": "mu-fq3-eve-2026-06-23",
+     "title": "Everyone agrees on Micron now. Tomorrow it has to print."
+    },
+    {
+     "date": "2026-06-28",
+     "rating": "Buy",
+     "target": 1500,
+     "slug": "mu-fq3-reaction-2026-06-28",
+     "title": "Micron didn’t fade. It ripped 16%. What we got wrong — and the contract that rewrote the thesis."
+    },
+    {
+     "date": "2026-07-02",
+     "rating": "Hold",
+     "target": null,
+     "slug": "mu-unwind-2026-07-02",
+     "title": "Micron round-tripped the best quarter in its history. What the unwind is — and isn’t."
+    },
+    {
+     "date": "2026-07-06",
+     "rating": "Hold",
+     "target": null,
+     "slug": "mu-bounce-2026-07-06",
+     "title": "The bounce came with names attached. Micron’s was the smallest. Friday is why."
+    },
+    {
+     "date": "2026-07-08",
+     "rating": "Hold",
+     "target": null,
+     "slug": "mu-reckoning-2026-07-08",
+     "title": "Samsung posted the biggest profit in the world. Memory made new lows. That’s the tell."
+    },
+    {
+     "date": "2026-07-14",
+     "rating": "Hold",
+     "target": null,
+     "slug": "mu-rollercoaster-2026-07-14",
+     "title": "Micron round-tripped again. KeyBanc raised its target to $1,750. We didn’t."
+    },
+    {
+     "date": "2026-07-21",
+     "rating": "Hold",
+     "target": null,
+     "slug": "mu-stop-2026-07-21",
+     "title": "Micron closed below $900. Our rule said sell. We didn’t."
+    },
+    {
+     "date": "2026-07-30",
+     "rating": "Coverage closed",
+     "target": null,
+     "slug": "mu-close-2026-07-30",
+     "title": "Micron broke $900 again. This time the order was already there."
+    },
+    {
+     "date": "2026-09-28",
+     "rating": "Not rated",
+     "target": null,
+     "slug": "mu-fq4-preview-2026-09-28",
+     "title": "Micron reports Wednesday. The margin guide decides our view."
+    },
+    {
+     "date": "2026-10-19",
+     "rating": "Hold",
+     "target": 1090,
+     "slug": "mu-fq4-update-2026-10-19",
+     "title": "Micron’s Best Quarter Ever Wasn’t Enough"
+    }
+   ],
+   "rating": "Hold",
+   "target": 1090,
+   "updated": "2026-10-19",
+   "latestSlug": "mu-fq4-update-2026-10-19",
+   "latestTitle": "Micron’s Best Quarter Ever Wasn’t Enough"
+  },
+  {
+   "ticker": "VST",
+   "company": "Vistra",
+   "history": [
+    {
+     "date": "2026-10-03",
+     "rating": "Hold",
+     "target": 140,
+     "slug": "vst-initiation-2026-10-03",
+     "title": "Vistra: The Street Has the Earnings. It Doesn’t Have the Rate."
+    }
+   ],
+   "rating": "Hold",
+   "target": 140,
+   "updated": "2026-10-03",
+   "latestSlug": "vst-initiation-2026-10-03",
+   "latestTitle": "Vistra: The Street Has the Earnings. It Doesn’t Have the Rate."
+  },
+  {
+   "ticker": "NVDA",
+   "company": "Nvidia",
+   "history": [
+    {
+     "date": "2026-08-26",
+     "rating": "Hold",
+     "target": 250,
+     "slug": "nvda-eve-2026-08-26",
+     "title": "Nvidia Earnings: The Next Guide Sets the Grade"
+    }
+   ],
+   "rating": "Hold",
+   "target": 250,
+   "updated": "2026-08-26",
+   "latestSlug": "nvda-eve-2026-08-26",
+   "latestTitle": "Nvidia Earnings: The Next Guide Sets the Grade"
+  },
+  {
+   "ticker": "SPCX",
+   "company": "SpaceX",
+   "history": [
+    {
+     "date": "2026-06-16",
+     "rating": "Hold",
+     "target": null,
+     "slug": "spacex-initiation-2026-06-16",
+     "title": "SpaceX — initiation. A world-class moat, priced for a flawless 2030."
+    }
+   ],
+   "rating": "Hold",
+   "target": null,
+   "updated": "2026-06-16",
+   "latestSlug": "spacex-initiation-2026-06-16",
+   "latestTitle": "SpaceX — initiation. A world-class moat, priced for a flawless 2030."
+  },
+  {
+   "ticker": "DELL",
+   "company": "Dell Technologies",
+   "history": [
+    {
+     "date": "2026-06-09",
+     "rating": "Hold",
+     "target": 340,
+     "slug": "dell-initiation-2026-06-09",
+     "title": "Dell — initiation. Start with what we got wrong."
+    }
+   ],
+   "rating": "Hold",
+   "target": 340,
+   "updated": "2026-06-09",
+   "latestSlug": "dell-initiation-2026-06-09",
+   "latestTitle": "Dell — initiation. Start with what we got wrong."
+  }
+ ]
+}

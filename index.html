@@ -3,36 +3,50 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Brandon Leon</title>
-<link rel="manifest" href="/site.webmanifest">
+  <title>Brandon Leon &mdash; Independent equity research</title>
+  <link rel="manifest" href="/site.webmanifest">
   <meta name="color-scheme" content="light only" />
   <meta name="theme-color" content="#fbf7ef" />
   <meta name="supported-color-schemes" content="light" />
-  <meta name="description" content="Brandon Leon — IB-grade equity research across semis and AI (Micron, NVDA, AMD), energy, and commodities. Audited DCFs, peer-blended multiples, reverse-DCF decompositions, through-cycle valuation. CFA IRC Americas winner." />
+  <meta name="description" content="Independent equity research — semiconductors, AI infrastructure, energy and commodities. Coverage notes with published targets, graded in public. Free valuation calculators and workbooks." />
   <meta name="author" content="Brandon Leon" />
   <link rel="canonical" href="https://bpleon.com/" />
-
-  <link rel="alternate" type="application/rss+xml" title="Brandon Leon &mdash; Writing" href="feed.xml" />
-  <!-- Open Graph -->
+  <link rel="alternate" type="application/rss+xml" title="Brandon Leon &mdash; Research" href="feed.xml" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://bpleon.com/" />
-  <meta property="og:title" content="Brandon Leon" />
-  <meta property="og:description" content="Equity research across semis and AI, energy, and commodities. Audited DCFs, peer-blended multiples, reverse-DCF decompositions. Free workbooks." />
+  <meta property="og:title" content="Brandon Leon &mdash; Independent equity research" />
+  <meta property="og:description" content="Semiconductors, AI infrastructure, energy and commodities. Coverage notes with published targets, graded in public. Free valuation tools." />
   <meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
   <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
   <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
-
-  <!-- Fonts: Newsreader (serif) + Inter (sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css?v=50" />
-  <!-- Cloudflare Web Analytics -->
+  <link rel="stylesheet" href="style.css?v=51" />
+  <style>
+    .home { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+    .hero-plain { padding: 3.25rem 0 2.5rem; border-bottom: 1px solid var(--rule); }
+    .hero-plain h1 { font-size: clamp(2.1rem, 5vw, 3.4rem); line-height: 1.08; margin: .35rem 0 .9rem; max-width: 18ch; }
+    .hero-plain .lede { max-width: 62ch; font-size: 1.12rem; }
+    .cred { display: inline-flex; align-items: center; gap: .5rem; margin: .25rem 0 1.25rem; padding: .35rem .75rem; border: 1px solid var(--rule);
+      border-radius: 999px; font-family: var(--sans); font-size: .8rem; color: var(--ink-soft); background: var(--bg-soft); }
+    .cred::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent-2); }
+    .two-col { display: grid; grid-template-columns: 1.25fr 1fr; gap: 2rem; }
+    @media (max-width: 820px) { .two-col { grid-template-columns: 1fr; } }
+    .lead-pick-card { padding: 1.4rem 1.5rem; border: 1px solid var(--rule); border-radius: 12px; background: var(--bg-soft); }
+    .lead-pick-card .lp-name { font-size: 1.5rem; margin: .2rem 0 .5rem; }
+    .lead-pick-card .lp-symbol { font-family: var(--sans); font-size: .8rem; color: var(--muted); letter-spacing: .08em; }
+    .lead-pick-card .lp-pitch-row { font-family: var(--sans); font-size: .95rem; margin: 0 0 .7rem; }
+    .lead-pick-card .lp-thesis { color: var(--ink-soft); line-height: 1.5; }
+    .headlines-panel h3 { font-family: var(--sans); font-size: .78rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin: 0 0 .6rem; }
+    .hl-row { display: block; padding: .6rem 0; border-bottom: 1px solid var(--rule); text-decoration: none; color: var(--ink); }
+    .hl-row:hover .hl-title { color: var(--accent); }
+    .hl-title { display: block; font-family: var(--serif); font-size: 1.02rem; line-height: 1.35; }
+    .hl-meta { display: block; font-family: var(--sans); font-size: .76rem; color: var(--muted); margin-top: .2rem; }
+    .section-head .more { white-space: nowrap; }
+  </style>
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "7b2ea33ed910421582a8d5e1cad4c038"}'></script>
   <script type="application/ld+json">
   {
@@ -43,7 +57,7 @@
         "@id": "https://bpleon.com/#website",
         "url": "https://bpleon.com/",
         "name": "Brandon Leon",
-        "description": "Independent equity research across semiconductors & AI infrastructure, energy, and commodities — through a through-cycle valuation lens.",
+        "description": "Independent equity research across semiconductors and AI infrastructure, energy, and commodities, through a through-cycle valuation lens.",
         "inLanguage": "en-US",
         "publisher": { "@id": "https://bpleon.com/#person" }
       },
@@ -53,470 +67,111 @@
         "name": "Brandon Leon",
         "url": "https://bpleon.com/",
         "jobTitle": "Equity Research Analyst",
-        "description": "Finance MBA, passed Level I of the CFA Program, former private equity. 2023 CFA Institute Research Challenge Americas winner. Equity research across semiconductors & AI infrastructure, energy, and commodities.",
+        "description": "Finance MBA, passed Level I of the CFA Program, former private equity. 2023 CFA Institute Research Challenge Americas winner. Equity research across semiconductors and AI infrastructure, energy, and commodities.",
         "alumniOf": { "@type": "CollegeOrUniversity", "name": "California State University, Fullerton" },
         "knowsAbout": ["Equity Research", "Semiconductors", "Memory (DRAM and HBM)", "Valuation", "Discounted Cash Flow", "Leveraged Buyouts", "Commodities"],
-        "sameAs": [
-          "https://www.linkedin.com/in/brandonpleone/",
-          "https://bpleon.substack.com"
-        ]
+        "sameAs": ["https://www.linkedin.com/in/brandonpleone/", "https://bpleon.substack.com"]
       }
     ]
   }
   </script>
 </head>
-<body style="background:#fbf7ef;color:#1c1a16;">
-<a class="skip-link" href="#main">Skip to content</a>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
   <div id="ticker-tape" class="ticker-wrap" aria-hidden="true"></div>
   <header class="site-header">
     <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
-    <nav class="site-nav" aria-label="Primary">
-      <a href="about.html">About</a>
-      <a href="markets.html">Markets</a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary">
+      <a href="writing.html">Research</a>
+      <a href="coverage.html">Coverage</a>
       <a href="toolkit.html">Toolkit</a>
-      <a href="reports.html">Reports</a>
-      <a href="research.html">Research</a>
-      <a href="projects.html">Projects</a>
-      <a href="writing.html">Writing</a>
-      <a href="contact.html">Contact</a>
+      <a href="markets.html">Markets</a>
+      <a href="about.html">About</a>
+      <a class="nav-subscribe" href="https://bpleon.substack.com/subscribe">Subscribe</a>
     </nav>
   </header>
 
-  <main id="main">
+  <main id="main" class="home">
 
-    <!-- ====== HERO with decorative SVG ====== -->
-    <section class="hero hero-split">
-      <div class="hero-text">
-        <p class="eyebrow">Equity research &middot; Semis &middot; AI &middot; Commodities</p>
-        <h1>Reading markets, writing it down.</h1>
-        <p class="lede">
-          Independent equity research across the names I track most
-          closely &mdash; semis and AI infrastructure (Micron, NVDA, AMD),
-          energy (XOM, CVX), and the commodities + macro layer that
-          drives them. Through-cycle valuation is the lens, built on an
-          audited DCF pipeline I wrote myself. My team out of Cal State
-          Fullerton won the 2023 CFA Institute Research Challenge for the
-          Americas. The writing, calculators, and demo workbooks are
-          free; the full IB-grade workbooks and Python pipelines are
-          paid. Everything is published with the same audit standards.
-        </p>
-        <div class="hero-cta">
-          <a class="btn" href="writing.html">Read the writing &rarr;</a>
-          <a class="btn btn-ghost" href="dcf-template.html">Get the DCF template</a>
-        </div>
-      </div>
-      <div class="hero-art">
-        <!-- Live S&P 500 chart on dotted grid paper. Period toggles below
-             switch the range (1M / 6M / YTD / 1Y / 5Y) and a soft terracotta
-             gradient fills below the line. The placeholder path inside
-             #hero-chart-line is replaced by script.js once Yahoo data lands;
-             if the fetch fails the placeholder remains. The wrapper is the
-             positioning container for the hover crosshair + price/date
-             tooltip overlay. -->
-        <div class="hero-chart-wrap">
-        <svg id="hero-chart" viewBox="0 0 320 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="S&amp;P 500 price chart" aria-hidden="false">
-          <defs>
-            <pattern id="dots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
-              <circle cx="2" cy="2" r="1" fill="#d8cfb9"/>
-            </pattern>
-            <linearGradient id="hero-fill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%"   stop-color="#b56a3f" stop-opacity="0.30"/>
-              <stop offset="100%" stop-color="#b56a3f" stop-opacity="0.02"/>
-            </linearGradient>
-          </defs>
-          <rect width="320" height="240" fill="#f3ece0" rx="14"/>
-          <rect width="320" height="240" fill="url(#dots)" rx="14"/>
-          <g id="hero-chart-fill"></g>
-          <g id="hero-chart-line">
-            <path d="M 24 200 L 64 178 L 104 184 L 144 142 L 184 158 L 224 102 L 264 118 L 296 60"
-                  fill="none" stroke="#b56a3f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
-            <circle cx="296" cy="60" r="6" fill="#b56a3f" opacity="0.55"/>
-          </g>
-          <text id="hero-chart-label" x="22" y="28" fill="#534f47" font-weight="600">Loading&hellip;</text>
-        </svg>
-        <div class="hero-chart-overlay" aria-hidden="true">
-          <div class="hero-chart-cross"></div>
-          <div class="hero-chart-dot"></div>
-          <div class="hero-chart-tip"></div>
-        </div>
-        </div>
-        <div class="hero-chart-periods" role="tablist" aria-label="S&amp;P 500 chart range">
-          <button type="button" class="period-btn" data-range="1d">1D</button>
-          <button type="button" class="period-btn" data-range="5d">5D</button>
-          <button type="button" class="period-btn" data-range="1mo">1M</button>
-          <button type="button" class="period-btn" data-range="6mo">6M</button>
-          <button type="button" class="period-btn" data-range="ytd">YTD</button>
-          <button type="button" class="period-btn active" data-range="1y">1Y</button>
-          <button type="button" class="period-btn" data-range="5y">5Y</button>
-        </div>
+    <section class="hero-plain">
+      <p class="eyebrow">Independent equity research &middot; Semis &middot; AI infrastructure &middot; Energy &middot; Commodities</p>
+      <h1>Reading markets, writing it down.</h1>
+      <p class="lede">Coverage notes with a published rating, a target and the test that would prove them wrong &mdash; then graded in public when the print lands. Through-cycle valuation is the lens. The writing and the calculators are free.</p>
+      <p class="cred">2023 CFA Institute Research Challenge &middot; Americas winner</p>
+      <div class="hero-cta">
+        <a class="btn" href="writing.html">Read the latest research &rarr;</a>
+        <a class="btn btn-ghost" href="https://bpleon.substack.com/subscribe">Subscribe</a>
       </div>
     </section>
 
-    <!-- ====== JUST PUBLISHED (latest article surface) ====== -->
     <section class="section">
       <div class="section-head">
-        <h2>Just published</h2>
-        <a class="more" href="writing.html">All writing &rarr;</a>
+        <h2>Latest research</h2>
+        <a class="more" href="writing.html">View all research &rarr;</a>
       </div>
-      <a class="feature-card" href="mu-fq4-update-2026-10-19.html">
-        <div class="feature-card-art" aria-hidden="true">
-          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <rect width="200" height="200" fill="#0b1f3a" rx="10"/>
-            <text x="100" y="30" font-family="Inter,sans-serif" font-size="8.5" font-weight="700" fill="#c9a961" text-anchor="middle" letter-spacing="0.5">MICRON FQ4 &middot; THE TEST WE SET</text>
-            <line x1="26" y1="104" x2="174" y2="104" stroke="#fbf7ef" stroke-width="1" opacity="0.25"/>
-            <rect x="26" y="96" width="42" height="16" rx="3" fill="#b56a3f" opacity="0.55"/>
-            <text x="47" y="88" font-family="Inter,sans-serif" font-size="7.5" font-weight="700" fill="#b56a3f" text-anchor="middle">BREAK &lt;80%</text>
-            <rect x="126" y="96" width="48" height="16" rx="3" fill="#5b7f6b" opacity="0.65"/>
-            <text x="150" y="88" font-family="Inter,sans-serif" font-size="7.5" font-weight="700" fill="#5b7f6b" text-anchor="middle">INTACT &ge;86%</text>
-            <circle cx="138" cy="104" r="6" fill="#fbf7ef"/>
-            <text x="138" y="132" font-family="Inter,sans-serif" font-size="11" font-weight="700" fill="#fbf7ef" text-anchor="middle">86.25%</text>
-            <text x="100" y="154" font-family="Inter,sans-serif" font-size="7.5" font-weight="600" fill="#fbf7ef" opacity="0.6" text-anchor="middle">THE GUIDE CLEARED THE LINE.</text>
-            <text x="100" y="178" font-family="Inter,sans-serif" font-size="8" font-weight="600" fill="#c9a961" text-anchor="middle" letter-spacing="1">HOLD &middot; $1,090 &middot; CLOSE $878.84</text>
-          </svg>
-        </div>
-        <div class="feature-card-body">
-          <p class="eyebrow">Just published &middot; October 19, 2026 &middot; Coverage update</p>
-          <h3>Micron&rsquo;s Best Quarter Ever Wasn&rsquo;t Enough</h3>
-          <p>Record revenue, an 87% gross margin and $33 billion of free cash flow in three months &mdash; and the shares sit 30% below their June high. The fiscal-Q1 margin guide came in at 86.25%, clearing the line we published before the print, so the thesis holds. We initiate at hold with a $1,090 target, own the test we wrote with a gap in the middle, and show the arithmetic we previously only asserted.</p>
-          <p class="feature-card-cta">Read the update &rarr;</p>
-        </div>
-        </a>
+      <div data-bp="latest" data-n="4" aria-live="polite"><p class="muted small">Loading&hellip;</p></div>
     </section>
 
-    <!-- ====== JUST SHIPPED (newest tool / product) ====== -->
     <section class="section">
       <div class="section-head">
-        <h2>Just shipped</h2>
-        <a class="more" href="toolkit.html">Full toolkit &rarr;</a>
+        <h2>Coverage</h2>
+        <a class="more" href="coverage.html">Ratings and history &rarr;</a>
       </div>
-      <a class="feature-card" href="through-cycle-pt.html">
-        <div class="feature-card-art" aria-hidden="true">
-          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <rect width="200" height="200" fill="#0B3D91" rx="10"/>
-            <!-- Through-cycle scenario fan: bear/base/bull normalized targets -> probability-weighted blend -->
-            <line x1="28" y1="148" x2="172" y2="148" stroke="#fbf7ef" stroke-width="1" opacity="0.35"/>
-            <line x1="28" y1="100" x2="172" y2="100" stroke="#fbf7ef" stroke-width="1" opacity="0.35"/>
-            <line x1="28" y1="52"  x2="172" y2="52"  stroke="#fbf7ef" stroke-width="1" opacity="0.35"/>
-            <!-- "now" / current price, dashed -->
-            <line x1="28" y1="126" x2="172" y2="126" stroke="#fbf7ef" stroke-width="1.5" opacity="0.55" stroke-dasharray="3 4"/>
-            <!-- scenario path: bear (low) -> base -> bull (high) -->
-            <path d="M 46 150 L 100 104 L 154 50" stroke="#C9A961" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="46" cy="150" r="5" fill="#C9A961"/>
-            <circle cx="154" cy="50" r="5" fill="#C9A961"/>
-            <!-- blended, probability-weighted target (emphasized) -->
-            <circle cx="100" cy="104" r="7" fill="#C9A961"/>
-            <circle cx="100" cy="104" r="11.5" fill="none" stroke="#C9A961" stroke-width="1.5" opacity="0.55"/>
-          </svg>
-        </div>
-        <div class="feature-card-body">
-          <p class="eyebrow">Just shipped &middot; June 2026 &middot; Valuation</p>
-          <h3>The through-cycle valuation suite</h3>
-          <p>Five browser calculators that run the whole arc &mdash; value, target, size. Reverse DCF (the FCF growth the market's already pricing in), EPV (the no-growth floor), Through-Cycle PT (normalized EPS &times; recovery multiple, probability-weighted), Accretion / Dilution (first-year deal EPS), and Position Sizing (Kelly, half by default). All free, browser-only, and shareable by URL.</p>
-          <p class="feature-card-cta">Open the calculator &rarr;</p>
-        </div>
-      </a>
+      <p class="muted small section-sub">Rating and target come from the latest published note on each name, so this table cannot contradict the research. Prices are live; not investment advice &mdash; <a href="disclaimer.html">disclaimer</a>.</p>
+      <div data-bp="coverage" aria-live="polite"><p class="muted small">Loading&hellip;</p></div>
     </section>
 
-    <!-- ====== WATCHLIST + HEADLINES (live, mounted via script.js) ====== -->
+    <section class="section">
+      <div class="two-col">
+        <article class="lead-pick-card" data-bp="lead-pick" aria-live="polite"><p class="muted small">Loading&hellip;</p></article>
+        <aside class="headlines-panel" aria-label="Recent headlines" data-bp="headlines" data-max-days="7"><p class="muted small">Loading headlines&hellip;</p></aside>
+      </div>
+    </section>
+
     <section class="section">
       <div class="section-head">
-        <h2>What I'm watching</h2>
-        <a class="more" href="projects.html">All picks &rarr;</a>
+        <h2>Toolkit</h2>
+        <a class="more" href="toolkit.html">What each one does &rarr;</a>
       </div>
-      <p class="muted small section-sub">
-        Live prices and news via TradingView. Targets and theses are mine &mdash;
-        not investment advice. <a href="disclaimer.html">Disclaimer</a>.
-      </p>
-      <div class="watchlist-row">
-        <article id="lead-pick" class="lead-pick-card" aria-labelledby="lp-name" aria-live="polite">
-          <header class="lp-head">
-            <p class="lp-eyebrow">Lead pick</p>
-            <h3 id="lp-name" class="lp-name">Loading&hellip;</h3>
-            <p id="lp-symbol" class="lp-symbol">&nbsp;</p>
-          </header>
-
-          <div class="lp-priceblock">
-            <span id="lp-price" class="lp-price">$&mdash;</span>
-            <span id="lp-change" class="lp-change">&nbsp;</span>
-          </div>
-
-          <div id="lp-spark" class="lp-spark" aria-hidden="true"></div>
-          <div class="lp-spark-periods" role="tablist" aria-label="Sparkline range">
-            <button type="button" class="period-btn-sm" data-range="1d">1D</button>
-            <button type="button" class="period-btn-sm" data-range="5d">1W</button>
-            <button type="button" class="period-btn-sm active" data-range="1mo">1M</button>
-            <button type="button" class="period-btn-sm" data-range="3mo">3M</button>
-            <button type="button" class="period-btn-sm" data-range="1y">1Y</button>
-            <button type="button" class="period-btn-sm" data-range="5y">5Y</button>
-          </div>
-
-          <p id="lp-thesis" class="lp-thesis">&nbsp;</p>
-
-          <dl class="lp-pitch-row">
-            <div><dt>Target</dt><dd id="lp-target">&mdash;</dd></div>
-            <div><dt>To target</dt><dd id="lp-totarget">&mdash;</dd></div>
-            <div><dt>Posted</dt><dd id="lp-posted">&mdash;</dd></div>
-          </dl>
-
-          <p class="lp-section-label">Stats</p>
-          <dl id="lp-stats" class="lp-stats">
-            <div><dt>Mkt Cap</dt><dd>&mdash;</dd></div>
-            <div><dt>P/E (TTM)</dt><dd>&mdash;</dd></div>
-            <div><dt>52W Range</dt><dd>&mdash;</dd></div>
-            <div><dt>Day Range</dt><dd>&mdash;</dd></div>
-            <div><dt>Volume</dt><dd>&mdash;</dd></div>
-            <div><dt>Avg Volume</dt><dd>&mdash;</dd></div>
-          </dl>
-
-          <a id="lp-link" class="lp-link" href="https://finance.yahoo.com/" target="_blank" rel="noopener">View on Yahoo Finance &rarr;</a>
-        </article>
-
-        <aside class="headlines-panel" aria-label="Recent headlines">
-          <h3 class="headlines-title" id="headlines-title">On the wire</h3>
-          <div id="headlines-list" class="headlines-list">
-            <p class="muted small">Loading headlines&hellip;</p>
-          </div>
-        </aside>
-      </div>
+      <div data-bp="toolkit"></div>
     </section>
 
-    <!-- ====== WORLD MARKETS STATUS (live, mounted via script.js) ====== -->
     <section class="section">
-      <div class="section-head">
-        <h2>World markets</h2>
-        <span class="muted small" id="markets-now-et" aria-live="polite"></span>
-      </div>
-      <div id="markets-status-grid" class="markets-status-grid" aria-live="polite">
-        <p class="muted small">Loading markets&hellip;</p>
-      </div>
-    </section>
-
-    <!-- ====== FEATURED highlight ====== -->
-    <section class="section">
-      <div class="section-head">
-        <h2>Featured</h2>
-        <a class="more" href="writing.html">All writing &rarr;</a>
-      </div>
-      <a class="feature-card" href="mu-through-cycle.html">
-        <div class="feature-card-art" aria-hidden="true">
-          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-            <rect width="200" height="200" fill="#5b7f6b" rx="10"/>
-            <path d="M 30 160 L 70 130 L 110 145 L 150 90 L 180 110"
-                  stroke="#fbf7ef" stroke-width="3" fill="none" stroke-linecap="round"/>
-            <circle cx="180" cy="110" r="5" fill="#fbf7ef"/>
-          </svg>
-        </div>
-        <div class="feature-card-body">
-          <p class="eyebrow">Published &middot; May 2026 &middot; Memory / semis</p>
-          <h3>MU &mdash; Through-cycle long</h3>
-          <p>The first full pitch is live: HBM contribution to the next cycle peak, mid-cycle EBIT margin normalisation, what today's price implicitly requires via reverse-DCF, and the bear-case kill shot.</p>
-          <p class="feature-card-cta">Read the pitch &rarr;</p>
-        </div>
-      </a>
-    </section>
-
-    <!-- ====== TOOLS row ====== -->
-    <section class="section">
-      <div class="section-head">
-        <h2>Tools &amp; templates</h2>
-        <a class="more" href="toolkit.html">All tools &rarr;</a>
-      </div>
-      <div class="tile-row">
-        <a class="tile" href="dcf.html">
-          <div class="tile-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="6" width="36" height="36" rx="6" fill="#fbf7ef" stroke="#b56a3f" stroke-width="2"/>
-              <path d="M 13 32 L 21 24 L 27 28 L 35 16" stroke="#b56a3f" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="35" cy="16" r="2.5" fill="#b56a3f"/>
-            </svg>
-          </div>
-          <h3>DCF Calculator</h3>
-          <p>Plug in revenue, margin, WACC, terminal growth. Watch the implied share price move live, see a sensitivity grid.</p>
-          <p class="tile-cta">Open &rarr;</p>
-        </a>
-        <a class="tile" href="comps-template.html">
-          <div class="tile-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="6" width="36" height="36" rx="6" fill="#fbf7ef" stroke="#b56a3f" stroke-width="2"/>
-              <rect x="11" y="14" width="20" height="3" rx="1" fill="#b56a3f" opacity="0.6"/>
-              <rect x="11" y="20" width="14" height="3" rx="1" fill="#b56a3f" opacity="0.6"/>
-              <rect x="11" y="26" width="24" height="3" rx="1" fill="#b56a3f"/>
-              <rect x="11" y="32" width="18" height="3" rx="1" fill="#b56a3f" opacity="0.6"/>
-              <line x1="26" y1="11" x2="26" y2="38" stroke="#b56a3f" stroke-width="1.5" stroke-dasharray="2 2"/>
-            </svg>
-          </div>
-          <h3>Trading Comps Workbook</h3>
-          <p>19-tab IB-grade workbook + Python pipeline. Rebuilds for any ticker in 30 seconds. Cyclical adjustments built in. Demo free.</p>
-          <p class="tile-cta">Open &rarr;</p>
-        </a>
-        <a class="tile" href="pe-reverse-lbo.html">
-          <div class="tile-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="6" width="36" height="36" rx="6" fill="#fbf7ef" stroke="#b56a3f" stroke-width="2"/>
-              <!-- Reverse arrow: target IRR back to entry -->
-              <line x1="36" y1="14" x2="14" y2="34" stroke="#b56a3f" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-              <polyline points="14,34 22,34 14,26" stroke="#b56a3f" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="36" cy="14" r="2.5" fill="#b56a3f"/>
-            </svg>
-          </div>
-          <h3>Reverse-LBO Calculator</h3>
-          <p>Solve the LBO backward. Target IRR &rarr; max entry multiple &rarr; implied take-private price. Worked MU and WDC examples ship as one-click presets.</p>
-          <p class="tile-cta">Open &rarr;</p>
-        </a>
-        <a class="tile" href="lbo-ma-template.html">
-          <div class="tile-icon" aria-hidden="true">
-            <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="6" width="36" height="36" rx="6" fill="#fbf7ef" stroke="#b56a3f" stroke-width="2"/>
-              <path d="M 12 36 L 12 14 L 20 14 L 20 36 M 22 36 L 22 22 L 30 22 L 30 36 M 32 36 L 32 28 L 40 28 L 40 36"
-                    stroke="#b56a3f" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <h3>LBO &amp; M&amp;A Template</h3>
-          <p>17-tab workbook with cycle diagnostic, returns attribution, reverse-LBO. Two MU worked examples (through-cycle + AI-cycle).</p>
-          <p class="tile-cta">Open &rarr;</p>
-        </a>
-
-      </div>
-    </section>
-
-    <!-- ====== SELECTED WORK ====== -->
-    <section class="section">
-      <div class="section-head">
-        <h2>Selected work</h2>
-        <a class="more" href="projects.html">All projects &rarr;</a>
-      </div>
-      <ul class="project-list">
-        <li class="project">
-          <span class="project-tag">Buy-side suite</span>
-          <h3><a href="toolkit.html#buy-side">Reverse-LBO + buy-side suite</a></h3>
-          <p class="project-meta">May 2026 &middot; Five calculators + workbook + precedents</p>
-          <p>Reverse-LBO, returns waterfall, distribution waterfall, cap table &amp; waterfall, QofE quick-check &mdash; all browser-only. Plus the 8-tab Reverse-LBO Template (free, pipeline on request) and a 30-deal hand-curated take-private precedents database.</p>
-        </li>
-        <li class="project">
-          <span class="project-tag">Worked example</span>
-          <h3><a href="mu-reverse-lbo.html">MU &mdash; Reverse-LBO worked example</a></h3>
-          <p class="project-meta">May 2026 &middot; Memory / semis</p>
-          <p>The Micron name read through a sponsor's lens. Through-cycle vs AI-cycle scorecards disagree by ~$35 of implied take-private price. The spread between them is the structural call.</p>
-        </li>
-        <li class="project">
-          <span class="project-tag">Take-private case</span>
-          <h3><a href="wdc-take-private.html">WDC &mdash; Post-spin take-private case</a></h3>
-          <p class="project-meta">May 2026 &middot; NAND / storage</p>
-          <p>Reverse-LBO at 22% sponsor IRR on Western Digital after the SanDisk spin. Math works at modest premium; the friction list is what would actually kill the deal.</p>
-        </li>
-        <li class="project">
-          <span class="project-tag">Template</span>
-          <h3><a href="projects.html#lbo-ma-template">IB-grade LBO &amp; M&amp;A Template</a></h3>
-          <p class="project-meta">May 2026 &middot; Methodology artifact</p>
-          <p>17-tab workbook shipped as two worked Micron scorecards (through-cycle + AI-cycle) so methodology disagreement is explicit. Returns attribution, reverse-LBO, covenant tracking, accretion/dilution.</p>
-        </li>
-        <li class="project">
-          <span class="project-tag">Template</span>
-          <h3><a href="projects.html#dcf-template">IB-grade DCF Template</a></h3>
-          <p class="project-meta">Apr 2026 &middot; Methodology artifact</p>
-          <p>20-tab Excel workbook with a worked Micron example: two-stage FCFF DCF, peer-blended multiples, three scenarios, reverse-DCF decomposition.</p>
-        </li>
-        <li class="project">
-          <span class="project-tag">Workbook</span>
-          <h3><a href="comps-template.html">IB-grade Trading Comps Workbook</a></h3>
-          <p class="project-meta">May 2026 &middot; Live refresh pipeline</p>
-          <p>19-tab workbook with a Python pipeline that rebuilds for any ticker in 30 seconds. Football Field, Mini-DCF, WACC, Cyclical Adjustments. Demo free; Standard $79; Pro $249.</p>
-        </li>
-        <li class="project">
-          <span class="project-tag">Pitch</span>
-          <h3><a href="projects.html#mu-through-cycle">MU &mdash; Through-cycle long</a></h3>
-          <p class="project-meta">Q2 2026 &middot; Memory / semis</p>
-          <p>Through-cycle thesis on Micron Technology against a cyclical comp. Workbook finalised; write-up in progress.</p>
-        </li>
-        <li class="project">
-          <span class="project-tag">Cross-section</span>
-          <h3><a href="projects.html#energy-cycle">Integrated oil &mdash; capital-allocation tier list</a></h3>
-          <p class="project-meta">Q2 2026 &middot; Energy</p>
-          <p>XOM, CVX, COP, SHEL, BP ranked on through-cycle capital allocation discipline against the commodity strip.</p>
-        </li>
-      </ul>
-    </section>
-
-    <!-- ====== ON DECK (writing in flight) ====== -->
-        <section class="section">
       <div class="section-head">
         <h2>On deck</h2>
-        <a class="more" href="writing.html">All writing &rarr;</a>
+        <a class="more" href="writing.html">All research &rarr;</a>
       </div>
-      <ul class="writing-list">
-        <li>
-          <a href="mu-through-cycle.html">
-            <span class="post-title">MU &mdash; Through-cycle v2 (post-FQ4 update)</span>
-            <span class="post-date">Q3 2026</span>
-          </a>
-        </li>
-        <li>
-          <a href="writing.html#energy-tier-list">
-            <span class="post-title">Integrated oil &mdash; capital-allocation tier list</span>
-            <span class="post-date">Q2 2026</span>
-          </a>
-        </li>
-        <li>
-          <a href="writing.html#reading-10k">
-            <span class="post-title">Notes on reading a 10-K like you mean it</span>
-            <span class="post-date">Forthcoming</span>
-          </a>
-        </li>
-      </ul>
+      <div data-bp="on-deck"></div>
     </section>
 
-    <!-- ====== READING + WATCHING ====== -->
-    <section class="section">
-      <div class="section-head">
-        <h2>Currently reading &amp; watching</h2>
-      </div>
-      <ul class="rw-list">
-        <li>
-          <span class="rw-tag">Reading</span>
-          <span class="rw-text"><em>Chip War</em> by Chris Miller &mdash; the cleanest narrative of how the semiconductor stack became the most strategically valuable industry on the planet. Mandatory background reading for anyone valuing NVDA, AMD, or Micron.</span>
-        </li>
-        <li>
-          <span class="rw-tag">Watching</span>
-          <span class="rw-text">The 10Y yield. HBM ASP commentary in the next round of memory prints. Capex guides from the AI buildout (NVDA, AVGO, the hyperscalers). Crude as an early signal for the energy cycle. Gold and BTC as the macro hedge pair.</span>
-        </li>
-        <li>
-          <span class="rw-tag">Listening</span>
-          <span class="rw-text"><em>Odd Lots</em> (Bloomberg) for the macro / commodities / crypto crossovers. <em>Acquired</em> when there&rsquo;s a tech business worth unpacking end-to-end &mdash; recent episodes on the chip stack are excellent.</span>
-        </li>
-      </ul>
-      <p class="muted small">Updated every few weeks on the <a href="now.html">/now</a> page. The full <a href="reading-list.html">reading list</a> &mdash; foundations, sectoral, capital allocation &amp; sponsor capital &mdash; lives there.</p>
-    </section>
-
-    <!-- ====== SUBSCRIBE ====== -->
     <section class="section subscribe">
       <h2>Subscribe</h2>
-      <p>New essays and research notes, sent occasionally. No spam, unsubscribe any time.</p>
-      <iframe
-        src="https://bpleon.substack.com/embed"
-        title="Subscribe"
-        width="100%"
-        height="150"
-        style="border:1px solid var(--rule); border-radius:8px; background:var(--bg);"
-        frameborder="0"
-        scrolling="no"></iframe>
-      <p class="subscribe-fallback">
-        Or subscribe directly on Substack: <a href="https://bpleon.substack.com" rel="noopener">bpleon.substack.com</a>
-      </p>
+      <p>Every note, the morning after it publishes. No spam, unsubscribe any time.</p>
+      <iframe src="https://bpleon.substack.com/embed" title="Subscribe" width="100%" height="150" loading="lazy"
+        style="border:1px solid var(--rule); border-radius:8px; background:var(--bg);" frameborder="0" scrolling="no"></iframe>
+      <p class="subscribe-fallback">Or subscribe directly on Substack: <a href="https://bpleon.substack.com" rel="noopener">bpleon.substack.com</a></p>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon &middot; <span class="muted small" data-bp-generated></span></p>
       <ul class="social">
         <li><a href="now.html">Now</a></li>
+        <li><a href="reading-list.html">Reading list</a></li>
+        <li><a href="research.html">Data sources</a></li>
+        <li><a href="track-record.html">Track record</a></li>
+        <li><a href="contact.html">Contact</a></li>
         <li><a href="disclaimer.html">Disclaimer</a></li>
-        <li><a href="mailto:brandon@bpleon.com">Email</a></li>
+        <li><a href="feed.xml">RSS</a></li>
         <li><a href="https://www.linkedin.com/in/brandonpleone/" rel="me noopener">LinkedIn</a></li>
+        <li><button class="theme-toggle" type="button" aria-pressed="false">Dark</button></li>
       </ul>
     </div>
   </footer>
 
-  <script src="script.js?v=50" defer></script>
+  <script src="script.js?v=51" defer></script>
+  <script src="data/content.js" data-root="."></script>
 </body>
 </html>

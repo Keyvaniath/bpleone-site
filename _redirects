@@ -20,3 +20,7 @@ https://www.bpleon.com/* https://bpleon.com/:splat 301
 # causes ERR_TOO_MANY_REDIRECTS. Cloudflare Pages already serves
 # .html files at their clean-URL paths by default, so the rules
 # were redundant anyway.
+
+# 2026-10-23 overhaul: Projects folded into the Coverage page; Reports stays (it is the MU deck download page)
+/projects.html  /coverage.html  301
+/projects       /coverage       301

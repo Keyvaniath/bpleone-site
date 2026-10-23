@@ -70,7 +70,6 @@ admin/portfolio-backup.json
 # The pre-commit hook rebuilds sitemap/site-index from the WORKING TREE, so any
 # untracked page or asset at the repo root leaks into them. Ignoring these keeps
 # the files on disk while removing that hazard.
-coverage.html
 assets/reports/spcx-reverse-dcf-heatmap.png
 # Orphan export artifacts: on disk, referenced by no page. Named individually
 # rather than ignoring exports/ wholesale, so genuine exports can still ship.

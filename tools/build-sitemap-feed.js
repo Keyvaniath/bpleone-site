@@ -22,10 +22,11 @@ const FEED_MAX = 25;
 const CORE = {
   'index.html':        ['1.0', 'weekly'],
   'writing.html':      ['0.9', 'weekly'],
+  'coverage.html':     ['0.9', 'weekly'],   // 2026-10-23: public coverage table + rating history, from data/content.json
   'toolkit.html':      ['0.9', 'monthly'],
   'reports.html':      ['0.9', 'monthly'],
-  'research.html':     ['0.9', 'monthly'],
-  'projects.html':     ['0.8', 'monthly'],
+  'research.html':     ['0.7', 'monthly'],  // the data-sources page (retitled 2026-10-23); the archive is writing.html
+  'projects.html':     ['0.3', 'yearly'],   // 301 -> coverage.html since 2026-10-23; kept as a fallback file only
   'about.html':        ['0.8', 'monthly'],
   'markets.html':      ['0.7', 'daily'],
   'dcf-template.html': ['0.9', 'monthly'],
