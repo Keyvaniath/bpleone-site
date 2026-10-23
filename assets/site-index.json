@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-10-23",
   "fileCount": 174,
-  "totalBytes": 10616067,
+  "totalBytes": 10616413,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,8 +28,8 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 41352,
-      "sizeText": "40.4 KB",
+      "size": 41587,
+      "sizeText": "40.6 KB",
       "modified": "2026-10-23",
       "ext": ".json",
       "category": "assets"
@@ -298,8 +298,8 @@
     {
       "path": "be-q3-update-2026-10-23.html",
       "name": "be-q3-update-2026-10-23.html",
-      "size": 47399,
-      "sizeText": "46.3 KB",
+      "size": 47353,
+      "sizeText": "46.2 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -991,8 +991,8 @@
     {
       "path": "writing.html",
       "name": "writing.html",
-      "size": 48486,
-      "sizeText": "47.3 KB",
+      "size": 48531,
+      "sizeText": "47.4 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -1432,8 +1432,8 @@
     {
       "path": "feed.xml",
       "name": "feed.xml",
-      "size": 15063,
-      "sizeText": "14.7 KB",
+      "size": 14997,
+      "sizeText": "14.6 KB",
       "modified": "2026-10-23",
       "ext": ".xml",
       "category": "site-meta"
@@ -1450,8 +1450,8 @@
     {
       "path": "sitemap.xml",
       "name": "sitemap.xml",
-      "size": 12887,
-      "sizeText": "12.6 KB",
+      "size": 13065,
+      "sizeText": "12.8 KB",
       "modified": "2026-10-23",
       "ext": ".xml",
       "category": "site-meta"
