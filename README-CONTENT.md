@@ -80,11 +80,16 @@ Live prices in the coverage table use the same Worker's `?symbols=` route. The t
 
 Nav is now six items: Research · Coverage · Toolkit · Markets · About · Subscribe. Now, Reading list, Data sources, Track record, Contact, Disclaimer and RSS live in the footer.
 
-## Not done yet (stage 2)
+## Stage 2 (2026-10-23): article pages
 
-- **Per-article chrome** via the `related` and `prev-next` views, a table of contents, and JSON-LD on the 26 article pages that lack it. The views exist; the article pages have not been edited beyond the shared nav and cache-version bump.
-- `toolkit.html` keeps its hand-written per-tool descriptions and JSON-LD `ItemList`; only its nav changed. The homepage grid is the deduplicated one.
-- The smoke test (`.github/workflows/smoke.yml`) now asserts the content index rendered instead of the removed hero chart.
+Every root article page now carries, injected once by a deterministic script and rendered by `content.js`:
+
+- a **table of contents** (`<nav class="toc" data-bp="toc">`) after the page head, built from the page's own H2s; ids are assigned where older pages lacked them; hidden on pages with fewer than three sections;
+- **Related research** (`data-bp="related"`, up to four notes sharing a ticker, then a sector) and **prev / next** by date, placed before `</article>` or, on the 17 older pages without one, before `</main>`;
+- **BlogPosting JSON-LD** on the 25 pages that lacked it (headline, description, dates, author, tickers as `about`), with `dateModified` taken from the page's last git commit when later than publication;
+- a `twitter:card` on the 3 pages missing one.
+
+`toolkit.html` keeps its hand-written per-tool descriptions and JSON-LD `ItemList`; only its nav changed. The smoke test asserts the content index rendered instead of the removed hero chart. Still not done: a rating/PT box and "key figures" callout as a uniform component on every note (the coverage notes already carry a one-page summary table, in varying shapes), and an `updated` field in the index surfaced on cards.
 
 ## Open items for Brandon
 

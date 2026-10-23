@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-10-23",
   "fileCount": 178,
-  "totalBytes": 10688194,
+  "totalBytes": 10731194,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -28,8 +28,8 @@
     {
       "path": "assets/site-index.json",
       "name": "site-index.json",
-      "size": 41587,
-      "sizeText": "40.6 KB",
+      "size": 42419,
+      "sizeText": "41.4 KB",
       "modified": "2026-10-23",
       "ext": ".json",
       "category": "assets"
@@ -235,8 +235,8 @@
     {
       "path": "README-CONTENT.md",
       "name": "README-CONTENT.md",
-      "size": 6454,
-      "sizeText": "6.3 KB",
+      "size": 7251,
+      "sizeText": "7.1 KB",
       "modified": "2026-10-23",
       "ext": ".md",
       "category": "other"
@@ -280,8 +280,8 @@
     {
       "path": "asml-initiation-2026-07-15.html",
       "name": "asml-initiation-2026-07-15.html",
-      "size": 36868,
-      "sizeText": "36.0 KB",
+      "size": 37099,
+      "sizeText": "36.2 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -289,8 +289,8 @@
     {
       "path": "asml-q3-update-2026-10-22.html",
       "name": "asml-q3-update-2026-10-22.html",
-      "size": 51834,
-      "sizeText": "50.6 KB",
+      "size": 53213,
+      "sizeText": "52.0 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -298,8 +298,8 @@
     {
       "path": "be-initiation-2026-09-09.html",
       "name": "be-initiation-2026-09-09.html",
-      "size": 81432,
-      "sizeText": "79.5 KB",
+      "size": 82879,
+      "sizeText": "80.9 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -307,8 +307,8 @@
     {
       "path": "be-q3-update-2026-10-23.html",
       "name": "be-q3-update-2026-10-23.html",
-      "size": 47552,
-      "sizeText": "46.4 KB",
+      "size": 48880,
+      "sizeText": "47.7 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -316,8 +316,8 @@
     {
       "path": "china-memory-2026-08-04.html",
       "name": "china-memory-2026-08-04.html",
-      "size": 43796,
-      "sizeText": "42.8 KB",
+      "size": 45305,
+      "sizeText": "44.2 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -352,8 +352,8 @@
     {
       "path": "cooling-under-semis-2026-05-08.html",
       "name": "cooling-under-semis-2026-05-08.html",
-      "size": 60202,
-      "sizeText": "58.8 KB",
+      "size": 60441,
+      "sizeText": "59.0 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -388,8 +388,8 @@
     {
       "path": "dell-initiation-2026-06-09.html",
       "name": "dell-initiation-2026-06-09.html",
-      "size": 67564,
-      "sizeText": "66.0 KB",
+      "size": 68959,
+      "sizeText": "67.3 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -415,8 +415,8 @@
     {
       "path": "fed-april-2026.html",
       "name": "fed-april-2026.html",
-      "size": 28130,
-      "sizeText": "27.5 KB",
+      "size": 28337,
+      "sizeText": "27.7 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -487,8 +487,8 @@
     {
       "path": "mu-after-ubs-2026-05-28.html",
       "name": "mu-after-ubs-2026-05-28.html",
-      "size": 34031,
-      "sizeText": "33.2 KB",
+      "size": 34256,
+      "sizeText": "33.5 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -496,8 +496,8 @@
     {
       "path": "mu-bounce-2026-07-06.html",
       "name": "mu-bounce-2026-07-06.html",
-      "size": 27830,
-      "sizeText": "27.2 KB",
+      "size": 28049,
+      "sizeText": "27.4 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -505,8 +505,8 @@
     {
       "path": "mu-close-2026-07-30.html",
       "name": "mu-close-2026-07-30.html",
-      "size": 40603,
-      "sizeText": "39.7 KB",
+      "size": 40820,
+      "sizeText": "39.9 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -514,8 +514,8 @@
     {
       "path": "mu-fq3-eve-2026-06-23.html",
       "name": "mu-fq3-eve-2026-06-23.html",
-      "size": 46429,
-      "sizeText": "45.3 KB",
+      "size": 46650,
+      "sizeText": "45.6 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -523,8 +523,8 @@
     {
       "path": "mu-fq3-reaction-2026-06-28.html",
       "name": "mu-fq3-reaction-2026-06-28.html",
-      "size": 29247,
-      "sizeText": "28.6 KB",
+      "size": 29478,
+      "sizeText": "28.8 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -532,8 +532,8 @@
     {
       "path": "mu-fq4-preview-2026-09-28.html",
       "name": "mu-fq4-preview-2026-09-28.html",
-      "size": 21374,
-      "sizeText": "20.9 KB",
+      "size": 22757,
+      "sizeText": "22.2 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -541,8 +541,8 @@
     {
       "path": "mu-fq4-update-2026-10-19.html",
       "name": "mu-fq4-update-2026-10-19.html",
-      "size": 38131,
-      "sizeText": "37.2 KB",
+      "size": 39594,
+      "sizeText": "38.7 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -550,8 +550,8 @@
     {
       "path": "mu-june-outlook-2026-05-31.html",
       "name": "mu-june-outlook-2026-05-31.html",
-      "size": 38743,
-      "sizeText": "37.8 KB",
+      "size": 40039,
+      "sizeText": "39.1 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -559,8 +559,8 @@
     {
       "path": "mu-note-2026-05-05.html",
       "name": "mu-note-2026-05-05.html",
-      "size": 24759,
-      "sizeText": "24.2 KB",
+      "size": 24974,
+      "sizeText": "24.4 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -568,8 +568,8 @@
     {
       "path": "mu-reckoning-2026-07-08.html",
       "name": "mu-reckoning-2026-07-08.html",
-      "size": 34752,
-      "sizeText": "33.9 KB",
+      "size": 34977,
+      "sizeText": "34.2 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -577,8 +577,8 @@
     {
       "path": "mu-reverse-lbo.html",
       "name": "mu-reverse-lbo.html",
-      "size": 21364,
-      "sizeText": "20.9 KB",
+      "size": 21571,
+      "sizeText": "21.1 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -586,8 +586,8 @@
     {
       "path": "mu-rollercoaster-2026-07-14.html",
       "name": "mu-rollercoaster-2026-07-14.html",
-      "size": 34326,
-      "sizeText": "33.5 KB",
+      "size": 34559,
+      "sizeText": "33.7 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -595,8 +595,8 @@
     {
       "path": "mu-stop-2026-07-21.html",
       "name": "mu-stop-2026-07-21.html",
-      "size": 38671,
-      "sizeText": "37.8 KB",
+      "size": 38886,
+      "sizeText": "38.0 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -604,8 +604,8 @@
     {
       "path": "mu-through-cycle.html",
       "name": "mu-through-cycle.html",
-      "size": 116112,
-      "sizeText": "113.4 KB",
+      "size": 116323,
+      "sizeText": "113.6 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -613,8 +613,8 @@
     {
       "path": "mu-unwind-2026-07-02.html",
       "name": "mu-unwind-2026-07-02.html",
-      "size": 34731,
-      "sizeText": "33.9 KB",
+      "size": 34950,
+      "sizeText": "34.1 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -622,8 +622,8 @@
     {
       "path": "next-dollar-01-2026-07-31.html",
       "name": "next-dollar-01-2026-07-31.html",
-      "size": 57555,
-      "sizeText": "56.2 KB",
+      "size": 59220,
+      "sizeText": "57.8 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -631,8 +631,8 @@
     {
       "path": "next-dollar-02-2026-08-14.html",
       "name": "next-dollar-02-2026-08-14.html",
-      "size": 30230,
-      "sizeText": "29.5 KB",
+      "size": 31713,
+      "sizeText": "31.0 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -649,8 +649,8 @@
     {
       "path": "nvda-eve-2026-08-26.html",
       "name": "nvda-eve-2026-08-26.html",
-      "size": 39887,
-      "sizeText": "39.0 KB",
+      "size": 41336,
+      "sizeText": "40.4 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -793,8 +793,8 @@
     {
       "path": "spacex-initiation-2026-06-16.html",
       "name": "spacex-initiation-2026-06-16.html",
-      "size": 31298,
-      "sizeText": "30.6 KB",
+      "size": 32802,
+      "sizeText": "32.0 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -829,8 +829,8 @@
     {
       "path": "vst-initiation-2026-10-03.html",
       "name": "vst-initiation-2026-10-03.html",
-      "size": 58899,
-      "sizeText": "57.5 KB",
+      "size": 60301,
+      "sizeText": "58.9 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -847,8 +847,8 @@
     {
       "path": "wdc-take-private.html",
       "name": "wdc-take-private.html",
-      "size": 22252,
-      "sizeText": "21.7 KB",
+      "size": 22463,
+      "sizeText": "21.9 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -856,8 +856,8 @@
     {
       "path": "weekly-outlook-2026-05-04.html",
       "name": "weekly-outlook-2026-05-04.html",
-      "size": 40777,
-      "sizeText": "39.8 KB",
+      "size": 41006,
+      "sizeText": "40.0 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -865,8 +865,8 @@
     {
       "path": "weekly-outlook-2026-05-15.html",
       "name": "weekly-outlook-2026-05-15.html",
-      "size": 51896,
-      "sizeText": "50.7 KB",
+      "size": 52125,
+      "sizeText": "50.9 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -874,8 +874,8 @@
     {
       "path": "weekly-outlook-2026-05-18.html",
       "name": "weekly-outlook-2026-05-18.html",
-      "size": 51853,
-      "sizeText": "50.6 KB",
+      "size": 52082,
+      "sizeText": "50.9 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -883,8 +883,8 @@
     {
       "path": "weekly-outlook-2026-05-26.html",
       "name": "weekly-outlook-2026-05-26.html",
-      "size": 53998,
-      "sizeText": "52.7 KB",
+      "size": 54227,
+      "sizeText": "53.0 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -892,8 +892,8 @@
     {
       "path": "weekly-outlook-2026-05-29.html",
       "name": "weekly-outlook-2026-05-29.html",
-      "size": 59963,
-      "sizeText": "58.6 KB",
+      "size": 60192,
+      "sizeText": "58.8 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -901,8 +901,8 @@
     {
       "path": "weekly-outlook-2026-06-08.html",
       "name": "weekly-outlook-2026-06-08.html",
-      "size": 50453,
-      "sizeText": "49.3 KB",
+      "size": 51783,
+      "sizeText": "50.6 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -910,8 +910,8 @@
     {
       "path": "weekly-outlook-2026-06-16.html",
       "name": "weekly-outlook-2026-06-16.html",
-      "size": 53251,
-      "sizeText": "52.0 KB",
+      "size": 54530,
+      "sizeText": "53.3 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -919,8 +919,8 @@
     {
       "path": "weekly-outlook-2026-06-19.html",
       "name": "weekly-outlook-2026-06-19.html",
-      "size": 38091,
-      "sizeText": "37.2 KB",
+      "size": 39351,
+      "sizeText": "38.4 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -928,8 +928,8 @@
     {
       "path": "weekly-outlook-2026-06-29.html",
       "name": "weekly-outlook-2026-06-29.html",
-      "size": 43951,
-      "sizeText": "42.9 KB",
+      "size": 45299,
+      "sizeText": "44.2 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -937,8 +937,8 @@
     {
       "path": "weekly-outlook-2026-07-06.html",
       "name": "weekly-outlook-2026-07-06.html",
-      "size": 55863,
-      "sizeText": "54.6 KB",
+      "size": 57187,
+      "sizeText": "55.8 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -946,8 +946,8 @@
     {
       "path": "weekly-outlook-2026-07-13.html",
       "name": "weekly-outlook-2026-07-13.html",
-      "size": 62808,
-      "sizeText": "61.3 KB",
+      "size": 64132,
+      "sizeText": "62.6 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -955,8 +955,8 @@
     {
       "path": "weekly-outlook-2026-07-20.html",
       "name": "weekly-outlook-2026-07-20.html",
-      "size": 56410,
-      "sizeText": "55.1 KB",
+      "size": 57738,
+      "sizeText": "56.4 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -964,8 +964,8 @@
     {
       "path": "weekly-outlook-2026-08-03.html",
       "name": "weekly-outlook-2026-08-03.html",
-      "size": 60162,
-      "sizeText": "58.8 KB",
+      "size": 61464,
+      "sizeText": "60.0 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -973,8 +973,8 @@
     {
       "path": "weekly-outlook-2026-08-10.html",
       "name": "weekly-outlook-2026-08-10.html",
-      "size": 41412,
-      "sizeText": "40.4 KB",
+      "size": 42756,
+      "sizeText": "41.8 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -982,8 +982,8 @@
     {
       "path": "weekly-outlook-2026-08-17.html",
       "name": "weekly-outlook-2026-08-17.html",
-      "size": 48229,
-      "sizeText": "47.1 KB",
+      "size": 49506,
+      "sizeText": "48.3 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -991,8 +991,8 @@
     {
       "path": "weekly-outlook-2026-09-08.html",
       "name": "weekly-outlook-2026-09-08.html",
-      "size": 65504,
-      "sizeText": "64.0 KB",
+      "size": 66847,
+      "sizeText": "65.3 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -1000,8 +1000,8 @@
     {
       "path": "weekly-outlook-2026-10-20.html",
       "name": "weekly-outlook-2026-10-20.html",
-      "size": 33471,
-      "sizeText": "32.7 KB",
+      "size": 34813,
+      "sizeText": "34.0 KB",
       "modified": "2026-10-23",
       "ext": ".html",
       "category": "pages"
@@ -1423,8 +1423,8 @@
     {
       "path": "data/content.js",
       "name": "content.js",
-      "size": 22684,
-      "sizeText": "22.2 KB",
+      "size": 23960,
+      "sizeText": "23.4 KB",
       "modified": "2026-10-23",
       "ext": ".js",
       "category": "site-code"
@@ -1459,8 +1459,8 @@
     {
       "path": "style.css",
       "name": "style.css",
-      "size": 53050,
-      "sizeText": "51.8 KB",
+      "size": 53909,
+      "sizeText": "52.6 KB",
       "modified": "2026-10-23",
       "ext": ".css",
       "category": "site-code"
@@ -1486,7 +1486,7 @@
     {
       "path": "sitemap.xml",
       "name": "sitemap.xml",
-      "size": 13065,
+      "size": 13126,
       "sizeText": "12.8 KB",
       "modified": "2026-10-23",
       "ext": ".xml",

@@ -301,7 +301,27 @@
     }).catch(function () { el.innerHTML = ''; });
   }
 
-  var VIEWS = { headlines: renderHeadlines, latest: renderLatest, archive: renderArchive, 'on-deck': renderOnDeck, coverage: renderCoverage,
+  // Table of contents built from the article's own H2s. Ids are assigned where missing so the
+  // links work on older pages; renders nothing on pages with fewer than three sections.
+  function renderToc(el) {
+    var main = document.getElementById('main') || document.querySelector('main'); if (!main) { el.innerHTML = ''; return; }
+    var hs = [].slice.call(main.querySelectorAll('h2')).filter(function (h) { return !h.closest('[data-bp]') && !h.closest('.site-footer') && h.textContent.trim(); });
+    if (hs.length < 3) { el.innerHTML = ''; el.setAttribute('hidden', ''); return; }
+    var seen = {};
+    hs.forEach(function (h) {
+      if (!h.id) {
+        var base = h.textContent.trim().toLowerCase().replace(/^\d+[\.\)]\s*/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) || 'section';
+        var id = base, n = 2; while (seen[id] || document.getElementById(id)) { id = base + '-' + (n++); }
+        h.id = id;
+      }
+      seen[h.id] = true;
+    });
+    el.innerHTML = '<p class="toc-label">In this note</p><ol class="toc-list">' + hs.map(function (h) {
+      return '<li><a href="#' + esc(h.id) + '">' + esc(h.textContent.trim().replace(/^\d+[\.\)]\s*/, '')) + '</a></li>';
+    }).join('') + '</ol>';
+  }
+
+  var VIEWS = { toc: renderToc, headlines: renderHeadlines, latest: renderLatest, archive: renderArchive, 'on-deck': renderOnDeck, coverage: renderCoverage,
     history: renderHistory, toolkit: renderToolkit, 'lead-pick': renderLeadPick, related: renderRelated, 'prev-next': renderPrevNext };
 
   function mountAll() {
