@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-10-26",
   "fileCount": 181,
-  "totalBytes": 11640342,
+  "totalBytes": 11640386,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -829,7 +829,7 @@
     {
       "path": "vst-initiation-2026-10-03.html",
       "name": "vst-initiation-2026-10-03.html",
-      "size": 61212,
+      "size": 61256,
       "sizeText": "59.8 KB",
       "modified": "2026-10-26",
       "ext": ".html",
