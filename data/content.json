@@ -4,6 +4,58 @@
  "generated": "2026-10-23",
  "items": [
   {
+   "slug": "fomc-reaction-2026-10-28",
+   "url": null,
+   "title": "The Fed’s October decision — reaction note",
+   "date": "2026-10-28",
+   "type": "Essay",
+   "tickers": [],
+   "sectors": [
+    "Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Hold or hike — what the decision does to the financing math.",
+   "readMin": null,
+   "status": "upcoming"
+  },
+  {
+   "slug": "vst-fy27-guide-graded",
+   "url": null,
+   "title": "Vistra — the first FY27 guide, graded against the published gate",
+   "date": "2026-11-06",
+   "type": "Coverage update",
+   "tickers": [
+    "VST"
+   ],
+   "sectors": [
+    "Power"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "The one number that grades the initiation.",
+   "readMin": null,
+   "status": "upcoming"
+  },
+  {
+   "slug": "dell-reunderwrite",
+   "url": null,
+   "title": "Dell — FY27 re-underwrite, scoring our July hold",
+   "date": null,
+   "type": "Coverage update",
+   "tickers": [
+    "DELL"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Q4 2026.",
+   "readMin": null,
+   "status": "upcoming"
+  },
+  {
    "slug": "reading-a-10k",
    "url": null,
    "title": "Notes on reading a 10-K like you mean it",
@@ -16,26 +68,6 @@
    "rating": null,
    "target": null,
    "summary": "A working method for the filing, not the press release.",
-   "readMin": null,
-   "status": "upcoming"
-  },
-  {
-   "slug": "oil-capital-allocation-tier-list",
-   "url": null,
-   "title": "Integrated oil: capital-allocation tier list",
-   "date": null,
-   "type": "Sector note",
-   "tickers": [
-    "XOM",
-    "CVX",
-    "COP"
-   ],
-   "sectors": [
-    "Energy"
-   ],
-   "rating": null,
-   "target": null,
-   "summary": "Ranking the majors on where the next dollar of cash flow goes.",
    "readMin": null,
    "status": "upcoming"
   },

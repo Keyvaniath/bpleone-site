@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-10-26",
   "fileCount": 181,
-  "totalBytes": 11641125,
+  "totalBytes": 11640344,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -1459,9 +1459,9 @@
     {
       "path": "data/content.json",
       "name": "content.json",
-      "size": 52412,
-      "sizeText": "51.2 KB",
-      "modified": "2026-10-23",
+      "size": 51631,
+      "sizeText": "50.4 KB",
+      "modified": "2026-10-26",
       "ext": ".json",
       "category": "site-code"
     },
