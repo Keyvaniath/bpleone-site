@@ -3,8 +3,10 @@
 # The `manifests.yml` guard catches a truncated <html>; this catches the subtler
 # failure that started everything — "page loads fine but the hero chart + ticker
 # are dead" (e.g. the missing <script src=script.js> regression). It serves THIS
-# commit's HTML locally and drives it with a real browser (charts fetch from the
-# live Worker), so it validates the about-to-ship version before you trust it.
+# commit's HTML locally and drives it with a real browser (the chart and ticker
+# are TradingView widgets since 2026-09-30; the test checks that script.js
+# mounted both iframes and threw no error), so it validates the about-to-ship
+# version before you trust it.
 #
 # Runs on every push to main + on demand. Fails (and emails you) if charts don't
 # populate within ~20s.
@@ -35,11 +37,20 @@ jobs:
           npx http-server . -p 8080 -s &
           sleep 3
           cat > smoke.js <<'EOF'
+          // What the homepage renders since 2026-09-30 (commit bda2e69): script.js
+          // mounts TradingView widgets into #ticker-tape and .hero-chart-wrap
+          // (iframes from tradingview-widget.com), replacing the Yahoo-era
+          // .ticker-item spans and the #hero-chart-label "Loading..." SVG text.
+          // The old checks could never pass after that change; these check the
+          // same two things (ticker alive, hero chart alive) the way they are
+          // built now, plus: script.js loaded, and no uncaught JS error on load.
           const { chromium } = require('playwright');
           (async () => {
             const browser = await chromium.launch();
             const page = await browser.newPage();
             const fails = [];
+            const jsErrors = [];
+            page.on('pageerror', e => jsErrors.push(String(e && e.message || e)));
             await page.goto('http://localhost:8080/', { waitUntil: 'load', timeout: 30000 });
 
             // 1) script.js must actually load (the regression that killed the homepage)
@@ -47,31 +58,38 @@ jobs:
               performance.getEntriesByType('resource').some(r => /script\.js/.test(r.name)));
             if (!scriptLoaded) fails.push('script.js was never loaded by the page');
 
-            // 2) hero chart must leave "Loading…" and show a real S&P label
+            // 2) hero chart: script.js must have swapped the placeholder SVG for the
+            //    TradingView symbol-overview widget (an iframe inside .hero-chart-wrap)
             try {
               await page.waitForFunction(() => {
-                const l = document.getElementById('hero-chart-label');
-                return l && !/loading/i.test(l.textContent) && /S&P|\d{3,}/.test(l.textContent);
+                const w = document.querySelector('.hero-chart-wrap');
+                if (!w || !w.classList.contains('tv-hero')) return false;
+                const f = w.querySelector('iframe');
+                return !!(f && /symbol-overview/.test(f.getAttribute('src') || '')) && !w.querySelector('#hero-chart');
               }, { timeout: 20000 });
-              console.log('OK  hero chart:', (await page.$eval('#hero-chart-label', e => e.textContent)).trim());
-            } catch { fails.push('hero chart stuck on Loading / never rendered'); }
+              console.log('OK  hero chart: TradingView symbol-overview mounted, placeholder SVG replaced');
+            } catch { fails.push('hero chart never mounted (no TradingView symbol-overview iframe in .hero-chart-wrap)'); }
 
-            // 3) ticker tape must populate with multiple items
+            // 3) ticker tape: the TradingView ticker-tape widget must be mounted
             try {
               await page.waitForFunction(() => {
                 const t = document.getElementById('ticker-tape');
-                return t && t.querySelectorAll('.ticker-item').length > 3;
+                if (!t || !t.classList.contains('tv-ticker')) return false;
+                const f = t.querySelector('iframe');
+                return !!(f && /ticker-tape/.test(f.getAttribute('src') || ''));
               }, { timeout: 20000 });
-              const n = await page.$$eval('#ticker-tape .ticker-item', els => els.length);
-              console.log('OK  ticker populated:', n, 'items');
-            } catch { fails.push('ticker tape never populated'); }
+              console.log('OK  ticker tape: TradingView ticker-tape mounted');
+            } catch { fails.push('ticker tape never mounted (no TradingView ticker-tape iframe in #ticker-tape)'); }
+
+            // 4) no uncaught JavaScript error while the homepage loaded
+            if (jsErrors.length) fails.push('uncaught JS error(s): ' + jsErrors.join(' | '));
 
             await browser.close();
             if (fails.length) {
               console.error('\nSMOKE TEST FAILED:\n - ' + fails.join('\n - '));
               process.exit(1);
             }
-            console.log('\nSmoke test passed — homepage charts + ticker render.');
+            console.log('\nSmoke test passed: homepage mounts its TradingView chart + ticker, script.js loaded, no JS errors.');
           })().catch(e => { console.error(e); process.exit(1); });
           EOF
           node smoke.js
