@@ -4,6 +4,38 @@
   "generated": "2026-10-26",
   "reports": [
     {
+      "id": "vst-initiation-2026-10-onepager",
+      "title": "vst-initiation-2026-10-onepager",
+      "subtitle": "",
+      "type": "report",
+      "published": "2026-10-26",
+      "page": "",
+      "files": [
+        {
+          "label": "vst-initiation-2026-10-onepager",
+          "path": "assets/reports/vst-initiation-2026-10-onepager.pdf",
+          "size": 177255,
+          "gated": false
+        }
+      ]
+    },
+    {
+      "id": "vst-initiation-2026-10-report",
+      "title": "vst-initiation-2026-10-report",
+      "subtitle": "",
+      "type": "report",
+      "published": "2026-10-26",
+      "page": "",
+      "files": [
+        {
+          "label": "vst-initiation-2026-10-report",
+          "path": "assets/reports/vst-initiation-2026-10-report.pdf",
+          "size": 698278,
+          "gated": false
+        }
+      ]
+    },
+    {
       "id": "mu-er-initiation-2026-05",
       "title": "Micron Technology (MU) — Equity Research Initiation",
       "subtitle": "Riding the AI Memory Supercycle (Buy, PT $895)",
