@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>A Mixed Answer From the Buyers &middot; Brandon Leon</title>
+<meta name="description" content="Alphabet pointed significantly higher for 2027 and Microsoft to a second-half acceleration; Meta gave no direction. The demand case stands on two buyers and the financing question is open on all of them." />
+<meta name="author" content="Brandon Leon" /><meta name="doc-class" content="published" /><link rel="canonical" href="https://bpleon.com/capex-2027-guides-2026-10-28.html" />
+<meta property="og:type" content="article" /><meta property="og:url" content="https://bpleon.com/capex-2027-guides-2026-10-28.html" />
+<meta property="og:title" content="A Mixed Answer From the Buyers" />
+<meta property="og:description" content="Alphabet pointed significantly higher for 2027 and Microsoft to a second-half acceleration; Meta gave no direction. The demand case stands on two buyers and the financing question is open on all of them." />
+<meta property="og:image" content="https://bpleon.com/assets/brand/og-image.png" /><meta property="article:published_time" content="2026-10-29" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css?v=51" />
+<style>
+    .pitch-meta { display:flex; gap:1.5rem; flex-wrap:wrap; font-family:var(--sans); font-size:.85rem;
+      color:var(--muted); letter-spacing:.04em; margin:.25rem 0 1.75rem; }
+    .pitch-meta span strong { color:var(--ink-soft); font-weight:500; margin-right:.35em; letter-spacing:.04em; }
+    .article-deck { font-family:var(--serif); font-size:1.18rem; font-style:italic; color:var(--ink-soft); line-height:1.55; margin:.4rem 0 1rem; }
+    .pitch-thesis { padding:1.6rem 1.85rem; background:var(--bg-soft); border-left:3px solid var(--accent-2);
+      border-radius:12px; margin:1.25rem 0 2.75rem; font-family:var(--serif); font-size:1.16rem;
+      line-height:1.6; color:var(--ink); }
+    .pitch-thesis p { margin:0 0 1em; } .pitch-thesis p:last-child { margin:0; }
+    .pitch-thesis-label { display:block; font-family:var(--sans); font-size:.78rem; font-weight:600;
+      letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:0 0 .65em; }
+    .pitch-section { margin:3rem 0; padding-top:1.75rem; border-top:1px solid var(--rule); }
+    .pitch-section:first-of-type { border-top:0; padding-top:0; }
+    .pitch-section h2 { margin-top:0; font-size:1.55rem; }
+    .pitch-section h3 { font-size:1.15rem; margin-top:1.6em; }
+    .pull-quote { margin:2rem 0; padding:1.4rem 1.85rem; background:var(--bg-soft);
+      border-left:3px solid var(--accent); border-radius:10px; font-family:var(--serif);
+      font-style:italic; font-size:1.18rem; line-height:1.55; color:var(--ink); }
+    .article-chart { margin:2rem 0; padding:1.5rem; background:var(--bg-soft);
+      border-left:3px solid var(--accent); border-radius:8px; }
+    .article-chart .chart-title { font-family:var(--sans); font-size:.78rem; font-weight:600;
+      letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:0 0 .4rem; }
+    .article-chart .chart-headline { font-family:var(--serif); font-size:1.2rem; font-weight:500;
+      color:var(--ink); margin:0 0 1.2rem; line-height:1.4; }
+    .article-chart .chart-svg { width:100%; height:auto; max-width:760px; display:block; margin:0 auto; }
+    .article-chart .chart-caption { font-family:var(--sans); font-size:.82rem; color:var(--ink-soft);
+      margin:1rem 0 0; line-height:1.5; font-style:italic; }
+    table.pitch-table { width:100%; border-collapse:collapse; margin:1.25rem 0 2rem;
+      font-family:var(--sans); font-size:.88rem; }
+    table.pitch-table th { background:var(--bg-soft); color:var(--ink); font-weight:600;
+      letter-spacing:.04em; padding:.6rem .8rem; text-align:left; border-bottom:2px solid var(--rule); }
+    table.pitch-table td { padding:.6rem .8rem; border-bottom:1px solid var(--rule);
+      color:var(--ink-soft); vertical-align:top; }
+    table.pitch-table td strong { color:var(--ink); }
+    table.pitch-table td q { font-family:var(--serif); font-style:italic; quotes:"\201C" "\201D"; }
+    table.pitch-table tr.row-warn td { background:rgba(201,169,97,0.08); }
+    table.pitch-table tr.row-pass td { background:rgba(91,127,107,0.08); }
+    table.pitch-table tr.row-bad td { background:rgba(181,106,63,0.08); }
+    .simply-recap { margin:1.75rem 0 0; padding:1rem 1.25rem; background:rgba(91,127,107,0.10);
+      border-left:3px solid #5b7f6b; border-radius:6px; font-family:var(--sans); font-size:.95rem;
+      color:var(--ink); line-height:1.55; }
+    .simply-recap strong { color:#4a6a58; font-weight:700; margin-right:.4em; }
+    .fill { background:#fff3b0; outline:2px dashed #b56a3f; padding:0 .3em; font-weight:600;
+      font-family:var(--sans); font-size:.93em; }
+    .branch { margin:1.25rem 0; padding:1.1rem 1.25rem; border-radius:6px; }
+    .branch-a { background:rgba(91,127,107,.10); border-left:3px solid #5b7f6b; }
+    .branch-b { background:rgba(181,106,63,.08); border-left:3px solid #b56a3f; }
+    .branch-c { background:rgba(201,169,97,.10); border-left:3px solid #c9a961; }
+    .branch .bl { display:block; font-family:var(--sans); font-size:.9rem; font-weight:700; margin-bottom:.5em; }
+    .branch-a .bl { color:#4a6a58; } .branch-b .bl { color:#b56a3f; } .branch-c .bl { color:#a08440; }
+    .runbook { background:rgba(11,31,58,.05); border-left:3px solid #0B1F3A; padding:1.1rem 1.25rem;
+      border-radius:6px; margin:1.5rem 0; font-family:var(--sans); font-size:.93rem; line-height:1.55; }
+    .runbook .bl { display:block; font-weight:700; color:#0B1F3A; margin-bottom:.5em; }
+    .disclosures { margin-top:2.5rem; padding-top:1.4rem; border-top:1px solid var(--rule);
+      font-family:var(--sans); font-size:.8rem; line-height:1.6; color:var(--muted); }
+    .sources { font-family:var(--sans); font-size:.82rem; color:var(--ink-soft); line-height:1.6; }
+    .sources li { margin:.35rem 0; }
+</style>
+</head>
+<body style="background:#fbf7ef;color:#1c1a16;">
+<header class="site-header"><a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+<button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="writing.html">Research</a><a href="coverage.html">Coverage</a><a href="toolkit.html">Toolkit</a><a href="markets.html">Markets</a><a href="about.html">About</a><a class="nav-subscribe" href="https://bpleon.substack.com/subscribe">Subscribe</a></nav></header>
+<main id="main" class="prose"><article>
+
+
+<header class="page-head">
+  <p class="eyebrow">Hyperscaler capital spending &middot; October 28&ndash;29, 2026 &middot; Macro &middot; No rating</p>
+  <h1>A Mixed Answer From the Buyers</h1>
+  <p class="article-deck">Two of the three buyers who have reported committed to spending more in 2027 and the third would not say; what none of them settled is who pays for it.</p>
+  <p class="pitch-meta"><span><strong>Posted</strong> October 29, 2026</span><span><strong>Author</strong> Brandon Leon</span><span><strong>Data as of</strong> company releases and calls as reported; Amazon reports Thursday and is added in a dated update</span></p>
+
+  <div class="pitch-thesis"><span class="pitch-thesis-label">The verdict</span>
+
+  <p>No buyer stepped back. Meta, about a fifth of the four plans at the midpoint of its 2026 range, gave no 2027 direction at all: &ldquo;we expect to continue investing aggressively,&rdquo; with the budget still being built. Our own wording from October 19 requires restraint here: one company guiding lower needs its size and reasons examined before it means anything about the cycle.<sup>[15]</sup> That is neither a build pause nor a demand statement; it is a budget not yet set, and the disclosures do not allow a determination.</p>
+  <p>The other two pointed higher, so the demand case is intact on the majority of the spending and unproven on the rest. That is a narrower conclusion than either of the clean outcomes would have allowed, and it leaves the financing question exactly where October 19 left it.</p>
+  
+
+  </div>
+</header>
+
+<nav class="toc" data-bp="toc" aria-label="Contents"></nav>
+
+<section class="pitch-section" id="plans"><h2>1. What the buyers had already said</h2>
+
+<p>Everyone was waiting for the 2027 numbers. The buyers had already answered the question underneath them: each of the four raised its plan for the current year at least once in 2026, and that record is the baseline the new guides are judged against.</p>
+
+<p>Alphabet opened the year at $175 to $185 billion and had reached $195 to $205 billion by July, having told shareholders in June that 2027 would &ldquo;significantly increase&rdquo; from there.<sup>[1][2][3]</sup> Amazon said about $200 billion in February and about $220 billion in July, with the chief executive attributing the increase to the cost of memory and adding that demand would exceed capacity &ldquo;in 2027, too.&rdquo;<sup>[11][13]</sup> Meta started at $115 to $135 billion, raised the range in April on component prices and has since narrowed it upward twice, to $135 to $145 billion last week.<sup>[7][8][9][10]</sup> Microsoft, on a June fiscal year, said in July that fiscal 2027 spending &ldquo;will grow year-over-year&rdquo; and put the figure at about $175 billion after moving new data-center leases off the capital-spending line.<sup>[6]</sup></p>
+
+<!-- chart:revisions -->
+<figure class="article-chart">
+  <p class="chart-title">Chart 1: The Plans Kept Rising</p>
+  <p class="chart-headline">Every buyer raised its plan at least once this year; Meta did it three times.</p>
+  <svg class="chart-svg" viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" aria-label="Step lines of each company's current-year capital spending plan during 2026: Alphabet 180 to 185 to 200, Amazon 200 to 220, Meta 125 to 135 to 137.5 to 140, and Microsoft a single fiscal 2027 point at 175. Open markers mark this week's reports.">
+    <text x="380.0" y="20.0" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">Capital-spending plans for the current year, midpoint of each guide as given, 2026 ($bn)</text>
+    <line x1="78" y1="270.0" x2="676" y2="270.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="273.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">100</text>
+    <line x1="78" y1="238.0" x2="676" y2="238.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="241.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">120</text>
+    <line x1="78" y1="206.0" x2="676" y2="206.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="209.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">140</text>
+    <line x1="78" y1="174.0" x2="676" y2="174.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="177.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">160</text>
+    <line x1="78" y1="142.0" x2="676" y2="142.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="145.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">180</text>
+    <line x1="78" y1="110.0" x2="676" y2="110.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="113.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">200</text>
+    <line x1="78" y1="78.0" x2="676" y2="78.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="81.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">220</text>
+    <line x1="78" y1="46.0" x2="676" y2="46.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="49.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">240</text>
+    <line x1="78" y1="46" x2="78" y2="270" stroke="rgba(28,26,22,.25)" stroke-width="1"/><line x1="78" y1="270" x2="676" y2="270" stroke="rgba(28,26,22,.25)" stroke-width="1"/>
+    <rect x="78" y="29" width="14" height="8" fill="#0B1F3A"/>
+    <text x="97.0" y="36.0" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="start">Alphabet 2026</text>
+    <rect x="185" y="29" width="14" height="8" fill="#b56a3f"/>
+    <text x="204.8" y="36.0" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="start">Amazon 2026</text>
+    <rect x="282" y="29" width="14" height="8" fill="#a08440"/>
+    <text x="301.4" y="36.0" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="start">Meta 2026</text>
+    <rect x="367" y="29" width="14" height="8" fill="#5b7f6b"/>
+    <text x="386.8" y="36.0" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="start">Microsoft FY27</text>
+    <polyline fill="none" stroke="#0B1F3A" stroke-width="2" points="133.9,142.0 271.9,142.0 271.9,134.0 409.9,134.0 409.9,110.0 570.9,110.0 570.9,110.0 570.9,110.0"/>
+    <circle cx="133.9" cy="142.0" r="4" fill="#0B1F3A"/>
+    <text x="139.9" y="133.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="start">175-185</text>
+    <circle cx="271.9" cy="134.0" r="4" fill="#0B1F3A"/>
+    <text x="271.9" y="125.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="middle">180-190</text>
+    <circle cx="409.9" cy="110.0" r="4" fill="#0B1F3A"/>
+    <text x="409.9" y="101.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="middle">195-205</text>
+    <circle cx="570.9" cy="110.0" r="4" fill="#0B1F3A"/>
+    <text x="570.9" y="101.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="middle">195-205 unchanged (Oct 28)</text>
+    <circle cx="570.9" cy="110.0" r="4.5" fill="none" stroke="#0B1F3A" stroke-width="2"/>
+    <polyline fill="none" stroke="#b56a3f" stroke-width="2" points="135.5,110.0 423.0,110.0 423.0,78.0 570.9,78.0"/>
+    <circle cx="135.5" cy="110.0" r="4" fill="#b56a3f"/>
+    <text x="141.5" y="101.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#b56a3f" text-anchor="start">~200</text>
+    <circle cx="423.0" cy="78.0" r="4" fill="#b56a3f"/>
+    <text x="423.0" y="69.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#b56a3f" text-anchor="middle">~220</text>
+    <circle cx="572.5" cy="78.0" r="4.5" fill="none" stroke="#b56a3f" stroke-width="2"/>
+    <polyline fill="none" stroke="#a08440" stroke-width="2" points="122.4,230.0 271.9,230.0 271.9,214.0 421.4,214.0 421.4,210.0 559.4,210.0 559.4,206.0 570.9,206.0"/>
+    <circle cx="122.4" cy="230.0" r="4" fill="#a08440"/>
+    <text x="128.4" y="221.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#a08440" text-anchor="start">115-135</text>
+    <circle cx="271.9" cy="214.0" r="4" fill="#a08440"/>
+    <text x="271.9" y="205.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#a08440" text-anchor="middle">125-145</text>
+    <circle cx="421.4" cy="210.0" r="4" fill="#a08440"/>
+    <text x="421.4" y="201.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#a08440" text-anchor="middle">130-145</text>
+    <circle cx="559.4" cy="206.0" r="4" fill="#a08440"/>
+    <text x="559.4" y="197.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#a08440" text-anchor="middle">135-145</text>
+    <circle cx="421.4" cy="150.0" r="4" fill="#5b7f6b"/>
+    <text x="427.4" y="141.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#5b7f6b" text-anchor="start">FY27 ~175</text>
+    <circle cx="570.9" cy="150.0" r="4.5" fill="none" stroke="#5b7f6b" stroke-width="2"/>
+    <text x="572.9" y="58.0" font-family="Inter,sans-serif" font-size="9" fill="#9CA3AF" text-anchor="end">prints Oct 28-29</text>
+    <text x="78.0" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Jan</text>
+    <text x="128.9" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Feb</text>
+    <text x="174.9" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Mar</text>
+    <text x="225.9" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Apr</text>
+    <text x="275.1" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">May</text>
+    <text x="326.1" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Jun</text>
+    <text x="375.4" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Jul</text>
+    <text x="426.3" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Aug</text>
+    <text x="477.2" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Sep</text>
+    <text x="526.5" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Oct</text>
+    <text x="577.4" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Nov</text>
+    <text x="626.7" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Dec</text>
+    <text x="380.0" y="306.0" font-family="Inter,sans-serif" font-size="9" fill="#9CA3AF" text-anchor="middle">Alphabet and Amazon: cash purchases of property and equipment. Meta: including finance-lease principal.</text>
+    <text x="380.0" y="318.0" font-family="Inter,sans-serif" font-size="9" fill="#9CA3AF" text-anchor="middle">Microsoft: fiscal year to June 2027, after moving new data-center leases off the capital-spending line.</text>
+  </svg>
+  <p class="chart-caption">Sources: company releases and calls, each quoted in the text and listed in the sources.<sup>[1]&ndash;[13]</sup> Plotted at the midpoint of each range on the date it was given.</p>
+</figure>
+<!-- /chart:revisions -->
+
+<p>Add the four current-year plans and the figure is about $735 billion, against roughly $410 billion the same companies spent in their last completed year.<sup>[1][5][7][11]</sup> The definitions differ, and Microsoft&rsquo;s fiscal year straddles two calendar years, so treat the sum as a measure of scale and nothing more precise. Even as scale, it says the buyers were committed to nearly twice last year&rsquo;s total before anyone asked them about 2027.</p>
+
+<!-- chart:levels -->
+<figure class="article-chart">
+  <p class="chart-title">Chart 2: The Scale of the Commitment</p>
+  <p class="chart-headline">The current-year plans sum to roughly $735 billion, against about $411 billion spent last year.</p>
+  <svg class="chart-svg" viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" aria-label="Grouped bars by company: last completed year actual, current plan midpoint, and next-year guide where given. Alphabet 91 then 200; Amazon 132 then 220; Meta 72 then 140; Microsoft fiscal 2026 116 then fiscal 2027 plan 175.">
+    <text x="380.0" y="20.0" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">Last year spent, this year planned, next year guided ($bn)</text>
+    <line x1="78" y1="270.0" x2="676" y2="270.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="273.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">0</text>
+    <line x1="78" y1="238.0" x2="676" y2="238.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="241.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">40</text>
+    <line x1="78" y1="206.0" x2="676" y2="206.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="209.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">80</text>
+    <line x1="78" y1="174.0" x2="676" y2="174.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="177.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">120</text>
+    <line x1="78" y1="142.0" x2="676" y2="142.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="145.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">160</text>
+    <line x1="78" y1="110.0" x2="676" y2="110.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="113.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">200</text>
+    <line x1="78" y1="78.0" x2="676" y2="78.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="81.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">240</text>
+    <line x1="78" y1="46.0" x2="676" y2="46.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="49.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">280</text>
+    <line x1="78" y1="46" x2="78" y2="270" stroke="rgba(28,26,22,.25)" stroke-width="1"/><line x1="78" y1="270" x2="676" y2="270" stroke="rgba(28,26,22,.25)" stroke-width="1"/>
+    <rect x="78" y="29" width="14" height="8" fill="#9CA3AF"/>
+    <text x="97.0" y="36.0" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="start">last completed year, actual</text>
+    <rect x="264" y="29" width="14" height="8" fill="#0B1F3A"/>
+    <text x="283.2" y="36.0" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="start">current plan, midpoint</text>
+    <rect x="422" y="29" width="14" height="8" fill="#c9a961"/>
+    <text x="441.4" y="36.0" font-family="Inter,sans-serif" font-size="9" fill="#6B7280" text-anchor="start">next year, as guided this week</text>
+    <rect x="97.8" y="196.8" width="34" height="73.2" fill="#9CA3AF"/>
+    <text x="114.8" y="191.8" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#6B7280" text-anchor="middle">91</text>
+    <rect x="135.8" y="110.0" width="34" height="160.0" fill="#0B1F3A"/>
+    <text x="152.8" y="105.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="middle">200</text>
+    <rect x="173.8" y="110.0" width="34" height="160.0" fill="none" stroke="#c9a961" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="190.8" y="105.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#a08440" text-anchor="middle">words</text>
+    <text x="152.8" y="288.0" font-family="Inter,sans-serif" font-size="9.5" font-weight="700" fill="#0B1F3A" text-anchor="middle">Alphabet</text>
+    <text x="152.8" y="300.0" font-family="Inter,sans-serif" font-size="8.5" fill="#9CA3AF" text-anchor="middle">2025 / 2026 plan</text>
+    <rect x="247.2" y="164.5" width="34" height="105.5" fill="#9CA3AF"/>
+    <text x="264.2" y="159.5" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#6B7280" text-anchor="middle">132</text>
+    <rect x="285.2" y="94.0" width="34" height="176.0" fill="#0B1F3A"/>
+    <text x="302.2" y="89.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="middle">220</text>
+    <rect x="323.2" y="94.0" width="34" height="176.0" fill="none" stroke="#c9a961" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="340.2" y="89.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#a08440" text-anchor="middle">?</text>
+    <text x="302.2" y="288.0" font-family="Inter,sans-serif" font-size="9.5" font-weight="700" fill="#0B1F3A" text-anchor="middle">Amazon</text>
+    <text x="302.2" y="300.0" font-family="Inter,sans-serif" font-size="8.5" fill="#9CA3AF" text-anchor="middle">2025 / 2026 plan</text>
+    <rect x="396.8" y="212.2" width="34" height="57.8" fill="#9CA3AF"/>
+    <text x="413.8" y="207.2" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#6B7280" text-anchor="middle">72</text>
+    <rect x="434.8" y="158.0" width="34" height="112.0" fill="#0B1F3A"/>
+    <text x="451.8" y="153.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="middle">140</text>
+    <rect x="472.8" y="158.0" width="34" height="112.0" fill="none" stroke="#c9a961" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="489.8" y="153.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#a08440" text-anchor="middle">words</text>
+    <text x="451.8" y="288.0" font-family="Inter,sans-serif" font-size="9.5" font-weight="700" fill="#0B1F3A" text-anchor="middle">Meta</text>
+    <text x="451.8" y="300.0" font-family="Inter,sans-serif" font-size="8.5" fill="#9CA3AF" text-anchor="middle">2025 / 2026 plan</text>
+    <rect x="546.2" y="177.2" width="34" height="92.8" fill="#9CA3AF"/>
+    <text x="563.2" y="172.2" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#6B7280" text-anchor="middle">116</text>
+    <rect x="584.2" y="130.0" width="34" height="140.0" fill="#0B1F3A"/>
+    <text x="601.2" y="125.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="middle">175</text>
+    <rect x="622.2" y="130.0" width="34" height="140.0" fill="none" stroke="#c9a961" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="639.2" y="125.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#a08440" text-anchor="middle">words</text>
+    <text x="601.2" y="288.0" font-family="Inter,sans-serif" font-size="9.5" font-weight="700" fill="#0B1F3A" text-anchor="middle">Microsoft</text>
+    <text x="601.2" y="300.0" font-family="Inter,sans-serif" font-size="8.5" fill="#9CA3AF" text-anchor="middle">FY26 (to Jun 2026) / FY27 plan</text>
+    <text x="380.0" y="318.0" font-family="Inter,sans-serif" font-size="9" fill="#9CA3AF" text-anchor="middle">Four plans summed: about $735 billion for the current year against about $411 billion spent in the last completed year, on each company's own definition.</text>
+  </svg>
+  <p class="chart-caption">Sources: cash flow statements in each company's results release for the actuals; guides as quoted in the text. Definitions differ by company and the sum mixes Microsoft's fiscal years with calendar years; read it as scale only.</p>
+</figure>
+<!-- /chart:levels -->
+
+<p>So the live question was narrower than the headlines suggested: would the buyers commit to more in 2027 than the roughly $735 billion already planned, and how would they pay for it. The first half is the demand case the October 19 note said this week would settle. The second half is the financing question it said this week could not.</p>
+</section>
+
+<section class="pitch-section" id="grading"><h2>2. How the market has been grading the raises</h2>
+
+<p>Which of the two halves the market cares about is also already on the record. The July reports are the best guide, because all four companies raised or held their plans within nine days and the reactions split cleanly. Microsoft left its calendar-2026 plan unchanged, backed it with Azure growth of 43% and a contracted backlog, and rose 15.5% the next session. Amazon raised to about $220 billion with AWS accelerating to 37% growth and rose 15.3%. Alphabet raised to $195 to $205 billion in the same quarter it reported its first negative free cash flow and after raising $49.6 billion of equity and $56.2 billion of debt in six months, and fell 7.1%. Meta raised its range alongside free cash flow of under $1 billion and fell 8.0%.<sup>[4][5][12][14]</sup></p>
+
+<p>October has so far delivered only the sold half of that pattern. Meta narrowed its range upward again on October 21, reported negative free cash flow for the quarter, and fell 7.0% the next day. Lam Research, which sells the equipment this spending buys, guided its December quarter to $8.6 billion against the $8.1 billion we had registered as the proof level, and fell 11.8%.<sup>[10][14][17]</sup> Good news on the spending line has been sold for two weeks. The market is grading two other things: whether the spending is paid for from operations, and whether the revenue it is meant to produce is showing up.</p>
+
+<!-- chart:reactions -->
+<figure class="article-chart">
+  <p class="chart-title">Chart 3: How the Market Has Graded the Raises</p>
+  <p class="chart-headline">Since July the market has paid the plans funded from operations and fined the ones that arrived with negative free cash flow.</p>
+  <svg class="chart-svg" viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" aria-label="Horizontal bars of next-session moves: Alphabet July minus 7, Meta July minus 8, Microsoft July plus 15, Amazon July plus 15, Meta October minus 7, Lam October minus 12, with three empty bars for this week's reports.">
+    <text x="380.0" y="20.0" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">Next-session move after each capital-spending message, close to close (%)</text>
+    <line x1="78" y1="46" x2="78" y2="270" stroke="rgba(28,26,22,.25)" stroke-width="1"/><line x1="78" y1="270" x2="676" y2="270" stroke="rgba(28,26,22,.25)" stroke-width="1"/>
+    <line x1="308.5" y1="46" x2="308.5" y2="270" stroke="rgba(28,26,22,.08)"/>
+    <text x="308.5" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">-15</text>
+    <line x1="361.0" y1="46" x2="361.0" y2="270" stroke="rgba(28,26,22,.08)"/>
+    <text x="361.0" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">-10</text>
+    <line x1="413.5" y1="46" x2="413.5" y2="270" stroke="rgba(28,26,22,.08)"/>
+    <text x="413.5" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">-5</text>
+    <line x1="466.0" y1="46" x2="466.0" y2="270" stroke="rgba(28,26,22,.08)"/>
+    <text x="466.0" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">0</text>
+    <line x1="518.5" y1="46" x2="518.5" y2="270" stroke="rgba(28,26,22,.08)"/>
+    <text x="518.5" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">+5</text>
+    <line x1="571.0" y1="46" x2="571.0" y2="270" stroke="rgba(28,26,22,.08)"/>
+    <text x="571.0" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">+10</text>
+    <line x1="623.5" y1="46" x2="623.5" y2="270" stroke="rgba(28,26,22,.08)"/>
+    <text x="623.5" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">+15</text>
+    <line x1="676.0" y1="46" x2="676.0" y2="270" stroke="rgba(28,26,22,.08)"/>
+    <text x="676.0" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">+20</text>
+    <line x1="466.0" y1="46" x2="466.0" y2="270" stroke="rgba(28,26,22,.35)"/>
+    <text x="290.0" y="61.4" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="end">Alphabet, Jul 22: raised to $195-205B</text>
+    <rect x="391.1" y="51.6" width="74.9" height="13.7" fill="#b56a3f"/>
+    <text x="386.1" y="61.4" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#b56a3f" text-anchor="end">-7.1%</text>
+    <text x="290.0" y="86.3" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="end">Meta, Jul 29: raised to $130-145B</text>
+    <rect x="382.5" y="76.5" width="83.5" height="13.7" fill="#b56a3f"/>
+    <text x="377.5" y="86.3" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#b56a3f" text-anchor="end">-8.0%</text>
+    <text x="290.0" y="111.2" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="end">Microsoft, Jul 29: 2026 plan unchanged</text>
+    <rect x="466.0" y="101.4" width="162.8" height="13.7" fill="#5b7f6b"/>
+    <text x="633.8" y="111.2" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#5b7f6b" text-anchor="start">+15.5%</text>
+    <text x="290.0" y="136.1" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="end">Amazon, Jul 30: raised to ~$220B</text>
+    <rect x="466.0" y="126.3" width="160.9" height="13.7" fill="#5b7f6b"/>
+    <text x="631.9" y="136.1" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#5b7f6b" text-anchor="start">+15.3%</text>
+    <text x="290.0" y="161.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="end">Meta, Oct 21: raised to $135-145B</text>
+    <rect x="392.7" y="151.2" width="73.3" height="13.7" fill="#b56a3f"/>
+    <text x="387.7" y="161.0" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#b56a3f" text-anchor="end">-7.0%</text>
+    <text x="290.0" y="185.9" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#0B1F3A" text-anchor="end">Lam, Oct 21: guided above its gate</text>
+    <rect x="342.6" y="176.0" width="123.4" height="13.7" fill="#b56a3f"/>
+    <text x="337.6" y="185.9" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#b56a3f" text-anchor="end">-11.8%</text>
+    <text x="290.0" y="210.8" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="end">Microsoft, Oct 28</text>
+    <rect x="468.0" y="200.9" width="60" height="13.7" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="534.0" y="210.8" font-family="Inter,sans-serif" font-size="9" fill="#9CA3AF" text-anchor="start">to come</text>
+    <text x="290.0" y="235.7" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="end">Alphabet, Oct 28</text>
+    <rect x="468.0" y="225.8" width="60" height="13.7" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="534.0" y="235.7" font-family="Inter,sans-serif" font-size="9" fill="#9CA3AF" text-anchor="start">to come</text>
+    <text x="290.0" y="260.6" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="end">Amazon, Oct 29</text>
+    <rect x="468.0" y="250.7" width="60" height="13.7" fill="none" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="4,3"/>
+    <text x="534.0" y="260.6" font-family="Inter,sans-serif" font-size="9" fill="#9CA3AF" text-anchor="start">to come</text>
+    <text x="380.0" y="312.0" font-family="Inter,sans-serif" font-size="9.5" fill="#9CA3AF" text-anchor="middle">Green: the market paid the message. Terracotta: it fined it. Dashed: this week's reports, filled after the next close.</text>
+  </svg>
+  <p class="chart-caption">Source: Yahoo Finance daily closes;<sup>[14]</sup> the move is from the close before the release to the next close. Messages as quoted in the text.</p>
+</figure>
+<!-- /chart:reactions -->
+
+<p>That is why each of this week&rsquo;s reports carries a proof test we set before it, each at a 55% prior: Azure growth above the 45% Microsoft guided, Google Cloud backlog above $560 billion, and AWS growth above the 37% of the second quarter.<sup>[16]</sup> A raised 2027 plan that arrives with its proof test passed is the July Microsoft and Amazon pattern. A raised plan with the proof missed, or with new external financing, is the Alphabet and Meta pattern, and on the evidence of the last three months the shares will say so by the next close.</p>
+
+<p>One accounting point decides how to read Microsoft&rsquo;s number. The ~$175 billion for fiscal 2027 is after a change that moves new data-center leases from finance to operating treatment; finance leases count as capital spending and operating leases do not, and the company said the shift lowered the figure it would otherwise have given.<sup>[6]</sup> A reported number that comes in under what the Street carried may therefore be an accounting effect, with the build unchanged. The operating-lease commitments in the quarterly filing are where the difference shows, and we read that line before calling anything a cut.</p>
+</section>
+
+<section class="pitch-section" id="guides"><h2>3. The guides</h2>
+
+<p>In <a href="weekly-outlook-2026-10-20.html">the October 19 outlook</a> we wrote: &ldquo;if the combined guidance from the large cloud buyers points higher than 2026, the demand case survives the credit scare and we treat the drawdown as a repricing of leverage, not of orders. If the guidance points flat or lower across more than one major buyer, we treat the cycle as turning and say so; a single company guiding lower needs its size and reasons examined before it means anything about the cycle.&rdquo;<sup>[15]</sup> The table scores each company on that sentence.</p>
+
+<table class="pitch-table">
+<thead><tr><th>Company</th><th>Last year, actual</th><th>This year, as planned</th><th>2027</th><th>Funding line</th><th>Proof test</th></tr></thead>
+<tbody>
+<tr><td><strong>Microsoft</strong><br><span style="font-size:.8em">FY to June; Oct 28</span></td><td>FY26 $115.9B additions to property and equipment<sup>[5]</sup></td><td>FY27 about $175B after the lease shift; &ldquo;will grow year-over-year&rdquo;<sup>[6]</sup></td><td>No calendar-2027 figure, and the July ~$175B was not restated. &ldquo;In Q2 we expect CapEx spend will be over $50 billion. Therefore for the calendar year, spend approximately $170 billion. Due to the 3P capacity delays noted earlier, in the second half of the fiscal year we currently expect CapEx spend to accelerate.&rdquo;<sup>[18]</sup> Direction: higher into the first half of 2027.</td><td>FY26 free cash flow about $67B; no external raise. Q1 FY27 free cash flow $18.6B on $45.2B of capex including $7.4B of finance leases; &ldquo;we will access additional sources of funding when we believe it is attractive to do so&rdquo;; operating-lease commitments are in the 10-Q.<sup>[18]</sup></td><td>Azure above 45% cc: passed, 48% (48% in constant currency); Q2 guided to 49&ndash;50%<sup>[18]</sup></td></tr>
+<tr><td><strong>Alphabet</strong><br><span style="font-size:.8em">calendar; Oct 28</span></td><td>2025 $91.4B purchases<sup>[1]</sup></td><td>$195&ndash;205B, raised twice<sup>[3]</sup></td><td>June: &ldquo;significantly increase&rdquo;<sup>[2]</sup> Oct 28: &ldquo;We continue to expect our CapEx to increase significantly in 2027 and will provide further details on our Q4 call&rdquo;; 2026 held at $195&ndash;205B.<sup>[17]</sup></td><td>Q2 free cash flow &minus;$5.9B; $49.6B equity and $56.2B debt raised in H1; $811B of purchase commitments<sup>[4]</sup> Q3 free cash flow &minus;$9.1B on $51.4B of capex (a TPU-system inventory build and a $5.2B EC fine also weighed); purchase commitments $924B, from $811B; long-term debt $125.1B; the quarter&rsquo;s issuance is in the 10-Q.<sup>[17]</sup></td><td>Cloud backlog above $560B: passed, $561B at September 30, one billion over the line<sup>[17]</sup></td></tr>
+<tr><td><strong>Meta</strong><br><span style="font-size:.8em">calendar; reported Oct 21</span></td><td>2025 $72.2B incl. finance-lease principal<sup>[7]</sup></td><td>$135&ndash;145B, raised three times<sup>[10]</sup></td><td>No figure. &ldquo;We expect to continue investing aggressively to support both our core business and emerging AI initiatives.&rdquo;<sup>[10]</sup></td><td>Q3 free cash flow &minus;$2.1B on $34.9B of capex<sup>[10]</sup></td><td>2026 midpoint above $137.5B: passed at $140B; shares &minus;7.0%</td></tr>
+<tr><td><strong>Amazon</strong><br><span style="font-size:.8em">calendar; Oct 29</span></td><td>2025 $131.8B purchases<sup>[11]</sup></td><td>About $220B, from about $200B<sup>[13]</sup></td><td>July: demand exceeds capacity &ldquo;in 2027, too&rdquo;<sup>[13]</sup> <em>Reports Thursday; added October 30.</em></td><td>Trailing free cash flow &minus;$7.6B at June 30; &ldquo;you&rsquo;ve seen us issue debt this year&rdquo;<sup>[12][13]</sup> <em>Added October 30.</em></td><td>AWS growth above 37%: <em>Thursday; added October 30.</em></td></tr>
+<tr class="row-warn"><td><strong>Read</strong></td><td colspan="5">Two of the three buyers who have spoken pointed higher for 2027: Alphabet in words (&ldquo;increase significantly&rdquo;) and Microsoft by a second-half acceleration with no 2027 figure. Meta gave words without a direction. None pointed flat or lower. By the October 19 sentence that is branch C, a majority higher and one unproven; it becomes A only if Amazon points higher on Thursday and Meta&rsquo;s &ldquo;investing aggressively&rdquo; is read as higher. Amazon is added October 30.</td></tr>
+</tbody></table>
+
+<p>Meta is the buyer that did not point higher, and it did not point lower either. Its October 21 release gave no 2027 figure and no direction, only &ldquo;we expect to continue investing aggressively to support both our core business and emerging AI initiatives,&rdquo; with the 2027 budget still in development. At the midpoint of its 2026 plan it is about 19% of the four. Nothing in the disclosures allows a cycle reading from it either way.</p>
+<p>The demand case stands on the buyers who pointed higher and is unproven on the one who did not. The financing question is unchanged by either. Both proof tests at the buyers who pointed higher passed: Azure grew 48% against the 45% line and Google Cloud&rsquo;s backlog reached $561 billion against the $560 billion line, by one billion.</p>
+
+
+<div class="simply-recap"><strong>What it means:</strong> Alphabet said it will spend significantly more next year and Microsoft said its spending accelerates into the first half of 2027; Meta would only say it keeps investing aggressively. The same calls showed the cost: Alphabet&rsquo;s free cash flow was negative $9 billion for the quarter and Microsoft said it will tap outside funding when it is attractive.</div>
+</section>
+
+<section class="pitch-section" id="names"><h2>4. What it does to the covered names</h2>
+
+<p>Four published positions sit downstream of this week&rsquo;s numbers, and each carries a test written before the reports.</p>
+
+<table class="pitch-table">
+<thead><tr><th>Name</th><th>Published stance</th><th>The test it carries</th><th>Read after the guides</th></tr></thead>
+<tbody>
+<tr><td><strong>Micron</strong></td><td>Hold, $1,090 (<a href="mu-fq4-update-2026-10-19.html">October 19</a>)</td><td>The thesis breaks on the first cut to fiscal 2028 consensus earnings; there is no price level in the test</td><td>Less likely: three-quarters of Microsoft&rsquo;s quarter went to short-lived assets, &ldquo;primarily CPUs and GPUs, including higher memory and storage costs,&rdquo; with spending accelerating in the second half, and Alphabet&rsquo;s plan rises again in 2027. The memory line in the plans points up.</td></tr>
+<tr><td><strong>ASML</strong></td><td>Accumulate, about $2,075 (<a href="asml-q3-update-2026-10-22.html">October 22</a>)</td><td>Lithography orders follow this line with a lag; one of the four tests in the October 22 note</td><td>Two buyers pointing higher is the input that note&rsquo;s order test wants; graded there once Amazon has reported.</td></tr>
+<tr><td><strong>Nvidia</strong></td><td>Hold, about $250 (<a href="nvda-eve-2026-08-26.html">August 26</a>); re-underwrite due November 11</td><td>Two or more buyers cutting 2027 plans is a preregistered kill; the quarter lands around November 17, date unconfirmed</td><td>Did not fire: no buyer cut a 2027 plan; two pointed higher and one gave no direction.</td></tr>
+<tr><td><strong>Dell</strong></td><td>Hold, $340 (<a href="dell-initiation-2026-06-09.html">June 9</a>); re-underwrite staged</td><td>AI-server orders are this spending one step down the chain; the funding of those orders was the July note&rsquo;s subject</td><td>Supportive one step down: Microsoft&rsquo;s second-half acceleration and Alphabet&rsquo;s build of TPU-system inventory are server orders in waiting, and nothing said about their funding changed.</td></tr>
+</tbody></table>
+
+<p>The index these names trade with has its own rule, registered on October 23 after the fourth straight down week: no bottom call until the market buys a capital-spending beat, meaning a weekly close back above the October 16 close after a beat the index finishes up on.<sup>[16]</sup> Meta&rsquo;s and Lam&rsquo;s beats were sold: Meta closed Wednesday at $612.49, 12% below its pre-report close, while Lam has recovered to $253.82 from $230.15. Whether this week&rsquo;s are bought is Thursday&rsquo;s question. Microsoft closed at $531.01 and Alphabet at $324.89 before their reports, and SMH at 567.67, already above the 539.79 October 16 weekly close the rule needs it to hold on Friday after a beat it finishes up on.<sup>[16]</sup></p>
+
+<!-- chart:smh -->
+<figure class="article-chart">
+  <p class="chart-title">Chart 4: The Semiconductor Index, Waiting for a Beat to Be Bought</p>
+  <p class="chart-headline">No bottom call until the market buys a capital-spending beat.</p>
+  <svg class="chart-svg" viewBox="0 0 760 330" xmlns="http://www.w3.org/2000/svg" aria-label="SMH weekly closes over four months, peaking Oct 2 at 630.60 and falling to 527.20 by Oct 23, with dashed lines at the Oct 16 and Oct 23 weekly closes.">
+    <text x="380.0" y="20.0" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#0B1F3A" text-anchor="middle">VanEck Semiconductor ETF (SMH), weekly closes, Jul 3 - Oct 30 ($)</text>
+    <line x1="78" y1="270.0" x2="676" y2="270.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="273.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">500</text>
+    <line x1="78" y1="242.0" x2="676" y2="242.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="245.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">520</text>
+    <line x1="78" y1="214.0" x2="676" y2="214.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="217.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">540</text>
+    <line x1="78" y1="186.0" x2="676" y2="186.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="189.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">560</text>
+    <line x1="78" y1="158.0" x2="676" y2="158.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="161.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">580</text>
+    <line x1="78" y1="130.0" x2="676" y2="130.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="133.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">600</text>
+    <line x1="78" y1="102.0" x2="676" y2="102.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="105.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">620</text>
+    <line x1="78" y1="74.0" x2="676" y2="74.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="77.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">640</text>
+    <line x1="78" y1="46.0" x2="676" y2="46.0" stroke="rgba(28,26,22,.08)" stroke-width="1"/>
+    <text x="70.0" y="49.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="end">660</text>
+    <line x1="78" y1="46" x2="78" y2="270" stroke="rgba(28,26,22,.25)" stroke-width="1"/><line x1="78" y1="270" x2="676" y2="270" stroke="rgba(28,26,22,.25)" stroke-width="1"/>
+    <line x1="78" y1="214.3" x2="676" y2="214.3" stroke="#a08440" stroke-width="1.4" stroke-dasharray="6,4"/>
+    <text x="82.0" y="210.3" font-family="Inter,sans-serif" font-size="9" fill="#a08440" text-anchor="start">Oct 16 weekly close 539.79</text>
+    <line x1="78" y1="231.9" x2="676" y2="231.9" stroke="#b56a3f" stroke-width="1.4" stroke-dasharray="6,4"/>
+    <text x="82.0" y="227.9" font-family="Inter,sans-serif" font-size="9" fill="#b56a3f" text-anchor="start">Oct 23 weekly close 527.20</text>
+    <polyline fill="none" stroke="#0B1F3A" stroke-width="2" points="78.0,140.8 113.2,114.6 148.4,190.9 183.5,184.3 218.7,213.3 253.9,154.2 289.1,147.1 324.2,185.4 359.4,195.6 394.6,176.2 429.8,174.1 464.9,167.8 500.1,120.8 535.3,87.2 570.5,125.3 605.6,214.3 640.8,231.9"/>
+    <polyline fill="none" stroke="#0B1F3A" stroke-width="2" stroke-dasharray="4,3" points="640.8,231.9 676.0,175.3"/>
+    <circle cx="676.0" cy="175.3" r="4" fill="none" stroke="#0B1F3A" stroke-width="2"/>
+    <text x="670.0" y="191.3" font-family="Inter,sans-serif" font-size="9" fill="#0B1F3A" text-anchor="end">week in progress 567.67 (Oct 28)</text>
+    <circle cx="535.3" cy="87.2" r="4" fill="#b56a3f"/>
+    <text x="535.3" y="78.2" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#b56a3f" text-anchor="middle">Oct 2 630.60</text>
+    <text x="78.0" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Jul 3</text>
+    <text x="183.5" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Jul 24</text>
+    <text x="289.1" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Aug 14</text>
+    <text x="394.6" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Sep 4</text>
+    <text x="500.1" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Sep 25</text>
+    <text x="605.6" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Oct 16</text>
+    <text x="676.0" y="288.0" font-family="Inter,sans-serif" font-size="9.5" fill="#6B7280" text-anchor="middle">Oct 30</text>
+    <text x="380.0" y="312.0" font-family="Inter,sans-serif" font-size="9" fill="#9CA3AF" text-anchor="middle">Last full week 527.20, -16.4% below the Oct 2 weekly high. The test: a weekly close above the Oct 16 close, after a capex beat the index closes up on.</text>
+  </svg>
+  <p class="chart-caption">Source: Yahoo Finance daily closes, taken as the last close of each week.<sup>[14]</sup> The rule was registered on October 23, before this week's reports.<sup>[16]</sup></p>
+</figure>
+<!-- /chart:smh -->
+
+<p><strong>The book.</strong> One thing changed, and it was mechanical. No published level keys off a capital-spending guide directly; the levels that can move are the ones in the names that sell to these buyers, and those were set before the week. Bloom Energy stays inside a window through November 4, with a target review due Friday. An order to buy Alphabet at $319.78, resting since August 18 under the resting-order exception, executed at Thursday&rsquo;s open when the stock gapped through the limit on the print; the disclosure below carries the position. This note rates no security and opens no window of its own.</p>
+</section>
+
+<section class="pitch-section" id="tests"><h2>5. What would make us reconsider</h2>
+<ol>
+<li><strong>The proof tests, graded five sessions after each report.</strong> Azure above 45%, Cloud backlog above $560 billion, AWS above 37%, each registered at a 55% prior. Azure 48%, passed; Google Cloud backlog $561 billion, passed by one billion; AWS reports Thursday. The five-session grades follow on November 4.</li>
+<li><strong>A new test from what the guides revealed.</strong> The aggregate rose, so the next question is funding. The read changes from &ldquo;demand intact, financing open&rdquo; to &ldquo;demand bought with leverage&rdquo; if Alphabet&rsquo;s fourth-quarter free cash flow is negative again alongside new issuance in the 10-Q, or if Microsoft&rsquo;s &ldquo;additional sources of funding&rdquo; becomes a raise of $20 billion or more before its fiscal second quarter closes. If neither happens, the demand case stands as written.</li>
+<li><strong>CoreWeave credit, standing.</strong> A five-year default-swap spread back below 800 basis points says the credit scare is healing. At or above 1,140, the October high, says it is deepening.</li>
+<li><strong>The ten-year, standing.</strong> A Friday close at or above 5.31%, October&rsquo;s cycle high, keeps the pressure on long-duration equity; sustained below it eases one source of it.</li>
+<li><strong>The semiconductor index.</strong> A weekly close above the October 16 close, after a capital-spending beat the index finishes up on, ends the no-bottom-call rule. Until then the rule stands.</li>
+</ol>
+</section>
+
+<section class="pitch-section" id="housekeeping"><h2>Housekeeping</h2>
+<p><strong>Scope.</strong> Guidance figures are taken from each company&rsquo;s own release or call and quoted as given; where a figure comes from a call and not from the release, the source says so. Prior-year actuals are from the cash flow statements in the results releases. Share moves are close to close from Yahoo Finance. The four companies define capital spending differently and the text keeps each on its own definition.</p>
+<p><strong>Amazon.</strong> Amazon reports Thursday after the close. The branch chosen above is chosen on three of the four buyers. Amazon&rsquo;s row in section 3, its bar in Chart 3 and the read on all four will be added on October 30 in a dated section, and if its guidance changes the branch, that section will say so without rewriting what was published here.</p>
+<p><strong>Trading window.</strong> Our policy restricts trading in a covered name from ten days before a publication to five days after it. This note rates no security. Bloom Energy is inside the window of the October 23 note through October 28; Vistra is inside the window ahead of its November 6 report note. The resting Alphabet order predates every window and is logged under the resting-order exception. Protective stops and kills at previously approved levels remain available at any time; the Coherent and ATI kill levels were breached on October 22 and belong to those names&rsquo; own records; nothing in this note changes a level.</p>
+<p><strong>Pre-registration.</strong> The direction call in section 3 was logged on October 26 with a 75% prior that every buyer who spoke would point higher for 2027. The three proof tests were registered on October 20 and 21 with their thresholds and 55% priors, before any of the reports. All four are internal records; the thresholds and priors are quoted here exactly as written.</p>
+</section>
+
+<section class="pitch-section" id="sources"><h2>Sources</h2>
+<ol class="sources">
+<li>Alphabet, fourth-quarter and fiscal-year 2025 results, February 4, 2026: purchases of property and equipment $91,447M (2025) and $52,535M (2024); &ldquo;our 2026 CapEx investments are anticipated to be in the range of $175 to $185 billion.&rdquo; <a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000012/googexhibit991q42025.htm">SEC EDGAR</a></li>
+<li>Alphabet, Form 8-K of June 1, 2026 (equity offerings): &ldquo;its 2026 capital expenditures are expected to be $180-$190 billion&rdquo; and &ldquo;it expects 2027 capital expenditures to significantly increase compared to 2026.&rdquo; <a href="https://www.sec.gov/Archives/edgar/data/0001652044/000119312526257724/d83560dex991.htm">SEC EDGAR</a></li>
+<li>Alphabet, second-quarter 2026 results, July 22, 2026: purchases of property and equipment $44,924M; free cash flow &minus;$5,855M; Google Cloud revenue $24,768M, up 82%. The $195&ndash;205 billion range was stated on the call. <a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000066/googexhibit991q22026.htm">SEC EDGAR</a>; call via <a href="https://abc.xyz/investor/">abc.xyz/investor</a></li>
+<li>Alphabet, Form 10-Q for the quarter ended June 30, 2026: cash from financing, net equity and debt issuance, purchase commitments of $811.0 billion. <a href="https://www.sec.gov/Archives/edgar/data/1652044/000165204426000071/goog-20260630.htm">SEC EDGAR</a></li>
+<li>Microsoft, fiscal 2026 fourth-quarter results, July 29, 2026: additions to property and equipment $115,948M (FY26) and $64,551M (FY25); cash from operations $182,935M; Azure and other cloud services growth 43%. <a href="https://www.sec.gov/Archives/edgar/data/0000789019/000119312526323632/msft-ex99_1.htm">SEC EDGAR</a></li>
+<li>Microsoft, fiscal 2026 fourth-quarter earnings call, July 29, 2026, Amy Hood: &ldquo;we expect FY &rsquo;27 capital expenditures will grow year-over-year given demand signals across our portfolio. However, the shift from finance to operating leases adjust our expectation to approximately $175 billion&rdquo;; useful lives extended from 15 to 25 years; first-quarter capital spending &ldquo;over $50 billion&rdquo;; calendar-2026 expectations &ldquo;unchanged&rdquo; outside the useful-life effect. Transcript via <a href="https://www.fool.com/earnings/call-transcripts/2026/08/07/microsoft-msft-q4-2026-earnings-call-transcript/">The Motley Fool</a>, a secondary source.</li>
+<li>Meta, fourth-quarter and full-year 2025 results, January 28, 2026: capital expenditures including finance-lease principal $72.22B (2025); purchases $37,256M plus finance-lease principal $1,969M (2024); 2026 outlook &ldquo;in the range of $115-135 billion.&rdquo; <a href="https://www.sec.gov/Archives/edgar/data/1326801/000162828026003832/meta-12312025xexhibit991.htm">SEC EDGAR</a></li>
+<li>Meta, first-quarter 2026 results, April 29, 2026: 2026 outlook raised to $125&ndash;145 billion on component prices. <a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-First-Quarter-2026-Results/">investor.atmeta.com</a></li>
+<li>Meta, second-quarter 2026 results, July 29, 2026: &ldquo;in the range of $130-145 billion, narrowed from our prior outlook of $125-145 billion&rdquo;; capex $31.08B; free cash flow $784M. <a href="https://www.sec.gov/Archives/edgar/data/0001326801/000162828026050596/meta-06302026xexhibit991.htm">SEC EDGAR</a></li>
+<li>Meta, third-quarter 2026 results, October 21, 2026: &ldquo;in the range of $135-145 billion, narrowed from our prior outlook of $130-145 billion&rdquo;; capex $34.91B; free cash flow &minus;$2.12B; cash from operations $32.79B; revenue $64.60B, up 26%; &ldquo;we expect to continue investing aggressively to support both our core business and emerging AI initiatives.&rdquo; <a href="https://www.sec.gov/Archives/edgar/data/0001326801/000162828026066700/meta-09302026xexhibit991.htm">SEC EDGAR</a></li>
+<li>Amazon, fourth-quarter 2025 results, February 5, 2026: purchases of property and equipment $131,819M (2025) and $82,999M (2024); trailing free cash flow $11,194M; &ldquo;we expect to invest about $200 billion in capital expenditures across Amazon in 2026.&rdquo; <a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000002/amzn-20251231xex991.htm">SEC EDGAR</a></li>
+<li>Amazon, second-quarter 2026 results, July 30, 2026: purchases $54,208M in the quarter and $173,028M trailing; trailing free cash flow &minus;$7,604M; AWS net sales $42,232M, up 37%; third-quarter guidance. <a href="https://www.sec.gov/Archives/edgar/data/1018724/000101872426000024/amzn-20260630xex991.htm">SEC EDGAR</a></li>
+<li>Amazon, second-quarter 2026 earnings call, July 30, 2026, Andy Jassy: &ldquo;We now believe we will spend approximately $220 billion in cash CapEx in 2026&rdquo;; &ldquo;The higher cost of memory pushing this number up from our prior estimate of about $200 billion&rdquo;; demand to exceed capacity &ldquo;in 2027, too&rdquo;; &ldquo;You&rsquo;ve seen us issue debt this year.&rdquo; Transcript via <a href="https://www.webull.com/news/15364638750483456">Webull</a>, a secondary source.</li>
+<li>Yahoo Finance daily closes for META, MSFT, GOOGL, AMZN, LRCX and SMH. <a href="https://finance.yahoo.com/quote/SMH/history/">Price history</a></li>
+<li>Our October 19 outlook: <a href="weekly-outlook-2026-10-20.html">&ldquo;Insurance on a Company You Don&rsquo;t Own&rdquo;</a>, section 4, where the capital-spending test and the single-company caveat were set.</li>
+<li>Our internal print-gate register and ledger: the three proof tests (registered October 20 and 21), the direction call (October 26) and the index rule (October 23). Internal records without public URLs; thresholds and priors are quoted exactly as written.</li>
+<li>Lam Research, results for the quarter ended September 2026, October 21, 2026: September-quarter revenue $8.22 billion; December-quarter revenue outlook $8.60 billion plus or minus $400 million. <a href="https://investor.lamresearch.com/">investor.lamresearch.com</a></li>
+<li>Alphabet, third-quarter 2026 results, October 28, 2026: revenues $127,577M; Google Cloud revenue $30,709M, up 103%; capital expenditures $51,355M; free cash flow &minus;$9,065M. <a href="https://www.sec.gov/Archives/edgar/data/0001652044/000165204426000080/googexhibit991q32026.htm">SEC EDGAR</a>. Call, October 28, 2026, Anat Ashkenazi: &ldquo;Google Cloud&rsquo;s backlog was $561 billion in the third quarter&rdquo;; &ldquo;our full-year 2026 CapEx guidance range of $195 to $205 billion remains unchanged. We continue to expect our CapEx to increase significantly in 2027&rdquo;; future purchase commitments $924 billion. Transcript via <a href="https://www.benzinga.com/news/26/10/62679903/alphabet-q3-2026-earnings-call-transcript">Benzinga</a>, a secondary source.</li>
+<li>Microsoft, fiscal 2027 first-quarter results, October 28, 2026: revenue $92.3 billion; Azure and other cloud services revenue growth 48% (48% in constant currency); Microsoft Cloud revenue $63.9 billion. <a href="https://www.microsoft.com/en-us/investor/earnings/fy-2027-q1/press-release-webcast">microsoft.com/investor</a>. Call, October 28, 2026, Amy Hood: &ldquo;In Q2 we expect CapEx spend will be over $50 billion. Therefore for the calendar year, spend approximately $170 billion&rdquo;; &ldquo;in the second half of the fiscal year we currently expect CapEx spend to accelerate&rdquo;; Azure guided to 49% to 50% in constant currency; &ldquo;we will access additional sources of funding when we believe it is attractive to do so.&rdquo; Transcript via <a href="https://www.benzinga.com/news/26/10/62680566/microsoft-q1-2027-earnings-call-transcript">Benzinga</a>, a secondary source.</li>
+</ol>
+</section>
+
+<div class="disclosures">
+<p><strong>Disclosures.</strong> The author holds long positions in AI-infrastructure securities, including Nvidia, Micron, Marvell, AMD, Credo and Bloom Energy, and in Alphabet, where a resting order to buy at $319.78, entered August 18, executed at Thursday&rsquo;s open on the post-earnings gap &mdash; all confirmed against brokerage records on the publication date. The author holds no position in Microsoft, Amazon or Meta. None of the securities discussed is rated in this note.</p>
+<p><strong>Not investment advice.</strong> Brandon Leon is a publisher, not a registered investment adviser, and nothing here is a recommendation to buy or sell any security or a solicitation to do so. This is independent research prepared for general readership without regard to any individual&rsquo;s circumstances, objectives or risk tolerance. Forecasts are estimates and will be wrong in detail. Past performance of any call described here does not indicate future results. Do your own work or consult a licensed adviser before acting.</p>
+<p><strong>Methodology.</strong> Guidance is quoted from each company&rsquo;s release or call and attributed to the document or speaker. Actuals are from the cash flow statements in results releases. Each company&rsquo;s own definition of capital spending is kept; the sum of the four is presented as scale only. Share moves are close to close. The direction call and the three proof tests were set and logged before the reports, with their priors; the text says which were met.</p>
+</div>
+
+
+</article></main>
+<section class="related" data-bp="related" data-slug="capex-2027-guides-2026-10-28"></section>
+<div data-bp="prev-next" data-slug="capex-2027-guides-2026-10-28"></div>
+
+<footer class="site-footer"><p>&copy; 2026 Brandon Leon &middot; <a href="index.html">bpleon.com</a> &middot; <a href="writing.html">All writing</a></p></footer>
+  <script src="./data/content.js" data-root="."></script>
+</body>
+</html>
