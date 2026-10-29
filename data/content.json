@@ -1,23 +1,23 @@
 {
  "_comment": "Single source of truth for bpleon.com content. Edit this file; the pages render from it. See README-CONTENT.md.",
  "version": 1,
- "generated": "2026-10-26",
+ "generated": "2026-10-28",
  "items": [
   {
-   "slug": "fomc-reaction-2026-10-28",
-   "url": null,
-   "title": "The Fed’s October decision — reaction note",
+   "slug": "fomc-2026-10-28",
+   "url": "fomc-2026-10-28.html",
+   "title": "The Long End Stopped Waiting for the Fed",
    "date": "2026-10-28",
-   "type": "Essay",
+   "type": "Sector note",
    "tickers": [],
    "sectors": [
-    "Macro"
+    "Commodities/Macro"
    ],
-   "rating": null,
+   "rating": "Not rated",
    "target": null,
-   "summary": "Hold or hike — what the decision does to the financing math.",
-   "readMin": null,
-   "status": "upcoming"
+   "summary": "The Fed held at 3.75% to 4.00% by ten votes to two, both dissents for an increase; the ten-year had already given back its post-September rise, rose six basis points on the day, and December stayed priced near 80%.",
+   "readMin": 8,
+   "status": "published"
   },
   {
    "slug": "vst-fy27-guide-graded",
