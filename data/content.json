@@ -1,13 +1,13 @@
 {
  "_comment": "Single source of truth for bpleon.com content. Edit this file; the pages render from it. See README-CONTENT.md.",
  "version": 1,
- "generated": "2026-11-02",
+ "generated": "2026-11-03",
  "items": [
   {
    "slug": "capex-2027-guides-2026-10-28",
    "url": "capex-2027-guides-2026-10-28.html",
    "title": "A Mixed Answer From the Buyers",
-   "date": "2026-11-02",
+   "date": "2026-11-03",
    "type": "Sector note",
    "tickers": [
     "MSFT",
