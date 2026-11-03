@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-11-03",
   "fileCount": 183,
-  "totalBytes": 11762434,
+  "totalBytes": 11762488,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -316,8 +316,8 @@
     {
       "path": "capex-2027-guides-2026-10-28.html",
       "name": "capex-2027-guides-2026-10-28.html",
-      "size": 66457,
-      "sizeText": "64.9 KB",
+      "size": 66511,
+      "sizeText": "65.0 KB",
       "modified": "2026-11-03",
       "ext": ".html",
       "category": "pages"
