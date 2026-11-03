@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-11-03",
   "fileCount": 183,
-  "totalBytes": 11762476,
+  "totalBytes": 11762437,
   "countsByCategory": {
     "admin": 1,
     "assets": 1,
@@ -30,7 +30,7 @@
       "name": "site-index.json",
       "size": 43677,
       "sizeText": "42.7 KB",
-      "modified": "2026-11-02",
+      "modified": "2026-11-03",
       "ext": ".json",
       "category": "assets"
     },
@@ -316,8 +316,8 @@
     {
       "path": "capex-2027-guides-2026-10-28.html",
       "name": "capex-2027-guides-2026-10-28.html",
-      "size": 66519,
-      "sizeText": "65.0 KB",
+      "size": 66460,
+      "sizeText": "64.9 KB",
       "modified": "2026-11-03",
       "ext": ".html",
       "category": "pages"
@@ -1513,9 +1513,9 @@
     {
       "path": "feed.xml",
       "name": "feed.xml",
-      "size": 14929,
+      "size": 14949,
       "sizeText": "14.6 KB",
-      "modified": "2026-11-02",
+      "modified": "2026-11-03",
       "ext": ".xml",
       "category": "site-meta"
     },
@@ -1533,7 +1533,7 @@
       "name": "sitemap.xml",
       "size": 13479,
       "sizeText": "13.2 KB",
-      "modified": "2026-11-02",
+      "modified": "2026-11-03",
       "ext": ".xml",
       "category": "site-meta"
     },

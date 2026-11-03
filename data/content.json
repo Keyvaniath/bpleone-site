@@ -1,13 +1,13 @@
 {
  "_comment": "Single source of truth for bpleon.com content. Edit this file; the pages render from it. See README-CONTENT.md.",
  "version": 1,
- "generated": "2026-10-29",
+ "generated": "2026-11-02",
  "items": [
   {
    "slug": "capex-2027-guides-2026-10-28",
    "url": "capex-2027-guides-2026-10-28.html",
    "title": "A Mixed Answer From the Buyers",
-   "date": "2026-10-29",
+   "date": "2026-11-02",
    "type": "Sector note",
    "tickers": [
     "MSFT",
@@ -20,7 +20,7 @@
    ],
    "rating": "Not rated",
    "target": null,
-   "summary": "Alphabet pointed significantly higher for 2027 and Microsoft to a second-half acceleration; Meta gave no direction. The demand case stands on two buyers and the financing question is open on all of them.",
+   "summary": "Alphabet and Amazon pointed higher for 2027 in words and Microsoft by a second-half acceleration; Meta gave no direction. The demand case stands on three of the four buyers and the financing question is open on all of them.",
    "readMin": 10,
    "status": "published"
   },
