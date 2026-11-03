@@ -4,6 +4,24 @@
  "generated": "2026-11-03",
  "items": [
   {
+   "slug": "googl-q3-update-2026-10-29",
+   "url": "googl-q3-update-2026-10-29.html",
+   "title": "The Backlog Cleared. The Cash Did Not.",
+   "date": "2026-11-03",
+   "type": "Initiation",
+   "tickers": [
+    "GOOGL"
+   ],
+   "sectors": [
+    "Semis/AI"
+   ],
+   "rating": "Hold",
+   "target": 280,
+   "summary": "Alphabet passed two of the three tests we set in August: Cloud grew 103% and its backlog reached $561 billion. Free cash flow was negative a second quarter, buybacks stayed at zero and 2027 spending goes higher. Hold, probability-weighted value about $280.",
+   "readMin": 14,
+   "status": "published"
+  },
+  {
    "slug": "capex-2027-guides-2026-10-28",
    "url": "capex-2027-guides-2026-10-28.html",
    "title": "A Mixed Answer From the Buyers",
