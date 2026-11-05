@@ -430,6 +430,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://bpleon.com/resume.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://bpleon.com/reverse-dcf.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

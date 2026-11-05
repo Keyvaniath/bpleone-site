@@ -78,3 +78,6 @@ exports/2026-06-08_streak-broke-tougher-test.pdf
 exports/2026-07-06_suppliers-sold-first.docx
 exports/MU-FQ3-EVE-2026-06-23-TESTCOPY.pdf
 exports/MU-NOTEBOOK-2026-06-09.docx
+
+# Local dev-server config for the Claude desktop app preview
+.claude/

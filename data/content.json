@@ -2,6 +2,16 @@
  "_comment": "Single source of truth for bpleon.com content. Edit this file; the pages render from it. See README-CONTENT.md.",
  "version": 1,
  "generated": "2026-11-03",
+ "companies": {
+  "BE": "Bloom Energy",
+  "ASML": "ASML Holding",
+  "MU": "Micron Technology",
+  "VST": "Vistra",
+  "NVDA": "Nvidia",
+  "SPCX": "SpaceX",
+  "DELL": "Dell Technologies",
+  "GOOGL": "Alphabet"
+ },
  "items": [
   {
    "slug": "googl-q3-update-2026-10-29",
@@ -1332,6 +1342,24 @@
   }
  ],
  "coverage": [
+  {
+   "ticker": "GOOGL",
+   "company": "Alphabet",
+   "history": [
+    {
+     "date": "2026-11-03",
+     "rating": "Hold",
+     "target": 280,
+     "slug": "googl-q3-update-2026-10-29",
+     "title": "The Backlog Cleared. The Cash Did Not."
+    }
+   ],
+   "rating": "Hold",
+   "target": 280,
+   "updated": "2026-11-03",
+   "latestSlug": "googl-q3-update-2026-10-29",
+   "latestTitle": "The Backlog Cleared. The Cash Did Not."
+  },
   {
    "ticker": "BE",
    "company": "Bloom Energy",

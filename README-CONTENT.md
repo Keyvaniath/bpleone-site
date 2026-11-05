@@ -34,7 +34,7 @@ Since 2026-10-23 the homepage, the archive (`writing.html`), the coverage page (
 
 ## Update a rating or target
 
-Do **not** edit the coverage table. It is derived: for each ticker, the newest `published` item of type `Initiation` or `Coverage update` that carries a `rating` supplies the row and the top of the history table. So the way to change a public target is the way it should be — **publish the note that changes it**, with the new `rating` and `target` on its entry. Every earlier call stays in the history as "superseded".
+Do **not** edit the coverage table. Since 2026-11-05 the `coverage` array in `content.json` is **generated** by `tools/build-coverage.js` (runs first in `npm run manifests`): for each ticker, every `published` single-ticker item of type `Initiation` or `Coverage update` with a non-null `rating` becomes a history entry, and the newest one supplies the row. So the way to change a public target is the way it should be — **publish the note that changes it**, with the new `rating` and `target` on its entry, then run `npm run manifests`. Every earlier call stays in the history as "superseded". A new ticker also needs a company name in the `companies` map (the generator refuses to write without one). Before 11/5 the array was maintained by hand, which is how the Nov 3 Alphabet initiation went missing from the live table for two days.
 
 If an older entry's rating or target in the JSON is wrong, correct that entry; the seed for the back catalogue was reconstructed from the notes and the May–July MU sequence in particular deserves a read-through (see "Open items").
 
