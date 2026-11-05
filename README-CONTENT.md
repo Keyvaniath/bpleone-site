@@ -58,6 +58,7 @@ Put `<script src="data/content.js" data-root="."></script>` before `</body>` (`d
 | `headlines` (`data-max-days="7"`) | five newest headlines for the lead ticker; hides itself with a fallback link if the newest is older than the limit |
 | `related` (`data-slug="…"`) | up to four articles sharing a ticker or sector |
 | `prev-next` (`data-slug="…"`) | earlier / later article by date |
+| `note-rating` (`data-slug="…"`) | the uniform rating/target box on a coverage note, with a superseded banner when a newer call exists (injected on all rated note pages 2026-11-05) |
 
 `content.js` also wires the mobile menu (`.nav-toggle`) and the opt-in dark theme (`.theme-toggle`, persisted in `localStorage`). The dark tokens already existed in `style.css`; auto-dark via `prefers-color-scheme` is deliberately **not** enabled, per the note at the top of the stylesheet.
 

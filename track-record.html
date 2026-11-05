@@ -19,10 +19,8 @@
   <link rel="icon" type="image/svg+xml" href="assets/brand/01-master-monolith.svg" />
   <link rel="alternate icon" type="image/png" href="assets/brand/favicon-192.png" />
   <link rel="apple-touch-icon" href="assets/brand/favicon-512.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=51" />
+  <link rel="stylesheet" href="assets/fonts/fonts.css" />
+  <link rel="stylesheet" href="style.css?v=52" />
   <style>
     .tr-section-head { margin: 2.75rem 0 .5rem; padding-bottom: .55rem; border-bottom: 2px solid var(--ink); font-family: var(--sans); font-size: .85rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
     .tr-section-note { margin: 0 0 1rem; color: var(--muted); font-family: var(--sans); font-size: .85rem; }
@@ -137,6 +135,17 @@
       </p>
     </article>
 
+    <h2 class="tr-section-head">Every published rating</h2>
+    <p class="tr-section-note">
+      Generated from the same content index that renders the
+      <a href="coverage.html">coverage table</a>, so this list cannot
+      disagree with the notes: every rating and target ever published on a
+      covered name, newest first, each linked to the note that made it. The
+      top row of each table is the current call; everything under it is
+      superseded. Grades and the reasoning live in the notes themselves.
+    </p>
+    <div data-bp="history"><p class="muted small">Loading the rating history&hellip;</p></div>
+
     <div class="tr-how">
       <h2>How I grade</h2>
       <p>
@@ -178,7 +187,7 @@
     </div>
   </footer>
 
-  <script src="script.js?v=51" defer></script>
-  <script src="./data/content.js" data-root="."></script>
+  <script src="script.js?v=52" defer></script>
+  <script src="./data/content.js?v=52" data-root="."></script>
 </body>
 </html>

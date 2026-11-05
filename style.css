@@ -1850,3 +1850,17 @@ table.cov .chg { font-size:.8em; margin-left:.3em; }
 @media (max-width: 640px) { .toc-list { columns: 1; } }
 .related { margin: 2.5rem 0 0; padding-top: 1.25rem; border-top: 1px solid var(--rule); }
 .related h2 { font-size: 1.3rem; margin: 0 0 .5rem; }
+
+/* Note rating box (data-bp="note-rating") ----------------------------------
+   The uniform rating/target component on coverage notes; rendered by
+   content.js from content.json, so it cannot contradict the coverage table. */
+.note-rating { margin: 1.75rem 0; padding: .9rem 1.1rem; border: 1px solid var(--rule); border-left: 3px solid var(--accent-2); border-radius: 10px; background: var(--bg-soft); font-family: var(--sans); }
+.note-rating:empty { display: none; }
+.note-rating .nr-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem .8rem; }
+.note-rating .nr-ticker { font-weight: 600; letter-spacing: .06em; }
+.note-rating .nr-company { color: var(--ink-soft); }
+.note-rating .nr-target { font-weight: 500; }
+.note-rating .nr-date { color: var(--muted); font-size: .82rem; }
+.note-rating .nr-status { margin: .5rem 0 0; font-size: .85rem; color: var(--ink-soft); }
+.note-rating.is-superseded { border-left-color: var(--accent); }
+.note-rating .nr-status strong { color: var(--accent); }

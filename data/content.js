@@ -321,8 +321,37 @@
     }).join('') + '</ol>';
   }
 
+  function renderNoteRating(el, d) {
+    // The uniform rating box on a coverage note. Reads the same data as the
+    // coverage table, so the box, the table and the note can never disagree.
+    var slug = el.getAttribute('data-slug'); if (!slug) { el.innerHTML = ''; return; }
+    var item = bySlug(d, slug);
+    if (!item || item.rating == null || !item.tickers || item.tickers.length !== 1) { el.innerHTML = ''; return; }
+    var t = item.tickers[0], cov = null;
+    (d.coverage || []).forEach(function (c) { if (c.ticker === t) cov = c; });
+    if (!cov) { el.innerHTML = ''; return; }
+    var current = cov.latestSlug === slug;
+    var status;
+    if (current) {
+      status = '<p class="nr-status nr-current">This is the current call on ' + esc(t) +
+        ' &middot; <a href="' + ROOT + '/coverage.html">coverage table</a> &middot; <a href="' + ROOT + '/track-record.html">track record</a></p>';
+    } else {
+      status = '<p class="nr-status nr-superseded"><strong>Superseded.</strong> The current call on ' + esc(t) + ' is ' +
+        esc(cov.rating) + (cov.target != null ? ', target ' + money(cov.target) + ',' : '') +
+        ' from <a href="' + ROOT + '/' + esc(cov.latestSlug) + '.html">' + esc(cov.latestTitle) + '</a> (' + fmtDate(cov.updated) + ').</p>';
+    }
+    el.innerHTML = '<div class="nr-row">' +
+      '<span class="nr-ticker">' + esc(t) + '</span>' +
+      '<span class="nr-company">' + esc(cov.company) + '</span>' +
+      ratingBadge(item.rating) +
+      '<span class="nr-target">' + (item.target != null ? 'Target ' + money(item.target) : 'No published target') + '</span>' +
+      '<span class="nr-date">as published <time datetime="' + esc(item.date) + '">' + fmtDate(item.date) + '</time></span>' +
+      '</div>' + status;
+    el.classList.add(current ? 'is-current' : 'is-superseded');
+  }
+
   var VIEWS = { toc: renderToc, headlines: renderHeadlines, latest: renderLatest, archive: renderArchive, 'on-deck': renderOnDeck, coverage: renderCoverage,
-    history: renderHistory, toolkit: renderToolkit, 'lead-pick': renderLeadPick, related: renderRelated, 'prev-next': renderPrevNext };
+    history: renderHistory, toolkit: renderToolkit, 'lead-pick': renderLeadPick, related: renderRelated, 'prev-next': renderPrevNext, 'note-rating': renderNoteRating };
 
   function mountAll() {
     var els = document.querySelectorAll('[data-bp]'); if (!els.length) return;
