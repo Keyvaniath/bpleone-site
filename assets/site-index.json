@@ -3,7 +3,7 @@
   "version": 1,
   "generated": "2026-11-05",
   "fileCount": 196,
-  "totalBytes": 12472595,
+  "totalBytes": 12472846,
   "countsByCategory": {
     "admin": 1,
     "assets": 11,
@@ -352,8 +352,8 @@
     {
       "path": "about.html",
       "name": "about.html",
-      "size": 9655,
-      "sizeText": "9.4 KB",
+      "size": 9736,
+      "sizeText": "9.5 KB",
       "modified": "2026-11-05",
       "ext": ".html",
       "category": "pages"
@@ -442,8 +442,8 @@
     {
       "path": "contact.html",
       "name": "contact.html",
-      "size": 4321,
-      "sizeText": "4.2 KB",
+      "size": 4357,
+      "sizeText": "4.3 KB",
       "modified": "2026-11-05",
       "ext": ".html",
       "category": "pages"
@@ -460,7 +460,7 @@
     {
       "path": "coverage.html",
       "name": "coverage.html",
-      "size": 4604,
+      "size": 4619,
       "sizeText": "4.5 KB",
       "modified": "2026-11-05",
       "ext": ".html",
@@ -550,8 +550,8 @@
     {
       "path": "index.html",
       "name": "index.html",
-      "size": 10284,
-      "sizeText": "10.0 KB",
+      "size": 10425,
+      "sizeText": "10.2 KB",
       "modified": "2026-11-05",
       "ext": ".html",
       "category": "pages"
@@ -757,7 +757,7 @@
     {
       "path": "now.html",
       "name": "now.html",
-      "size": 8260,
+      "size": 8296,
       "sizeText": "8.1 KB",
       "modified": "2026-11-05",
       "ext": ".html",
@@ -901,7 +901,7 @@
     {
       "path": "resume.html",
       "name": "resume.html",
-      "size": 12865,
+      "size": 12878,
       "sizeText": "12.6 KB",
       "modified": "2026-11-05",
       "ext": ".html",
@@ -946,8 +946,8 @@
     {
       "path": "track-record.html",
       "name": "track-record.html",
-      "size": 11363,
-      "sizeText": "11.1 KB",
+      "size": 11288,
+      "sizeText": "11.0 KB",
       "modified": "2026-11-05",
       "ext": ".html",
       "category": "pages"
@@ -1144,7 +1144,7 @@
     {
       "path": "writing.html",
       "name": "writing.html",
-      "size": 3864,
+      "size": 3868,
       "sizeText": "3.8 KB",
       "modified": "2026-11-05",
       "ext": ".html",
