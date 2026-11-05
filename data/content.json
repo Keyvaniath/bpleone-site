@@ -1,7 +1,7 @@
 {
  "_comment": "Single source of truth for bpleon.com content. Edit this file; the pages render from it. See README-CONTENT.md.",
  "version": 1,
- "generated": "2026-11-03",
+ "generated": "2026-11-05",
  "companies": {
   "BE": "Bloom Energy",
   "ASML": "ASML Holding",
@@ -13,6 +13,22 @@
   "GOOGL": "Alphabet"
  },
  "items": [
+  {
+   "slug": "weekly-outlook-2026-11-04",
+   "url": "weekly-outlook-2026-11-04.html",
+   "title": "The Bill Moved Down the Supply Chain",
+   "date": "2026-11-04",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "Three of the four cloud buyers said they will spend more in 2027, every proof test we set passed, and the shares were sold on each print anyway. Within three sessions the sellers were the ones raising money: Marvell paying $115 billion in its own stock for Lumentum, Oracle selling $10 billion of shares and $10 billion of bonds. The question has moved from who buys to who pays, and AMD’s beat is the week’s test.",
+   "readMin": 13,
+   "status": "published"
+  },
   {
    "slug": "googl-q3-update-2026-10-29",
    "url": "googl-q3-update-2026-10-29.html",
