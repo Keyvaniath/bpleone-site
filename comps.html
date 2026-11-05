@@ -15,6 +15,7 @@
 <link rel="icon" type="image/svg+xml" href="./assets/brand/01-master-monolith.svg">
 <meta name="description" content="Plug in target metrics + peer median multiples. Get implied share price across every standard methodology.">
 <link rel="stylesheet" href="assets/fonts/fonts.css" />
+<link rel="stylesheet" href="assets/tool-shell.css?v=1" />
 <style>
 :root {
   /* Brand palette (matches style.css — keeps calculators on-brand with the site). */
@@ -118,24 +119,6 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
 .breadcrumb a:hover { color: var(--accent); }
 
 /* ===== Shared brand header + footer (site cohesion) ===== */
-.bp-header { max-width: 1080px; margin: 0 auto 30px; padding: 0 0 16px; display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; border-bottom: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
-.bp-brand { display: inline-flex; align-items: center; line-height: 0; flex-shrink: 0; text-decoration: none; }
-.bp-brand img { height: 36px; width: auto; display: block; }
-.bp-brand:hover { opacity: .85; }
-.bp-nav { display: flex; flex-wrap: wrap; gap: .8rem 1.35rem; font-size: 14.5px; }
-.bp-nav a { text-decoration: none; color: var(--text-muted); }
-.bp-nav a:hover { color: var(--accent); }
-.bp-nav a[aria-current="page"] { color: var(--text); font-weight: 600; }
-.bp-footer { max-width: 1080px; margin: 56px auto 0; border-top: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
-.bp-footer-inner { padding: 22px 0 4px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 13.5px; color: var(--text-muted); }
-.bp-social { list-style: none; display: flex; gap: 1.25rem; padding: 0; margin: 0; }
-.bp-social a { color: var(--text-muted); text-decoration: none; }
-.bp-social a:hover { color: var(--accent); }
-@media (max-width: 640px) {
-  .bp-nav { gap: .45rem .9rem; font-size: 13px; }
-  .bp-brand img { height: 30px; }
-  .bp-footer-inner { flex-direction: column; align-items: flex-start; }
-}
 /* Wide data tables scroll horizontally on phones instead of forcing the whole
    page to overflow sideways (min-width:0 lets the cards shrink below content). */
 @media (max-width: 680px) {
@@ -148,9 +131,6 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
 @media (max-width: 640px) {
   input[type="number"], input[type="text"], select, textarea { font-size: 16px; }
 }
-
-.skip-link { position: absolute; left: -9999px; top: 8px; z-index: 1000; background: var(--accent); color: #fff; padding: .55rem 1rem; border-radius: 4px; font-family: 'Inter', system-ui, sans-serif; font-size: 14px; text-decoration: none; }
-.skip-link:focus { left: 8px; }
 
 /* Related-tools strip (cross-link between calculators) */
 .bp-more-tools { max-width: 1100px; margin: 48px auto 0; padding-top: 22px; border-top: 1px solid var(--rule); font-family: 'Inter', system-ui, sans-serif; }
@@ -210,23 +190,18 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
   }
 }
 </script>
-<style id="calc-print">@page{margin:1.5cm}@media print{.bp-header,.bp-footer,.bp-more-tools,.skip-link,.breadcrumb,button{display:none!important}html,body{background:#fff!important;color:#000!important;padding:0!important;margin:0!important;font-size:11pt}.container{max-width:100%!important;margin:0!important}.grid{display:block!important}.card{border:1px solid #ccc!important;break-inside:avoid;page-break-inside:avoid;margin-bottom:14px}h1,.card h2,.sens-section h2,.howworks h3{color:#000!important}.implied-price,.implied-price.pos,.implied-price.neg{color:#000!important}input[type=number]{border:1px solid #bbb!important;color:#000!important;background:#fff!important}table,.build-table,table.sens{break-inside:avoid;page-break-inside:avoid;width:100%!important;border-collapse:collapse}thead{display:table-header-group}tr{page-break-inside:avoid}table.sens td.center{background:#ddd!important;color:#000!important;font-weight:600}.verdict{border:1px solid #999!important}.howworks{break-inside:avoid}a{color:#000!important;text-decoration:none}.howworks::after{content:"bpleon.com";display:block;margin-top:1.5em;padding-top:.5em;border-top:1px solid #bbb;font-family:Inter,sans-serif;font-size:9pt;color:#555}}</style>
+<style id="calc-print">@page{margin:1.5cm}@media print{.site-header,.site-footer,.bp-more-tools,.skip-link,.breadcrumb,button{display:none!important}html,body{background:#fff!important;color:#000!important;padding:0!important;margin:0!important;font-size:11pt}.container{max-width:100%!important;margin:0!important}.grid{display:block!important}.card{border:1px solid #ccc!important;break-inside:avoid;page-break-inside:avoid;margin-bottom:14px}h1,.card h2,.sens-section h2,.howworks h3{color:#000!important}.implied-price,.implied-price.pos,.implied-price.neg{color:#000!important}input[type=number]{border:1px solid #bbb!important;color:#000!important;background:#fff!important}table,.build-table,table.sens{break-inside:avoid;page-break-inside:avoid;width:100%!important;border-collapse:collapse}thead{display:table-header-group}tr{page-break-inside:avoid}table.sens td.center{background:#ddd!important;color:#000!important;font-weight:600}.verdict{border:1px solid #999!important}.howworks{break-inside:avoid}a{color:#000!important;text-decoration:none}.howworks::after{content:"bpleon.com";display:block;margin-top:1.5em;padding-top:.5em;border-top:1px solid #bbb;font-family:Inter,sans-serif;font-size:9pt;color:#555}}</style>
 </head>
-<body spellcheck="false">
+<body class="tool-page" spellcheck="false">
 <a class="skip-link" href="#main">Skip to content</a>
 <noscript><p style="max-width:1100px;margin:16px auto;padding:12px 16px;border:1px solid #d3c8ab;border-radius:4px;background:#f1e6d8;color:#56503f;font-family:Inter,system-ui,sans-serif;font-size:14px;text-align:center;">This calculator runs entirely in your browser &mdash; please enable JavaScript to compute results.</p></noscript>
-<header class="bp-header">
-  <a class="bp-brand" href="./index.html" aria-label="Brandon Leon — Home"><img src="./assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="170" height="44"></a>
-  <nav class="bp-nav" aria-label="Primary">
-    <a href="./about.html">About</a>
-    <a href="./markets.html">Markets</a>
-    <a href="./toolkit.html" aria-current="page">Toolkit</a>
-    <a href="./reports.html">Reports</a>
-    <a href="./research.html">Research</a>
-    <a href="./writing.html">Writing</a>
-    <a href="./contact.html">Contact</a>
-  </nav>
-</header>
+<header class="site-header">
+    <a class="brand" href="index.html" aria-label="Brandon Leon — Home"><img src="assets/brand/02-horizontal-lockup.svg" alt="Brandon Leon" width="180" height="48" /></a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav id="site-nav" class="site-nav" aria-label="Primary"><a href="writing.html">Research</a><a href="coverage.html">Coverage</a><a href="toolkit.html" aria-current="page">Toolkit</a><a href="markets.html">Markets</a><a href="about.html">About</a><a class="nav-subscribe" href="https://bpleon.substack.com/subscribe">Subscribe</a></nav>
+  </header>
+
+<main class="tool-main">
 <div class="container" id="main">
   <div class="breadcrumb"><a href="./index.html">Home</a> &nbsp;·&nbsp; <a href="./toolkit.html">← Toolkit</a> &nbsp;·&nbsp; Valuation calculators</div>
   <div class="kicker">TOOLKIT · TRADING COMPS</div>
@@ -331,17 +306,24 @@ table.sens td.center { background: var(--accent); color: white; font-weight: 600
     <li><a href="./toolkit.html">All tools &rarr;</a></li>
   </ul>
 </nav>
-<footer class="bp-footer">
-  <div class="bp-footer-inner">
-    <p>© 2026 Brandon Leon</p>
-    <ul class="bp-social">
-      <li><a href="./now.html">Now</a></li>
-      <li><a href="./disclaimer.html">Disclaimer</a></li>
-      <li><a href="mailto:brandon@bpleon.com">Email</a></li>
-      <li><a href="https://www.linkedin.com/in/brandonpleone/" rel="me noopener">LinkedIn</a></li>
-    </ul>
-  </div>
-</footer>
+</main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="copy">&copy; <span id="year">2026</span> Brandon Leon</p>
+      <ul class="social">
+        <li><a href="now.html">Now</a></li>
+        <li><a href="reading-list.html">Reading list</a></li>
+        <li><a href="research.html">Data sources</a></li>
+        <li><a href="track-record.html">Track record</a></li>
+        <li><a href="resume.html">R&eacute;sum&eacute;</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="disclaimer.html">Disclaimer</a></li>
+        <li><a href="feed.xml">RSS</a></li>
+        <li><a href="https://www.linkedin.com/in/brandonpleone/" rel="me noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
 
 <script>
 function v(id) { var x = parseFloat(document.getElementById(id).value); return isNaN(x) ? null : x; }

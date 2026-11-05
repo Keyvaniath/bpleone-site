@@ -3,7 +3,7 @@
   "private": true,
   "description": "Static site for bpleon.com (Cloudflare Pages). No build step for the site itself; npm scripts only regenerate the admin manifests.",
   "scripts": {
-    "manifests": "node tools/build-coverage.js && node tools/build-reports-manifest.js && node tools/build-site-index.js && node tools/build-sitemap-feed.js",
+    "manifests": "node tools/build-coverage.js && node tools/build-tool-shell.js && node tools/build-reports-manifest.js && node tools/build-site-index.js && node tools/build-sitemap-feed.js",
     "coverage": "node tools/build-coverage.js",
     "manifest:reports": "node tools/build-reports-manifest.js",
     "manifest:site": "node tools/build-site-index.js",
