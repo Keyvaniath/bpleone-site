@@ -14,6 +14,22 @@
  },
  "items": [
   {
+   "slug": "weekly-outlook-2026-11-06",
+   "url": "weekly-outlook-2026-11-06.html",
+   "title": "The Market Did Not Buy the Beat",
+   "date": "2026-11-06",
+   "type": "Weekly outlook",
+   "tickers": [],
+   "sectors": [
+    "Commodities/Macro"
+   ],
+   "rating": null,
+   "target": null,
+   "summary": "AMD beat and guided above the bar, and the chip ETF still closed the week down 11.2%, 15% under the line we set Wednesday, after its worst session since March 2020. A stronger-than-expected payroll report pushed the odds of a December rate increase back to about 78% while the chips rebounded with them. Our first test resolved the way our financing reading predicted, the Thursday line was inconclusive, and the December test grades on Kalshi’s daily close.",
+   "readMin": 12,
+   "status": "published"
+  },
+  {
    "slug": "weekly-outlook-2026-11-04",
    "url": "weekly-outlook-2026-11-04.html",
    "title": "The Bill Moved Down the Supply Chain",
